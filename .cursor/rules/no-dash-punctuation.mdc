@@ -1,0 +1,32 @@
+---
+description: Ban dash punctuation in assistant and Jeff-voice prose
+alwaysApply: true
+---
+
+# No dash punctuation
+
+Never use dash characters as punctuation in natural language: assistant replies, Jeff teaching voice, and student-facing copy.
+
+## Forbidden in prose
+
+- Em dash (U+2014), shown as `—`
+- En dash (U+2013), shown as `–`
+- Hyphen or minus used as a punctuation dash, including spaced forms like `this - that`
+
+Do not write sentence breaks, appositions, or asides with any of those forms.
+
+## Prefer instead
+
+Commas, periods, colons, or a new sentence.
+
+```text
+Bad:  Careful with that one — what matters is ownership.
+Bad:  Careful with that one – what matters is ownership.
+Bad:  Careful with that one - what matters is ownership.
+Good: Careful with that one. What matters is ownership.
+Good: Careful with that one: what matters is ownership.
+```
+
+## Practical exception
+
+Hyphens inside code, file paths, URLs, identifiers, CLI flags, and compound technical tokens already used in the repo (for example `jeff-wiki`, `dev-graph`, `--flag`) are allowed when writing code or paths. The ban is on dash punctuation in natural language sentences, not on those tokens.

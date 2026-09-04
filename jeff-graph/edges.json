@@ -1,0 +1,237 @@
+{
+  "version": 1,
+  "edges": [
+    {
+      "id": "e.cites.pr.founder-face.src.webinar",
+      "type": "cites",
+      "from": "pr.founder-face-printshop",
+      "to": "src.webinar.20260312.day2",
+      "confidence": 0.8,
+      "summary": "印钞机 / 脸就是招牌 taught on Day 2 webinar"
+    },
+    {
+      "id": "e.cites.pr.founder-face.src.slides",
+      "type": "cites",
+      "from": "pr.founder-face-printshop",
+      "to": "src.slides.ip-monetization.v2",
+      "confidence": 0.8,
+      "summary": "老板就是品牌 on slides"
+    },
+    {
+      "id": "e.cites.pr.exposure.src.slides",
+      "type": "cites",
+      "from": "pr.exposure-trust-conversion",
+      "to": "src.slides.ip-monetization.v2",
+      "confidence": 0.85,
+      "summary": "Slide chain 曝光→信任→成交"
+    },
+    {
+      "id": "e.cites.cl.buy-people.src.slides",
+      "type": "cites",
+      "from": "cl.buy-people-not-product",
+      "to": "src.slides.ip-monetization.v2",
+      "confidence": 0.85,
+      "summary": "客户不买最好的产品"
+    },
+    {
+      "id": "e.supports.cl.buy-people.pr.exposure",
+      "type": "supports",
+      "from": "cl.buy-people-not-product",
+      "to": "pr.exposure-trust-conversion",
+      "confidence": 0.8,
+      "summary": "Buying people requires visibility and trust"
+    },
+    {
+      "id": "e.includes.fw.etd.pr.exposure",
+      "type": "includes",
+      "from": "fw.exposure-trust-deal",
+      "to": "pr.exposure-trust-conversion",
+      "confidence": 0.7,
+      "summary": "Suggested framework wraps the exposure-trust principle"
+    },
+    {
+      "id": "e.includes.fw.etd.cl.buy-people",
+      "type": "includes",
+      "from": "fw.exposure-trust-deal",
+      "to": "cl.buy-people-not-product",
+      "confidence": 0.7,
+      "summary": "Framework includes buy-people claim"
+    },
+    {
+      "id": "e.cites.cl.ip-team.src.webinar",
+      "type": "cites",
+      "from": "cl.ip-without-pro-team",
+      "to": "src.webinar.20260312.day2",
+      "confidence": 0.75,
+      "summary": "建立IP不需要专业团队"
+    },
+    {
+      "id": "e.cites.cl.content-ads.src.webinar",
+      "type": "cites",
+      "from": "cl.content-not-ads",
+      "to": "src.webinar.20260312.day2",
+      "confidence": 0.75,
+      "summary": "内容资产 vs 广告"
+    },
+    {
+      "id": "e.defines.tm.content-asset.cl.content-ads",
+      "type": "defines",
+      "from": "tm.content-asset",
+      "to": "cl.content-not-ads",
+      "confidence": 0.7,
+      "summary": "Term used in content-vs-ads claim"
+    },
+    {
+      "id": "e.rejects.cl.content-ads.rj.ads-as-assets",
+      "type": "rejects",
+      "from": "cl.content-not-ads",
+      "to": "rj.ads-as-content-assets",
+      "confidence": 0.75,
+      "summary": "Reject ads mistaken for content assets"
+    },
+    {
+      "id": "e.warns.webinar.rj.overnight",
+      "type": "warns_against",
+      "from": "src.webinar.20260312.day2",
+      "to": "rj.overnight-fame",
+      "confidence": 0.8,
+      "summary": "Not selling overnight fame"
+    },
+    {
+      "id": "e.cites.pr.direction.src.ws",
+      "type": "cites",
+      "from": "pr.direction-beats-volume",
+      "to": "src.workshop.ws-clips.batch1",
+      "confidence": 0.75,
+      "summary": "WS01/WS03 direction over volume"
+    },
+    {
+      "id": "e.rejects.pr.direction.rj.volume",
+      "type": "rejects",
+      "from": "pr.direction-beats-volume",
+      "to": "rj.volume-equals-money",
+      "confidence": 0.8,
+      "summary": "Reject monetize-by-posting-more"
+    },
+    {
+      "id": "e.cites.pr.ego.src.ws",
+      "type": "cites",
+      "from": "pr.advice-vs-ego",
+      "to": "src.workshop.ws-clips.batch1",
+      "confidence": 0.8,
+      "summary": "WS07 建议vsEGO"
+    },
+    {
+      "id": "e.cites.pr.standpoint.src.ws",
+      "type": "cites",
+      "from": "pr.standpoint-or-invisible",
+      "to": "src.workshop.ws-clips.batch1",
+      "confidence": 0.75,
+      "summary": "WS14 立场"
+    },
+    {
+      "id": "e.defines.tm.lichang.pr.standpoint",
+      "type": "defines",
+      "from": "tm.lichang",
+      "to": "pr.standpoint-or-invisible",
+      "confidence": 0.75,
+      "summary": "立场 term underpins standpoint principle"
+    },
+    {
+      "id": "e.cites.cl.shortlong.src.ws",
+      "type": "cites",
+      "from": "cl.short-vs-long-video",
+      "to": "src.workshop.ws-clips.batch1",
+      "confidence": 0.75,
+      "summary": "WS04 short vs long"
+    },
+    {
+      "id": "e.cites.cl.criticism.src.ws",
+      "type": "cites",
+      "from": "cl.criticism-not-failure",
+      "to": "src.workshop.ws-clips.batch1",
+      "confidence": 0.75,
+      "summary": "WS10 criticism ≠ failure"
+    },
+    {
+      "id": "e.cites.cl.value.src.ws",
+      "type": "cites",
+      "from": "cl.value-then-convert",
+      "to": "src.workshop.ws-clips.batch1",
+      "confidence": 0.7,
+      "summary": "WS17 value then convert"
+    },
+    {
+      "id": "e.warns.ws.rj.gpt",
+      "type": "warns_against",
+      "from": "src.workshop.ws-clips.batch1",
+      "to": "rj.outsource-judgment-to-gpt",
+      "confidence": 0.6,
+      "summary": "WS06 keep judgment; don’t outsource to GPT"
+    },
+    {
+      "id": "e.cites.fw.day12.src.webinar",
+      "type": "cites",
+      "from": "fw.webinar-day1-day2",
+      "to": "src.webinar.20260312.day2",
+      "confidence": 0.7,
+      "summary": "Arc described in Day 2 opening"
+    },
+    {
+      "id": "e.illustrated.pr.direction.st.abang",
+      "type": "illustrated_by",
+      "from": "pr.direction-beats-volume",
+      "to": "st.abang-jeff",
+      "confidence": 0.55,
+      "summary": "Student lacked定位 while posting often"
+    },
+    {
+      "id": "e.illustrated.pr.exposure.st.kk",
+      "type": "illustrated_by",
+      "from": "pr.exposure-trust-conversion",
+      "to": "st.kk-toh",
+      "confidence": 0.55,
+      "summary": "Student reframed IP as story→trust→follow"
+    },
+    {
+      "id": "e.illustrated.cl.ip-team.st.kk",
+      "type": "illustrated_by",
+      "from": "cl.ip-without-pro-team",
+      "to": "st.kk-toh",
+      "confidence": 0.5,
+      "summary": "Student reports self-producing after class"
+    },
+    {
+      "id": "e.illustrated.pr.exposure.st.rolex",
+      "type": "illustrated_by",
+      "from": "pr.exposure-trust-conversion",
+      "to": "st.rolex-testi",
+      "confidence": 0.5,
+      "summary": "Guest valued systematic trust-to-conversion"
+    },
+    {
+      "id": "e.cites.st.abang.src.testi",
+      "type": "cites",
+      "from": "st.abang-jeff",
+      "to": "src.testimonials.batch1",
+      "confidence": 0.7,
+      "summary": "From batch-1 testimonials"
+    },
+    {
+      "id": "e.cites.st.kk.src.testi",
+      "type": "cites",
+      "from": "st.kk-toh",
+      "to": "src.testimonials.batch1",
+      "confidence": 0.7,
+      "summary": "From batch-1 testimonials"
+    },
+    {
+      "id": "e.cites.st.rolex.src.testi",
+      "type": "cites",
+      "from": "st.rolex-testi",
+      "to": "src.testimonials.batch1",
+      "confidence": 0.7,
+      "summary": "From batch-1 testimonials"
+    }
+  ]
+}

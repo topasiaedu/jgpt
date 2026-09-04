@@ -1,0 +1,35 @@
+{
+  "name": "jgpt-web",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "sync:jeff": "node scripts/sync-jeff-content.mjs",
+    "prebuild": "node scripts/sync-jeff-content.mjs",
+    "dev": "next dev",
+    "dev:turbo": "next dev --turbopack",
+    "build": "next build",
+    "start": "next start",
+    "lint": "eslint",
+    "test:probe": "npx --yes tsx scripts/test-probe.ts",
+    "test:strip-dash": "npx --yes tsx scripts/test-strip-dash.ts",
+    "test:long-chat": "npx --yes tsx scripts/test-long-chat.ts"
+  },
+  "dependencies": {
+    "next": "^15.5.2",
+    "openai": "^4.104.0",
+    "react": "^19.1.1",
+    "react-dom": "^19.1.1"
+  },
+  "devDependencies": {
+    "@eslint/eslintrc": "^3.3.1",
+    "@tailwindcss/postcss": "^4.1.12",
+    "@types/node": "^22.17.2",
+    "@types/react": "^19.1.12",
+    "@types/react-dom": "^19.1.9",
+    "eslint": "^9.34.0",
+    "eslint-config-next": "^15.5.2",
+    "tailwindcss": "^4.1.12",
+    "tsx": "^4.23.13",
+    "typescript": "^5.9.2"
+  }
+}

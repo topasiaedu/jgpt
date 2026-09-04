@@ -1,0 +1,5 @@
+# Prevent Cursor / agents from indexing huge local media (can thrash the machine).
+# Git still tracks handoff / transcripts / slides via .gitignore carve-outs.
+raw/
+**/node_modules/
+**/.next/

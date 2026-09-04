@@ -1,0 +1,137 @@
+{
+  "version": 1,
+  "nodes": [
+    {
+      "id": "DualStore",
+      "type": "ArchitectureComponent",
+      "title": "Dual store with access wall",
+      "summary": "Jeff Teaching Graph (jeff-*) is the only student-probeable doctrine store. Dev / Cursor wiki (dev-*) is builder memory and must never be mounted for students.",
+      "status": "active",
+      "wiki_refs": [
+        "dev-wiki/architecture.md",
+        "dev-wiki/decisions.md"
+      ],
+      "tags": ["access-wall", "jeff-wiki", "dev-wiki"],
+      "created": "2026-09-03"
+    },
+    {
+      "id": "RepoFirstStorage",
+      "type": "ArchitectureComponent",
+      "title": "Repo-first storage",
+      "summary": "Proof of concept validation keeps both stores as markdown and JSON in git. A later student serving database may export only jeff-* rebuilt from git.",
+      "status": "active",
+      "wiki_refs": [
+        "dev-wiki/architecture.md",
+        "dev-wiki/decisions.md"
+      ],
+      "tags": ["git", "storage"],
+      "created": "2026-09-03"
+    },
+    {
+      "id": "ClosedDoctrine",
+      "type": "Decision",
+      "title": "Closed Jeff allowlist",
+      "summary": "Doctrine comes only from allowlisted Jeff materials under raw/jeff after compile. No open-web RAG for doctrine; search stays inside jeff-wiki and jeff-graph.",
+      "status": "active",
+      "wiki_refs": [
+        "dev-wiki/decisions.md",
+        "schema/AGENTS.md",
+        "schema/alignment/doctrine-policy.md"
+      ],
+      "tags": ["allowlist", "anti-hallucination"],
+      "created": "2026-09-03"
+    },
+    {
+      "id": "SteerResponsePolicy",
+      "type": "Decision",
+      "title": "Generally → Jeff → steer",
+      "summary": "Out of coverage uses warm teacher’s-pet voice: light general framing, pivot to Jeff’s taught direction, concrete next question. Never KB-meta refuse, never relativize other educators, never invent Jeff rules.",
+      "status": "active",
+      "wiki_refs": [
+        "dev-wiki/architecture.md",
+        "dev-wiki/decisions.md",
+        "schema/voice/jeff-style.md",
+        "schema/voice/do-dont.md"
+      ],
+      "tags": ["voice", "out-of-coverage"],
+      "created": "2026-09-03"
+    },
+    {
+      "id": "SufficiencyGate",
+      "type": "Goal",
+      "title": "Sufficiency before student frontend",
+      "summary": "Prove Jeff Teaching Graph answers pass golden and adversarial bars before building student UI. Limited release still uses jeff-* only and the same steer rules.",
+      "status": "open",
+      "wiki_refs": [
+        "dev-wiki/goals.md",
+        "dev-wiki/architecture.md",
+        "eval/README.md"
+      ],
+      "tags": ["eval", "gate"],
+      "created": "2026-09-03"
+    },
+    {
+      "id": "CompileThenProbe",
+      "type": "Decision",
+      "title": "Karpathy compile-then-probe",
+      "summary": "Immutable raw sources compile into wiki plus schema-driven graph; agents run ingest, query, and lint — not ad-hoc chat over uncompiled PDFs.",
+      "status": "active",
+      "wiki_refs": [
+        "dev-wiki/decisions.md",
+        "schema/AGENTS.md"
+      ],
+      "tags": ["ingest", "karpathy"],
+      "created": "2026-09-03"
+    },
+    {
+      "id": "MethodOpenWebRag",
+      "type": "Method",
+      "title": "Open-web RAG for doctrine",
+      "summary": "Rejected: pulling third-party web pages to invent or complete Jeff teaching.",
+      "status": "rejected",
+      "wiki_refs": [
+        "dev-wiki/decisions.md"
+      ],
+      "tags": ["rejected"],
+      "created": "2026-09-03"
+    },
+    {
+      "id": "MethodMixedWiki",
+      "type": "Method",
+      "title": "Single mixed student+builder wiki",
+      "summary": "Rejected: one store for both audiences collapses the access wall and leaks builder memory.",
+      "status": "rejected",
+      "wiki_refs": [
+        "dev-wiki/decisions.md"
+      ],
+      "tags": ["rejected"],
+      "created": "2026-09-03"
+    },
+    {
+      "id": "MethodKbMetaRefuse",
+      "type": "Method",
+      "title": "KB-meta refuse to students",
+      "summary": "Rejected: telling students the knowledge base lacks Jeff teaching. Use Generally → Jeff → steer instead.",
+      "status": "rejected",
+      "wiki_refs": [
+        "dev-wiki/decisions.md",
+        "schema/voice/do-dont.md"
+      ],
+      "tags": ["rejected", "voice"],
+      "created": "2026-09-03"
+    },
+    {
+      "id": "MethodEducatorRelativizing",
+      "type": "Method",
+      "title": "Relativizing other educators",
+      "summary": "Rejected: framing rival methods as equally acceptable under Jeff’s approach.",
+      "status": "rejected",
+      "wiki_refs": [
+        "dev-wiki/decisions.md",
+        "eval/adversarial-other-schools.md"
+      ],
+      "tags": ["rejected"],
+      "created": "2026-09-03"
+    }
+  ]
+}

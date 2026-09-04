@@ -1,0 +1,82 @@
+{
+  "version": 1,
+  "edges": [
+    {
+      "id": "e-dualstore-implements-closed",
+      "type": "implements",
+      "from": "DualStore",
+      "to": "ClosedDoctrine",
+      "summary": "Access wall keeps student probes on the closed Jeff allowlist only."
+    },
+    {
+      "id": "e-repofirst-supports-compile",
+      "type": "supports",
+      "from": "RepoFirstStorage",
+      "to": "CompileThenProbe",
+      "summary": "Git markdown/JSON makes compile artifacts diffable during the proof of concept."
+    },
+    {
+      "id": "e-compile-depends-closed",
+      "type": "depends_on",
+      "from": "CompileThenProbe",
+      "to": "ClosedDoctrine",
+      "summary": "Ingest only allowlisted raw/jeff sources into the teaching graph."
+    },
+    {
+      "id": "e-steer-supports-gate",
+      "type": "supports",
+      "from": "SteerResponsePolicy",
+      "to": "SufficiencyGate",
+      "summary": "Out-of-coverage steer quality is part of the sufficiency bar."
+    },
+    {
+      "id": "e-closed-supports-gate",
+      "type": "supports",
+      "from": "ClosedDoctrine",
+      "to": "SufficiencyGate",
+      "summary": "Zero invented Jeff doctrine and bound citations are gate criteria."
+    },
+    {
+      "id": "e-dualstore-supports-gate",
+      "type": "supports",
+      "from": "DualStore",
+      "to": "SufficiencyGate",
+      "summary": "Zero Dev-wiki leakage into student answers is a gate criterion."
+    },
+    {
+      "id": "e-closed-rejects-web-rag",
+      "type": "rejects",
+      "from": "ClosedDoctrine",
+      "to": "MethodOpenWebRag",
+      "summary": "No open-web retrieval to complete Jeff doctrine."
+    },
+    {
+      "id": "e-dualstore-rejects-mixed",
+      "type": "rejects",
+      "from": "DualStore",
+      "to": "MethodMixedWiki",
+      "summary": "Student and builder memory stay in separate stores."
+    },
+    {
+      "id": "e-steer-rejects-kb-meta",
+      "type": "rejects",
+      "from": "SteerResponsePolicy",
+      "to": "MethodKbMetaRefuse",
+      "summary": "Replace KB-meta refuse with Generally → Jeff → steer."
+    },
+    {
+      "id": "e-steer-rejects-relativizing",
+      "type": "rejects",
+      "from": "SteerResponsePolicy",
+      "to": "MethodEducatorRelativizing",
+      "summary": "Keep Jeff authority; do not both-sides rival educators."
+    },
+    {
+      "id": "e-gate-tracks-repofirst",
+      "type": "tracks",
+      "from": "SufficiencyGate",
+      "to": "RepoFirstStorage",
+      "summary": "Validate sufficiency in-repo before any student serving stack."
+    }
+  ]
+}

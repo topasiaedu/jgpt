@@ -1,0 +1,66 @@
+# OS junk
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+Thumbs.db
+Desktop.ini
+
+# Editor / IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+
+# Env and secrets: never commit
+.env
+.env.*
+.env.local
+!.env.example
+*.pem
+*.key
+credentials.json
+secrets/
+
+# Node / Python local tooling
+node_modules/
+.next/
+out/
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+dist/
+build/
+.coverage
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# Logs and local caches
+*.log
+.cache/
+tmp/
+temp/
+
+# Cursor local (keep project rules; ignore personal state if present)
+.cursor/plans/
+
+# Heavy media under raw/ (keep tracking handoff, transcripts txt, slides, manifests)
+raw/**/*.mp4
+raw/**/*.m4a
+raw/**/*.mov
+raw/**/*.mkv
+raw/**/*.webm
+raw/**/*.wav
+raw/**/*.mp3
+raw/**/*.aac
+raw/**/*.flac
+raw/**/*.zip
+raw/jeff/_staging/
+raw/jeff/_turboscribe/
+
+# Generated Jeff teaching bundle for Vercel (copied at prebuild)
+apps/web/content/jeff/
