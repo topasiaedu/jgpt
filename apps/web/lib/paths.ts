@@ -5,13 +5,23 @@ import path from "path";
  * Resolves the teaching root that holds jeff-wiki / jeff-graph.
  * Prefer apps/web/content/jeff (copied at build for Vercel serverless).
  * Fall back to the monorepo root for local probe/dev before sync.
+ *
+ * On Vercel, process.cwd() may be the lambda root (/var/task) while NFT
+ * files live under apps/web/content/jeff when outputFileTracingRoot is the
+ * monorepo. Search both layouts plus several __dirname depths for bundled routes.
  */
 export function getTeachingRoot(): string {
   const cwd: string = process.cwd();
   const candidates: string[] = [
     path.join(cwd, "content", "jeff"),
     path.resolve(cwd, "content", "jeff"),
+    path.join(cwd, "apps", "web", "content", "jeff"),
     path.resolve(__dirname, "../content/jeff"),
+    path.resolve(__dirname, "../../content/jeff"),
+    path.resolve(__dirname, "../../../content/jeff"),
+    path.resolve(__dirname, "../../../../content/jeff"),
+    path.resolve(__dirname, "../../../../../content/jeff"),
+    path.resolve(__dirname, "../../../../../../content/jeff"),
     cwd,
     path.resolve(cwd, "../.."),
     path.resolve(cwd, ".."),
@@ -59,9 +69,15 @@ export function resolveVoiceFile(fileName: string): string | null {
   const cwd: string = process.cwd();
   const candidates: string[] = [
     path.join(cwd, "content", "jeff", "voice", safeName),
+    path.join(cwd, "apps", "web", "content", "jeff", "voice", safeName),
     path.resolve(__dirname, "../content/jeff/voice", safeName),
+    path.resolve(__dirname, "../../content/jeff/voice", safeName),
+    path.resolve(__dirname, "../../../content/jeff/voice", safeName),
+    path.resolve(__dirname, "../../../../content/jeff/voice", safeName),
+    path.resolve(__dirname, "../../../../../content/jeff/voice", safeName),
     path.resolve(cwd, "../../schema/voice", safeName),
     path.resolve(cwd, "../schema/voice", safeName),
+    path.resolve(cwd, "schema/voice", safeName),
     path.resolve(__dirname, "../../../schema/voice", safeName),
   ];
 

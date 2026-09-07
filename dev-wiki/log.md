@@ -108,3 +108,10 @@
 - Optional OpenAI tool loop: `probe_jeff({ query })` re-probes jeff-graph/wiki; max **2** tool calls/turn then force final answer. Response `sources` = union of auto probe + tool probes.
 - Prompt: this-turn-only evidence, call tool on topic shift, niche invention ban, language match, dash ban. `npm run test:long-chat` verifies cap + turn2 funnel query ≠ turn1 founder pack paste.
 - No turbopack. No commit.
+
+## 2026-09-07: Vercel chat API unreachable UX + harden deploy
+
+- Symptom on Vercel: client showed "Could not reach the chat API..." after sending a founder/IP question. That string is the ChatShell catch when `fetch` fails or the body is non-JSON (HTML timeout/gateway page), not a soft OpenAI JSON error.
+- Likely causes: platform timeout on large system prompt + `probe_jeff` tool loops (default ~10s/15s), and/or serverless path layout when tracing root was the monorepo. Missing `OPENAI_API_KEY` already returned JSON 503.
+- Fix: `runtime = "nodejs"`, `maxDuration = 60`, outer JSON catch-all on `POST /api/chat`; prefer tracing `content/jeff` under apps/web (`/api/chat` includes); broaden `getTeachingRoot` / voice candidates for Vercel cwd layouts; client distinguishes network vs HTTP vs non-JSON body snippet.
+- Docs: README Vercel env + include-files-outside-root note. Did not commit `.env.local`. Pushed to `main` for redeploy.

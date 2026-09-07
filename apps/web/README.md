@@ -29,6 +29,7 @@ npm run test:probe
 | --- | --- |
 | Framework | Next.js |
 | Root Directory | `apps/web` |
+| Include files outside Root Directory | On (needed so `prebuild` can copy `jeff-wiki` / `jeff-graph` from the monorepo) |
 | Build Command | `npm run build` (runs `prebuild` → sync teaching assets, then `next build`) |
 | Install Command | `npm install` (default) |
 | Output | Next.js default |
@@ -40,7 +41,9 @@ npm run test:probe
 | `OPENAI_API_KEY` | Yes | your server key |
 | `OPENAI_MODEL` | No | `gpt-4.1-mini` (default if unset) |
 
-Never expose `OPENAI_API_KEY` to the browser. It is server-only.
+Set these under Project → Settings → Environment Variables for **Production** (and Preview if you use preview URLs), then **Redeploy**. Never expose `OPENAI_API_KEY` to the browser.
+
+`POST /api/chat` runs on the Node.js runtime with `maxDuration = 60` so probe + OpenAI tool loops are less likely to hit the platform timeout (which returns a non-JSON error page to the client).
 
 ### Teaching assets on serverless
 

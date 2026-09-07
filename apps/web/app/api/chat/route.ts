@@ -12,11 +12,34 @@ import { probeTeaching } from "@/lib/probe";
 import { stripDashPunctuation } from "@/lib/stripDashPunctuation";
 import { buildSystemPrompt } from "@/lib/systemPrompt";
 
+/** fs-based probe + OpenAI tool loop; must not run on Edge. */
+export const runtime = "nodejs";
+/** Tool loops need headroom beyond the default 10s Hobby / 15s Pro limit. */
+export const maxDuration = 60;
+/** Always run on the server; never statically cache chat. */
+export const dynamic = "force-dynamic";
+
 /**
  * POST /api/chat: fresh probe this turn + dialogue-only history + optional probe_jeff tools.
  * Soft-fails with JSON error if OPENAI_API_KEY is missing.
+ * Always returns JSON so the client never has to parse an HTML error page for app errors.
  */
 export async function POST(request: Request): Promise<NextResponse<ChatResponseBody | ChatErrorBody>> {
+  try {
+    return await handleChatPost(request);
+  } catch (error) {
+    const message: string =
+      error instanceof Error ? error.message : "Unexpected chat API failure.";
+    return NextResponse.json({ error: message }, { status: 500 });
+  }
+}
+
+/**
+ * Core chat handler. Thrown errors are converted to JSON by POST.
+ */
+async function handleChatPost(
+  request: Request,
+): Promise<NextResponse<ChatResponseBody | ChatErrorBody>> {
   let body: unknown;
 
   try {
@@ -37,7 +60,7 @@ export async function POST(request: Request): Promise<NextResponse<ChatResponseB
     return NextResponse.json(
       {
         error:
-          "OPENAI_API_KEY is not set. Copy apps/web/.env.example to apps/web/.env.local and add your key.",
+          "OPENAI_API_KEY is not set on the server. Add it in the Vercel project Environment Variables (Production), then redeploy.",
       },
       { status: 503 },
     );

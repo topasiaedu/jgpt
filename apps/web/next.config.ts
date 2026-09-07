@@ -1,15 +1,12 @@
 import type { NextConfig } from "next";
-import path from "path";
 
 /**
- * Jeff IP test app under apps/web. Monorepo root is two levels up and holds
- * jeff-wiki / jeff-graph / schema. Never watch or trace raw/ (tens of GB).
+ * Jeff IP test app under apps/web. Teaching assets are copied into content/jeff
+ * at prebuild for Vercel serverless, so tracing stays inside this app directory.
+ * Never watch or trace raw/ (tens of GB under the monorepo).
  *
- * Teaching assets are copied into content/jeff at prebuild for Vercel serverless.
  * Prefer `npm run dev` (webpack). Never use Turbopack / `dev:turbo` as default.
  */
-const monorepoRoot: string = path.join(__dirname, "../..");
-
 const IGNORED_WATCH_GLOBS: string[] = [
   "**/node_modules/**",
   "**/.git/**",
@@ -30,21 +27,18 @@ const TRACING_EXCLUDES: string[] = [
   "**/dev-graph/**",
 ];
 
-const TEACHING_INCLUDES: string[] = [
-  "./content/jeff/**/*",
-  "content/jeff/**/*",
-];
+/** Globs relative to apps/web (this next.config). Route keys match App Router paths. */
+const TEACHING_INCLUDES: string[] = ["./content/jeff/**/*"];
 
 const nextConfig: NextConfig = {
-  // Keep tracing root at monorepo so parent assets remain reachable if needed,
-  // but runtime prefers content/jeff (copied at prebuild). Exclude raw/.
-  outputFileTracingRoot: monorepoRoot,
+  // Default tracing root = apps/web so serverless cwd + content/jeff line up on Vercel.
+  // prebuild sync makes monorepo parent paths unnecessary at runtime.
   outputFileTracingIncludes: {
-    "/api/**": TEACHING_INCLUDES,
-    "/*": TEACHING_INCLUDES,
+    "/api/chat": TEACHING_INCLUDES,
   },
   outputFileTracingExcludes: {
-    "*": TRACING_EXCLUDES,
+    "/api/chat": TRACING_EXCLUDES,
+    "/*": TRACING_EXCLUDES,
   },
   webpack: (config, { dev }) => {
     if (dev) {

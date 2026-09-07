@@ -44,8 +44,9 @@ export default function ChatShell() {
     setIsSending(true);
     setOpenChipIndex(null);
 
+    let response: Response;
     try {
-      const response = await fetch("/api/chat", {
+      response = await fetch("/api/chat", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
@@ -56,23 +57,28 @@ export default function ChatShell() {
           })),
         }),
       });
+    } catch {
+      setError("Could not reach the chat API (network error). Check the deployment and try again.");
+      setIsSending(false);
+      return;
+    }
 
-      const data: unknown = await response.json();
+    try {
+      const rawBody: string = await response.text();
+      const data: unknown = parseJsonBody(rawBody);
+
+      if (data === null) {
+        setError(formatNonJsonApiError(response.status, rawBody));
+        return;
+      }
 
       if (!response.ok) {
-        const message =
-          typeof data === "object" &&
-          data !== null &&
-          "error" in data &&
-          typeof (data as { error: unknown }).error === "string"
-            ? (data as { error: string }).error
-            : "Chat request failed.";
-        setError(message);
+        setError(extractApiErrorMessage(data, response.status));
         return;
       }
 
       if (!isChatResponseBody(data)) {
-        setError("Unexpected response from chat API.");
+        setError(`Unexpected response from chat API (HTTP ${String(response.status)}).`);
         return;
       }
 
@@ -85,8 +91,9 @@ export default function ChatShell() {
       setPanelSources(data.sources);
       setPanelHasReply(true);
       setOpenChipIndex(null);
-    } catch {
-      setError("Could not reach the chat API. Check that the server is running.");
+    } catch (error) {
+      const detail: string = error instanceof Error ? error.message : "unknown error";
+      setError(`Chat request failed while reading the response: ${detail}`);
     } finally {
       setIsSending(false);
     }
@@ -243,6 +250,61 @@ export default function ChatShell() {
       </div>
     </div>
   );
+}
+
+/**
+ * Parses a response body as JSON. Returns null when empty or not JSON
+ * (HTML error pages, gateway timeouts, deployment-protection pages).
+ */
+function parseJsonBody(rawBody: string): unknown | null {
+  const trimmed: string = rawBody.trim();
+  if (trimmed.length === 0) {
+    return null;
+  }
+
+  try {
+    return JSON.parse(trimmed) as unknown;
+  } catch {
+    return null;
+  }
+}
+
+/**
+ * Builds a readable error when the API returns HTML or other non-JSON.
+ */
+function formatNonJsonApiError(status: number, rawBody: string): string {
+  const snippet: string = rawBody.replace(/\s+/g, " ").trim().slice(0, 180);
+  if (snippet.length === 0) {
+    return `Chat API HTTP ${String(status)}: empty non-JSON body (often a timeout or platform error page).`;
+  }
+  return `Chat API HTTP ${String(status)}: ${snippet}`;
+}
+
+/**
+ * Pulls a string error from a JSON error body, including nested Vercel shapes.
+ */
+function extractApiErrorMessage(data: unknown, status: number): string {
+  if (typeof data === "object" && data !== null) {
+    if ("error" in data) {
+      const errorField: unknown = (data as { error: unknown }).error;
+      if (typeof errorField === "string" && errorField.trim().length > 0) {
+        return errorField;
+      }
+      if (
+        typeof errorField === "object" &&
+        errorField !== null &&
+        "message" in errorField &&
+        typeof (errorField as { message: unknown }).message === "string"
+      ) {
+        return (errorField as { message: string }).message;
+      }
+    }
+    if ("message" in data && typeof (data as { message: unknown }).message === "string") {
+      return (data as { message: string }).message;
+    }
+  }
+
+  return `Chat request failed (HTTP ${String(status)}).`;
 }
 
 /**
