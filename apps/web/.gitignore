@@ -35,5 +35,5 @@ yarn-error.log*
 *.tsbuildinfo
 next-env.d.ts
 
-# generated teaching bundle (prebuild)
-/content/jeff/
+# content/jeff is committed so Vercel is self-contained even when
+# "Include files outside Root Directory" is off. Re-sync with npm run sync:jeff.

@@ -62,5 +62,4 @@ raw/**/*.zip
 raw/jeff/_staging/
 raw/jeff/_turboscribe/
 
-# Generated Jeff teaching bundle for Vercel (copied at prebuild)
-apps/web/content/jeff/
+# apps/web/content/jeff is committed (self-contained Vercel deploy).

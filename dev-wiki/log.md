@@ -115,3 +115,10 @@
 - Likely causes: platform timeout on large system prompt + `probe_jeff` tool loops (default ~10s/15s), and/or serverless path layout when tracing root was the monorepo. Missing `OPENAI_API_KEY` already returned JSON 503.
 - Fix: `runtime = "nodejs"`, `maxDuration = 60`, outer JSON catch-all on `POST /api/chat`; prefer tracing `content/jeff` under apps/web (`/api/chat` includes); broaden `getTeachingRoot` / voice candidates for Vercel cwd layouts; client distinguishes network vs HTTP vs non-JSON body snippet.
 - Docs: README Vercel env + include-files-outside-root note. Did not commit `.env.local`. Pushed to `main` for redeploy.
+
+## 2026-09-07: Vercel /api/chat HTML 500 MODULE_NOT_FOUND
+
+- Live `POST/HEAD /api/chat` returned Next HTML 500 (`x-matched-path: /500`) in ~500ms, not a timeout.
+- Vercel logs: `Cannot find module 'next/dist/compiled/next-server/app-route.runtime.prod.js'` and missing `react/jsx-runtime.js` under `/var/task/apps/web/node_modules`.
+- Root cause: `outputFileTracingExcludes` listed `node_modules/**`, which stripped Next/React from the serverless NFT bundle.
+- Fix: remove `node_modules` from tracing excludes; pin `outputFileTracingRoot` to `apps/web`; commit `apps/web/content/jeff/**` (stop gitignoring); sync script keeps committed bundle if monorepo parents are absent; shrink sound-profile prompt budget to 6k chars.

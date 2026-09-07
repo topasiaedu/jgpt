@@ -1,0 +1,533 @@
+{
+  "version": 1,
+  "nodes": [
+    {
+      "id": "src.webinar.20260312.day2",
+      "type": "Source",
+      "title": "Webinar 2026-03-12 Day 2 IP monetization",
+      "summary": "TurboScribe transcript of Jeff Day 2 webinar: founder face as growth lever, lean IP SOP, trust/content-vs-ads, not overnight fame.",
+      "status": "draft",
+      "confidence": 0.8,
+      "doctrine": "endorse",
+      "citations": [
+        {
+          "wiki_path": "jeff-wiki/sources/webinar-20260312-day2-ip-monetization.md",
+          "raw_path": "raw/jeff/transcripts/turboscribe-batch-1/webinar GMT20260312-120901 Recording.txt",
+          "span_note": "full Day 2 recording transcript"
+        }
+      ],
+      "wiki_page": "jeff-wiki/sources/webinar-20260312-day2-ip-monetization.md",
+      "tags": ["webinar", "batch1"],
+      "created": "2026-09-04",
+      "updated": "2026-09-04"
+    },
+    {
+      "id": "src.workshop.ws-clips.batch1",
+      "type": "Source",
+      "title": "Workshop WS teaching clips batch-1",
+      "summary": "17 short WS clips on ego vs advice, short/long video, standpoint, criticism, value-then-convert.",
+      "status": "draft",
+      "confidence": 0.75,
+      "doctrine": "endorse",
+      "citations": [
+        {
+          "wiki_path": "jeff-wiki/sources/workshop-ws-clips-batch1.md",
+          "raw_path": "raw/jeff/transcripts/turboscribe-batch-1/",
+          "span_note": "workshop 001/002 WS*.txt"
+        }
+      ],
+      "wiki_page": "jeff-wiki/sources/workshop-ws-clips-batch1.md",
+      "tags": ["workshop", "batch1"],
+      "created": "2026-09-04",
+      "updated": "2026-09-04"
+    },
+    {
+      "id": "src.slides.ip-monetization.v2",
+      "type": "Source",
+      "title": "Jeff Leong Slides Latest v2 — IP变现",
+      "summary": "Slide deck: buy people not best product; exposure→trust→deal; boss-as-brand pattern.",
+      "status": "draft",
+      "confidence": 0.85,
+      "doctrine": "endorse",
+      "citations": [
+        {
+          "wiki_path": "jeff-wiki/sources/slides-ip-monetization-latest-v2.md",
+          "raw_path": "raw/jeff/slides/Jeff Leong_Slides_Latest v2.txt",
+          "span_note": "opening market-truth and boss-brand sections"
+        }
+      ],
+      "wiki_page": "jeff-wiki/sources/slides-ip-monetization-latest-v2.md",
+      "tags": ["slides", "batch1"],
+      "created": "2026-09-04",
+      "updated": "2026-09-04"
+    },
+    {
+      "id": "src.testimonials.batch1",
+      "type": "Source",
+      "title": "Testimonials TurboScribe batch-1",
+      "summary": "64 testimonial transcripts; light story filing only.",
+      "status": "draft",
+      "confidence": 0.5,
+      "doctrine": "unknown",
+      "citations": [
+        {
+          "wiki_path": "jeff-wiki/sources/testimonials-turboscribe-batch1.md",
+          "raw_path": "raw/jeff/transcripts/turboscribe-batch-1/",
+          "span_note": "testi-*.txt"
+        }
+      ],
+      "wiki_page": "jeff-wiki/sources/testimonials-turboscribe-batch1.md",
+      "tags": ["testimonial", "batch1"],
+      "created": "2026-09-04",
+      "updated": "2026-09-04"
+    },
+    {
+      "id": "fw.exposure-trust-deal",
+      "type": "Framework",
+      "title": "Exposure → Trust → Deal (Suggested name)",
+      "summary": "Suggested label for slide chain 曝光→信任→成交. Mechanism endorsed via principle/claim nodes; framework title remains Suggested.",
+      "status": "suggested",
+      "confidence": 0.6,
+      "doctrine": "unknown",
+      "citations": [
+        {
+          "wiki_path": "jeff-wiki/frameworks/exposure-trust-deal.md",
+          "raw_path": "raw/jeff/slides/Jeff Leong_Slides_Latest v2.txt",
+          "span_note": "曝光度=信任; 信任=成交 bullets"
+        }
+      ],
+      "wiki_page": "jeff-wiki/frameworks/exposure-trust-deal.md",
+      "tags": ["suggested"],
+      "created": "2026-09-04",
+      "updated": "2026-09-04"
+    },
+    {
+      "id": "fw.webinar-day1-day2",
+      "type": "Framework",
+      "title": "Day1 strategy / Day2 practice (Suggested)",
+      "summary": "Observed webinar arc: Day1战略深度/roadmap; Day2实战速度与系统.",
+      "status": "suggested",
+      "confidence": 0.55,
+      "doctrine": "unknown",
+      "citations": [
+        {
+          "wiki_path": "jeff-wiki/frameworks/webinar-day1-strategy-day2-practice.md",
+          "raw_path": "raw/jeff/transcripts/turboscribe-batch-1/webinar GMT20260312-120901 Recording.txt",
+          "span_note": "Day2 opening recap"
+        }
+      ],
+      "wiki_page": "jeff-wiki/frameworks/webinar-day1-strategy-day2-practice.md",
+      "tags": ["suggested", "webinar"],
+      "created": "2026-09-04",
+      "updated": "2026-09-04"
+    },
+    {
+      "id": "pr.founder-face-printshop",
+      "type": "Principle",
+      "title": "Founder face is the company growth lever",
+      "summary": "SME老板的脸/个人IP functions as 印钞机 and 招牌; boss is the brand.",
+      "status": "draft",
+      "confidence": 0.75,
+      "doctrine": "endorse",
+      "citations": [
+        {
+          "wiki_path": "jeff-wiki/principles/founder-face-is-the-printshop.md",
+          "raw_path": "raw/jeff/transcripts/turboscribe-batch-1/webinar GMT20260312-120901 Recording.txt",
+          "span_note": "老板的脸就是公司的印钞机"
+        }
+      ],
+      "wiki_page": "jeff-wiki/principles/founder-face-is-the-printshop.md",
+      "tags": ["ip", "brand"],
+      "created": "2026-09-04",
+      "updated": "2026-09-04"
+    },
+    {
+      "id": "pr.exposure-trust-conversion",
+      "type": "Principle",
+      "title": "Exposure → trust → conversion",
+      "summary": "Being seen enables trust; trust enables deals. Invisible founders lose.",
+      "status": "draft",
+      "confidence": 0.8,
+      "doctrine": "endorse",
+      "citations": [
+        {
+          "wiki_path": "jeff-wiki/principles/exposure-trust-conversion.md",
+          "raw_path": "raw/jeff/slides/Jeff Leong_Slides_Latest v2.txt",
+          "span_note": "曝光度=信任; 信任=成交"
+        }
+      ],
+      "wiki_page": "jeff-wiki/principles/exposure-trust-conversion.md",
+      "tags": ["trust"],
+      "created": "2026-09-04",
+      "updated": "2026-09-04"
+    },
+    {
+      "id": "pr.direction-beats-volume",
+      "type": "Principle",
+      "title": "Direction beats posting volume",
+      "summary": "Wrong direction wastes posts; monetization is not posting more.",
+      "status": "draft",
+      "confidence": 0.7,
+      "doctrine": "endorse",
+      "citations": [
+        {
+          "wiki_path": "jeff-wiki/principles/direction-beats-volume.md",
+          "raw_path": "raw/jeff/transcripts/turboscribe-batch-1/workshop 002 WS01.变现不是多发.txt",
+          "span_note": "人生永远不是多发"
+        }
+      ],
+      "wiki_page": "jeff-wiki/principles/direction-beats-volume.md",
+      "tags": ["content"],
+      "created": "2026-09-04",
+      "updated": "2026-09-04"
+    },
+    {
+      "id": "pr.advice-vs-ego",
+      "type": "Principle",
+      "title": "Separate advice from ego when filming",
+      "summary": "On camera be an actor for the IP; failures/corrections are content.",
+      "status": "draft",
+      "confidence": 0.75,
+      "doctrine": "endorse",
+      "citations": [
+        {
+          "wiki_path": "jeff-wiki/principles/advice-vs-ego-on-camera.md",
+          "raw_path": "raw/jeff/transcripts/turboscribe-batch-1/workshop 001 WS07.建议vsEGO.txt",
+          "span_note": "建议 vs Ego"
+        }
+      ],
+      "wiki_page": "jeff-wiki/principles/advice-vs-ego-on-camera.md",
+      "tags": ["ego", "filming"],
+      "created": "2026-09-04",
+      "updated": "2026-09-04"
+    },
+    {
+      "id": "pr.standpoint-or-invisible",
+      "type": "Principle",
+      "title": "Take a sharp standpoint or stay invisible",
+      "summary": "无立场 content is ignored; criticism can signal people care.",
+      "status": "draft",
+      "confidence": 0.7,
+      "doctrine": "endorse",
+      "citations": [
+        {
+          "wiki_path": "jeff-wiki/principles/standpoint-or-invisible.md",
+          "raw_path": "raw/jeff/transcripts/turboscribe-batch-1/workshop 001 WS14.立场.txt",
+          "span_note": "要搞清楚立场"
+        }
+      ],
+      "wiki_page": "jeff-wiki/principles/standpoint-or-invisible.md",
+      "tags": ["lichang"],
+      "created": "2026-09-04",
+      "updated": "2026-09-04"
+    },
+    {
+      "id": "cl.buy-people-not-product",
+      "type": "Claim",
+      "title": "Customers buy people they trust, not best product",
+      "summary": "Market chooses recognized/trusted people over objectively best product.",
+      "status": "draft",
+      "confidence": 0.85,
+      "doctrine": "endorse",
+      "citations": [
+        {
+          "wiki_path": "jeff-wiki/claims/buy-people-not-best-product.md",
+          "raw_path": "raw/jeff/slides/Jeff Leong_Slides_Latest v2.txt",
+          "span_note": "客户不买最好的产品"
+        }
+      ],
+      "wiki_page": "jeff-wiki/claims/buy-people-not-best-product.md",
+      "tags": ["trust", "market"],
+      "created": "2026-09-04",
+      "updated": "2026-09-04"
+    },
+    {
+      "id": "cl.ip-without-pro-team",
+      "type": "Claim",
+      "title": "IP without a full professional team",
+      "summary": "Owners can build IP with a lean personal system/SOP; team optional.",
+      "status": "draft",
+      "confidence": 0.7,
+      "doctrine": "endorse",
+      "citations": [
+        {
+          "wiki_path": "jeff-wiki/claims/ip-without-pro-team.md",
+          "raw_path": "raw/jeff/transcripts/turboscribe-batch-1/webinar GMT20260312-120901 Recording.txt",
+          "span_note": "建立IP不需要专业团队"
+        }
+      ],
+      "wiki_page": "jeff-wiki/claims/ip-without-pro-team.md",
+      "tags": ["sop"],
+      "created": "2026-09-04",
+      "updated": "2026-09-04"
+    },
+    {
+      "id": "cl.short-vs-long-video",
+      "type": "Claim",
+      "title": "Short video volume; long video trust",
+      "summary": "Short for补量/payback; long-form for trust; short as entry ramp.",
+      "status": "draft",
+      "confidence": 0.7,
+      "doctrine": "endorse",
+      "citations": [
+        {
+          "wiki_path": "jeff-wiki/claims/short-vs-long-video-roles.md",
+          "raw_path": "raw/jeff/transcripts/turboscribe-batch-1/workshop 001 WS04.短视频优势.txt",
+          "span_note": "短影片负责做补量…长影片负责建立信任"
+        }
+      ],
+      "wiki_page": "jeff-wiki/claims/short-vs-long-video-roles.md",
+      "tags": ["video"],
+      "created": "2026-09-04",
+      "updated": "2026-09-04"
+    },
+    {
+      "id": "cl.content-not-ads",
+      "type": "Claim",
+      "title": "Content assets are not ads",
+      "summary": "Do not mistake advertising for content assets; learn to judge and amplify content.",
+      "status": "draft",
+      "confidence": 0.7,
+      "doctrine": "endorse",
+      "citations": [
+        {
+          "wiki_path": "jeff-wiki/claims/content-assets-not-ads.md",
+          "raw_path": "raw/jeff/transcripts/turboscribe-batch-1/webinar GMT20260312-120901 Recording.txt",
+          "span_note": "广告 vs 内容资产"
+        }
+      ],
+      "wiki_page": "jeff-wiki/claims/content-assets-not-ads.md",
+      "tags": ["content-asset"],
+      "created": "2026-09-04",
+      "updated": "2026-09-04"
+    },
+    {
+      "id": "cl.criticism-not-failure",
+      "type": "Claim",
+      "title": "Criticism is not failure — stopping is",
+      "summary": "Visibility brings criticism; quitting is the failure mode.",
+      "status": "draft",
+      "confidence": 0.7,
+      "doctrine": "endorse",
+      "citations": [
+        {
+          "wiki_path": "jeff-wiki/claims/criticism-is-not-failure.md",
+          "raw_path": "raw/jeff/transcripts/turboscribe-batch-1/workshop 002 WS10.被批评不是失败.txt",
+          "span_note": "停下来的人才算失败"
+        }
+      ],
+      "wiki_page": "jeff-wiki/claims/criticism-is-not-failure.md",
+      "tags": ["mindset"],
+      "created": "2026-09-04",
+      "updated": "2026-09-04"
+    },
+    {
+      "id": "cl.value-then-convert",
+      "type": "Claim",
+      "title": "Value content then convert",
+      "summary": "Lead with open valuable content; convert after trust/value, don’t hoard expertise.",
+      "status": "draft",
+      "confidence": 0.65,
+      "doctrine": "endorse",
+      "citations": [
+        {
+          "wiki_path": "jeff-wiki/claims/value-content-then-convert.md",
+          "raw_path": "raw/jeff/transcripts/turboscribe-batch-1/workshop 002 WS17.提供价值内容再转化.txt",
+          "span_note": "提供什么价值给人家"
+        }
+      ],
+      "wiki_page": "jeff-wiki/claims/value-content-then-convert.md",
+      "tags": ["conversion"],
+      "created": "2026-09-04",
+      "updated": "2026-09-04"
+    },
+    {
+      "id": "tm.content-asset",
+      "type": "Term",
+      "title": "内容资产 (content asset)",
+      "summary": "Durable content distinct from paid ads.",
+      "status": "draft",
+      "confidence": 0.7,
+      "doctrine": "endorse",
+      "citations": [
+        {
+          "wiki_path": "jeff-wiki/terms/content-asset.md",
+          "raw_path": "raw/jeff/transcripts/turboscribe-batch-1/webinar GMT20260312-120901 Recording.txt"
+        }
+      ],
+      "wiki_page": "jeff-wiki/terms/content-asset.md",
+      "tags": ["term"],
+      "created": "2026-09-04",
+      "updated": "2026-09-04"
+    },
+    {
+      "id": "tm.lichang",
+      "type": "Term",
+      "title": "立场 (standpoint)",
+      "summary": "Sharp viewpoint required for visible content.",
+      "status": "draft",
+      "confidence": 0.7,
+      "doctrine": "endorse",
+      "citations": [
+        {
+          "wiki_path": "jeff-wiki/terms/standpoint-lichang.md",
+          "raw_path": "raw/jeff/transcripts/turboscribe-batch-1/workshop 001 WS14.立场.txt"
+        }
+      ],
+      "wiki_page": "jeff-wiki/terms/standpoint-lichang.md",
+      "tags": ["term"],
+      "created": "2026-09-04",
+      "updated": "2026-09-04"
+    },
+    {
+      "id": "tm.bianhao-xiuchizheng",
+      "type": "Term",
+      "title": "变好羞耻症",
+      "summary": "Shame/crab-effect pressure while improving publicly.",
+      "status": "draft",
+      "confidence": 0.6,
+      "doctrine": "endorse",
+      "citations": [
+        {
+          "wiki_path": "jeff-wiki/terms/bianhao-xiuchizheng.md",
+          "raw_path": "raw/jeff/transcripts/turboscribe-batch-1/workshop 002 WS16.变好羞耻症.txt"
+        }
+      ],
+      "wiki_page": "jeff-wiki/terms/bianhao-xiuchizheng.md",
+      "tags": ["term"],
+      "created": "2026-09-04",
+      "updated": "2026-09-04"
+    },
+    {
+      "id": "rj.overnight-fame",
+      "type": "Reject",
+      "title": "Reject overnight fame / viral-as-promise",
+      "summary": "Jeff explicitly not selling 一夜成名 or 爆红 as the offer.",
+      "status": "draft",
+      "confidence": 0.8,
+      "doctrine": "reject",
+      "citations": [
+        {
+          "wiki_path": "jeff-wiki/sources/webinar-20260312-day2-ip-monetization.md",
+          "raw_path": "raw/jeff/transcripts/turboscribe-batch-1/webinar GMT20260312-120901 Recording.txt",
+          "span_note": "不是叫你一夜成名 不是爆红"
+        }
+      ],
+      "tags": ["reject"],
+      "created": "2026-09-04",
+      "updated": "2026-09-04"
+    },
+    {
+      "id": "rj.volume-equals-money",
+      "type": "Reject",
+      "title": "Reject posting-more as monetization",
+      "summary": "多发 is not the path; continuous directed improvement is.",
+      "status": "draft",
+      "confidence": 0.75,
+      "doctrine": "reject",
+      "citations": [
+        {
+          "wiki_path": "jeff-wiki/sources/workshop-ws-clips-batch1.md",
+          "raw_path": "raw/jeff/transcripts/turboscribe-batch-1/workshop 002 WS01.变现不是多发.txt"
+        }
+      ],
+      "tags": ["reject"],
+      "created": "2026-09-04",
+      "updated": "2026-09-04"
+    },
+    {
+      "id": "rj.ads-as-content-assets",
+      "type": "Reject",
+      "title": "Reject treating ads as content assets",
+      "summary": "Don’t confuse advertising with content assets.",
+      "status": "draft",
+      "confidence": 0.7,
+      "doctrine": "reject",
+      "citations": [
+        {
+          "wiki_path": "jeff-wiki/claims/content-assets-not-ads.md",
+          "raw_path": "raw/jeff/transcripts/turboscribe-batch-1/webinar GMT20260312-120901 Recording.txt"
+        }
+      ],
+      "tags": ["reject"],
+      "created": "2026-09-04",
+      "updated": "2026-09-04"
+    },
+    {
+      "id": "rj.outsource-judgment-to-gpt",
+      "type": "Reject",
+      "title": "Warns against outsourcing judgment to GPT",
+      "summary": "Fundamentals and personal judgment matter; don’t let GPT replace judgment.",
+      "status": "draft",
+      "confidence": 0.6,
+      "doctrine": "reject",
+      "citations": [
+        {
+          "wiki_path": "jeff-wiki/sources/workshop-ws-clips-batch1.md",
+          "raw_path": "raw/jeff/transcripts/turboscribe-batch-1/workshop 002 WS06.变现路径.txt",
+          "span_note": "为什么我不要你们用GBT"
+        }
+      ],
+      "tags": ["warns_against"],
+      "created": "2026-09-04",
+      "updated": "2026-09-04"
+    },
+    {
+      "id": "st.abang-jeff",
+      "type": "Story",
+      "title": "Abang Jeff定位 story",
+      "summary": "Penang car seller found sharper定位 and valued timed script+shoot drill.",
+      "status": "draft",
+      "confidence": 0.55,
+      "doctrine": "unknown",
+      "citations": [
+        {
+          "wiki_path": "jeff-wiki/stories/abang-jeff-positioning.md",
+          "raw_path": "raw/jeff/transcripts/turboscribe-batch-1/testi-from-zips Abang Jeff.txt"
+        }
+      ],
+      "wiki_page": "jeff-wiki/stories/abang-jeff-positioning.md",
+      "tags": ["testimonial"],
+      "created": "2026-09-04",
+      "updated": "2026-09-04"
+    },
+    {
+      "id": "st.kk-toh",
+      "type": "Story",
+      "title": "KK Toh story→trust",
+      "summary": "Learned IP is story for trust/follow, not mere posting; self-produce.",
+      "status": "draft",
+      "confidence": 0.55,
+      "doctrine": "unknown",
+      "citations": [
+        {
+          "wiki_path": "jeff-wiki/stories/kk-toh-story-trust.md",
+          "raw_path": "raw/jeff/transcripts/turboscribe-batch-1/testi-from-zips KK Toh.txt"
+        }
+      ],
+      "wiki_page": "jeff-wiki/stories/kk-toh-story-trust.md",
+      "tags": ["testimonial"],
+      "created": "2026-09-04",
+      "updated": "2026-09-04"
+    },
+    {
+      "id": "st.rolex-testi",
+      "type": "Story",
+      "title": "Webinar guest trust-system story",
+      "summary": "Had scattered theory; valued systematic trust path to conversion.",
+      "status": "draft",
+      "confidence": 0.5,
+      "doctrine": "unknown",
+      "citations": [
+        {
+          "wiki_path": "jeff-wiki/stories/rolex-testi-trust-system.md",
+          "raw_path": "raw/jeff/transcripts/turboscribe-batch-1/testi-webinar #1 Rolex Testi.txt"
+        }
+      ],
+      "wiki_page": "jeff-wiki/stories/rolex-testi-trust-system.md",
+      "tags": ["testimonial"],
+      "created": "2026-09-04",
+      "updated": "2026-09-04"
+    }
+  ]
+}

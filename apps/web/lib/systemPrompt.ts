@@ -14,7 +14,8 @@ export type SystemPromptInput = {
   coverage: "in" | "out";
 };
 
-const SOUND_PROFILE_BUDGET_CHARS: number = 14000;
+/** Keep the system message lean so Vercel hobby/pro duration stays safe. */
+const SOUND_PROFILE_BUDGET_CHARS: number = 6000;
 
 /**
  * Loads a voice markdown file from content/jeff/voice or monorepo schema/voice.

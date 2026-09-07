@@ -29,8 +29,8 @@ npm run test:probe
 | --- | --- |
 | Framework | Next.js |
 | Root Directory | `apps/web` |
-| Include files outside Root Directory | On (needed so `prebuild` can copy `jeff-wiki` / `jeff-graph` from the monorepo) |
-| Build Command | `npm run build` (runs `prebuild` → sync teaching assets, then `next build`) |
+| Include files outside Root Directory | Optional (teaching bundle is committed under `apps/web/content/jeff`) |
+| Build Command | `npm run build` (runs `prebuild` → sync when monorepo parents exist, then `next build`) |
 | Install Command | `npm install` (default) |
 | Output | Next.js default |
 
@@ -47,7 +47,7 @@ Set these under Project → Settings → Environment Variables for **Production*
 
 ### Teaching assets on serverless
 
-`prebuild` copies monorepo `jeff-wiki/` and `jeff-graph/` into `apps/web/content/jeff/`. Runtime reads that bundle first so Vercel serverless file tracing does not depend on fragile parent paths. `raw/` is excluded from tracing and watches.
+`apps/web/content/jeff/` is committed so deploys are self-contained. `prebuild` refreshes it from monorepo `jeff-wiki/` / `jeff-graph/` / `schema/voice/` when those parents are visible. Runtime reads `content/jeff` first. Never exclude `node_modules` from `outputFileTracingExcludes` (that breaks `/api/chat` with MODULE_NOT_FOUND). `raw/` is excluded from tracing and watches.
 
 ## Safety
 
