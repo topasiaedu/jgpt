@@ -1,0 +1,97 @@
+import type { ModulePack } from "@/lib/modules/types";
+
+/**
+ * Long Video Trust Script: YouTube-style deeper teach.
+ */
+export const LONG_VIDEO_TRUST_SCRIPT_PACK: ModulePack = {
+  moduleId: "long-video-trust-script",
+  intakeFields: [
+    {
+      id: "topic",
+      label: "Topic you can teach 5 to 15 minutes",
+      placeholder: "One topic with real depth",
+      required: true,
+    },
+    {
+      id: "audience",
+      label: "Who it helps",
+      placeholder: "Audience for this teach",
+      required: true,
+    },
+    {
+      id: "example",
+      label: "Story or example from your practice",
+      placeholder: "Yours or a permitted paraphrase; not Jeff patient scripts",
+      required: true,
+      multiline: true,
+    },
+    {
+      id: "trustOutcome",
+      label: "Trust outcome you want",
+      placeholder: "What belief or confidence should they leave with?",
+      required: true,
+    },
+    {
+      id: "language",
+      label: "Language preference",
+      placeholder: "English, Chinese, or mixed",
+      required: false,
+    },
+  ],
+  probeHints: [
+    "long video",
+    "short vs long",
+    "trust",
+    "exposure trust",
+    "content asset",
+    "teach",
+    "长视频",
+    "信任",
+    "先给价值",
+    "内容资产",
+    "probe_jeff",
+  ],
+  boundNodeIds: [
+    "cl.short-vs-long-video",
+    "pr.exposure-trust-conversion",
+    "cl.value-then-convert",
+    "cl.content-not-ads",
+    "pr.advice-vs-ego",
+  ],
+  starterPrompt:
+    "Using my intake, outline a YouTube-style long video: open, teaching sections, close with a soft next step. Structure for MY craft.",
+  chatOpener:
+    "I will outline a longer trust-building teaching video. What topic can you teach for 5 to 15 minutes without fluff?",
+  systemOverlay: [
+    "## Module mode: Long Video Trust Script",
+    "You are running the Long Video Trust Script tool for this user.",
+    "Job: deeper teach outline so viewers stay long enough to trust judgment.",
+    "",
+    "### Conversational collect (chat-first; no form)",
+    "Slots live in conversation history. Ask at most 1 to 2 questions per turn.",
+    "Prefer Jeff-shaped asks over a generic business questionnaire.",
+    "When enough is known, or the user says just write it, deliver the full output and name assumptions.",
+    "",
+    "### Output format (when ready to generate)",
+    "1. Open: why this matters.",
+    "2. Teaching sections (3 to 5): speakable beats.",
+    "3. Example placement from the conversation (label as THEIR practice).",
+    "4. Close: soft next step; value then light convert.",
+    "Never invent Jeff patient stories as doctrine.",
+    "",
+    "### Jeff distinctiveness (hard)",
+    "Use Jeff mechanisms in the user's language: get seen before trust before deal; standpoint; content assets not ads; advice vs ego; direction beats volume; value then convert where relevant.",
+    "ANTI-GENERIC: If this reply could have come from a generic LinkedIn coach with no Jeff graph, rewrite before sending.",
+    "",
+    "### Doctrine rules (hard)",
+    "Long video role is trust depth; short is exposure. Content asset, not ad.",
+    "No overnight-fame.",
+    "",
+    "### Evidence binding",
+    "Prefer: cl.short-vs-long-video, pr.exposure-trust-conversion, cl.value-then-convert, cl.content-not-ads, pr.advice-vs-ego when in the pack.",
+    "Sources still come only from probe / probe_jeff.",
+    "",
+    "### After the outline",
+    "End with one direct question about which section they will film first.",
+  ].join("\n"),
+};

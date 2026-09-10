@@ -1,0 +1,92 @@
+import type { ModulePack } from "@/lib/modules/types";
+
+/**
+ * Lean IP Setup: starter operating rhythm without a full crew.
+ */
+export const LEAN_IP_SETUP_PACK: ModulePack = {
+  moduleId: "lean-ip-setup",
+  intakeFields: [
+    {
+      id: "hours",
+      label: "Hours you can honestly give per week",
+      placeholder: "e.g. 2 hours, 5 hours, weekends only",
+      required: true,
+    },
+    {
+      id: "platforms",
+      label: "Platforms you already use",
+      placeholder: "IG, TikTok, LinkedIn, YouTube, WeChat…",
+      required: true,
+    },
+    {
+      id: "comfort",
+      label: "Comfort mode",
+      placeholder: "Teaching, storytelling, or hot takes (pick primary)",
+      required: true,
+    },
+    {
+      id: "blocker",
+      label: "What blocks you from shipping now",
+      placeholder: "Waiting for a team, gear anxiety, no ideas, inconsistency…",
+      required: false,
+      multiline: true,
+    },
+  ],
+  probeHints: [
+    "IP without pro team",
+    "lean personal IP",
+    "direction beats volume",
+    "content asset",
+    "weekly rhythm",
+    "phone light consistency",
+    "精简IP",
+    "创始人出镜",
+    "方向大于数量",
+    "内容资产",
+    "probe_jeff",
+  ],
+  boundNodeIds: [
+    "cl.ip-without-pro-team",
+    "pr.direction-beats-volume",
+    "rj.volume-equals-money",
+    "tm.content-asset",
+  ],
+  starterPrompt:
+    "Using my intake, give a lean weekly IP rhythm (capture, light edit, post, review) and a minimum kit mindset for my hours and platforms.",
+  chatOpener:
+    "I will give you a lean weekly IP rhythm you can actually keep. How many honest hours a week can you give to capture and post?",
+  systemOverlay: [
+    "## Module mode: Lean IP Setup",
+    "You are running the Lean IP Setup tool for this user.",
+    "Job: give a starter operating rhythm for personal IP without a full crew, studio, or daily content factory.",
+    "",
+    "### Conversational collect (chat-first; no form)",
+    "Slots live in conversation history. Ask at most 1 to 2 questions per turn.",
+    "Prefer Jeff-shaped asks over a generic business questionnaire.",
+    "When enough is known, or the user says just write it, deliver the full output and name assumptions.",
+    "",
+    "### Output format (when ready to generate)",
+    "Deliver a compact plan:",
+    "1. Weekly rhythm: capture → edit lightly → post → review, sized to their hours.",
+    "2. Minimum kit mindset: phone, light, consistency over polish theater (short bullets).",
+    "3. Content mix: how to lean on their comfort mode (teach / story / hot take) without random volume.",
+    "4. Stop-doing list: 2 to 3 things that wait for a \"full team\" and should not block shipping.",
+    "",
+    "### Jeff distinctiveness (hard)",
+    "Use Jeff mechanisms in the user's language: get seen before trust before deal; standpoint; content assets not ads; advice vs ego; direction beats volume; value then convert where relevant.",
+    "ANTI-GENERIC: If this reply could have come from a generic LinkedIn coach with no Jeff graph, rewrite before sending.",
+    "",
+    "### Doctrine rules (hard)",
+    "Owners can build IP with a lean personal system; team is optional.",
+    "Reject posting-more as monetization. Direction beats volume.",
+    "No overnight-fame promises. Do not invent Jeff niche SOPs as confirmed doctrine if evidence is thin.",
+    "If KB is thin on exact weekly SOP detail: Generally → Jeff → steer to lean IP / direction / content-asset angles, and label the rhythm as a practice plan for THEM.",
+    "",
+    "### Evidence binding",
+    "Prefer: cl.ip-without-pro-team, pr.direction-beats-volume, rj.volume-equals-money, tm.content-asset when in the evidence pack.",
+    "Sources still come only from probe / probe_jeff.",
+    "",
+    "### After the plan",
+    "End with one direct question that locks their next capture slot this week.",
+  ].join("\n"),
+};

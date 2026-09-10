@@ -1,0 +1,96 @@
+import type { ModulePack } from "@/lib/modules/types";
+
+/**
+ * Learning Journey Series: how I got here / how we work arcs.
+ */
+export const LEARNING_JOURNEY_SERIES_PACK: ModulePack = {
+  moduleId: "learning-journey-series",
+  intakeFields: [
+    {
+      id: "started",
+      label: "Where you started",
+      placeholder: "Early context without oversharing",
+      required: true,
+      multiline: true,
+    },
+    {
+      id: "turningPoint",
+      label: "Turning point",
+      placeholder: "What changed your path",
+      required: true,
+      multiline: true,
+    },
+    {
+      id: "howWeWork",
+      label: "How you work now",
+      placeholder: "Current craft / process",
+      required: true,
+      multiline: true,
+    },
+    {
+      id: "viewerLearn",
+      label: "What the viewer should learn",
+      placeholder: "Takeaway without copying your whole life",
+      required: true,
+    },
+    {
+      id: "episodeCount",
+      label: "Preferred episode count",
+      placeholder: "3 to 5",
+      required: false,
+    },
+  ],
+  probeHints: [
+    "journey",
+    "trust",
+    "story",
+    "how we work",
+    "content asset",
+    "exposure trust",
+    "学习旅程",
+    "信任",
+    "系列内容",
+    "内容资产",
+    "probe_jeff",
+  ],
+  boundNodeIds: [
+    "pr.exposure-trust-conversion",
+    "pr.founder-face-printshop",
+    "pr.advice-vs-ego",
+    "tm.content-asset",
+    "cl.content-not-ads",
+  ],
+  starterPrompt:
+    "Using my intake, map a 3 to 5 episode learning-journey series with purpose tags and soft continuity between parts.",
+  chatOpener:
+    "I will map a short learning-journey series with soft continuity. Where did you start, and what turning point matters?",
+  systemOverlay: [
+    "## Module mode: Learning Journey Series",
+    "You are running the Learning Journey Series tool for this user.",
+    "Job: multi-part arc for how I got here / how we work that builds trust.",
+    "",
+    "### Conversational collect (chat-first; no form)",
+    "Slots live in conversation history. Ask at most 1 to 2 questions per turn.",
+    "Prefer Jeff-shaped asks over a generic business questionnaire.",
+    "When enough is known, or the user says just write it, deliver the full output and name assumptions.",
+    "",
+    "### Output format (when ready to generate)",
+    "3 to 5 episodes: title, purpose tag (see/trust/convert), one-line beat, continuity note to next part.",
+    "Advice not ego. No invented drama. No overnight-fame arc.",
+    "If series doctrine is thin: Generally → Jeff → steer.",
+    "",
+    "### Jeff distinctiveness (hard)",
+    "Use Jeff mechanisms in the user's language: get seen before trust before deal; standpoint; content assets not ads; advice vs ego; direction beats volume; value then convert where relevant.",
+    "ANTI-GENERIC: If this reply could have come from a generic LinkedIn coach with no Jeff graph, rewrite before sending.",
+    "",
+    "### Doctrine rules (hard)",
+    "Never invent Jeff niche case studies as doctrine. Their story only.",
+    "",
+    "### Evidence binding",
+    "Prefer: pr.exposure-trust-conversion, pr.founder-face-printshop, pr.advice-vs-ego, tm.content-asset, cl.content-not-ads when in the pack.",
+    "Sources still come only from probe / probe_jeff.",
+    "",
+    "### After the outline",
+    "End with one direct question: which episode they will film first.",
+  ].join("\n"),
+};

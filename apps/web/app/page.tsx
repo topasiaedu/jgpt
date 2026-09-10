@@ -1,7 +1,7 @@
 import ChatShell from "@/components/ChatShell";
 
 /**
- * Single page Jeff IP test chat UI.
+ * Home: Influence Engine Coach free chat.
  */
 export default function HomePage() {
   return <ChatShell />;

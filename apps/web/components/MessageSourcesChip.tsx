@@ -1,6 +1,7 @@
 "use client";
 
 import type { ChatSource } from "@/lib/chatTypes";
+import { useI18n } from "@/lib/i18n/LocaleProvider";
 
 type MessageSourcesChipProps = {
   sources: ChatSource[];
@@ -10,37 +11,40 @@ type MessageSourcesChipProps = {
 
 /**
  * Compact top-right affordance on a Jeff bubble: source count or honest empty label.
- * Expands a short list (id, title, type) so stakeholders can see grounding per reply.
+ * Gold accent when graph sources hit; quieter empty state.
  */
 export default function MessageSourcesChip({
   sources,
   open,
   onToggle,
 }: MessageSourcesChipProps) {
+  const { t } = useI18n();
   const isEmpty: boolean = sources.length === 0;
   const label: string = isEmpty
-    ? "No graph source"
+    ? t("sourcesChipEmpty")
     : sources.length === 1
-      ? "1 source"
-      : `${String(sources.length)} sources`;
+      ? t("sourcesChipOne")
+      : t("sourcesChipMany", { n: sources.length });
+
+  const chipClass = isEmpty
+    ? "msg-sources-chip msg-sources-chip-empty"
+    : "msg-sources-chip msg-sources-chip-hit";
 
   return (
     <div className="msg-sources">
       <button
         type="button"
-        className={isEmpty ? "msg-sources-chip msg-sources-chip-empty" : "msg-sources-chip"}
+        className={chipClass}
         aria-expanded={open}
-        aria-label={isEmpty ? "No graph source for this reply" : `Show ${label} for this reply`}
+        aria-label={label}
         onClick={onToggle}
       >
         {label}
       </button>
       {open ? (
-        <div className="msg-sources-popover" role="region" aria-label="Sources for this reply">
+        <div className="msg-sources-popover" role="region" aria-label={t("sourcesTitle")}>
           {isEmpty ? (
-            <p className="msg-sources-empty">
-              No graph source. General steer: Jeff craft framing only; this niche claim is not cited from the teaching graph.
-            </p>
+            <p className="msg-sources-empty">{t("sourcesChipEmptyDetail")}</p>
           ) : (
             <ul className="msg-sources-list">
               {sources.map((source) => (

@@ -1,0 +1,95 @@
+import type { ModulePack } from "@/lib/modules/types";
+
+/**
+ * IP Pillars: 3–5 recurring content themes from craft.
+ * KB thin on named pillar frameworks: Generally → Jeff → steer.
+ */
+export const IP_PILLARS_PACK: ModulePack = {
+  moduleId: "ip-pillars",
+  intakeFields: [
+    {
+      id: "craft",
+      label: "What you do day to day",
+      placeholder: "Your craft in plain words",
+      required: true,
+      multiline: true,
+    },
+    {
+      id: "clientQuestions",
+      label: "Questions clients ask",
+      placeholder: "List a few recurring questions",
+      required: true,
+      multiline: true,
+    },
+    {
+      id: "results",
+      label: "Results you can show",
+      placeholder: "Outcomes you are willing to mention",
+      required: false,
+      multiline: true,
+    },
+    {
+      id: "standpoint",
+      label: "Standpoint to remember",
+      placeholder: "One line people should associate with you",
+      required: true,
+    },
+  ],
+  probeHints: [
+    "content asset",
+    "direction",
+    "standpoint",
+    "exposure trust",
+    "personal IP",
+    "themes",
+    "内容资产",
+    "方向",
+    "立场",
+    "曝光信任",
+    "主题轮换",
+    "probe_jeff",
+  ],
+  boundNodeIds: [
+    "tm.content-asset",
+    "pr.direction-beats-volume",
+    "pr.standpoint-or-invisible",
+    "pr.exposure-trust-conversion",
+    "rj.volume-equals-money",
+  ],
+  starterPrompt:
+    "Using my intake, propose 3 to 5 recurring content pillars with example post angles under each, and how to rotate see / trust / convert.",
+  chatOpener:
+    "I will map 3 to 5 recurring content themes from your craft (practice map, not a fake Jeff pillar framework). What do you do day to day in plain words?",
+  systemOverlay: [
+    "## Module mode: IP Pillars",
+    "You are running the IP Pillars tool for this user.",
+    "Job: turn their craft into 3 to 5 recurring content themes they can rotate.",
+    "",
+    "### Conversational collect (chat-first; no form)",
+    "Slots live in conversation history. Ask at most 1 to 2 questions per turn.",
+    "Prefer Jeff-shaped asks over a generic business questionnaire.",
+    "When enough is known, or the user says just write it, deliver the full output and name assumptions.",
+    "",
+    "### Output format (when ready to generate)",
+    "1. Three to five named pillars (short titles).",
+    "2. Under each: 2 example post angles.",
+    "3. A simple rotation note tagged see / trust / convert.",
+    "4. Reject volume-equals-money: pillars beat random posting volume.",
+    "",
+    "### Jeff distinctiveness (hard)",
+    "Use Jeff mechanisms in the user's language: get seen before trust before deal; standpoint; content assets not ads; advice vs ego; direction beats volume; value then convert where relevant.",
+    "ANTI-GENERIC: If this reply could have come from a generic LinkedIn coach with no Jeff graph, rewrite before sending.",
+    "",
+    "### KB honesty (hard)",
+    "Named \"pillar framework\" doctrine is thin. Generally → Jeff → steer using content assets, direction, standpoint, exposure-trust.",
+    "Never invent a confirmed Jeff pillar system name. Label this as a practice map for THEIR craft.",
+    "No overnight-fame. Never invent Jeff niche case studies as doctrine.",
+    "",
+    "### Evidence binding",
+    "Prefer: tm.content-asset, pr.direction-beats-volume, pr.standpoint-or-invisible, pr.exposure-trust-conversion, rj.volume-equals-money when in the pack.",
+    "Sources still come only from probe / probe_jeff.",
+    "",
+    "### After the pillars",
+    "End with one direct question: which pillar they will film this week.",
+  ].join("\n"),
+};

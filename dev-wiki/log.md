@@ -122,3 +122,53 @@
 - Vercel logs: `Cannot find module 'next/dist/compiled/next-server/app-route.runtime.prod.js'` and missing `react/jsx-runtime.js` under `/var/task/apps/web/node_modules`.
 - Root cause: `outputFileTracingExcludes` listed `node_modules/**`, which stripped Next/React from the serverless NFT bundle.
 - Fix: remove `node_modules` from tracing excludes; pin `outputFileTracingRoot` to `apps/web`; commit `apps/web/content/jeff/**` (stop gitignoring); sync script keeps committed bundle if monorepo parents are absent; shrink sound-profile prompt budget to 6k chars.
+
+## 2026-09-08 — Vault SoT + remove agent handoff prompts
+
+- Deleted `raw/agent-handoff/` (01 what-we-are-doing, 02 implementation agent prompts, README) so builder prompts are not mistaken for wiki/teaching doctrine.
+- Added `dev-wiki/accomplishments-and-decisions.md` as the engineering source-of-truth summary (built, decided, open).
+- Updated `dev-wiki/index.md`, `decisions.md` (D9–D12 + rejected rows), `goals.md` status.
+
+## 2026-09-08 — Agent handoff restored for IP modules (Artemo-style)
+
+- Recreated `raw/agent-handoff/` as **builder-only** briefs (explicit: do not ingest into jeff teaching).
+  - `01-what-we-are-doing.md`: product goal, keep existing chat/probe, `/tools` + module packs, locked 15-module menu, non-goals.
+  - `02-implementation-agent-prompts.md`: Phases A–D copy-paste prompts (shell → API+IG Reel → remaining packs → polish), sized for ~200k-context agents without one mega-task.
+  - `README.md` + `raw/README.md` access-wall notes.
+- Updated `dev-wiki/index.md` pointer. No app code in this note.
+
+## 2026-09-08 — Phases A–D: Tools wall landed (builder log)
+
+- Phase A–C: `/tools` category grid, intro → intake → module chat for all 15 packs; free chat at `/` kept; shared `POST /api/chat` with `moduleId` + intake.
+- Phase D polish: home deep-link chips to Tools / IG Reel Script; title search; per-module “Don’t show again”; module chat loading/error parity; STAKEHOLDER + README routes updated. No new modules. No jeff doctrine ingest from this work.
+
+## 2026-09-08 — Full Jeff IP module list shipped for stakeholder cut
+
+Expanded Tools from the curated 15 to the full proposed set (39 ready packs), including Earn Trust and Convert categories. Some modules are KB-thin by design; overlays steer rather than invent doctrine. Stakeholder can cut later.
+
+## 2026-09-08 — Tools chat-first + Jeff-distinctive overlays
+
+- Removed intake form gate: intro (optional/skip) → ModuleChatShell with seeded `chatOpener`.
+- `intakeFields` kept as internal chat slots; `modulePrompt` injects conversational rules, anti-generic Jeff rewrite rule, and capped `boundNodeIds` title/summary briefs from nodes.json.
+- Strengthened all ~39 pack overlays/probeHints; deeper flagship care on IG Reel, Standpoint, Stage Check, Asset Planner, Value Teaching, Ad vs Asset, Advice vs Ego, Hot Take, Boss Brand, Scroll-Stop Hook.
+- STAKEHOLDER updated: report generic/non-Jeff module answers. Free chat at `/` unchanged.
+
+## 2026-09-08: Influence Engine Coach UI redesign handoffs (docs only)
+
+- Wrote `raw/agent-handoff/03-ui-redesign-what-we-are-doing.md` and `04-ui-redesign-agent-prompts.md` (phases U1 to U3). Locked: product name Influence Engine Coach, ZH-main chrome + multilingual, brand asset rights YES.
+- Updated `raw/agent-handoff/README.md`, `raw/README.md`, and this wiki index pointer. No `apps/web` UI implementation in this step. Not jeff teaching ingest.
+
+## 2026-09-08 — Phase U3: Influence Engine Coach polish + docs
+
+- U1–U3 UI redesign on `apps/web`: brand shell + stage-first Tools already in tree; U3 added restrained motion (CTA/send pulse, opener fade-in, mobile stage-rail snap), mobile chat/tools polish, ZH/EN student empty/error copy, optional dismissible first-visit dark brand moment, STAKEHOLDER + README rewritten for Influence Engine Coach. Locale toggle verified (footer 中文/EN; first-visit EN browser hint). No new modules, no doctrine ingest, no probe rebuild. Builder log only.
+
+## 2026-09-10 — Artemo flow handoffs (docs only)
+
+- Wrote `raw/agent-handoff/05-artemo-flow-what-we-are-doing.md` and `06-artemo-flow-agent-prompts.md` (phases F1 to F3). Locked: home ask「今天要做什么 IP 内容？」→ recommend 2 to 4 tools → fresh tool chat clarify-then-deliver; All Tools = category card wall; no stage-first primary; no forms.
+- Updated `raw/agent-handoff/README.md` (01 to 06). Stage-first front door from 03/U2 superseded for product flow; brand chrome from U1 to U3 kept. No `apps/web` UI in this step. Not jeff teaching ingest.
+
+## 2026-09-10 — Artemo flow F1 to F3 landed (builder log)
+
+- F1: home ask「今天要做什么 IP 内容？」+ structured `recommendedModuleIds` cards.
+- F2: `/tools` category card wall; stage hero removed as primary.
+- F3: fresh tool chat per open (remount keying); pack `chatOpener` + optional `?from=home&q=` handoff (length-capped); shared overlay clarify-then-deliver reinforced; STAKEHOLDER + README updated for locked flow. No intake forms. No doctrine ingest.

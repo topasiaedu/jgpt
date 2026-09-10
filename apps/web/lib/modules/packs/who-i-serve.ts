@@ -1,0 +1,91 @@
+import type { ModulePack } from "@/lib/modules/types";
+
+/**
+ * Who I Serve: ideal customer + why they buy YOU (people not product).
+ */
+export const WHO_I_SERVE_PACK: ModulePack = {
+  moduleId: "who-i-serve",
+  intakeFields: [
+    {
+      id: "idealCustomer",
+      label: "Who you want to serve",
+      placeholder: "Role, situation, or life stage (not \"everyone\")",
+      required: true,
+    },
+    {
+      id: "problem",
+      label: "Problem they bring",
+      placeholder: "The real pain or goal that brings them to you",
+      required: true,
+      multiline: true,
+    },
+    {
+      id: "whyYou",
+      label: "Why they buy YOU",
+      placeholder: "Craft, trust, standpoint: not only features or price",
+      required: true,
+      multiline: true,
+    },
+    {
+      id: "proofOfFit",
+      label: "One proof of fit",
+      placeholder: "Result, story, or pattern you can show without inventing cases",
+      required: false,
+      multiline: true,
+    },
+  ],
+  probeHints: [
+    "buy people not product",
+    "ideal customer",
+    "standpoint",
+    "personal IP",
+    "trust",
+    "founder face",
+    "买人",
+    "信任",
+    "谁是客户",
+    "立场",
+    "probe_jeff",
+  ],
+  boundNodeIds: [
+    "cl.buy-people-not-product",
+    "pr.standpoint-or-invisible",
+    "pr.founder-face-printshop",
+    "pr.exposure-trust-conversion",
+  ],
+  starterPrompt:
+    "Using my intake, write a short ideal-customer sketch, a why-they-buy-you line, and one content angle that shows people-first fit.",
+  chatOpener:
+    "I will sketch who you serve and why they buy you, people-first not product theater. Who do you want to be known for helping?",
+  systemOverlay: [
+    "## Module mode: Who I Serve",
+    "You are running the Who I Serve tool for this user.",
+    "Job: clarify ideal customer and why they buy the person and craft, not only the product.",
+    "",
+    "### Conversational collect (chat-first; no form)",
+    "Slots live in conversation history. Ask at most 1 to 2 questions per turn.",
+    "Prefer Jeff-shaped asks over a generic business questionnaire.",
+    "When enough is known, or the user says just write it, deliver the full output and name assumptions.",
+    "",
+    "### Output format (when ready to generate)",
+    "1. Ideal-customer sketch (3 to 5 lines): who, situation, what they want.",
+    "2. Why-they-buy-you line: people and craft first, product second.",
+    "3. One content angle that shows fit without hard sell.",
+    "4. Reject note: do not center cheapest/loudest product framing.",
+    "",
+    "### Jeff distinctiveness (hard)",
+    "Use Jeff mechanisms in the user's language: get seen before trust before deal; standpoint; content assets not ads; advice vs ego; direction beats volume; value then convert where relevant.",
+    "ANTI-GENERIC: If this reply could have come from a generic LinkedIn coach with no Jeff graph, rewrite before sending.",
+    "",
+    "### Doctrine rules (hard)",
+    "Bind to buy-people-not-product when evidence hits. No overnight-fame. Never invent Jeff niche case studies as doctrine.",
+    "Niche facts come from the conversation.",
+    "",
+    "### Evidence binding",
+    "Prefer: cl.buy-people-not-product, pr.standpoint-or-invisible, pr.founder-face-printshop, pr.exposure-trust-conversion when in the pack.",
+    "Sources still come only from probe / probe_jeff.",
+    "",
+    "### After the sketch",
+    "End with one direct question that tightens who they will film for first.",
+  ].join("\n"),
+};

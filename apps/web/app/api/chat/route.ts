@@ -7,6 +7,13 @@ import type {
   ChatResponseBody,
 } from "@/lib/chatTypes";
 import { buildProbeQuery, toDialogueOnly } from "@/lib/dialogue";
+import {
+  appendModuleSystemOverlay,
+  buildModuleProbeQuery,
+} from "@/lib/modules/modulePrompt";
+import { getModulePack } from "@/lib/modules/packs";
+import { HOME_INTENT_Q_MAX_CHARS } from "@/lib/modules/homeHandoff";
+import { appendHomeRecommendOverlay } from "@/lib/modules/recommend";
 import { generateJeffReply, getOpenAIConfig } from "@/lib/openai";
 import { probeTeaching } from "@/lib/probe";
 import { stripDashPunctuation } from "@/lib/stripDashPunctuation";
@@ -21,6 +28,8 @@ export const dynamic = "force-dynamic";
 
 /**
  * POST /api/chat: fresh probe this turn + dialogue-only history + optional probe_jeff tools.
+ * Optional moduleId enables named IP module packs (same closed-doctrine stack).
+ * Legacy intake map is optional; chat-first modules rely on conversation history.
  * Soft-fails with JSON error if OPENAI_API_KEY is missing.
  * Always returns JSON so the client never has to parse an HTML error page for app errors.
  */
@@ -50,7 +59,10 @@ async function handleChatPost(
 
   if (!isChatRequestBody(body)) {
     return NextResponse.json(
-      { error: "Body must include messages: { role, content }[]." },
+      {
+        error:
+          "Body must include messages: { role, content }[]. Optional moduleId, intake, and homeIntent must be well-typed.",
+      },
       { status: 400 },
     );
   }
@@ -67,11 +79,31 @@ async function handleChatPost(
   }
 
   const dialogue: ChatMessage[] = toDialogueOnly(body.messages);
-  const query: string = buildProbeQuery(dialogue);
+  const baseQuery: string = buildProbeQuery(dialogue);
 
-  if (query.length === 0) {
+  if (baseQuery.length === 0) {
     return NextResponse.json({ error: "Send at least one non-empty user message." }, { status: 400 });
   }
+
+  const moduleId: string | undefined = body.moduleId;
+  const intake: Record<string, string> | undefined = body.intake;
+  const homeIntent: string | undefined =
+    typeof body.homeIntent === "string" && body.homeIntent.trim().length > 0
+      ? body.homeIntent.trim().slice(0, HOME_INTENT_Q_MAX_CHARS)
+      : undefined;
+  const pack = typeof moduleId === "string" ? getModulePack(moduleId) : undefined;
+
+  if (typeof moduleId === "string" && moduleId.trim().length > 0 && pack === undefined) {
+    return NextResponse.json(
+      { error: `Unknown or not-yet-wired moduleId: ${moduleId}` },
+      { status: 400 },
+    );
+  }
+
+  const query: string =
+    pack !== undefined
+      ? buildModuleProbeQuery({ baseQuery, pack, intake })
+      : baseQuery;
 
   let probe;
   try {
@@ -83,24 +115,39 @@ async function handleChatPost(
     return NextResponse.json({ error: message }, { status: 500 });
   }
 
-  const systemPrompt: string = buildSystemPrompt({
+  const baseSystemPrompt: string = buildSystemPrompt({
     evidencePackText: probe.evidencePackText,
     coverage: probe.coverage,
   });
 
+  const recommendMode: boolean = pack === undefined;
+  const systemPrompt: string =
+    pack !== undefined
+      ? appendModuleSystemOverlay({
+          baseSystemPrompt,
+          pack,
+          intake,
+          homeIntent,
+        })
+      : appendHomeRecommendOverlay(baseSystemPrompt);
+
   try {
-    const { reply, sources } = await generateJeffReply({
+    const { reply, sources, recommendedModuleIds } = await generateJeffReply({
       apiKey,
       model,
       systemPrompt,
       messages: dialogue,
       initialSources: probe.sources,
       runProbe: (toolQuery: string) => probeTeaching(toolQuery),
+      recommendMode,
     });
 
     const response: ChatResponseBody = {
       reply: stripDashPunctuation(reply),
       sources,
+      ...(recommendMode && recommendedModuleIds.length > 0
+        ? { recommendedModuleIds }
+        : {}),
     };
     return NextResponse.json(response);
   } catch (error) {
@@ -127,7 +174,32 @@ function isChatRequestBody(value: unknown): value is ChatRequestBody {
     return false;
   }
 
-  return messages.every(isChatMessage);
+  if (!messages.every(isChatMessage)) {
+    return false;
+  }
+
+  if ("moduleId" in value) {
+    const moduleId = (value as { moduleId: unknown }).moduleId;
+    if (moduleId !== undefined && typeof moduleId !== "string") {
+      return false;
+    }
+  }
+
+  if ("intake" in value) {
+    const intake = (value as { intake: unknown }).intake;
+    if (intake !== undefined && !isStringRecord(intake)) {
+      return false;
+    }
+  }
+
+  if ("homeIntent" in value) {
+    const homeIntent = (value as { homeIntent: unknown }).homeIntent;
+    if (homeIntent !== undefined && typeof homeIntent !== "string") {
+      return false;
+    }
+  }
+
+  return true;
 }
 
 /**
@@ -149,4 +221,15 @@ function isChatMessage(value: unknown): value is ChatMessage {
   const contentOk = typeof content === "string";
 
   return roleOk && contentOk;
+}
+
+/**
+ * Runtime validation for intake: object with string values only.
+ */
+function isStringRecord(value: unknown): value is Record<string, string> {
+  if (typeof value !== "object" || value === null || Array.isArray(value)) {
+    return false;
+  }
+
+  return Object.values(value).every((entry) => typeof entry === "string");
 }

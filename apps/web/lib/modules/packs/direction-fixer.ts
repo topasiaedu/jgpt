@@ -1,0 +1,92 @@
+import type { ModulePack } from "@/lib/modules/types";
+
+/**
+ * Direction Fixer: stop \"post more\"; pick a path.
+ */
+export const DIRECTION_FIXER_PACK: ModulePack = {
+  moduleId: "direction-fixer",
+  intakeFields: [
+    {
+      id: "posting",
+      label: "What you have been posting",
+      placeholder: "Formats, topics, frequency in plain language",
+      required: true,
+      multiline: true,
+    },
+    {
+      id: "worry",
+      label: "What metrics or gut feel worry you",
+      placeholder: "Views, saves, DMs, bookings, exhaustion…",
+      required: true,
+      multiline: true,
+    },
+    {
+      id: "outcomes",
+      label: "Outcomes you actually want",
+      placeholder: "Seen, trusted, booked (name the primary)",
+      required: true,
+    },
+    {
+      id: "niche",
+      label: "Niche or industry",
+      placeholder: "Optional context for steering",
+      required: false,
+    },
+  ],
+  probeHints: [
+    "direction beats volume",
+    "not posting more",
+    "exposure trust conversion",
+    "content asset",
+    "personal IP",
+    "方向大于数量",
+    "不是多发",
+    "曝光信任成交",
+    "内容资产",
+    "probe_jeff",
+  ],
+  boundNodeIds: [
+    "pr.direction-beats-volume",
+    "rj.volume-equals-money",
+    "pr.exposure-trust-conversion",
+    "cl.content-not-ads",
+  ],
+  starterPrompt:
+    "Using my intake, make a direction call: one primary lane, one secondary lane, and what to stop doing for now. Do not tell me to just post more.",
+  chatOpener:
+    "I will make a direction call: primary lane, secondary lane, and what to stop. What have you been posting, and what outcome do you actually want?",
+  systemOverlay: [
+    "## Module mode: Direction Fixer",
+    "You are running the Direction Fixer tool for this user.",
+    "Job: stop the vague advice to post more. Help them pick a path: what to double down on, what to pause, and why.",
+    "",
+    "### Conversational collect (chat-first; no form)",
+    "Slots live in conversation history. Ask at most 1 to 2 questions per turn.",
+    "Prefer Jeff-shaped asks over a generic business questionnaire.",
+    "When enough is known, or the user says just write it, deliver the full output and name assumptions.",
+    "",
+    "### Output format (when ready to generate)",
+    "Deliver a direction call:",
+    "1. Primary lane: one clear focus for the next 2 to 4 weeks.",
+    "2. Secondary lane: optional supporting focus (keep small).",
+    "3. Stop doing for now: 2 to 4 items, including any \"volume for volume\" habits.",
+    "4. Why: tie to see / trust / convert using what they shared.",
+    "5. Optional next module on this wall that matches the primary lane.",
+    "",
+    "### Jeff distinctiveness (hard)",
+    "Use Jeff mechanisms in the user's language: get seen before trust before deal; standpoint; content assets not ads; advice vs ego; direction beats volume; value then convert where relevant.",
+    "ANTI-GENERIC: If this reply could have come from a generic LinkedIn coach with no Jeff graph, rewrite before sending.",
+    "",
+    "### Doctrine rules (hard)",
+    "Reject volume-equals-money. Wrong direction wastes posts.",
+    "No overnight-fame promises. Never invent Jeff niche case studies as doctrine.",
+    "If KB is thin for their niche path: Generally → Jeff → steer to direction / exposure-trust-convert.",
+    "",
+    "### Evidence binding",
+    "Prefer: pr.direction-beats-volume, rj.volume-equals-money, pr.exposure-trust-conversion, cl.content-not-ads when in the evidence pack.",
+    "Sources still come only from probe / probe_jeff.",
+    "",
+    "### After the call",
+    "End with one direct question that forces a yes/no on the primary lane.",
+  ].join("\n"),
+};

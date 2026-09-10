@@ -1,0 +1,90 @@
+import type { ModulePack } from "@/lib/modules/types";
+
+/**
+ * Short vs Long Planner: when short (volume/exposure) vs long (trust).
+ */
+export const SHORT_VS_LONG_PLANNER_PACK: ModulePack = {
+  moduleId: "short-vs-long-planner",
+  intakeFields: [
+    {
+      id: "stage",
+      label: "Current stage",
+      placeholder: "Unseen, building trust, or converting",
+      required: true,
+    },
+    {
+      id: "topics",
+      label: "Topics you can cover",
+      placeholder: "List topics you can teach without research theater",
+      required: true,
+      multiline: true,
+    },
+    {
+      id: "capacity",
+      label: "Capacity",
+      placeholder: "Hours for short clips vs longer sits this week",
+      required: true,
+    },
+    {
+      id: "platforms",
+      label: "Platforms",
+      placeholder: "IG Reels, YouTube, TikTok…",
+      required: false,
+    },
+  ],
+  probeHints: [
+    "short vs long video",
+    "exposure trust",
+    "direction",
+    "content asset",
+    "volume",
+    "trust",
+    "短视频",
+    "长视频",
+    "曝光信任",
+    "方向大于数量",
+    "probe_jeff",
+  ],
+  boundNodeIds: [
+    "cl.short-vs-long-video",
+    "pr.exposure-trust-conversion",
+    "pr.direction-beats-volume",
+    "rj.volume-equals-money",
+  ],
+  starterPrompt:
+    "Using my intake, plan which topics go short vs long, and how that supports see → trust without volume-equals-money thinking.",
+  chatOpener:
+    "I will plan which topics go short vs long for see → trust, without volume-equals-money thinking. What stage are you in right now?",
+  systemOverlay: [
+    "## Module mode: Short vs Long Planner",
+    "You are running the Short vs Long Planner tool for this user.",
+    "Job: decide when short video is for exposure volume vs when long video is for trust depth.",
+    "",
+    "### Conversational collect (chat-first; no form)",
+    "Slots live in conversation history. Ask at most 1 to 2 questions per turn.",
+    "Prefer Jeff-shaped asks over a generic business questionnaire.",
+    "When enough is known, or the user says just write it, deliver the full output and name assumptions.",
+    "",
+    "### Output format (when ready to generate)",
+    "1. Stage read in one sentence.",
+    "2. Short lane: topics + why (get seen).",
+    "3. Long lane: topics + why (earn trust).",
+    "4. This-week plan limited by their capacity.",
+    "5. Reject volume-equals-money: more short clips alone do not equal money.",
+    "",
+    "### Jeff distinctiveness (hard)",
+    "Use Jeff mechanisms in the user's language: get seen before trust before deal; standpoint; content assets not ads; advice vs ego; direction beats volume; value then convert where relevant.",
+    "ANTI-GENERIC: If this reply could have come from a generic LinkedIn coach with no Jeff graph, rewrite before sending.",
+    "",
+    "### Doctrine rules (hard)",
+    "Bind to short-vs-long and exposure-trust when evidence hits.",
+    "No overnight-fame. Never invent Jeff niche case studies as doctrine.",
+    "",
+    "### Evidence binding",
+    "Prefer: cl.short-vs-long-video, pr.exposure-trust-conversion, pr.direction-beats-volume, rj.volume-equals-money when in the pack.",
+    "Sources still come only from probe / probe_jeff.",
+    "",
+    "### After the plan",
+    "End with one direct question: which one piece they will film first.",
+  ].join("\n"),
+};

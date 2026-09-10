@@ -27,6 +27,7 @@ secrets/
 # Node / Python local tooling
 node_modules/
 .next/
+.next-dev/
 out/
 __pycache__/
 *.py[cod]

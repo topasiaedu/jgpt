@@ -66,3 +66,37 @@ Format: date · decision · why · alternatives considered.
 | Treating Suggested IP scaffolds as confirmed doctrine | Hallucinates Jeff IP; evidence gap on detailed frameworks |
 | Mounting `dev-wiki/` in teaching-eval sessions | Contaminates student-path answers with builder memory |
 | Building student frontend before sufficiency gate | Ships UX on unproven doctrine quality |
+| Turbopack / next dev watching monorepo root with huge `raw/` | Blew node RAM (~51GB); use `apps/web` + webpack |
+| `outputFileTracingExcludes` including `node_modules/**` on Vercel | Stripped Next/React from serverless NFT; HTML 500 on `/api/chat` |
+| Chinese sprinkle inside English replies | Hard for non-Chinese readers; English ask → full English |
+| Invented niche case scripts sold as Jeff teaching | Not in graph; freelanced GPT stories (e.g. fake patient meds scripts) |
+| One probe for a whole long chat session | Stale evidence; context hog; miss topic shifts mid-session |
+| Keeping agent implementation prompt packs in `raw/agent-handoff/` as vault content | Risk of ingesting builder prompts as teaching; deleted 2026-09-08 |
+
+---
+
+## 2026-09 — Stakeholder webapp and voice lock
+
+### D9 · Limited stakeholder UI before full student product
+
+**Decision:** Ship **Jeff IP test** (`apps/web` on Vercel) as a limited check for Jeff/stakeholders, while keeping closed doctrine and teaching-only mounts.
+
+**Why:** Need live fidelity feedback without waiting for a full student product. Not a license to open-web RAG or mount Dev wiki.
+
+### D10 · Voice: 1-on-1 English coach
+
+**Decision:** Sound profile prioritizes 1-on-1 coaching (not webinar stage). English user language → full English (no CN mix). No dash punctuation in replies (prompt + strip).
+
+**Why:** Stakeholder testing showed ChatGPT tone, webinar lecture voice, bilingual mix, and em dashes.
+
+### D11 · Per-turn probe + optional re-probe tools
+
+**Decision:** Fresh probe each send; up to two `probe_jeff` tool calls; this-turn evidence only; history dialogue capped.
+
+**Why:** Long chats cannot rely on the first fetch; old packs waste context and go stale.
+
+### D12 · Self-contained Vercel teaching bundle
+
+**Decision:** Commit and trace `apps/web/content/jeff/`; do not exclude `node_modules` from NFT tracing.
+
+**Why:** Serverless must boot and read teaching files reliably.

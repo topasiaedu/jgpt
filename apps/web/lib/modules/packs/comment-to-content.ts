@@ -1,0 +1,90 @@
+import type { ModulePack } from "@/lib/modules/types";
+
+/**
+ * Comment to Content: turn comments/pushback into next scripts.
+ */
+export const COMMENT_TO_CONTENT_PACK: ModulePack = {
+  moduleId: "comment-to-content",
+  intakeFields: [
+    {
+      id: "comment",
+      label: "Comment or pushback",
+      placeholder: "Paste the comment, DM, or objection",
+      required: true,
+      multiline: true,
+    },
+    {
+      id: "instinct",
+      label: "Your honest reply instinct",
+      placeholder: "What you want to say back",
+      required: true,
+      multiline: true,
+    },
+    {
+      id: "format",
+      label: "Desired format",
+      placeholder: "Reel, caption, or story",
+      required: true,
+    },
+    {
+      id: "tone",
+      label: "Tone guardrail",
+      placeholder: "Firm, soft, humorous…",
+      required: false,
+    },
+  ],
+  probeHints: [
+    "criticism",
+    "comment",
+    "content asset",
+    "advice vs ego",
+    "not failure",
+    "standpoint",
+    "评论转内容",
+    "立场",
+    "建议 vs 自我",
+    "批评",
+    "probe_jeff",
+  ],
+  boundNodeIds: [
+    "cl.criticism-not-failure",
+    "pr.advice-vs-ego",
+    "tm.content-asset",
+    "cl.content-not-ads",
+    "pr.standpoint-or-invisible",
+  ],
+  starterPrompt:
+    "Using my intake, turn this comment into next-script angles that answer as advice, not as a fight.",
+  chatOpener:
+    "I will turn a comment or pushback into next-script angles as advice, not argument theater. Paste the comment.",
+  systemOverlay: [
+    "## Module mode: Comment to Content",
+    "You are running the Comment to Content tool for this user.",
+    "Job: turn comments or pushback into teaching assets.",
+    "",
+    "### Conversational collect (chat-first; no form)",
+    "Slots live in conversation history. Ask at most 1 to 2 questions per turn.",
+    "Prefer Jeff-shaped asks over a generic business questionnaire.",
+    "When enough is known, or the user says just write it, deliver the full output and name assumptions.",
+    "",
+    "### Output format (when ready to generate)",
+    "1. Reframe: what the comment is really asking.",
+    "2. Two to three next-script angles in their chosen format.",
+    "3. One line they should not say (ego fight).",
+    "Criticism is not failure; answer as advice.",
+    "",
+    "### Jeff distinctiveness (hard)",
+    "Use Jeff mechanisms in the user's language: get seen before trust before deal; standpoint; content assets not ads; advice vs ego; direction beats volume; value then convert where relevant.",
+    "ANTI-GENERIC: If this reply could have come from a generic LinkedIn coach with no Jeff graph, rewrite before sending.",
+    "",
+    "### Doctrine rules (hard)",
+    "No overnight-fame. Never invent Jeff niche case studies as doctrine.",
+    "",
+    "### Evidence binding",
+    "Prefer: cl.criticism-not-failure, pr.advice-vs-ego, tm.content-asset, cl.content-not-ads, pr.standpoint-or-invisible when in the pack.",
+    "Sources still come only from probe / probe_jeff.",
+    "",
+    "### After the angles",
+    "End with one direct question: which angle they will film.",
+  ].join("\n"),
+};

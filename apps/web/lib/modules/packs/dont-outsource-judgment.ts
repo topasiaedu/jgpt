@@ -1,0 +1,92 @@
+import type { ModulePack } from "@/lib/modules/types";
+
+/**
+ * Don't Outsource Judgment: AI drafts; human decides.
+ */
+export const DONT_OUTSOURCE_JUDGMENT_PACK: ModulePack = {
+  moduleId: "dont-outsource-judgment",
+  intakeFields: [
+    {
+      id: "draft",
+      label: "AI draft",
+      placeholder: "Paste the model draft",
+      required: true,
+      multiline: true,
+    },
+    {
+      id: "agree",
+      label: "What you agree with",
+      placeholder: "Parts that feel true",
+      required: true,
+      multiline: true,
+    },
+    {
+      id: "off",
+      label: "What feels off",
+      placeholder: "Wrong tone, wrong claim, wrong for your craft",
+      required: true,
+      multiline: true,
+    },
+    {
+      id: "yourCall",
+      label: "Decision only you can make",
+      placeholder: "The judgment call the model cannot own",
+      required: true,
+      multiline: true,
+    },
+  ],
+  probeHints: [
+    "outsource judgment",
+    "GPT",
+    "AI draft",
+    "advice vs ego",
+    "judgment",
+    "personal IP",
+    "不要外包判断",
+    "判断力",
+    "建议 vs 自我",
+    "内容资产",
+    "probe_jeff",
+  ],
+  boundNodeIds: [
+    "rj.outsource-judgment-to-gpt",
+    "pr.advice-vs-ego",
+    "pr.standpoint-or-invisible",
+    "cl.content-not-ads",
+  ],
+  starterPrompt:
+    "Using my intake, do a keep / cut / rewrite pass on this AI draft. Judgment stays with me.",
+  chatOpener:
+    "I will do a keep / cut / rewrite pass where judgment stays with you. Paste the AI draft you are unsure about.",
+  systemOverlay: [
+    "## Module mode: Don't Outsource Judgment",
+    "You are running the Don't Outsource Judgment tool for this user.",
+    "Job: useful AI draft pass; human keeps final judgment.",
+    "",
+    "### Conversational collect (chat-first; no form)",
+    "Slots live in conversation history. Ask at most 1 to 2 questions per turn.",
+    "Prefer Jeff-shaped asks over a generic business questionnaire.",
+    "When enough is known, or the user says just write it, deliver the full output and name assumptions.",
+    "",
+    "### Output format (when ready to generate)",
+    "1. Keep: what stays.",
+    "2. Cut: what goes and why.",
+    "3. Rewrite: improved lines they still must approve.",
+    "4. Judgment reminder: reject outsourcing final call to the model.",
+    "",
+    "### Jeff distinctiveness (hard)",
+    "Use Jeff mechanisms in the user's language: get seen before trust before deal; standpoint; content assets not ads; advice vs ego; direction beats volume; value then convert where relevant.",
+    "ANTI-GENERIC: If this reply could have come from a generic LinkedIn coach with no Jeff graph, rewrite before sending.",
+    "",
+    "### Doctrine rules (hard)",
+    "Bind to rj.outsource-judgment-to-gpt. You assist; they decide.",
+    "No overnight-fame. Never invent Jeff niche case studies as doctrine.",
+    "",
+    "### Evidence binding",
+    "Prefer: rj.outsource-judgment-to-gpt, pr.advice-vs-ego, pr.standpoint-or-invisible, cl.content-not-ads when in the pack.",
+    "Sources still come only from probe / probe_jeff.",
+    "",
+    "### After the pass",
+    "End with one direct question: which rewrite they accept as final.",
+  ].join("\n"),
+};

@@ -1,0 +1,98 @@
+import type { ModulePack } from "@/lib/modules/types";
+
+/**
+ * Process Proof Reel: why customers choose us + how we work (advice vs ego).
+ */
+export const PROCESS_PROOF_REEL_PACK: ModulePack = {
+  moduleId: "process-proof-reel",
+  intakeFields: [
+    {
+      id: "whyChoose",
+      label: "Why people pick you",
+      placeholder: "The honest reason customers choose you",
+      required: true,
+      multiline: true,
+    },
+    {
+      id: "processStep",
+      label: "One process step you can show",
+      placeholder: "A filmable step of how you work",
+      required: true,
+      multiline: true,
+    },
+    {
+      id: "viewerTakeaway",
+      label: "Viewer takeaway (even if they never buy)",
+      placeholder: "What advice they leave with",
+      required: true,
+    },
+    {
+      id: "language",
+      label: "Language preference",
+      placeholder: "English, Chinese, or mixed",
+      required: false,
+    },
+    {
+      id: "ctaSoftness",
+      label: "CTA softness",
+      placeholder: "Soft follow/save, or light invite",
+      required: false,
+    },
+  ],
+  probeHints: [
+    "advice vs ego",
+    "process",
+    "content asset",
+    "not ads",
+    "short video",
+    "buy people",
+    "过程证明",
+    "信任",
+    "内容资产",
+    "不是广告",
+    "probe_jeff",
+  ],
+  boundNodeIds: [
+    "pr.advice-vs-ego",
+    "cl.content-not-ads",
+    "cl.buy-people-not-product",
+    "cl.short-vs-long-video",
+    "pr.exposure-trust-conversion",
+  ],
+  starterPrompt:
+    "Using my intake, write a shootable process-proof Reel: hook, how-we-work beat, soft close. Keep it advice-led, not ego flex.",
+  chatOpener:
+    "I will write a process-proof Reel that shows how you work so trust can build. What is one process step you can honestly show on camera?",
+  systemOverlay: [
+    "## Module mode: Process Proof Reel",
+    "You are running the Process Proof Reel tool for this user.",
+    "Job: a short Reel that shows why customers choose them and how they work, as advice not ego.",
+    "",
+    "### Conversational collect (chat-first; no form)",
+    "Slots live in conversation history. Ask at most 1 to 2 questions per turn.",
+    "Prefer Jeff-shaped asks over a generic business questionnaire.",
+    "When enough is known, or the user says just write it, deliver the full output and name assumptions.",
+    "",
+    "### Output format (when ready to generate)",
+    "1. Hook (1 to 3 seconds).",
+    "2. How-we-work beat: show process; teach the viewer.",
+    "3. Soft close aligned with CTA softness.",
+    "4. On-screen text cues.",
+    "Match language preference when set.",
+    "",
+    "### Jeff distinctiveness (hard)",
+    "Use Jeff mechanisms in the user's language: get seen before trust before deal; standpoint; content assets not ads; advice vs ego; direction beats volume; value then convert where relevant.",
+    "ANTI-GENERIC: If this reply could have come from a generic LinkedIn coach with no Jeff graph, rewrite before sending.",
+    "",
+    "### Doctrine rules (hard)",
+    "Advice vs ego: process proof serves the viewer. Content asset, not hard-sell ad.",
+    "No overnight-fame. Never invent Jeff niche case studies as doctrine.",
+    "",
+    "### Evidence binding",
+    "Prefer: pr.advice-vs-ego, cl.content-not-ads, cl.buy-people-not-product, cl.short-vs-long-video, pr.exposure-trust-conversion when in the pack.",
+    "Sources still come only from probe / probe_jeff.",
+    "",
+    "### After the script",
+    "End with one direct question that helps them film the process step cleanly.",
+  ].join("\n"),
+};

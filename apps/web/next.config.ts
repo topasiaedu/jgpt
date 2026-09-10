@@ -2,20 +2,27 @@ import type { NextConfig } from "next";
 import path from "path";
 
 /**
- * Jeff IP test app under apps/web. Teaching assets live in content/jeff
+ * Influence Engine Coach under apps/web. Teaching assets live in content/jeff
  * (synced at prebuild and committed for self-contained Vercel deploys).
  * Never watch or trace raw/ (tens of GB under the monorepo).
  *
  * Prefer `npm run dev` (webpack). Never use Turbopack / `dev:turbo` as default.
  *
+ * Dev and production use separate dist dirs. Sharing `.next` between `next dev`
+ * and `next build` corrupts webpack chunks and yields HTML 500s:
+ * `Cannot find module './NNN.js'` from `.next/server/webpack-runtime.js`.
+ *
  * CRITICAL: do NOT exclude node_modules from outputFileTracingExcludes.
  * That strips next/react from the serverless function and yields MODULE_NOT_FOUND
  * HTML 500s on /api/chat (x-matched-path: /500).
  */
+const DIST_DIR: string = process.env.NODE_ENV === "development" ? ".next-dev" : ".next";
+
 const IGNORED_WATCH_GLOBS: string[] = [
   "**/node_modules/**",
   "**/.git/**",
   "**/.next/**",
+  "**/.next-dev/**",
   "**/raw/**",
   "**/dev-wiki/**",
   "**/dev-graph/**",
@@ -36,6 +43,7 @@ const TRACING_EXCLUDES: string[] = [
 const TEACHING_INCLUDES: string[] = ["./content/jeff/**/*"];
 
 const nextConfig: NextConfig = {
+  distDir: DIST_DIR,
   // Pin tracing to this app so serverless paths stay under apps/web on Vercel.
   outputFileTracingRoot: path.join(__dirname),
   outputFileTracingIncludes: {
