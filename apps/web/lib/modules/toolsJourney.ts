@@ -32,7 +32,7 @@ const STAGE_BLURB_KEYS: Record<ModuleCategory, MessageKey> = {
 
 /**
  * Core module ids that stay visible in each stage section.
- * Convert: every convert catalog module is core.
+ * Convert core is the purchase-path pair; soft CTA / DM / offer explain are practice.
  * Any catalog id not listed here defaults to practice.
  */
 const CORE_MODULE_IDS: ReadonlySet<string> = new Set([
@@ -54,17 +54,13 @@ const CORE_MODULE_IDS: ReadonlySet<string> = new Set([
   "long-video-trust-script",
   "story-trust-script",
   "value-convert-ladder",
-  "soft-cta-closer",
   "trust-offer-bridge",
-  "dm-comment-closer",
-  "offer-explanation-simple",
   "two-kinds-student-two-methods",
   "three-c-method",
   "three-r-method",
   "waffle-grid",
   "content-not-working-checklists",
   "positioning-four-questions",
-  "brand-stance-model",
   "goat-four-beats",
   "story-structure-search",
   "eight-ways-to-open",
@@ -98,6 +94,10 @@ export const PRACTICE_MODULE_IDS: ReadonlySet<string> = new Set([
   "learning-journey-series",
   "boss-brand-brief",
   "lean-ip-setup",
+  "brand-stance-model",
+  "soft-cta-closer",
+  "dm-comment-closer",
+  "offer-explanation-simple",
 ]);
 
 /**

@@ -1,8 +1,8 @@
 import type { ModulePack } from "@/lib/modules/types";
 
 /**
- * Trust → Offer Bridge: messaging when trust already built.
- * Convert KB thin: Generally → Jeff → steer; no invented offer architecture.
+ * Trust → Offer Bridge: bridge earned trust into the next step on
+ * 客户购买路径 (`fw.customer-purchase-paths`).
  */
 export const TRUST_OFFER_BRIDGE_PACK: ModulePack = {
   moduleId: "trust-offer-bridge",
@@ -24,8 +24,14 @@ export const TRUST_OFFER_BRIDGE_PACK: ModulePack = {
     {
       id: "nextConversation",
       label: "Honest next conversation",
-      placeholder: "DM, call, booking…",
+      placeholder: "DM, call, booking, in-store ask…",
       required: true,
+    },
+    {
+      id: "pathGuess",
+      label: "Purchase path this bridge serves (1 to 7)",
+      placeholder: "路径1 私讯 / 路径2 到店询问 / 路径3 转介绍 / 路径4 to 7 长决策",
+      required: false,
     },
     {
       id: "format",
@@ -35,12 +41,10 @@ export const TRUST_OFFER_BRIDGE_PACK: ModulePack = {
     },
   ],
   probeHints: [
-    "trust",
-    "offer",
-    "value then convert",
-    "exposure trust",
-    "not ads",
-    "convert",
+    "客户购买路径",
+    "内容→私讯→客户",
+    "内容→信任→到店",
+    "内容→转介绍",
     "信任到成交",
     "买人",
     "先给价值",
@@ -48,6 +52,7 @@ export const TRUST_OFFER_BRIDGE_PACK: ModulePack = {
     "probe_jeff",
   ],
   boundNodeIds: [
+    "fw.customer-purchase-paths",
     "pr.exposure-trust-conversion",
     "cl.value-then-convert",
     "cl.content-not-ads",
@@ -55,13 +60,23 @@ export const TRUST_OFFER_BRIDGE_PACK: ModulePack = {
     "rj.overnight-fame",
   ],
   starterPrompt:
-    "Using my intake, write a short trust-to-offer bridge script or caption. Assume trust is built; no overnight-fame or ad-as-asset framing.",
+    "Using my intake, name the 客户购买路径 this bridge serves, then write a short trust-to-offer bridge matched to that path. Assume trust is building; no overnight-fame or ad-as-asset framing.",
   chatOpener:
-    "I will write a trust-to-offer bridge assuming trust is already building. What trust have you earned, and what do you offer in plain words?",
+    "I will name your 客户购买路径 and write a trust-to-offer bridge on that path. What trust have you earned, and what do you offer in plain words?",
+  chatOpenerZh:
+    "我会点名你的客户购买路径，再写信任到 offer 的桥段。你已经赢得什么信任，用白话你提供什么？",
   systemOverlay: [
-    "## Module mode: Trust → Offer Bridge",
+    "## Module mode: Trust → Offer Bridge (客户购买路径)",
     "You are running the Trust → Offer Bridge tool for this user.",
-    "Job: bridge from earned trust into naming the offer and next conversation.",
+    "Exact Jeff framework: Customer purchase paths 1 to 7 / 客户购买路径 (`fw.customer-purchase-paths`).",
+    "Job: bridge from earned trust into naming the offer and next conversation on a named path.",
+    "",
+    "### Path vocabulary (hard; use Jeff terms)",
+    "1. 路径1 内容→私讯→客户",
+    "2. 路径2 内容→信任→到店/询问",
+    "3. 路径3 内容→转介绍",
+    "4. 路径4 to 7 长决策路径 + 跟进系统",
+    "Name the path first. Match the invite to that path (私讯 vs 到店/询问 vs 转介绍 vs follow-up system step).",
     "",
     "### Conversational collect (chat-first; no form)",
     "Slots live in conversation history. Ask at most 1 to 2 questions per turn.",
@@ -69,22 +84,24 @@ export const TRUST_OFFER_BRIDGE_PACK: ModulePack = {
     "When enough is known, or the user says just write it, deliver the full output and name assumptions.",
     "",
     "### Output format (when ready to generate)",
-    "Short bridge script or caption: trust acknowledgment → offer in plain words → next conversation invite.",
+    "1. Named path + one-line why.",
+    "2. Drop-off / friction note if they already trust but stall before the next path step.",
+    "3. Short bridge script or caption: trust acknowledgment → offer in plain words → next conversation invite matched to the path.",
+    "Do not ship a generic soft-sell without naming the path.",
     "",
     "### Jeff distinctiveness (hard)",
     "Use Jeff mechanisms in the user's language: get seen before trust before deal; standpoint; content assets not ads; advice vs ego; direction beats volume; value then convert where relevant.",
     "ANTI-GENERIC: If this reply could have come from a generic LinkedIn coach with no Jeff graph, rewrite before sending.",
     "",
-    "### KB honesty (hard)",
-    "Full offer systems are thin. Generally → Jeff → steer. No invented offer architecture, Epic Pitch clones, or named Jeff funnel doctrine.",
-    "Reject overnight-fame and ads-as-assets. Facts about the offer come from the conversation only.",
-    "Never invent Jeff niche case studies as doctrine.",
+    "### Doctrine rules (hard)",
+    "Bind to `fw.customer-purchase-paths`. Reject overnight-fame and ads-as-assets.",
+    "Facts about the offer come from the conversation only. Never invent Jeff niche case studies or Epic Pitch / funnel architecture as doctrine.",
     "",
     "### Evidence binding",
-    "Prefer: pr.exposure-trust-conversion, cl.value-then-convert, cl.content-not-ads, cl.buy-people-not-product, rj.overnight-fame when in the pack.",
+    "Prefer: fw.customer-purchase-paths, pr.exposure-trust-conversion, cl.value-then-convert, cl.content-not-ads, cl.buy-people-not-product, rj.overnight-fame when in the pack.",
     "Sources still come only from probe / probe_jeff.",
     "",
     "### After the bridge",
-    "End with one direct question: whether the next step feels honest to say on camera.",
+    "End with one direct question: whether the next path step feels honest to say on camera.",
   ].join("\n"),
 };

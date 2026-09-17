@@ -5,7 +5,13 @@ import { loadTeachingGraph } from "@/lib/probe";
 
 /** Cap bound-node briefs so module prompts stay denser than free chat without dumping the wiki. */
 const MAX_BOUND_NODE_BRIEFS: number = 6;
-const MAX_BOUND_SUMMARY_CHARS: number = 140;
+/**
+ * Bound-node summary truncation for the preferred-anchors block.
+ * 280 keeps slide-style Framework steps readable; Framework nodes get a bit more headroom.
+ * Full wiki still arrives via probe excerpts, not this brief.
+ */
+const MAX_BOUND_SUMMARY_CHARS: number = 280;
+const MAX_BOUND_FRAMEWORK_SUMMARY_CHARS: number = 400;
 
 /**
  * Formats optional leftover intake answers (legacy clients) into a short block.
@@ -112,10 +118,12 @@ export function formatBoundNodeBriefs(boundNodeIds: string[] | undefined): strin
       lines.push(`- ${id}: (id listed; not found in nodes.json this deploy)`);
       continue;
     }
+    const maxChars: number =
+      node.type === "Framework" || node.id.startsWith("fw.")
+        ? MAX_BOUND_FRAMEWORK_SUMMARY_CHARS
+        : MAX_BOUND_SUMMARY_CHARS;
     const summary: string =
-      node.summary.length > MAX_BOUND_SUMMARY_CHARS
-        ? `${node.summary.slice(0, MAX_BOUND_SUMMARY_CHARS)}…`
-        : node.summary;
+      node.summary.length > maxChars ? `${node.summary.slice(0, maxChars)}…` : node.summary;
     lines.push(`- ${node.id}: ${node.title}. ${summary}`);
   }
 
@@ -153,12 +161,9 @@ export function buildSharedModuleRules(pack: ModulePack): string {
     "",
     "## Jeff distinctiveness (hard; rewrite if violated)",
     "You are Jeff's aide on personal IP, not a generic personal-brand GPT.",
-    "Use Jeff teaching moves by name or mechanism in the locked UI locale language (English gloss OK when locale is en):",
-    "get seen before trust before deal (曝光→信任→成交); standpoint or invisible (立场);",
-    "content assets are not ads; founder face / boss is the brand; advice vs ego;",
-    "direction beats volume; value then convert; relevant rejects (volume≠money, overnight fame,",
-    "ads-as-content, outsourcing judgment to GPT).",
-    "ANTI-GENERIC: If this reply could have come from a generic LinkedIn coach with no Jeff graph, rewrite before sending until Jeff mechanisms are visible and concrete.",
+    "Pack overlay owns the job-relevant Jeff moves for this tool. Do not recite a universal Jeff slogan list.",
+    "Use only mechanisms named in this pack's overlay and/or present in this turn's bound evidence. Do not sprinkle unrelated Jeff slogans.",
+    "ANTI-GENERIC: If this reply could have come from a generic LinkedIn coach with no Jeff graph, rewrite until the pack's Jeff mechanisms are visible and concrete.",
     "Never invent Jeff case studies, patient stories, or named frameworks as confirmed doctrine.",
     "If evidence is thin: Generally → Jeff → steer. Still sound like Jeff's aide (diagnostic + one next move), not a bland coach.",
     "",
@@ -193,27 +198,98 @@ function moduleLocaleLockReminder(locale: Locale): string {
 const PROBE_HINT_BLOCKLIST: Set<string> = new Set(["probe_jeff"]);
 /** Cap hint flood so pack keywords cannot pin the same top sources every turn. */
 const MAX_MODULE_PROBE_HINTS: number = 4;
+/**
+ * Short generic English tokens that flood lexical scoring without Jeff-specific signal.
+ * Prefer Chinese terms and framework / node-id style hints instead.
+ */
+const GENERIC_ENGLISH_PROBE_HINTS: Set<string> = new Set([
+  "trust",
+  "offer",
+  "story",
+  "hook",
+  "brand",
+  "content",
+  "audience",
+  "script",
+  "caption",
+  "video",
+  "reel",
+  "post",
+  "engage",
+  "growth",
+  "funnel",
+  "cta",
+  "niche",
+  "personal",
+  "ip",
+]);
 
 /**
- * Light hint blend for module probes: drop meta tokens, cap count.
+ * Ranks a probe hint for the capped blend: Jeff node ids and Chinese first,
+ * generic English single words last. Higher score wins; ties keep pack order.
+ */
+function scoreModuleProbeHint(hint: string): number {
+  const trimmed: string = hint.trim();
+  if (trimmed.length === 0) {
+    return -Infinity;
+  }
+
+  let score = 0;
+  if (/[\u3400-\u9fff]/.test(trimmed)) {
+    score += 40;
+  }
+  if (/^(fw|pr|cl|tm|rj|src)\.[a-z0-9._-]+$/i.test(trimmed)) {
+    score += 35;
+  }
+  if (/\b(fw|pr|cl|tm|rj)\.[a-z0-9._-]+/i.test(trimmed)) {
+    score += 20;
+  }
+
+  const lower: string = trimmed.toLowerCase();
+  const words: string[] = lower.match(/[a-z0-9_]+/g) ?? [];
+  if (words.length === 1 && GENERIC_ENGLISH_PROBE_HINTS.has(words[0] ?? "")) {
+    score -= 25;
+  } else if (
+    words.length > 0 &&
+    words.every((word) => GENERIC_ENGLISH_PROBE_HINTS.has(word))
+  ) {
+    score -= 15;
+  }
+
+  // Slight preference for multi-token Jeff phrases over lone generics.
+  if (words.length >= 2 || /[\u3400-\u9fff]{2,}/.test(trimmed)) {
+    score += 5;
+  }
+
+  return score;
+}
+
+/**
+ * Light hint blend for module probes: drop meta tokens, prefer Jeff/CJK tokens, cap count.
  * Bound node ids are NOT dumped here (they soft-merge after probe instead).
  */
 export function selectModuleProbeHints(probeHints: string[]): string[] {
-  const selected: string[] = [];
-  for (const raw of probeHints) {
-    const hint: string = raw.trim();
+  const scored: Array<{ hint: string; score: number; order: number }> = [];
+
+  for (let order = 0; order < probeHints.length; order += 1) {
+    const hint: string = probeHints[order]?.trim() ?? "";
     if (hint.length === 0) {
       continue;
     }
     if (PROBE_HINT_BLOCKLIST.has(hint.toLowerCase())) {
       continue;
     }
-    selected.push(hint);
-    if (selected.length >= MAX_MODULE_PROBE_HINTS) {
-      break;
-    }
+    scored.push({ hint, score: scoreModuleProbeHint(hint), order });
   }
-  return selected;
+
+  scored.sort((a, b) => {
+    if (b.score !== a.score) {
+      return b.score - a.score;
+    }
+    return a.order - b.order;
+  });
+
+  return scored.slice(0, MAX_MODULE_PROBE_HINTS).map((item) => item.hint);
 }
 
 /**

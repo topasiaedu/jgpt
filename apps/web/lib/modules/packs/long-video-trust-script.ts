@@ -1,7 +1,8 @@
 import type { ModulePack } from "@/lib/modules/types";
 
 /**
- * Long Video Trust Script: YouTube-style deeper teach.
+ * Long Video Trust Script: trust-path outline bound to Trust Evidence /
+ * 信任复利公式 / Trust Engine. Not stock YouTube boilerplate.
  */
 export const LONG_VIDEO_TRUST_SCRIPT_PACK: ModulePack = {
   moduleId: "long-video-trust-script",
@@ -32,6 +33,13 @@ export const LONG_VIDEO_TRUST_SCRIPT_PACK: ModulePack = {
       required: true,
     },
     {
+      id: "evidenceTypes",
+      label: "Trust Evidence you can show (结果/过程/角色/人品)",
+      placeholder: "Which of 结果 / 过程 / 角色 / 人品 can you prove on camera?",
+      required: true,
+      multiline: true,
+    },
+    {
       id: "language",
       label: "Language preference",
       placeholder: "English, Chinese, or mixed",
@@ -39,19 +47,22 @@ export const LONG_VIDEO_TRUST_SCRIPT_PACK: ModulePack = {
     },
   ],
   probeHints: [
-    "long video",
-    "short vs long",
-    "trust",
-    "exposure trust",
-    "content asset",
-    "teach",
+    "信任证据清单",
+    "信任复利公式",
+    "信任引擎",
+    "结果证据",
+    "过程证据",
+    "角色证据",
+    "人品证据",
     "长视频",
-    "信任",
     "先给价值",
     "内容资产",
     "probe_jeff",
   ],
   boundNodeIds: [
+    "fw.trust-evidence-checklist",
+    "fw.trust-compound-formula",
+    "fw.trust-engine",
     "cl.short-vs-long-video",
     "pr.exposure-trust-conversion",
     "cl.value-then-convert",
@@ -59,13 +70,16 @@ export const LONG_VIDEO_TRUST_SCRIPT_PACK: ModulePack = {
     "pr.advice-vs-ego",
   ],
   starterPrompt:
-    "Using my intake, outline a YouTube-style long video: open, teaching sections, close with a soft next step. Structure for MY craft.",
+    "Using my intake, outline a long trust-path video: place Trust Evidence types (结果/过程/角色/人品), frame as 看见你→理解你→相信你→问你→买你 where useful, and close with a soft next step. Structure for MY craft.",
   chatOpener:
-    "I will outline a longer trust-building teaching video. What topic can you teach for 5 to 15 minutes without fluff?",
+    "I will outline a longer trust-building teach as a trust path (not stock YouTube filler), placing Trust Evidence types. What topic can you teach for 5 to 15 minutes without fluff?",
+  chatOpenerZh:
+    "我会按信任路径搭长视频大纲（不是通用 YouTube 模板），并放入信任证据类型。有哪个题目你能讲 5 到 15 分钟还不注水？",
   systemOverlay: [
     "## Module mode: Long Video Trust Script",
     "You are running the Long Video Trust Script tool for this user.",
     "Job: deeper teach outline so viewers stay long enough to trust judgment.",
+    "Bind Jeff frameworks: Trust Evidence Checklist / 信任证据清单 (`fw.trust-evidence-checklist`), 信任复利公式 (`fw.trust-compound-formula`), Trust Engine / 信任引擎 (`fw.trust-engine`).",
     "",
     "### Conversational collect (chat-first; no form)",
     "Slots live in conversation history. Ask at most 1 to 2 questions per turn.",
@@ -73,10 +87,13 @@ export const LONG_VIDEO_TRUST_SCRIPT_PACK: ModulePack = {
     "When enough is known, or the user says just write it, deliver the full output and name assumptions.",
     "",
     "### Output format (when ready to generate)",
-    "1. Open: why this matters.",
+    "Frame as a trust path, not stock YouTube boilerplate (no generic intro/hooks/outro theater).",
+    "1. Open: why this matters for trust (align to Trust Engine step when useful: 看见你 → 理解你 → 相信你 → 问你 → 买你).",
     "2. Teaching sections (3 to 5): speakable beats.",
-    "3. Example placement from the conversation (label as THEIR practice).",
-    "4. Close: soft next step; value then light convert.",
+    "3. Trust Evidence placement (required): label which sections prove 结果证据 / 过程证据 / 角色证据 / 人品证据. At least two types must appear; name gaps honestly.",
+    "4. Example placement from the conversation (label as THEIR practice).",
+    "5. Compound note (optional one line): 真实 × 执行 × 共鸣 when it fits their facts.",
+    "6. Close: soft next step; value then light convert.",
     "Never invent Jeff patient stories as doctrine.",
     "",
     "### Jeff distinctiveness (hard)",
@@ -85,13 +102,13 @@ export const LONG_VIDEO_TRUST_SCRIPT_PACK: ModulePack = {
     "",
     "### Doctrine rules (hard)",
     "Long video role is trust depth; short is exposure. Content asset, not ad.",
-    "No overnight-fame.",
+    "No overnight-fame. Do not ship a generic YouTube template with Jeff labels glued on.",
     "",
     "### Evidence binding",
-    "Prefer: cl.short-vs-long-video, pr.exposure-trust-conversion, cl.value-then-convert, cl.content-not-ads, pr.advice-vs-ego when in the pack.",
+    "Prefer: fw.trust-evidence-checklist, fw.trust-compound-formula, fw.trust-engine, cl.short-vs-long-video, pr.exposure-trust-conversion, cl.value-then-convert, cl.content-not-ads, pr.advice-vs-ego when in the pack.",
     "Sources still come only from probe / probe_jeff.",
     "",
     "### After the outline",
-    "End with one direct question about which section they will film first.",
+    "End with one direct question about which Trust Evidence type they will film first.",
   ].join("\n"),
 };

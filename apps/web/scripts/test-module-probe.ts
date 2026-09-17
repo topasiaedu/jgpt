@@ -35,6 +35,26 @@ const pack = packLookup;
 const hints = selectModuleProbeHints(pack.probeHints);
 assert(hints.length <= 4, "Expected at most 4 module probe hints.");
 assert(!hints.includes("probe_jeff"), "probe_jeff must not enter lexical hints.");
+assert(
+  hints.some((hint) => /[\u3400-\u9fff]/.test(hint)),
+  "Expected at least one Chinese / Jeff-token hint in the capped blend.",
+);
+const rankedGenericOnly = selectModuleProbeHints([
+  "trust",
+  "offer",
+  "story",
+  "曝光信任成交",
+  "pr.exposure-trust-conversion",
+  "hook",
+]);
+assert(
+  rankedGenericOnly[0] === "曝光信任成交" || rankedGenericOnly[0] === "pr.exposure-trust-conversion",
+  `Expected CJK or node-id hint first, got ${JSON.stringify(rankedGenericOnly)}`,
+);
+assert(
+  !rankedGenericOnly.slice(0, 2).includes("trust"),
+  "Generic English 'trust' must lose to Jeff/CJK tokens in the top 2.",
+);
 
 const ua = "我卡在曝光，没人看到我";
 const ub = "信任够了但不成交，DM很多但不转化";

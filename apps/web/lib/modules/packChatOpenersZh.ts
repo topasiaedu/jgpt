@@ -5,9 +5,9 @@
 
 export const PACK_CHAT_OPENERS_ZH: Record<string, string> = {
   "ip-stage-check":
-    "我会帮你判断你卡在「被看见 → 信任 → 成交」的哪一段，再指向下一个工具。你现在最卡住的是哪一块：曝光、信任、私信、约谈，还是方向不清？",
+    "我会跑 SELF DIAGNOSTIC / 自我诊断：你现在拥有的，是内容还是系统？第一项：你知道哪三种内容最适合自己吗？先答是或否，并用一句话说明。",
   "standpoint-builder":
-    "我会帮你磨出一句能上镜说的立场，偏建议、不偏炫耀。先用一句白话告诉我：你服务谁？",
+    "我会按 Jeff「IP影响力三角」写满三腿：坚持什么、反对什么、真实缺口（FLAW），再加一句市场对你的印象。你在工作里坚持什么、别人常回避？",
   "boss-brand-brief":
     "我会写一份简短的老板品牌 brief：以创办人面孔当品牌、可拍场景、可做与别做，不滑进硬广。你的角色是什么，谁该认出你的脸？",
   "lean-ip-setup":
@@ -15,11 +15,13 @@ export const PACK_CHAT_OPENERS_ZH: Record<string, string> = {
   "who-i-serve":
     "我会按「定位一句话：三行地图」写满三行：我是谁 / 我帮谁 / 解决什么。先用白话说「我是谁」：身份、行业、经验、角色？",
   "ip-pillars":
-    "我会从你真实做事里整理 Jeff Brand Pillars：3 到 5 个可反复拍的主题。用白话说说你日常在做什么？",
+    "我会按 Jeff Brand Pillars 四步走：WHO+痛点 → 列10个市场问题 → 归成3到5组 → 留成长期支柱。先说你服务谁、他们的痛点是什么？",
+  "brand-stance-model":
+    "我会写品牌立场的两腿：坚持什么、反对什么。Suggested 第三腿（known for doing）尚未确认为 Jeff IP。你坚持什么？",
   "ig-reel-script":
-    "我会帮你写一条可直接拍的 15 到 45 秒 Instagram Reel，当内容资产，不当硬广。你希望观众带走的那一个教训或故事点是什么？",
+    "我会用 OPENS 60秒五幕剧（Opening / Problem / Evidence / New Way / Step）写一条可拍的 15 到 45 秒 Instagram Reel，当内容资产，不当硬广。你希望观众带走的那一个教训或故事点是什么？",
   "scroll-stop-hook":
-    "我会用 Hook Formula 写前 1 到 3 秒能停住滑动的开场。主题是什么，哪一种痛点或好奇该让他们停下来？",
+    "我会用 Hook Formula（对象＋痛点＋反差/结果＋好奇）只打磨前 1 到 3 秒。对象是谁，哪一个痛点该让他们停下来？",
   "value-teaching-reel":
     "我会写一条价值向 Reel：先公开教一招，再给一个轻下一步。你能在一分钟内教完的那一招是什么？",
   "hot-take-script":
@@ -31,13 +33,13 @@ export const PACK_CHAT_OPENERS_ZH: Record<string, string> = {
   "short-vs-long-planner":
     "我会规划哪些题目适合短、哪些适合长，服务「被看见 → 信任」，不走「发得越多越赚钱」。你现在处在哪个阶段？",
   "long-video-trust-script":
-    "我会帮你搭一条偏长、用来建信任的教学视频大纲。有哪个题目你能讲 5 到 15 分钟还不注水？",
+    "我会按信任路径搭长视频大纲（不是通用 YouTube 模板），并放入信任证据类型。有哪个题目你能讲 5 到 15 分钟还不注水？",
   "story-trust-script":
-    "我会按你自己的实践写故事信任脚本（不编造 Jeff 案例）。你愿意讲的故事是什么，想落地的信念是什么？",
+    "我会用 S.T.O.R.Y（起点处境 / 最大冲突 / 困难选择 / 你坚持什么 / 你要影响谁）写你的故事信任脚本，只用你的事实。起点处境是什么？",
   "authority-relatable-mixer":
-    "我会帮你把权威感和人味配平，听起来不像广告牌，也不像随便闲聊。你平时上镜通常怎么出现？",
+    "我会按 WS09 角色约束（艺人 / 直播主 / 老师 / 博主）帮你混搭权威与亲和。你最接近哪一种角色？",
   "faq-content-bank":
-    "我会把反复被问的问题整理成 CONTENT BANK 角度。列出 5 到 10 个别人已经在问你的问题。",
+    "我会按 Jeff CONTENT BANK（题材 / 分类 / 形式 / 状态）帮你建内容库。把素材贴过来（问题、观点、误区、故事都可以）。FAQ 问题只进题材，不是整套任务。",
   "learning-journey-series":
     "我会帮你排一条有软连贯的学习旅程系列。你从哪里起步，哪个转折点最重要？",
   "soundbite-one-liner":
@@ -49,13 +51,13 @@ export const PACK_CHAT_OPENERS_ZH: Record<string, string> = {
   "direction-fixer":
     "我会做方向判断：主赛道、次赛道、该停什么。你最近在发什么，真正想要的结果是什么？",
   "value-convert-ladder":
-    "我会画一条从免费价值到自然邀请的短阶梯（知识库对漏斗较薄，紧贴最近的 Jeff 节点）。你免费教什么，卖的是什么？",
+    "我会点名你的客户购买路径（路径1 to 7），并标出掉点。你免费教什么，卖的是什么？",
   "ad-vs-asset-checker":
     "我会判断你的草稿读起来像销售广告还是内容资产，再改向资产。把要检查的草稿贴过来。",
   "comment-to-content":
     "我会把一条评论或推回，转成下一支脚本角度，当建议，不当吵架表演。把评论贴过来。",
   "content-ideation-ip":
-    "我会用九宫格 / Topic Bingo 从你真实做事方式里长出九个选题。你日常怎么工作？",
+    "我会按 AUG-D2 九宫格 / Topic Bingo 来：中心是人设，八格是兴趣/专业/观点/故事/客户/行业/趋势/痛点，再画四条穿心线长出大约 12 个题目雏形。先用白话说你的人设：市场该把你记成谁？",
   "advice-vs-ego-coach":
     "我会给你一份开拍前检查：上镜是给观众建议，不是给自己炫耀。你打算在镜头前说什么？",
   "comment-reply-three-lines":
@@ -69,9 +71,9 @@ export const PACK_CHAT_OPENERS_ZH: Record<string, string> = {
   "dont-outsource-judgment":
     "我会做一轮留 / 删 / 改写，判断权仍在你。把你吃不准的 AI 草稿贴过来。",
   "soft-cta-closer":
-    "我会在价值之后写软收尾选项：一步清楚下一步，不翻成硬卖。你已经教了什么价值，想要的下一步是什么？",
+    "我会按 CTA Structure（总结价值 → 发出指令 → 降低门槛）写软收尾。你已经教了什么价值，想要的下一步是什么？",
   "trust-offer-bridge":
-    "我会写信任到 offer 的桥段，前提是信任已在建立。你已经赢得什么信任，用白话你提供什么？",
+    "我会点名你的客户购买路径，再写信任到 offer 的桥段。你已经赢得什么信任，用白话你提供什么？",
   "dm-comment-closer":
     "我会起草一则回复，把有温度的兴趣推进到清楚下一步。把评论或私信贴过来。",
   "offer-explanation-simple":

@@ -11,10 +11,10 @@ export const MODULE_CATALOG: ModuleDefinition[] = [
     category: "Ideation",
     status: "ready",
     description: [
-      "What it does: Diagnoses where you are stuck in the see → trust → convert path. It names whether you are mainly unseen, trusted but not converting, or converting without a clear next move, then points you to the next module to open.",
-      "What to input: Your niche or industry, what you sell or want to be known for, how often you show up on camera or in content, and what feels stuck (views, trust, or deals).",
+      "What it does: Runs Jeff SELF DIAGNOSTIC / 自我诊断 (AUG-D3): 内容还是系统, then six yes/no checks. Unanswered checks are the next stage to fix. Get seen → trust → deal is only a secondary steer after the scorecard, not a replacement for the six checks.",
+      "What to input: What you do, plus honest yes/no on: best three content types, four weeks of stable publishing, traffic/trust/deal roles, topic-to-publish flow, weekly data adjust, and inquire/delivery/deal connection.",
       "When to use: At the start of personal IP work, after a quiet stretch, or when advice to post more is not helping.",
-      "What you get: A plain-language stage read, one priority focus, and a recommended next tool from this wall.",
+      "What you get: A content vs system framing, a six-check scorecard citing your answers, and a next-stage list of unanswered checks (not a canned module roulette).",
     ].join("\n\n"),
   },
   {
@@ -23,10 +23,10 @@ export const MODULE_CATALOG: ModuleDefinition[] = [
     category: "IP Positioning",
     status: "ready",
     description: [
-      "What it does: Helps you write one sharp standpoint line so people know what you stand for, not only what you sell.",
-      "What to input: Who you serve, what you believe that others soft-pedal, and what you refuse to do in your work.",
-      "When to use: Before filming, before a profile rewrite, or when your content sounds generic and interchangeable.",
-      "What you get: A short standpoint line you can say on camera, plus a note on how to keep it advice-led rather than ego-led.",
+      "What it does: Fills Jeff's IP Influence Triangle (立场): 坚持什么 / 反对什么 / 真实缺口 (FLAW), plus one market-impression sentence.",
+      "What to input: What you insist on, what you oppose, your real gap / human side, and how the market currently reads you in one sentence.",
+      "When to use: Before filming or a profile rewrite, when content sounds generic, or when you only have opinions without a real gap.",
+      "What you get: The three triangle legs and one market-impression sentence. Not a single camera opener as the primary job.",
     ].join("\n\n"),
   },
   {
@@ -60,9 +60,9 @@ export const MODULE_CATALOG: ModuleDefinition[] = [
     status: "ready",
     description: [
       "What it does: Fills Jeff's Positioning One-Liner: Three-Line Map (AUG-D1 p038): Who I am / Who I help / What I solve, so the market quickly understands who you help.",
-      "What to input: Who I am (identity, industry, experience, role), who I help, what I solve (problem or change the market buys), optional proof of fit.",
+      "What to input: Who I am (identity, industry, experience, role), who I help, and what I solve (problem or change the market buys).",
       "When to use: Before offers or scripts, when positioning is a long bio, or when content talks about you without naming who it is for.",
-      "What you get: All three map lines, an optional one-liner that stitches them, and one people-first content angle.",
+      "What you get: The three map lines (OCR acceptance). Stitch one-liner and content angles only if you ask after.",
     ].join("\n\n"),
   },
   {
@@ -71,10 +71,10 @@ export const MODULE_CATALOG: ModuleDefinition[] = [
     category: "IP Positioning",
     status: "ready",
     description: [
-      "What it does: Maps Jeff Brand Pillars: 3 to 5 recurring content themes from your craft you can rotate without inventing a new topic every day.",
-      "What to input: What you do day to day, questions clients ask, results you can show, and the standpoint you want people to remember.",
-      "When to use: When your feed feels random, when you run out of ideas mid-week, or when you need a simple theme map before planning scripts.",
-      "What you get: Three to five named pillars, example post angles under each, and a note on rotating see / trust / convert without volume-as-money thinking.",
+      "What it does: Runs Jeff Brand Pillars four steps (AUG-D1 p049): WHO+痛点, list 10 market questions, cluster to 3 to 5 themes, then durable pillars.",
+      "What to input: Who you serve and their pain, then 10 questions the market asks most often.",
+      "When to use: When your feed feels random, when you run out of ideas mid-week, or when you need durable columns before planning scripts.",
+      "What you get: Ten questions, 3 to 5 clustered pillars from those questions, and example angles. No see/trust/convert rotation in this tool.",
     ].join("\n\n"),
   },
   {
@@ -83,10 +83,10 @@ export const MODULE_CATALOG: ModuleDefinition[] = [
     category: "Content",
     status: "ready",
     description: [
-      "What it does: Writes a shootable 15-45 second Instagram Reel script in Jeff's content-asset style: hook, body beats, close. Built to get you seen and useful, not to hard-sell in the first second.",
-      "What to input: Niche or industry, audience, your standpoint or offer angle, one lesson or story beat, language preference, and how soft the close should be.",
+      "What it does: Writes a shootable 15-45 second Instagram Reel on OPENS 60秒五幕剧 (Opening / Problem / Evidence / New Way / Step). Content asset style, not a hard-sell ad. Does not rename OPENS to GOAT.",
+      "What to input: Niche or industry, audience, standpoint or offer angle, one lesson or story beat, language preference, optional 四种内容资产 type, and how soft the close should be.",
       "When to use: When you need a concrete Reel to film this week, or when drafts keep sounding like ads instead of teaching assets.",
-      "What you get: A structured script (hook, body, close), optional on-screen text cues, and a close that invites without overnight-fame promises.",
+      "What you get: A five-beat OPENS script, optional on-screen text, optional one asset-type tag, and a Step that invites without overnight-fame promises.",
     ].join("\n\n"),
   },
   {
@@ -95,10 +95,10 @@ export const MODULE_CATALOG: ModuleDefinition[] = [
     category: "Content",
     status: "ready",
     description: [
-      "What it does: Applies Hook Formula: opening lines that earn the first second of attention, without writing the full Reel.",
-      "What to input: Topic, audience pain or curiosity, and the standpoint you want the hook to imply.",
+      "What it does: Applies AUG-D2 Hook Formula (对象＋痛点＋反差/结果＋好奇): opening lines that earn the first second of attention, without writing the full Reel.",
+      "What to input: 对象, 痛点, 反差/结果, and 好奇 (topic and language optional).",
       "When to use: When the body of your video is fine but people scroll past the first frame, or when you want several hook options to A/B mentally before filming.",
-      "What you get: Multiple scroll-stop opening lines, with a note on what makes each stop-worthy without clickbait that breaks trust.",
+      "What you get: Multiple opening lines, each annotated with all four legs. Incomplete lines are rejected.",
     ].join("\n\n"),
   },
   {
@@ -167,10 +167,10 @@ export const MODULE_CATALOG: ModuleDefinition[] = [
     category: "Trust",
     status: "ready",
     description: [
-      "What it does: Outlines a YouTube-style deeper teach so viewers stay long enough to trust your judgment, not only your hook.",
-      "What to input: The topic you can teach for 5 to 15 minutes, who it helps, one story or example from your practice, and the trust outcome you want.",
+      "What it does: Outlines a longer teach as a trust path (Trust Evidence / 信任复利公式 / Trust Engine), so viewers stay long enough to trust your judgment, not only your hook.",
+      "What to input: The topic you can teach for 5 to 15 minutes, who it helps, one story or example from your practice, the trust outcome you want, and which Trust Evidence types you can show (结果 / 过程 / 角色 / 人品).",
       "When to use: When short clips get views but not belief, or when a topic needs depth the Reel format cannot hold.",
-      "What you get: A long-video outline (open, teaching sections, close) labeled as structure for your craft, with a soft next step.",
+      "What you get: A trust-path outline with teaching sections that place Trust Evidence types, not stock YouTube boilerplate, plus a soft next step.",
     ].join("\n\n"),
   },
   {
@@ -179,10 +179,10 @@ export const MODULE_CATALOG: ModuleDefinition[] = [
     category: "Trust",
     status: "ready",
     description: [
-      "What it does: Turns a personal or client story into a belief-building script without inventing Jeff case studies as doctrine.",
-      "What to input: The story (yours or a client you have permission to paraphrase), the belief you want the viewer to take, and what stays private.",
+      "What it does: Turns a personal or client story into an S.T.O.R.Y Founder Story trust script (Situation / Turning Point / Obstacle / Reason / Yield) without inventing Jeff case studies.",
+      "What to input: Your facts for each S.T.O.R.Y step, plus what stays private. Longer Problem→Search arcs belong in Story Structure (Problem to Search).",
       "When to use: When teaching tips feel dry, or when you need human proof that your standpoint is lived.",
-      "What you get: A story script with setup, turn, belief land, and a note that stories illustrate; they are not universal Jeff patient scripts.",
+      "What you get: An S.T.O.R.Y script filled with your story facts; stories illustrate, they are not universal Jeff patient scripts.",
     ].join("\n\n"),
   },
   {
@@ -191,10 +191,10 @@ export const MODULE_CATALOG: ModuleDefinition[] = [
     category: "Trust",
     status: "ready",
     description: [
-      "What it does: Helps you mix authority and relatability so you know what role can show (teacher / performer / live host energy) and what it should not overplay.",
-      "What to input: How you usually show up, where you feel stiff or too casual, and what your audience needs to trust you.",
+      "What it does: Mixes authority and relatability under WS09 role constraints (艺人 → 距离感, 直播主 → 信任感, 老师 vs 博主 content mix). Optional 内容角色 3+2 portfolio tip.",
+      "What to input: Your primary role (艺人 / 直播主 / 老师 / 博主), how you usually show up, where you feel stiff or too casual, and what your audience needs to trust you.",
       "When to use: When you look expert but cold, or warm but not credible, or when you keep switching personas with no plan.",
-      "What you get: A mix brief: what to show more of, what to dial down, and one filmable beat that balances authority with human.",
+      "What you get: A role-constrained mix brief: what to show more of, what to dial down, and one filmable beat that does not break the role.",
     ].join("\n\n"),
   },
   {
@@ -203,10 +203,10 @@ export const MODULE_CATALOG: ModuleDefinition[] = [
     category: "Content",
     status: "ready",
     description: [
-      "What it does: Builds a CONTENT BANK from common client questions: a short post series that teaches through answers, not ads.",
-      "What to input: Five to ten questions you hear often, your niche, and which answers you can give without oversharing confidential detail.",
-      "When to use: When you are out of topics, or when DMs repeat the same questions you could answer once on camera.",
-      "What you get: A bank of FAQ titles plus 1 to 2 sentence angles for each, ready to turn into Reels or captions.",
+      "What it does: Inventories a Jeff CONTENT BANK (AUG-D3) by four axes: 题材 (问题/观点/误区/故事), 分类 (教育/信任/证明/引流/转化), 形式 (口播/对谈/清单/案例/Vlog), and 状态. FAQ questions are one input for 题材 only.",
+      "What to input: Raw material (questions, views, myths, stories), your niche, optional preferred 形式 and 状态, and answer boundaries.",
+      "When to use: When you need a content inventory, not a random topic list, or when DMs repeat questions that should enter the bank as 题材.",
+      "What you get: Inventoried rows tagged on all four axes, ready to film. Not a see/trust/convert inventing scheme.",
     ].join("\n\n"),
   },
   {
@@ -275,10 +275,10 @@ export const MODULE_CATALOG: ModuleDefinition[] = [
     category: "Convert",
     status: "ready",
     description: [
-      "What it does: Maps how free value leads into a natural invite, so convert content does not appear out of nowhere.",
-      "What to input: What you teach for free, what you sell, and where people currently drop off between liked the tip and ready to talk.",
+      "What it does: Names your Jeff 客户购买路径 (paths 1 to 7) and maps where people drop off, so convert content does not appear out of nowhere.",
+      "What to input: What you teach for free, what you sell, where people drop off, and optionally which path you think you are on.",
       "When to use: When trust content never turns into conversations, or when convert posts feel abrupt.",
-      "What you get: A short ladder of asset types from value → invite, with language that stays coach-like rather than funnel-y.",
+      "What you get: A named path (路径1 内容→私讯→客户, 路径2 内容→信任→到店/询问, 路径3 内容→转介绍, or 路径4 to 7 长决策), drop-off map, and content moves. Not a generic rungs-only soft-sell.",
     ].join("\n\n"),
   },
   {
@@ -311,10 +311,10 @@ export const MODULE_CATALOG: ModuleDefinition[] = [
     category: "Ideation",
     status: "ready",
     description: [
-      "What it does: Fills a Topic Bingo / 九宫格 grid (related English name: The Waffle): nine filmable topic cells from process, FAQs, results, and standpoint so ideation stays IP-shaped.",
-      "What to input: How you work, questions you get, results you can show, and the standpoint line you want reinforced.",
+      "What it does: Fills Jeff AUG-D2 九宫格 / Topic Bingo: center 人设, eight cells 兴趣/专业/观点/故事/客户/行业/趋势/痛点, then 四条穿心线 into about 12 topic seeds. Not The Waffle format×theme plan.",
+      "What to input: Your 人设, plus keywords for the eight Jeff cells from real work (interest, expertise, views, stories, customers, industry, trends, pains).",
       "When to use: When the blank page wins, or when ideas feel random instead of on-brand for your personal IP.",
-      "What you get: A short idea list tagged see / trust / convert, each tied to process, question, result, or standpoint. Prefer The Waffle module when you want the format times themes multiplication plan.",
+      "What you get: One filled 九宫格 with Jeff cell labels, four 穿心线 directions, and about 12 题目雏形. Use The Waffle module when you want formats times themes toward ~100 videos.",
     ].join("\n\n"),
   },
   {
@@ -395,10 +395,10 @@ export const MODULE_CATALOG: ModuleDefinition[] = [
     category: "Convert",
     status: "ready",
     description: [
-      "What it does: Ends a value piece with one clear next step without flipping the whole post into a hard sell.",
-      "What to input: The value you already taught, the one next step you want (follow, save, DM, book), and how warm the audience is.",
+      "What it does: Ends a value piece with CTA Structure: 总结价值 → 发出指令 → 降低门槛, without flipping the whole post into a hard sell.",
+      "What to input: The value you already taught, the one next step you want, how you lower the barrier, and how warm the audience is.",
       "When to use: When your teach is strong but the ending trails off, or when closes feel either missing or too pushy.",
-      "What you get: Two to three soft close options plus guidance to pick one. KB on offers is thin: steer with Jeff craft, no invented funnel architecture.",
+      "What you get: Two to three soft close options, each showing all three CTA Structure beats, plus guidance to pick one.",
     ].join("\n\n"),
   },
   {
@@ -407,10 +407,10 @@ export const MODULE_CATALOG: ModuleDefinition[] = [
     category: "Convert",
     status: "ready",
     description: [
-      "What it does: Writes messaging that assumes trust is already built and bridges into talking about what you offer, without overnight-fame or ad-as-asset framing.",
-      "What to input: What trust you have earned, what you offer in plain words, and what the honest next conversation is.",
+      "What it does: Names the 客户购买路径 this invite serves, then writes messaging that bridges earned trust into the offer and next conversation.",
+      "What to input: What trust you have earned, what you offer in plain words, the honest next conversation, and optionally which purchase path (1 to 7) you are on.",
       "When to use: When people already trust you but you freeze when naming the offer, or when invite posts feel disconnected from prior teaching.",
-      "What you get: A short bridge script or caption. Knowledge on full offer systems is thin: Generally → Jeff → steer; no invented offer architecture.",
+      "What you get: A named path plus a short bridge script or caption matched to 私讯 / 到店询问 / 转介绍 / long-decision follow-up. No overnight-fame or ad-as-asset framing.",
     ].join("\n\n"),
   },
   {
@@ -551,10 +551,10 @@ export const MODULE_CATALOG: ModuleDefinition[] = [
     category: "Ideation",
     status: "ready",
     description: [
-      "What it does: Runs two coach checklists: nobody watching, and no ideas to film. Positioning before lighting tricks.",
-      "What to input: The symptom, what is actually sold, and your current positioning guess.",
+      "What it does: Runs two coach checklists in exact order. A (nobody watching): business → method → words → positioning. B (no ideas): fix positioning → loud/quiet → fill grid → AI draft. Positioning before lighting tricks.",
+      "What to input: The symptom, what is actually sold, loud or quiet temperament, customer words, and your current positioning guess.",
       "When to use: When views are dead or the calendar is empty and everyone wants a camera tip.",
-      "What you get: Ordered diagnosis, loud/quiet route call, and next grid steps.",
+      "What you get: Gate-by-gate diagnosis citing your facts, loud/quiet call, and named next tools (Two Kinds; Waffle or 九宫格) when ideas are empty.",
     ].join("\n\n"),
   },
   {
@@ -575,10 +575,10 @@ export const MODULE_CATALOG: ModuleDefinition[] = [
     category: "IP Positioning",
     status: "ready",
     description: [
-      "What it does: Writes stand for, stand against, and what you are known for doing. The third leg is suggested until Jeff wording is confirmed.",
-      "What to input: What you stand for, what you stand against, and repeated public proof of what you do.",
-      "When to use: When stance is only opinions, or when IP Influence Triangle needs evidence work.",
-      "What you get: Three stance legs with a Suggested label on the third, mapped carefully to IP Influence Triangle.",
+      "What it does: Drafts stand for and stand against. The Suggested third leg (known for doing) is not confirmed Jeff IP yet.",
+      "What to input: What you stand for, what you stand against, and optionally a real gap (真实缺口) if you have one.",
+      "When to use: When you want the stakeholder stance worksheet without treating Suggested as doctrine. Prefer Standpoint Builder for the AUG triangle.",
+      "What you get: Two stance legs; optional 真实缺口 mapping. No invented known-for line.",
     ].join("\n\n"),
   },
   {
@@ -611,10 +611,10 @@ export const MODULE_CATALOG: ModuleDefinition[] = [
     category: "Content",
     status: "ready",
     description: [
-      "What it does: Drafts openings for the first three seconds across eight ways, plus loudest-moment-first editing.",
+      "What it does: Drafts first-three-second openings across eight named ways (Strong feeling; Argument; View people fight about; Everyone cares; Breaking pattern; Myth; Unanswered question; News), plus loudest-ten-seconds-first editing.",
       "What to input: Topic, viewer biggest problem, and optional loudest moment already filmed.",
       "When to use: When strong videos die on a weak open, or you open with an introduction.",
-      "What you get: Opening lines by way, strongest two to film, and the edit rule. Complements Hook Formula.",
+      "What you get: One line per way (or skip with reason), strongest two to film, and the edit rule. Complements Hook Formula.",
     ].join("\n\n"),
   },
   {
