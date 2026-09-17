@@ -45,6 +45,7 @@ export const STANDPOINT_BUILDER_PACK: ModulePack = {
     "probe_jeff",
   ],
   boundNodeIds: [
+    "fw.ip-influence-triangle",
     "pr.standpoint-or-invisible",
     "tm.lichang",
     "pr.advice-vs-ego",

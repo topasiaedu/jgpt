@@ -100,7 +100,7 @@ export const IG_REEL_SCRIPT_PACK: ModulePack = {
     "3. Close: soft invite (follow, save, DM keyword, light talk), not overnight-fame pressure.",
     "4. On-screen text: short cues per beat.",
     "Optional timing so total stays about 15 to 45 seconds.",
-    "Match their language; otherwise match the latest user message.",
+    "Write the whole script in the locked UI locale language.",
     "",
     "### Hard bans",
     "No overnight-fame promises. No inventing Jeff patient/clinic/workshop case studies as doctrine.",

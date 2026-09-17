@@ -1,7 +1,8 @@
 import type { ModulePack } from "@/lib/modules/types";
 
 /**
- * Content Ideation IP: ideas from process, Qs, results, standpoint.
+ * 九宫格 / Topic Bingo ideation.
+ * Module id kept as content-ideation-ip for stable routes.
  */
 export const CONTENT_IDEATION_IP_PACK: ModulePack = {
   moduleId: "content-ideation-ip",
@@ -35,6 +36,8 @@ export const CONTENT_IDEATION_IP_PACK: ModulePack = {
     },
   ],
   probeHints: [
+    "九宫格",
+    "topic bingo",
     "content ideas",
     "content asset",
     "standpoint",
@@ -48,6 +51,8 @@ export const CONTENT_IDEATION_IP_PACK: ModulePack = {
     "probe_jeff",
   ],
   boundNodeIds: [
+    "fw.jiugongge-topic-bingo",
+    "fw.waffle-grid",
     "tm.content-asset",
     "pr.standpoint-or-invisible",
     "pr.direction-beats-volume",
@@ -55,13 +60,13 @@ export const CONTENT_IDEATION_IP_PACK: ModulePack = {
     "cl.content-not-ads",
   ],
   starterPrompt:
-    "Using my intake, generate an IP-shaped idea list tagged see / trust / convert, each tied to process, question, result, or standpoint.",
+    "Using my intake, fill a 九宫格 / Topic Bingo: nine filmable topic cells tagged see / trust / convert, each tied to process, question, result, or standpoint.",
   chatOpener:
-    "I will generate IP-shaped ideas tagged see / trust / convert from how you actually work. How do you work day to day?",
+    "I will fill a 九宫格 / Topic Bingo from how you actually work. How do you work day to day?",
   systemOverlay: [
-    "## Module mode: Content Ideation (IP)",
-    "You are running the Content Ideation (IP) tool for this user.",
-    "Job: ideas from process, questions, results, and standpoint.",
+    "## Module mode: 九宫格 Topic Bingo",
+    "You are running the 九宫格 / Topic Bingo tool (catalog id content-ideation-ip) for this user.",
+    "Job: nine filmable topic cells from process, questions, results, and standpoint. Not random volume ideation.",
     "",
     "### Conversational collect (chat-first; no form)",
     "Slots live in conversation history. Ask at most 1 to 2 questions per turn.",
@@ -69,7 +74,7 @@ export const CONTENT_IDEATION_IP_PACK: ModulePack = {
     "When enough is known, or the user says just write it, deliver the full output and name assumptions.",
     "",
     "### Output format (when ready to generate)",
-    "8 to 12 ideas. Each: title, source (process/Q/result/standpoint), see/trust/convert tag, one-line angle.",
+    "A 3x3 九宫格 (nine cells). Each cell: short title, source (process/Q/result/standpoint), see/trust/convert tag, one-line angle.",
     "Direction beats random volume. Assets not ads.",
     "",
     "### Jeff distinctiveness (hard)",
@@ -77,13 +82,13 @@ export const CONTENT_IDEATION_IP_PACK: ModulePack = {
     "ANTI-GENERIC: If this reply could have come from a generic LinkedIn coach with no Jeff graph, rewrite before sending.",
     "",
     "### Doctrine rules (hard)",
-    "Reject volume-equals-money ideation. No overnight-fame. Never invent Jeff niche case studies as doctrine.",
+    "Bind to fw.jiugongge-topic-bingo. Reject volume-equals-money ideation. No overnight-fame. Never invent Jeff niche case studies as doctrine.",
     "",
     "### Evidence binding",
-    "Prefer: tm.content-asset, pr.standpoint-or-invisible, pr.direction-beats-volume, pr.exposure-trust-conversion, cl.content-not-ads when in the pack.",
+    "Prefer: fw.jiugongge-topic-bingo, tm.content-asset, pr.standpoint-or-invisible, pr.direction-beats-volume, pr.exposure-trust-conversion, cl.content-not-ads when in the pack.",
     "Sources still come only from probe / probe_jeff.",
     "",
-    "### After the list",
-    "End with one direct question: which idea they will script this week.",
+    "### After the grid",
+    "End with one direct question: which cell they will script this week.",
   ].join("\n"),
 };

@@ -16,6 +16,8 @@ export type ChatApiResult = ChatApiSuccess | ChatApiFailure;
 
 export type PostChatOptions = {
   messages: ChatMessage[];
+  /** Chosen UI locale; locks all assistant output language. */
+  locale: "zh" | "en";
   moduleId?: string;
   intake?: Record<string, string>;
   /** Optional home → tool intent handoff (length-capped client-side). */
@@ -26,6 +28,7 @@ export type PostChatOptions = {
  * POSTs dialogue to /api/chat. Optionally sends moduleId for module mode.
  * Legacy intake map remains supported but chat-first tools omit it.
  * homeIntent is a silent hint when the user arrived from home recommend cards.
+ * locale is the sole authority for reply language (not the user's message language).
  */
 export async function postChat(options: PostChatOptions): Promise<ChatApiResult> {
   let response: Response;
@@ -38,6 +41,7 @@ export async function postChat(options: PostChatOptions): Promise<ChatApiResult>
           role: message.role,
           content: message.content,
         })),
+        locale: options.locale,
         ...(typeof options.moduleId === "string" && options.moduleId.length > 0
           ? { moduleId: options.moduleId }
           : {}),

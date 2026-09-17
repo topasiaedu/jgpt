@@ -3,15 +3,13 @@
  * Catalog holds UX copy; packs hold slots + probe hints + system overlays.
  */
 
-/** Top-level grouping on the All Tools grid. */
+/** Top-level grouping on the All Tools grid (5-stage product flow). */
 export type ModuleCategory =
-  | "IP Foundation"
-  | "Get Seen"
-  | "Earn Trust"
-  | "Content Asset System"
-  | "On-Camera Coach"
-  | "Convert"
-  | "Polish";
+  | "Ideation"
+  | "IP Positioning"
+  | "Content"
+  | "Trust"
+  | "Convert";
 
 /** Whether a module can start end-to-end work in the current product phase. */
 export type ModuleStatus = "ready" | "soon";
@@ -52,12 +50,16 @@ export type ModulePack = {
    * Not shown as a form.
    */
   intakeFields: IntakeField[];
-  /** Keywords blended into the automatic first probe query. */
+  /**
+   * Keywords lightly blended into the automatic first probe query (capped in buildModuleProbeQuery).
+   * Prefer short doctrine phrases; do not rely on dumping many synonyms.
+   */
   probeHints: string[];
   /** Appended after the base Jeff system prompt in module mode. */
   systemOverlay: string;
   /**
-   * Preferred jeff-graph node ids to mention as binding targets in the overlay.
+   * Preferred jeff-graph node ids for this tool.
+   * Soft-merged into the evidence pack after user-led probe ranking (not dumped into the lexical query).
    * Citations still come only from probe evidence; do not fake sources.
    */
   boundNodeIds?: string[];

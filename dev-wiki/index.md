@@ -15,4 +15,4 @@ Companion graph: `../dev-graph/` (nodes for DualStore, RepoFirstStorage, ClosedD
 
 Agent contract: `../schema/AGENTS.md`.
 
-**Builder handoff (not teaching):** `../raw/agent-handoff/` holds implementer briefs for `apps/web`: modules (`01` / `02`), UI redesign (`03` / `04`), Artemo flow (`05` / `06`). Do **not** ingest into `jeff-wiki` / `jeff-graph`. Prefer this wiki (especially [accomplishments-and-decisions.md](accomplishments-and-decisions.md)) as engineering SoT.
+**Builder handoff (not teaching):** `../raw/agent-handoff/` holds implementer briefs for `apps/web`: modules (`01` / `02`), UI redesign (`03` / `04`), Artemo flow (`05` / `06`), Tools journey UX (`07` / `08`). Do **not** ingest into `jeff-wiki` / `jeff-graph`. Prefer this wiki (especially [accomplishments-and-decisions.md](accomplishments-and-decisions.md)) as engineering SoT.

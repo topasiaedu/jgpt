@@ -97,11 +97,20 @@ assert(
 const systemPrompt = buildSystemPrompt({
   evidencePackText: turn2.evidencePackText,
   coverage: turn2.coverage,
+  locale: "en",
 });
 
 assert(systemPrompt.includes("this turn only") || systemPrompt.includes("THIS USER TURN"), "Prompt must state this-turn evidence.");
 assert(systemPrompt.includes("probe_jeff"), "Prompt must mention probe_jeff tool.");
 assert(systemPrompt.includes(turn2.evidencePackText), "System prompt must include this turn's evidence pack.");
+assert(
+  systemPrompt.includes("UI locale is English") || systemPrompt.includes("full English only"),
+  "Prompt must lock to UI locale English.",
+);
+assert(
+  !systemPrompt.includes("Detect from the latest USER message only"),
+  "Prompt must not tell the model to match latest user message language.",
+);
 assert(
   !systemPrompt.includes(turn1.evidencePackText) || turn1.evidencePackText === turn2.evidencePackText,
   "System prompt must not paste turn 1 evidence when composing turn 2 (unless packs identical).",

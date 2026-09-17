@@ -78,7 +78,7 @@ export const PROCESS_PROOF_REEL_PACK: ModulePack = {
     "2. How-we-work beat: show process; teach the viewer.",
     "3. Soft close aligned with CTA softness.",
     "4. On-screen text cues.",
-    "Match language preference when set.",
+    "Write in the locked UI locale language.",
     "",
     "### Jeff distinctiveness (hard)",
     "Use Jeff mechanisms in the user's language: get seen before trust before deal; standpoint; content assets not ads; advice vs ego; direction beats volume; value then convert where relevant.",

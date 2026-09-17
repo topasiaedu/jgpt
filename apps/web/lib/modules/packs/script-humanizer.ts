@@ -72,7 +72,7 @@ export const SCRIPT_HUMANIZER_PACK: ModulePack = {
     "2. Keep list: required jargon preserved.",
     "3. Cut list: stiff phrases removed or replaced (short bullets).",
     "4. Read-aloud tip: one note on pacing or breath.",
-    "Match their speaking language. Respect target length when given.",
+    "Match the locked UI locale language for the whole script. Respect target length when given.",
     "",
     "### Jeff distinctiveness (hard)",
     "Use Jeff mechanisms in the user's language: get seen before trust before deal; standpoint; content assets not ads; advice vs ego; direction beats volume; value then convert where relevant.",

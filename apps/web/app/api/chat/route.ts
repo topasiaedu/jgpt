@@ -15,8 +15,9 @@ import { getModulePack } from "@/lib/modules/packs";
 import { HOME_INTENT_Q_MAX_CHARS } from "@/lib/modules/homeHandoff";
 import { appendHomeRecommendOverlay } from "@/lib/modules/recommend";
 import { generateJeffReply, getOpenAIConfig } from "@/lib/openai";
-import { probeTeaching } from "@/lib/probe";
-import { stripDashPunctuation } from "@/lib/stripDashPunctuation";
+import { mergeBoundNodesIntoProbe, probeTeaching } from "@/lib/probe";
+import { DEFAULT_LOCALE, parseLocale, type Locale } from "@/lib/i18n/messages";
+import { sanitizeAssistantReply } from "@/lib/sanitizeAssistantReply";
 import { buildSystemPrompt } from "@/lib/systemPrompt";
 
 /** fs-based probe + OpenAI tool loop; must not run on Edge. */
@@ -61,7 +62,7 @@ async function handleChatPost(
     return NextResponse.json(
       {
         error:
-          "Body must include messages: { role, content }[]. Optional moduleId, intake, and homeIntent must be well-typed.",
+          "Body must include messages: { role, content }[]. Optional locale, moduleId, intake, and homeIntent must be well-typed.",
       },
       { status: 400 },
     );
@@ -78,6 +79,7 @@ async function handleChatPost(
     );
   }
 
+  const locale: Locale = parseLocale(body.locale) ?? DEFAULT_LOCALE;
   const dialogue: ChatMessage[] = toDialogueOnly(body.messages);
   const baseQuery: string = buildProbeQuery(dialogue);
 
@@ -109,6 +111,10 @@ async function handleChatPost(
   try {
     // Automatic first probe on this turn's ask (not blind into the model).
     probe = probeTeaching(query);
+    // Module packs: soft-append bound anchors after user-led ranking (no lexical flood).
+    if (pack !== undefined) {
+      probe = mergeBoundNodesIntoProbe(probe, pack.boundNodeIds);
+    }
   } catch (error) {
     const message: string =
       error instanceof Error ? error.message : "Teaching probe failed.";
@@ -118,6 +124,7 @@ async function handleChatPost(
   const baseSystemPrompt: string = buildSystemPrompt({
     evidencePackText: probe.evidencePackText,
     coverage: probe.coverage,
+    locale,
   });
 
   const recommendMode: boolean = pack === undefined;
@@ -128,8 +135,9 @@ async function handleChatPost(
           pack,
           intake,
           homeIntent,
+          locale,
         })
-      : appendHomeRecommendOverlay(baseSystemPrompt);
+      : appendHomeRecommendOverlay(baseSystemPrompt, locale);
 
   try {
     const { reply, sources, recommendedModuleIds } = await generateJeffReply({
@@ -143,7 +151,7 @@ async function handleChatPost(
     });
 
     const response: ChatResponseBody = {
-      reply: stripDashPunctuation(reply),
+      reply: sanitizeAssistantReply(reply, locale),
       sources,
       ...(recommendMode && recommendedModuleIds.length > 0
         ? { recommendedModuleIds }
@@ -195,6 +203,13 @@ function isChatRequestBody(value: unknown): value is ChatRequestBody {
   if ("homeIntent" in value) {
     const homeIntent = (value as { homeIntent: unknown }).homeIntent;
     if (homeIntent !== undefined && typeof homeIntent !== "string") {
+      return false;
+    }
+  }
+
+  if ("locale" in value) {
+    const locale = (value as { locale: unknown }).locale;
+    if (locale !== undefined && locale !== "zh" && locale !== "en") {
       return false;
     }
   }

@@ -3,6 +3,7 @@
  * Builder product UX only. Not doctrine for jeff-wiki ingest.
  */
 
+import type { Locale } from "@/lib/i18n/messages";
 import { MODULE_CATALOG, getModuleStatus } from "@/lib/modules/catalog";
 import { hasModulePack } from "@/lib/modules/packs";
 import type { ModuleDefinition } from "@/lib/modules/types";
@@ -69,10 +70,37 @@ export function validateRecommendedModuleIds(rawIds: string[]): string[] {
 }
 
 /**
+ * Locale-locked language rules for home recommend coaching replies.
+ */
+function recommendLanguageLock(locale: Locale): string {
+  if (locale === "zh") {
+    return [
+      "## Language lock in home recommend mode (hard; highest priority)",
+      "UI locale is Chinese (zh). Coaching reply MUST be mainly Chinese.",
+      "Do NOT detect language from the latest USER message. An English ask still gets a Chinese reply.",
+      "This English overlay, English catalog titles, English tool ids, and English evidence must NOT decide reply language.",
+      "Keep tool titles as given; coach speech stays Chinese.",
+      "Self-check before send: if your draft is mainly English, rewrite the coaching reply in Chinese.",
+    ].join("\n");
+  }
+
+  return [
+    "## Language lock in home recommend mode (hard; highest priority)",
+    "UI locale is English (en). Coaching reply MUST be full English only.",
+    "Do NOT detect language from the latest USER message. A Chinese ask still gets a full English reply.",
+    "No Chinese sprinkle. ASCII quotes \" and ' only (never 「」『』 or fullwidth ＂).",
+    "Self-check before send: if your draft has Chinese or CJK quotes, rewrite fully in English with ASCII quotes.",
+  ].join("\n");
+}
+
+/**
  * Appends home recommend-mode instructions after the base Jeff system prompt.
  * Only for free chat (no moduleId).
  */
-export function appendHomeRecommendOverlay(baseSystemPrompt: string): string {
+export function appendHomeRecommendOverlay(
+  baseSystemPrompt: string,
+  locale: Locale,
+): string {
   const catalogLines: string = formatRecommendCatalogForPrompt();
 
   return [
@@ -87,15 +115,7 @@ export function appendHomeRecommendOverlay(baseSystemPrompt: string): string {
     "If the message is too vague to pick tools, ask one sharp clarifying question and do NOT call recommend_modules yet.",
     "Do not dump a curriculum. Do not pretend you opened a tool chat. Deep work happens after they click a tool.",
     "",
-    "## Language match in home recommend mode (hard; highest priority)",
-    "Detect language from the latest USER message only.",
-    "This English overlay, English catalog titles, English tool ids, and English evidence must NOT decide reply language.",
-    "Chinese ask (汉字 in the latest user message) → coaching reply MUST be mainly Chinese (light English classroom mix OK).",
-    "Do not reply in English just because catalog titles or this section are English. Keep tool titles as given; coach speech stays Chinese.",
-    "English ask → full English only (no Chinese sprinkle).",
-    "Mixed → follow the dominant language of the latest user message.",
-    "Self-check before send: if the latest user message is mainly Chinese and your draft is English, rewrite the coaching reply in Chinese.",
-    "Self-check before send: if the latest user message is mainly English and your draft has Chinese, rewrite fully in English.",
+    recommendLanguageLock(locale),
     "",
     "## Recommendable tools (id: title)",
     catalogLines,

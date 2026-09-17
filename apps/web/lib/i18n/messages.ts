@@ -1,6 +1,6 @@
 /**
  * Chrome copy for Influence Engine Coach.
- * Default locale is zh. Chat model replies still follow Jeff language-match rules.
+ * Default locale is zh. Assistant replies follow the chosen UI locale (hard lock).
  */
 
 import type { ModuleCategory } from "@/lib/modules/types";
@@ -10,12 +10,10 @@ export type Locale = "zh" | "en";
 export type MessageKey =
   | "productName"
   | "productTagline"
-  | "navAsk"
   | "navTools"
   | "homeAsk"
   | "homePromise"
   | "pathStart"
-  | "pathAsk"
   | "pathTools"
   | "pathJumpReel"
   | "pathJumpStandpoint"
@@ -45,19 +43,19 @@ export type MessageKey =
   | "toolsTitle"
   | "toolsSubtitle"
   | "toolsBack"
-  | "toolsSearchPlaceholder"
-  | "toolsEmpty"
   | "toolsFeaturedTitle"
-  | "toolsRailsTitle"
   | "toolsBadgeReady"
   | "toolsBadgeSoon"
-  | "catIpFoundation"
-  | "catGetSeen"
-  | "catEarnTrust"
-  | "catContentAsset"
-  | "catOnCamera"
+  | "catIdeation"
+  | "catIpPositioning"
+  | "catContent"
+  | "catTrust"
   | "catConvert"
-  | "catPolish"
+  | "stageBlurbIdeation"
+  | "stageBlurbIpPositioning"
+  | "stageBlurbContent"
+  | "stageBlurbTrust"
+  | "stageBlurbConvert"
   | "introJobLabel"
   | "introBringLabel"
   | "introGetLabel"
@@ -91,12 +89,10 @@ type MessageTable = Record<MessageKey, string>;
 const zh: MessageTable = {
   productName: "Influence Engine Coach",
   productTagline: "个人 IP 教练",
-  navAsk: "问 Jeff",
   navTools: "全部工具",
   homeAsk: "今天要做什么 IP 内容？",
   homePromise: "说清楚你今天想做的内容，我会推荐 2 到 4 个合适工具。",
   pathStart: "不确定阶段时再诊断",
-  pathAsk: "直接提问",
   pathTools: "浏览全部工具",
   pathJumpReel: "写一条 Reel",
   pathJumpStandpoint: "立一个立场",
@@ -124,21 +120,21 @@ const zh: MessageTable = {
   sourcesChipMany: "{n} 条依据",
   sourcesChipEmptyDetail: "无图谱来源。这次是通用引导：用了 Jeff 的方法框架，该细分主张未点名图谱节点。",
   toolsTitle: "全部工具",
-  toolsSubtitle: "按分类浏览命名工具，或直接搜索。自由对话仍在「问 Jeff」。",
+  toolsSubtitle: "按五步旅程浏览命名工具。",
   toolsBack: "全部工具",
-  toolsSearchPlaceholder: "搜索工具…",
-  toolsEmpty: "没有匹配的工具。试试换个关键词，或清空搜索看全部。",
-  toolsFeaturedTitle: "常用",
-  toolsRailsTitle: "全部分类",
+  toolsFeaturedTitle: "从这里开始",
   toolsBadgeReady: "可用",
   toolsBadgeSoon: "即将上线",
-  catIpFoundation: "基础定位",
-  catGetSeen: "被看见",
-  catEarnTrust: "建信任",
-  catContentAsset: "内容资产",
-  catOnCamera: "上镜教练",
-  catConvert: "成交转化",
-  catPolish: "打磨润色",
+  catIdeation: "选题构思",
+  catIpPositioning: "IP 定位",
+  catContent: "内容",
+  catTrust: "信任",
+  catConvert: "成交",
+  stageBlurbIdeation: "先诊断卡住点，再产出能拍的选题。",
+  stageBlurbIpPositioning: "说清帮谁、立场，以及内容支柱。",
+  stageBlurbContent: "规划资产、钩子、内容库与可拍主片。",
+  stageBlurbTrust: "打磨记忆钩子、评论回应与更长信任内容。",
+  stageBlurbConvert: "信任之后，做软邀请并说清报价。",
   introJobLabel: "这个工具做什么",
   introBringLabel: "你需要带什么",
   introGetLabel: "你会得到什么",
@@ -171,12 +167,10 @@ const zh: MessageTable = {
 const en: MessageTable = {
   productName: "Influence Engine Coach",
   productTagline: "Personal IP coach",
-  navAsk: "Ask Jeff",
   navTools: "All Tools",
   homeAsk: "What IP content do you want to make today?",
   homePromise: "Tell me what you want to create today. I will recommend 2 to 4 fitting tools.",
   pathStart: "Stage check if you are stuck",
-  pathAsk: "Ask Jeff",
   pathTools: "Browse all tools",
   pathJumpReel: "Write a Reel",
   pathJumpStandpoint: "Build a standpoint",
@@ -207,21 +201,21 @@ const en: MessageTable = {
   sourcesChipEmptyDetail:
     "No graph source. General steer: Jeff craft framing only; this niche claim is not cited from the teaching graph.",
   toolsTitle: "All Tools",
-  toolsSubtitle: "Browse named tools by category, or search. Free chat stays on Ask Jeff.",
+  toolsSubtitle: "Browse named tools along the five stage journey.",
   toolsBack: "All Tools",
-  toolsSearchPlaceholder: "Search tools…",
-  toolsEmpty: "No matching tools. Try another keyword, or clear search to see all.",
-  toolsFeaturedTitle: "Popular",
-  toolsRailsTitle: "All categories",
+  toolsFeaturedTitle: "Start here",
   toolsBadgeReady: "Ready",
   toolsBadgeSoon: "Soon",
-  catIpFoundation: "Foundation",
-  catGetSeen: "Get Seen",
-  catEarnTrust: "Earn Trust",
-  catContentAsset: "Content Assets",
-  catOnCamera: "On-Camera",
+  catIdeation: "Ideation",
+  catIpPositioning: "IP Positioning",
+  catContent: "Content",
+  catTrust: "Trust",
   catConvert: "Convert",
-  catPolish: "Polish",
+  stageBlurbIdeation: "Diagnose where you are stuck, then generate filmable ideas.",
+  stageBlurbIpPositioning: "Clarify who you serve, your standpoint, and your pillars.",
+  stageBlurbContent: "Plan assets, hooks, content banks, and a flagship Reel.",
+  stageBlurbTrust: "Build memory hooks, comment replies, and longer trust scripts.",
+  stageBlurbConvert: "After trust, make soft invites and clarify the offer.",
   introJobLabel: "What it does",
   introBringLabel: "Bring this",
   introGetLabel: "You get this",
@@ -260,13 +254,11 @@ export const DEFAULT_LOCALE: Locale = "zh";
 export const LOCALE_STORAGE_KEY = "ie-coach-locale";
 
 const CATEGORY_KEYS: Record<ModuleCategory, MessageKey> = {
-  "IP Foundation": "catIpFoundation",
-  "Get Seen": "catGetSeen",
-  "Earn Trust": "catEarnTrust",
-  "Content Asset System": "catContentAsset",
-  "On-Camera Coach": "catOnCamera",
+  Ideation: "catIdeation",
+  "IP Positioning": "catIpPositioning",
+  Content: "catContent",
+  Trust: "catTrust",
   Convert: "catConvert",
-  Polish: "catPolish",
 };
 
 /**

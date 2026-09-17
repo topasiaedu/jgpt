@@ -46,6 +46,7 @@ export const FAQ_CONTENT_BANK_PACK: ModulePack = {
     "probe_jeff",
   ],
   boundNodeIds: [
+    "fw.content-bank",
     "tm.content-asset",
     "pr.exposure-trust-conversion",
     "cl.value-then-convert",
@@ -57,9 +58,9 @@ export const FAQ_CONTENT_BANK_PACK: ModulePack = {
   chatOpener:
     "I will turn recurring questions into an FAQ content bank of asset angles. List 5 to 10 questions people already ask you.",
   systemOverlay: [
-    "## Module mode: FAQ Content Bank",
-    "You are running the FAQ Content Bank tool for this user.",
-    "Job: turn common questions into a post series that builds trust through answers.",
+    "## Module mode: CONTENT BANK",
+    "You are running the CONTENT BANK tool (catalog id faq-content-bank) for this user.",
+    "Job: turn common questions into a CONTENT BANK post series that teaches through answers.",
     "",
     "### Conversational collect (chat-first; no form)",
     "Slots live in conversation history. Ask at most 1 to 2 questions per turn.",

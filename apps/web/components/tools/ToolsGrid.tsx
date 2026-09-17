@@ -1,7 +1,7 @@
 "use client";
 
-import { useMemo, useState } from "react";
-import type { ChangeEvent } from "react";
+import { useEffect, useMemo } from "react";
+import type { ReactElement } from "react";
 import { useRouter } from "next/navigation";
 
 import { useI18n } from "@/lib/i18n/LocaleProvider";
@@ -9,27 +9,43 @@ import { categoryMessageKey } from "@/lib/i18n/messages";
 import {
   FEATURED_MODULE_IDS,
   MODULE_CATALOG,
-  MODULE_CATEGORY_ORDER,
   getModuleById,
   getModuleStatus,
 } from "@/lib/modules/catalog";
 import { getModuleDisplay, moduleCardBlurb } from "@/lib/modules/moduleDisplay";
+import {
+  JOURNEY_STAGES,
+  auditJourneyMembership,
+  splitStageModules,
+  stageBlurbMessageKey,
+  stageRailNumber,
+  stageSectionId,
+} from "@/lib/modules/toolsJourney";
 import type { ModuleCategory, ModuleDefinition } from "@/lib/modules/types";
 
-type CategoryGroup = {
+type StageGroup = {
   category: ModuleCategory;
-  modules: ModuleDefinition[];
+  core: ModuleDefinition[];
 };
 
 /**
- * All Tools wall: search, category filters, optional compact featured strip, category cards.
+ * All Tools wall: start-here + five ordered stage sections (core cards only).
+ * Practice modules stay in catalog for deep links; they are not listed here.
  * Card click navigates straight to the module page (chat-first; no intro Start gate).
  */
 export default function ToolsGrid() {
   const router = useRouter();
   const { t, locale } = useI18n();
-  const [query, setQuery] = useState("");
-  const [activeCategory, setActiveCategory] = useState<ModuleCategory | "all">("all");
+
+  useEffect(() => {
+    if (process.env.NODE_ENV !== "development") {
+      return;
+    }
+    const report = auditJourneyMembership();
+    if (!report.ok) {
+      console.warn("[toolsJourney] membership mismatch", report);
+    }
+  }, []);
 
   const featuredModules: ModuleDefinition[] = useMemo(() => {
     return FEATURED_MODULE_IDS.map((id) => getModuleById(id)).filter(
@@ -37,33 +53,13 @@ export default function ToolsGrid() {
     );
   }, []);
 
-  const groups: CategoryGroup[] = useMemo(() => {
-    const normalized = query.trim().toLowerCase();
-    const filtered =
-      normalized.length === 0
-        ? MODULE_CATALOG
-        : MODULE_CATALOG.filter((module) => {
-            const display = getModuleDisplay(module, locale);
-            return (
-              module.title.toLowerCase().includes(normalized) ||
-              display.title.toLowerCase().includes(normalized)
-            );
-          });
-
-    return MODULE_CATEGORY_ORDER.map((category) => ({
-      category,
-      modules: filtered.filter((module) => module.category === category),
-    })).filter((group) => group.modules.length > 0);
-  }, [query, locale]);
-
-  const visibleGroups: CategoryGroup[] = useMemo(() => {
-    if (activeCategory === "all") {
-      return groups;
-    }
-    return groups.filter((group) => group.category === activeCategory);
-  }, [groups, activeCategory]);
-
-  const isSearching = query.trim().length > 0;
+  const stageGroups: StageGroup[] = useMemo(() => {
+    return JOURNEY_STAGES.map((category) => {
+      const inStage = MODULE_CATALOG.filter((module) => module.category === category);
+      const { core } = splitStageModules(inStage);
+      return { category, core };
+    });
+  }, []);
 
   /**
    * Opens the module page immediately (chat when ready; no intro modal).
@@ -72,67 +68,42 @@ export default function ToolsGrid() {
     router.push(`/tools/${module.id}`);
   }
 
-  function scrollToCategory(category: ModuleCategory): void {
-    setActiveCategory(category);
-    const el = document.getElementById(`cat-${category}`);
-    if (el !== null) {
-      el.scrollIntoView({ behavior: "smooth", block: "start" });
-    }
+  /**
+   * Renders one tools card button for the core list.
+   */
+  function renderModuleCard(module: ModuleDefinition): ReactElement {
+    const status = getModuleStatus(module);
+    const display = getModuleDisplay(module, locale);
+    return (
+      <li key={module.id}>
+        <button
+          type="button"
+          className="tools-card"
+          onClick={() => {
+            openModule(module);
+          }}
+        >
+          <span className="tools-card-top">
+            <span className="tools-card-title">{display.title}</span>
+            <span
+              className={
+                status === "ready"
+                  ? "tools-card-badge tools-card-badge-ready"
+                  : "tools-card-badge"
+              }
+            >
+              {status === "ready" ? t("toolsBadgeReady") : t("toolsBadgeSoon")}
+            </span>
+          </span>
+          <span className="tools-card-blurb">{moduleCardBlurb(display.description)}</span>
+        </button>
+      </li>
+    );
   }
 
   return (
     <div className="tools-grid-wrap">
-      <div className="tools-search">
-        <label className="sr-only" htmlFor="tools-search-input">
-          {t("toolsSearchPlaceholder")}
-        </label>
-        <input
-          id="tools-search-input"
-          className="tools-search-input"
-          type="search"
-          value={query}
-          placeholder={t("toolsSearchPlaceholder")}
-          onChange={(event: ChangeEvent<HTMLInputElement>) => {
-            setQuery(event.target.value);
-          }}
-        />
-      </div>
-
-      {!isSearching ? (
-        <div className="tools-rail-nav" role="navigation" aria-label={t("toolsRailsTitle")}>
-          <button
-            type="button"
-            className={
-              activeCategory === "all"
-                ? "tools-rail-chip tools-rail-chip-active"
-                : "tools-rail-chip"
-            }
-            onClick={() => {
-              setActiveCategory("all");
-            }}
-          >
-            {t("toolsRailsTitle")}
-          </button>
-          {MODULE_CATEGORY_ORDER.map((category) => (
-            <button
-              key={category}
-              type="button"
-              className={
-                activeCategory === category
-                  ? "tools-rail-chip tools-rail-chip-active"
-                  : "tools-rail-chip"
-              }
-              onClick={() => {
-                scrollToCategory(category);
-              }}
-            >
-              {t(categoryMessageKey(category))}
-            </button>
-          ))}
-        </div>
-      ) : null}
-
-      {!isSearching && featuredModules.length > 0 ? (
+      {featuredModules.length > 0 ? (
         <section className="tools-featured tools-featured-compact" aria-labelledby="tools-featured-heading">
           <h2 id="tools-featured-heading" className="tools-section-title tools-section-title-compact">
             {t("toolsFeaturedTitle")}
@@ -145,7 +116,7 @@ export default function ToolsGrid() {
                 <li key={module.id}>
                   <button
                     type="button"
-                    className="tools-card tools-card-featured-compact"
+                    className="tools-card tools-card-featured-compact tools-card-start-here"
                     onClick={() => {
                       openModule(module);
                     }}
@@ -171,52 +142,29 @@ export default function ToolsGrid() {
         </section>
       ) : null}
 
-      {visibleGroups.length === 0 ? (
-        <p className="tools-empty">{t("toolsEmpty")}</p>
-      ) : (
-        visibleGroups.map((group) => (
+      {stageGroups.map((group) => {
+        const sectionId = stageSectionId(group.category);
+
+        return (
           <section
             key={group.category}
+            id={sectionId}
             className="tools-category"
-            aria-labelledby={`cat-${group.category}`}
+            aria-labelledby={`${sectionId}-title`}
           >
-            <h2 id={`cat-${group.category}`} className="tools-category-title">
+            <h2 id={`${sectionId}-title`} className="tools-category-title">
+              <span className="tools-category-num" aria-hidden="true">
+                {stageRailNumber(group.category)}
+              </span>
               {t(categoryMessageKey(group.category))}
             </h2>
-            <ul className="tools-card-list">
-              {group.modules.map((module) => {
-                const status = getModuleStatus(module);
-                const display = getModuleDisplay(module, locale);
-                return (
-                  <li key={module.id}>
-                    <button
-                      type="button"
-                      className="tools-card"
-                      onClick={() => {
-                        openModule(module);
-                      }}
-                    >
-                      <span className="tools-card-top">
-                        <span className="tools-card-title">{display.title}</span>
-                        <span
-                          className={
-                            status === "ready"
-                              ? "tools-card-badge tools-card-badge-ready"
-                              : "tools-card-badge"
-                          }
-                        >
-                          {status === "ready" ? t("toolsBadgeReady") : t("toolsBadgeSoon")}
-                        </span>
-                      </span>
-                      <span className="tools-card-blurb">{moduleCardBlurb(display.description)}</span>
-                    </button>
-                  </li>
-                );
-              })}
-            </ul>
+            <p className="tools-category-blurb">{t(stageBlurbMessageKey(group.category))}</p>
+            {group.core.length > 0 ? (
+              <ul className="tools-card-list">{group.core.map(renderModuleCard)}</ul>
+            ) : null}
           </section>
-        ))
-      )}
+        );
+      })}
     </div>
   );
 }

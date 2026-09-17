@@ -31,6 +31,11 @@ export type ChatSource = {
 /** POST /api/chat request body. */
 export type ChatRequestBody = {
   messages: ChatMessage[];
+  /**
+   * Chosen UI locale. Sole authority for assistant reply language.
+   * Defaults to zh when omitted (matches app default).
+   */
+  locale?: "zh" | "en";
   /** When set, runs a named IP module pack (system overlay + conversational slots). */
   moduleId?: string;
   /**

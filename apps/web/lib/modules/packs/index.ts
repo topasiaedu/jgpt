@@ -4,8 +4,10 @@ import { AUTHORITY_RELATABLE_MIXER_PACK } from "@/lib/modules/packs/authority-re
 import { BIANHAO_COACH_PACK } from "@/lib/modules/packs/bianhao-coach";
 import { BOSS_BRAND_BRIEF_PACK } from "@/lib/modules/packs/boss-brand-brief";
 import { BULLET_CAPTION_PACK } from "@/lib/modules/packs/bullet-caption-pack";
+import { COMMENT_REPLY_THREE_LINES_PACK } from "@/lib/modules/packs/comment-reply-three-lines";
 import { COMMENT_TO_CONTENT_PACK } from "@/lib/modules/packs/comment-to-content";
 import { CONTENT_ASSET_PLANNER_PACK } from "@/lib/modules/packs/content-asset-planner";
+import { CONTENT_ASSET_STACK_PACK } from "@/lib/modules/packs/content-asset-stack";
 import { CONTENT_IDEATION_IP_PACK } from "@/lib/modules/packs/content-ideation-ip";
 import { CRITICISM_ARMOR_PACK } from "@/lib/modules/packs/criticism-armor";
 import { DIRECTION_FIXER_PACK } from "@/lib/modules/packs/direction-fixer";
@@ -37,6 +39,20 @@ import { TRUST_OFFER_BRIDGE_PACK } from "@/lib/modules/packs/trust-offer-bridge"
 import { VALUE_CONVERT_LADDER_PACK } from "@/lib/modules/packs/value-convert-ladder";
 import { VALUE_TEACHING_REEL_PACK } from "@/lib/modules/packs/value-teaching-reel";
 import { WHO_I_SERVE_PACK } from "@/lib/modules/packs/who-i-serve";
+import { BRAND_STANCE_MODEL_PACK } from "@/lib/modules/packs/brand-stance-model";
+import { CONTENT_AUTHORITY_LADDER_PACK } from "@/lib/modules/packs/content-authority-ladder";
+import { CONTENT_NOT_WORKING_CHECKLISTS_PACK } from "@/lib/modules/packs/content-not-working-checklists";
+import { EIGHT_WAYS_TO_OPEN_PACK } from "@/lib/modules/packs/eight-ways-to-open";
+import { FOUR_CONTENT_LAYERS_PACK } from "@/lib/modules/packs/four-content-layers";
+import { GOAT_FOUR_BEATS_PACK } from "@/lib/modules/packs/goat-four-beats";
+import { HIT_100X_FOLLOWERS_PACK } from "@/lib/modules/packs/hit-100x-followers";
+import { POSITIONING_FOUR_QUESTIONS_PACK } from "@/lib/modules/packs/positioning-four-questions";
+import { SIX_CAPTION_ANGLES_PACK } from "@/lib/modules/packs/six-caption-angles";
+import { STORY_STRUCTURE_SEARCH_PACK } from "@/lib/modules/packs/story-structure-search";
+import { THREE_C_METHOD_PACK } from "@/lib/modules/packs/three-c-method";
+import { THREE_R_METHOD_PACK } from "@/lib/modules/packs/three-r-method";
+import { TWO_KINDS_STUDENT_TWO_METHODS_PACK } from "@/lib/modules/packs/two-kinds-student-two-methods";
+import { WAFFLE_GRID_PACK } from "@/lib/modules/packs/waffle-grid";
 import type { ModulePack } from "@/lib/modules/types";
 
 /**
@@ -64,12 +80,14 @@ const MODULE_PACKS: Record<string, ModulePack> = {
   [LEARNING_JOURNEY_SERIES_PACK.moduleId]: LEARNING_JOURNEY_SERIES_PACK,
   [SOUNDBITE_ONE_LINER_PACK.moduleId]: SOUNDBITE_ONE_LINER_PACK,
   [CONTENT_ASSET_PLANNER_PACK.moduleId]: CONTENT_ASSET_PLANNER_PACK,
+  [CONTENT_ASSET_STACK_PACK.moduleId]: CONTENT_ASSET_STACK_PACK,
   [DIRECTION_FIXER_PACK.moduleId]: DIRECTION_FIXER_PACK,
   [VALUE_CONVERT_LADDER_PACK.moduleId]: VALUE_CONVERT_LADDER_PACK,
   [AD_VS_ASSET_CHECKER_PACK.moduleId]: AD_VS_ASSET_CHECKER_PACK,
   [COMMENT_TO_CONTENT_PACK.moduleId]: COMMENT_TO_CONTENT_PACK,
   [CONTENT_IDEATION_IP_PACK.moduleId]: CONTENT_IDEATION_IP_PACK,
   [ADVICE_VS_EGO_COACH_PACK.moduleId]: ADVICE_VS_EGO_COACH_PACK,
+  [COMMENT_REPLY_THREE_LINES_PACK.moduleId]: COMMENT_REPLY_THREE_LINES_PACK,
   [CRITICISM_ARMOR_PACK.moduleId]: CRITICISM_ARMOR_PACK,
   [BIANHAO_COACH_PACK.moduleId]: BIANHAO_COACH_PACK,
   [HIGH_TICKET_CAUTION_PACK.moduleId]: HIGH_TICKET_CAUTION_PACK,
@@ -83,6 +101,20 @@ const MODULE_PACKS: Record<string, ModulePack> = {
   [HOOK_REWRITER_PACK.moduleId]: HOOK_REWRITER_PACK,
   [PLATFORM_ADAPTER_PACK.moduleId]: PLATFORM_ADAPTER_PACK,
   [BULLET_CAPTION_PACK.moduleId]: BULLET_CAPTION_PACK,
+  [BRAND_STANCE_MODEL_PACK.moduleId]: BRAND_STANCE_MODEL_PACK,
+  [CONTENT_AUTHORITY_LADDER_PACK.moduleId]: CONTENT_AUTHORITY_LADDER_PACK,
+  [CONTENT_NOT_WORKING_CHECKLISTS_PACK.moduleId]: CONTENT_NOT_WORKING_CHECKLISTS_PACK,
+  [EIGHT_WAYS_TO_OPEN_PACK.moduleId]: EIGHT_WAYS_TO_OPEN_PACK,
+  [FOUR_CONTENT_LAYERS_PACK.moduleId]: FOUR_CONTENT_LAYERS_PACK,
+  [GOAT_FOUR_BEATS_PACK.moduleId]: GOAT_FOUR_BEATS_PACK,
+  [HIT_100X_FOLLOWERS_PACK.moduleId]: HIT_100X_FOLLOWERS_PACK,
+  [POSITIONING_FOUR_QUESTIONS_PACK.moduleId]: POSITIONING_FOUR_QUESTIONS_PACK,
+  [SIX_CAPTION_ANGLES_PACK.moduleId]: SIX_CAPTION_ANGLES_PACK,
+  [STORY_STRUCTURE_SEARCH_PACK.moduleId]: STORY_STRUCTURE_SEARCH_PACK,
+  [THREE_C_METHOD_PACK.moduleId]: THREE_C_METHOD_PACK,
+  [THREE_R_METHOD_PACK.moduleId]: THREE_R_METHOD_PACK,
+  [TWO_KINDS_STUDENT_TWO_METHODS_PACK.moduleId]: TWO_KINDS_STUDENT_TWO_METHODS_PACK,
+  [WAFFLE_GRID_PACK.moduleId]: WAFFLE_GRID_PACK,
 };
 
 /**

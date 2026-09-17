@@ -172,3 +172,8 @@ Expanded Tools from the curated 15 to the full proposed set (39 ready packs), in
 - F1: home ask「今天要做什么 IP 内容？」+ structured `recommendedModuleIds` cards.
 - F2: `/tools` category card wall; stage hero removed as primary.
 - F3: fresh tool chat per open (remount keying); pack `chatOpener` + optional `?from=home&q=` handoff (length-capped); shared overlay clarify-then-deliver reinforced; STAKEHOLDER + README updated for locked flow. No intake forms. No doctrine ingest.
+
+## 2026-09-18 — Tools journey UX Phases A to C landed (builder log)
+
+- `/tools` sticky numbered journey rail scrolls to stage sections (does not filter). Core cards stay visible; practice under collapsed 「更多练习工具」; single 「从这里开始」 → `ip-stage-check`. Search still reaches all modules.
+- Phase C: ZH/EN journey chrome copy polish; membership audit helper (`auditJourneyMembership`) wired in ToolsGrid (dev warn only). No jeff-wiki / jeff-graph ingest. Language-lock / quote sanitizer workstreams left alone.

@@ -6,7 +6,7 @@ Sources land here first. Compilers read them; they do not rewrite them in place.
 
 | Path | Put |
 | --- | --- |
-| [`agent-handoff/`](agent-handoff/) | Implementer briefs: modules (`01` / `02`), UI redesign (`03` / `04`), Artemo flow (`05` / `06`). Not teaching. |
+| [`agent-handoff/`](agent-handoff/) | Implementer briefs: modules (`01` / `02`), UI redesign (`03` / `04`), Artemo flow (`05` / `06`), Tools journey UX (`07` / `08`). Not teaching. |
 
 **Do not ingest `agent-handoff/` into `jeff-wiki` / `jeff-graph`.** It is builder process, not Jeff doctrine. Engineering SoT remains `dev-wiki/`.
 

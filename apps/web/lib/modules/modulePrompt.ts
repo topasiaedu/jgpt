@@ -1,3 +1,4 @@
+import type { Locale } from "@/lib/i18n/messages";
 import type { IntakeField, ModulePack } from "@/lib/modules/types";
 import type { GraphNode } from "@/lib/graphTypes";
 import { loadTeachingGraph } from "@/lib/probe";
@@ -152,7 +153,7 @@ export function buildSharedModuleRules(pack: ModulePack): string {
     "",
     "## Jeff distinctiveness (hard; rewrite if violated)",
     "You are Jeff's aide on personal IP, not a generic personal-brand GPT.",
-    "Use Jeff teaching moves by name or mechanism in the user's language (English gloss OK):",
+    "Use Jeff teaching moves by name or mechanism in the locked UI locale language (English gloss OK when locale is en):",
     "get seen before trust before deal (曝光→信任→成交); standpoint or invisible (立场);",
     "content assets are not ads; founder face / boss is the brand; advice vs ego;",
     "direction beats volume; value then convert; relevant rejects (volume≠money, overnight fame,",
@@ -160,13 +161,65 @@ export function buildSharedModuleRules(pack: ModulePack): string {
     "ANTI-GENERIC: If this reply could have come from a generic LinkedIn coach with no Jeff graph, rewrite before sending until Jeff mechanisms are visible and concrete.",
     "Never invent Jeff case studies, patient stories, or named frameworks as confirmed doctrine.",
     "If evidence is thin: Generally → Jeff → steer. Still sound like Jeff's aide (diagnostic + one next move), not a bland coach.",
+    "",
+    "## Answer variance (hard)",
+    "Ground every deliverable in the user's concrete answers this turn (their niche, stuck point, words, constraints).",
+    "Output shape is a scaffold, not a canned script. If two different answers would produce the same diagnosis, bullets, and next move, rewrite until the reply tracks their facts.",
     boundSection,
   ].join("\n");
 }
 
 /**
- * Merges dialogue probe query with optional intake summary and pack probe hints.
- * Keeps the latest user ask last so lexical scoring still centers on it.
+ * Short reminder so module overlays cannot override the UI locale lock.
+ */
+function moduleLocaleLockReminder(locale: Locale): string {
+  if (locale === "zh") {
+    return [
+      "## Module output language (hard)",
+      "UI locale is Chinese. Whole reply (questions + deliverables) in Chinese.",
+      "Ignore any pack line that says match the latest user message language.",
+    ].join("\n");
+  }
+
+  return [
+    "## Module output language (hard)",
+    "UI locale is English. Whole reply (questions + deliverables) in full English only.",
+    "ASCII quotes \" and ' only. Never 「」『』 or fullwidth ＂.",
+    "Ignore any pack line that says match the latest user message language.",
+  ].join("\n");
+}
+
+/** Meta tokens that must never enter lexical probe scoring. */
+const PROBE_HINT_BLOCKLIST: Set<string> = new Set(["probe_jeff"]);
+/** Cap hint flood so pack keywords cannot pin the same top sources every turn. */
+const MAX_MODULE_PROBE_HINTS: number = 4;
+
+/**
+ * Light hint blend for module probes: drop meta tokens, cap count.
+ * Bound node ids are NOT dumped here (they soft-merge after probe instead).
+ */
+export function selectModuleProbeHints(probeHints: string[]): string[] {
+  const selected: string[] = [];
+  for (const raw of probeHints) {
+    const hint: string = raw.trim();
+    if (hint.length === 0) {
+      continue;
+    }
+    if (PROBE_HINT_BLOCKLIST.has(hint.toLowerCase())) {
+      continue;
+    }
+    selected.push(hint);
+    if (selected.length >= MAX_MODULE_PROBE_HINTS) {
+      break;
+    }
+  }
+  return selected;
+}
+
+/**
+ * Merges dialogue probe query with a light hint blend and optional intake summary.
+ * Keeps the latest user ask last so lexical scoring centers on what they said.
+ * Does not inject boundNodeIds into the query string (see mergeBoundNodesIntoProbe).
  */
 export function buildModuleProbeQuery(options: {
   baseQuery: string;
@@ -174,18 +227,11 @@ export function buildModuleProbeQuery(options: {
   intake: Record<string, string> | undefined;
 }): string {
   const intakeSummary: string = summarizeIntakeForProbe(options.intake, options.pack.intakeFields);
-  const hints: string = options.pack.probeHints.join(" ");
-  const boundIds: string =
-    options.pack.boundNodeIds !== undefined && options.pack.boundNodeIds.length > 0
-      ? options.pack.boundNodeIds.join(" ")
-      : "";
+  const hints: string = selectModuleProbeHints(options.pack.probeHints).join(" ");
 
   const prefixParts: string[] = [];
   if (hints.length > 0) {
     prefixParts.push(hints);
-  }
-  if (boundIds.length > 0) {
-    prefixParts.push(boundIds);
   }
   if (intakeSummary.length > 0) {
     prefixParts.push(intakeSummary);
@@ -233,13 +279,17 @@ export function appendModuleSystemOverlay(options: {
   pack: ModulePack;
   intake: Record<string, string> | undefined;
   homeIntent?: string;
+  locale: Locale;
 }): string {
   const intakeBlock: string = formatIntakeForPrompt(options.intake, options.pack.intakeFields);
   const shared: string = buildSharedModuleRules(options.pack);
   const homeHint: string = formatHomeIntentHint(options.homeIntent);
+  const localeLock: string = moduleLocaleLockReminder(options.locale);
 
   return [
     options.baseSystemPrompt,
+    "",
+    localeLock,
     "",
     options.pack.systemOverlay,
     "",

@@ -5,14 +5,15 @@ import Link from "next/link";
 
 import { useI18n } from "@/lib/i18n/LocaleProvider";
 
-export type AppNavActive = "ask" | "tools";
+export type AppNavActive = "home" | "tools";
 
 type AppNavProps = {
   active: AppNavActive;
 };
 
 /**
- * Top product nav: Influence Engine Coach wordmark + Ask / All Tools (ZH default).
+ * Top product nav: Influence Engine Coach wordmark + All Tools.
+ * Home free chat stays at `/` via the brand mark; no Ask Jeff nav item.
  */
 export default function AppNav({ active }: AppNavProps) {
   const { t } = useI18n();
@@ -34,16 +35,6 @@ export default function AppNav({ active }: AppNavProps) {
         </span>
       </Link>
       <nav className="app-nav" aria-label="Primary">
-        <Link
-          href="/"
-          className={active === "ask" ? "app-nav-link app-nav-link-active" : "app-nav-link"}
-          aria-current={active === "ask" ? "page" : undefined}
-        >
-          {t("navAsk")}
-        </Link>
-        <span className="app-nav-sep" aria-hidden="true">
-          ·
-        </span>
         <Link
           href="/tools"
           className={active === "tools" ? "app-nav-link app-nav-link-active" : "app-nav-link"}

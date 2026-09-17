@@ -88,7 +88,7 @@ export default function ChatShell() {
     setError(null);
     setIsSending(true);
 
-    const result = await postChat({ messages: nextMessages });
+    const result = await postChat({ messages: nextMessages, locale });
 
     if (!result.ok) {
       setError(t(chatErrorMessageKey(result.error)));
@@ -130,7 +130,7 @@ export default function ChatShell() {
   return (
     <div className="shell">
       <header className="header header-brand">
-        <AppNav active="ask" />
+        <AppNav active="home" />
       </header>
 
       <div className="main">

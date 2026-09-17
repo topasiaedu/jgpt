@@ -48,6 +48,7 @@ export const VALUE_CONVERT_LADDER_PACK: ModulePack = {
     "probe_jeff",
   ],
   boundNodeIds: [
+    "fw.customer-purchase-paths",
     "cl.value-then-convert",
     "cl.content-not-ads",
     "pr.exposure-trust-conversion",

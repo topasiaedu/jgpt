@@ -32,7 +32,7 @@ export default function ModuleChatShell({
   homeIntent,
   onShowIntroAgain,
 }: ModuleChatShellProps) {
-  const { t } = useI18n();
+  const { t, locale } = useI18n();
   const [messages, setMessages] = useState<ChatMessage[]>(() => [
     { role: "assistant", content: chatOpener },
   ]);
@@ -57,6 +57,7 @@ export default function ModuleChatShell({
 
     const result = await postChat({
       messages: nextMessages,
+      locale,
       moduleId,
       ...(typeof homeIntent === "string" && homeIntent.length > 0
         ? { homeIntent }

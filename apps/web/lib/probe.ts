@@ -8,6 +8,8 @@ import { isForbiddenDoctrinePath, monorepoPath, resolveJeffWikiFile } from "@/li
 const MAX_SEED_NODES = 5;
 const MAX_HOPS = 2;
 const MAX_EVIDENCE_NODES = 8;
+/** Extra slots for module bound anchors appended after user-led ranking. */
+const MAX_BOUND_APPEND = 4;
 const MAX_WIKI_CHARS = 1800;
 const IN_COVERAGE_MIN_SCORE = 2.5;
 /** Ignore doctrine-bonus-only seeds so hop upgrades can win. */
@@ -166,6 +168,68 @@ export function probeTeaching(query: string): ProbeResult {
     evidence: ranked,
     sources,
     evidencePackText: formatEvidencePack(ranked, coverage),
+  };
+}
+
+/**
+ * Soft-merges pack boundNodeIds into an already-ranked probe result.
+ * Appends missing anchors at the end (does not re-sort to the top) so module
+ * grounding stays available for citations without flooding lexical seed scores.
+ */
+export function mergeBoundNodesIntoProbe(
+  probe: ProbeResult,
+  boundNodeIds: string[] | undefined,
+): ProbeResult {
+  if (boundNodeIds === undefined || boundNodeIds.length === 0) {
+    return probe;
+  }
+
+  const present: Set<string> = new Set(probe.evidence.map((item) => item.node.id));
+  const missingIds: string[] = boundNodeIds.filter((id) => !present.has(id));
+  if (missingIds.length === 0) {
+    return probe;
+  }
+
+  let nodes: GraphNode[];
+  try {
+    nodes = loadTeachingGraph().nodes;
+  } catch {
+    return probe;
+  }
+
+  const byId: Map<string, GraphNode> = new Map(nodes.map((node) => [node.id, node]));
+  const extras: EvidenceItem[] = [];
+
+  for (const id of missingIds.slice(0, MAX_BOUND_APPEND)) {
+    const node: GraphNode | undefined = byId.get(id);
+    if (node === undefined) {
+      continue;
+    }
+    extras.push({
+      node,
+      score: 0,
+      hop: 99,
+      wikiExcerpt: loadWikiExcerpt(node),
+    });
+  }
+
+  if (extras.length === 0) {
+    return probe;
+  }
+
+  const evidence: EvidenceItem[] = [...probe.evidence, ...extras];
+  const sources: ChatSource[] = evidence.map((item) => ({
+    id: item.node.id,
+    title: item.node.title,
+    type: item.node.type,
+  }));
+
+  return {
+    query: probe.query,
+    coverage: probe.coverage,
+    evidence,
+    sources,
+    evidencePackText: formatEvidencePack(evidence, probe.coverage),
   };
 }
 

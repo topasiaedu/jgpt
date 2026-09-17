@@ -232,6 +232,1358 @@
       "to": "src.testimonials.batch1",
       "confidence": 0.7,
       "summary": "From batch-1 testimonials"
+    },
+    {
+      "id": "e.cites.fw.trust-engine.src.offline",
+      "type": "cites",
+      "from": "fw.trust-engine",
+      "to": "src.workshop.offline.aug.d1-d3",
+      "confidence": 0.9,
+      "summary": "Trust Engine / 信任引擎 named on offline workshop slides"
+    },
+    {
+      "id": "e.includes.umbrella.fw.trust-engine",
+      "type": "includes",
+      "from": "fw.founder-ip-system-intensive",
+      "to": "fw.trust-engine",
+      "confidence": 0.8,
+      "summary": "Part of Founder IP System Intensive"
+    },
+    {
+      "id": "e.cites.fw.trust-evidence-checklist.src.offline",
+      "type": "cites",
+      "from": "fw.trust-evidence-checklist",
+      "to": "src.workshop.offline.aug.d1-d3",
+      "confidence": 0.9,
+      "summary": "Trust Evidence Checklist / 信任证据清单 named on offline workshop slides"
+    },
+    {
+      "id": "e.includes.umbrella.fw.trust-evidence-checklist",
+      "type": "includes",
+      "from": "fw.founder-ip-system-intensive",
+      "to": "fw.trust-evidence-checklist",
+      "confidence": 0.8,
+      "summary": "Part of Founder IP System Intensive"
+    },
+    {
+      "id": "e.cites.fw.content-asset-stack.src.offline",
+      "type": "cites",
+      "from": "fw.content-asset-stack",
+      "to": "src.workshop.offline.aug.d1-d3",
+      "confidence": 0.9,
+      "summary": "Content Asset Stack / 内容资产堆叠 named on offline workshop slides"
+    },
+    {
+      "id": "e.includes.umbrella.fw.content-asset-stack",
+      "type": "includes",
+      "from": "fw.founder-ip-system-intensive",
+      "to": "fw.content-asset-stack",
+      "confidence": 0.8,
+      "summary": "Part of Founder IP System Intensive"
+    },
+    {
+      "id": "e.cites.fw.noise-filter.src.offline",
+      "type": "cites",
+      "from": "fw.noise-filter",
+      "to": "src.workshop.offline.aug.d1-d3",
+      "confidence": 0.9,
+      "summary": "Noise Filter / 噪音过滤器 named on offline workshop slides"
+    },
+    {
+      "id": "e.includes.umbrella.fw.noise-filter",
+      "type": "includes",
+      "from": "fw.founder-ip-system-intensive",
+      "to": "fw.noise-filter",
+      "confidence": 0.8,
+      "summary": "Part of Founder IP System Intensive"
+    },
+    {
+      "id": "e.cites.fw.break-shield.src.offline",
+      "type": "cites",
+      "from": "fw.break-shield",
+      "to": "src.workshop.offline.aug.d1-d3",
+      "confidence": 0.9,
+      "summary": "B.R.E.A.K Shield / 评论护盾 named on offline workshop slides"
+    },
+    {
+      "id": "e.includes.umbrella.fw.break-shield",
+      "type": "includes",
+      "from": "fw.founder-ip-system-intensive",
+      "to": "fw.break-shield",
+      "confidence": 0.8,
+      "summary": "Part of Founder IP System Intensive"
+    },
+    {
+      "id": "e.cites.fw.memory-hook.src.offline",
+      "type": "cites",
+      "from": "fw.memory-hook",
+      "to": "src.workshop.offline.aug.d1-d3",
+      "confidence": 0.9,
+      "summary": "Memory Hook / 记忆钩子 named on offline workshop slides"
+    },
+    {
+      "id": "e.includes.umbrella.fw.memory-hook",
+      "type": "includes",
+      "from": "fw.founder-ip-system-intensive",
+      "to": "fw.memory-hook",
+      "confidence": 0.8,
+      "summary": "Part of Founder IP System Intensive"
+    },
+    {
+      "id": "e.cites.fw.market-memory-triangle.src.offline",
+      "type": "cites",
+      "from": "fw.market-memory-triangle",
+      "to": "src.workshop.offline.aug.d1-d3",
+      "confidence": 0.9,
+      "summary": "Market Memory Triangle / 市场记忆三角 named on offline workshop slides"
+    },
+    {
+      "id": "e.includes.umbrella.fw.market-memory-triangle",
+      "type": "includes",
+      "from": "fw.founder-ip-system-intensive",
+      "to": "fw.market-memory-triangle",
+      "confidence": 0.8,
+      "summary": "Part of Founder IP System Intensive"
+    },
+    {
+      "id": "e.cites.fw.ip-influence-triangle.src.offline",
+      "type": "cites",
+      "from": "fw.ip-influence-triangle",
+      "to": "src.workshop.offline.aug.d1-d3",
+      "confidence": 0.9,
+      "summary": "IP Influence Triangle / IP影响力三角 named on offline workshop slides"
+    },
+    {
+      "id": "e.includes.umbrella.fw.ip-influence-triangle",
+      "type": "includes",
+      "from": "fw.founder-ip-system-intensive",
+      "to": "fw.ip-influence-triangle",
+      "confidence": 0.8,
+      "summary": "Part of Founder IP System Intensive"
+    },
+    {
+      "id": "e.cites.fw.fifteen-second-positioning.src.offline",
+      "type": "cites",
+      "from": "fw.fifteen-second-positioning",
+      "to": "src.workshop.offline.aug.d1-d3",
+      "confidence": 0.9,
+      "summary": "15-second positioning formula / 15秒定位公式 named on offline workshop slides"
+    },
+    {
+      "id": "e.includes.umbrella.fw.fifteen-second-positioning",
+      "type": "includes",
+      "from": "fw.founder-ip-system-intensive",
+      "to": "fw.fifteen-second-positioning",
+      "confidence": 0.8,
+      "summary": "Part of Founder IP System Intensive"
+    },
+    {
+      "id": "e.cites.fw.content-matrix-3x6.src.offline",
+      "type": "cites",
+      "from": "fw.content-matrix-3x6",
+      "to": "src.workshop.offline.aug.d1-d3",
+      "confidence": 0.9,
+      "summary": "3×6 Content Matrix / 内容矩阵 named on offline workshop slides"
+    },
+    {
+      "id": "e.includes.umbrella.fw.content-matrix-3x6",
+      "type": "includes",
+      "from": "fw.founder-ip-system-intensive",
+      "to": "fw.content-matrix-3x6",
+      "confidence": 0.8,
+      "summary": "Part of Founder IP System Intensive"
+    },
+    {
+      "id": "e.cites.fw.experience-translator.src.offline",
+      "type": "cites",
+      "from": "fw.experience-translator",
+      "to": "src.workshop.offline.aug.d1-d3",
+      "confidence": 0.9,
+      "summary": "Experience Translator / 经历翻译器 named on offline workshop slides"
+    },
+    {
+      "id": "e.includes.umbrella.fw.experience-translator",
+      "type": "includes",
+      "from": "fw.founder-ip-system-intensive",
+      "to": "fw.experience-translator",
+      "confidence": 0.8,
+      "summary": "Part of Founder IP System Intensive"
+    },
+    {
+      "id": "e.cites.fw.story-founder-story.src.offline",
+      "type": "cites",
+      "from": "fw.story-founder-story",
+      "to": "src.workshop.offline.aug.d1-d3",
+      "confidence": 0.9,
+      "summary": "S.T.O.R.Y Founder Story named on offline workshop slides"
+    },
+    {
+      "id": "e.includes.umbrella.fw.story-founder-story",
+      "type": "includes",
+      "from": "fw.founder-ip-system-intensive",
+      "to": "fw.story-founder-story",
+      "confidence": 0.8,
+      "summary": "Part of Founder IP System Intensive"
+    },
+    {
+      "id": "e.cites.fw.five-track-trust-matrix.src.offline",
+      "type": "cites",
+      "from": "fw.five-track-trust-matrix",
+      "to": "src.workshop.offline.aug.d1-d3",
+      "confidence": 0.9,
+      "summary": "5-Track Trust Matrix named on offline workshop slides"
+    },
+    {
+      "id": "e.includes.umbrella.fw.five-track-trust-matrix",
+      "type": "includes",
+      "from": "fw.founder-ip-system-intensive",
+      "to": "fw.five-track-trust-matrix",
+      "confidence": 0.8,
+      "summary": "Part of Founder IP System Intensive"
+    },
+    {
+      "id": "e.cites.fw.thirty-day-content-system.src.offline",
+      "type": "cites",
+      "from": "fw.thirty-day-content-system",
+      "to": "src.workshop.offline.aug.d1-d3",
+      "confidence": 0.9,
+      "summary": "30-day content system / 30天内容系统 named on offline workshop slides"
+    },
+    {
+      "id": "e.includes.umbrella.fw.thirty-day-content-system",
+      "type": "includes",
+      "from": "fw.founder-ip-system-intensive",
+      "to": "fw.thirty-day-content-system",
+      "confidence": 0.8,
+      "summary": "Part of Founder IP System Intensive"
+    },
+    {
+      "id": "e.cites.fw.speaks-framework.src.offline",
+      "type": "cites",
+      "from": "fw.speaks-framework",
+      "to": "src.workshop.offline.aug.d1-d3",
+      "confidence": 0.9,
+      "summary": "SPEAKS Framework (authority scenes) named on offline workshop slides"
+    },
+    {
+      "id": "e.includes.umbrella.fw.speaks-framework",
+      "type": "includes",
+      "from": "fw.founder-ip-system-intensive",
+      "to": "fw.speaks-framework",
+      "confidence": 0.8,
+      "summary": "Part of Founder IP System Intensive"
+    },
+    {
+      "id": "e.cites.fw.authority-growth-system.src.offline",
+      "type": "cites",
+      "from": "fw.authority-growth-system",
+      "to": "src.workshop.offline.aug.d1-d3",
+      "confidence": 0.9,
+      "summary": "Authority growth system / 权威增长系统 named on offline workshop slides"
+    },
+    {
+      "id": "e.includes.umbrella.fw.authority-growth-system",
+      "type": "includes",
+      "from": "fw.founder-ip-system-intensive",
+      "to": "fw.authority-growth-system",
+      "confidence": 0.8,
+      "summary": "Part of Founder IP System Intensive"
+    },
+    {
+      "id": "e.cites.fw.customer-purchase-paths.src.offline",
+      "type": "cites",
+      "from": "fw.customer-purchase-paths",
+      "to": "src.workshop.offline.aug.d1-d3",
+      "confidence": 0.9,
+      "summary": "Customer purchase paths 1–7 / 客户购买路径 named on offline workshop slides"
+    },
+    {
+      "id": "e.includes.umbrella.fw.customer-purchase-paths",
+      "type": "includes",
+      "from": "fw.founder-ip-system-intensive",
+      "to": "fw.customer-purchase-paths",
+      "confidence": 0.8,
+      "summary": "Part of Founder IP System Intensive"
+    },
+    {
+      "id": "e.cites.fw.founder-ip-flywheel.src.offline",
+      "type": "cites",
+      "from": "fw.founder-ip-flywheel",
+      "to": "src.workshop.offline.aug.d1-d3",
+      "confidence": 0.9,
+      "summary": "Founder IP Flywheel / FounderIP飞轮 named on offline workshop slides"
+    },
+    {
+      "id": "e.includes.umbrella.fw.founder-ip-flywheel",
+      "type": "includes",
+      "from": "fw.founder-ip-system-intensive",
+      "to": "fw.founder-ip-flywheel",
+      "confidence": 0.8,
+      "summary": "Part of Founder IP System Intensive"
+    },
+    {
+      "id": "e.cites.fw.content-machine-blueprint.src.offline",
+      "type": "cites",
+      "from": "fw.content-machine-blueprint",
+      "to": "src.workshop.offline.aug.d1-d3",
+      "confidence": 0.9,
+      "summary": "Content Machine Blueprint named on offline workshop slides"
+    },
+    {
+      "id": "e.includes.umbrella.fw.content-machine-blueprint",
+      "type": "includes",
+      "from": "fw.founder-ip-system-intensive",
+      "to": "fw.content-machine-blueprint",
+      "confidence": 0.8,
+      "summary": "Part of Founder IP System Intensive"
+    },
+    {
+      "id": "e.cites.fw.scalable-revenue-engine.src.offline",
+      "type": "cites",
+      "from": "fw.scalable-revenue-engine",
+      "to": "src.workshop.offline.aug.d1-d3",
+      "confidence": 0.9,
+      "summary": "Scalable Revenue Engine™ named on offline workshop slides"
+    },
+    {
+      "id": "e.includes.umbrella.fw.scalable-revenue-engine",
+      "type": "includes",
+      "from": "fw.founder-ip-system-intensive",
+      "to": "fw.scalable-revenue-engine",
+      "confidence": 0.8,
+      "summary": "Part of Founder IP System Intensive"
+    },
+    {
+      "id": "e.cites.fw.trust-engine-automation.src.offline",
+      "type": "cites",
+      "from": "fw.trust-engine-automation",
+      "to": "src.workshop.offline.aug.d1-d3",
+      "confidence": 0.9,
+      "summary": "Trust Engine Automation (客户信任指南 path) named on offline workshop slides"
+    },
+    {
+      "id": "e.includes.umbrella.fw.trust-engine-automation",
+      "type": "includes",
+      "from": "fw.founder-ip-system-intensive",
+      "to": "fw.trust-engine-automation",
+      "confidence": 0.8,
+      "summary": "Part of Founder IP System Intensive"
+    },
+    {
+      "id": "e.cites.fw.content-roles-3plus2.src.offline",
+      "type": "cites",
+      "from": "fw.content-roles-3plus2",
+      "to": "src.workshop.offline.aug.d1-d3",
+      "confidence": 0.9,
+      "summary": "Content roles + 3+2 portfolio named on offline workshop slides"
+    },
+    {
+      "id": "e.includes.umbrella.fw.content-roles-3plus2",
+      "type": "includes",
+      "from": "fw.founder-ip-system-intensive",
+      "to": "fw.content-roles-3plus2",
+      "confidence": 0.8,
+      "summary": "Part of Founder IP System Intensive"
+    },
+    {
+      "id": "e.cites.fw.founder-ip-system.src.offline",
+      "type": "cites",
+      "from": "fw.founder-ip-system-intensive",
+      "to": "src.workshop.offline.aug.d1-d3",
+      "confidence": 0.95,
+      "summary": "Umbrella named on intensive title slides"
+    },
+    {
+      "id": "e.supports.fw.ip-influence.pr.standpoint",
+      "type": "supports",
+      "from": "fw.ip-influence-triangle",
+      "to": "pr.standpoint-or-invisible",
+      "confidence": 0.7,
+      "summary": "Triangle worksheet includes 立场 / oppose axis"
+    },
+    {
+      "id": "e.cites.fw.jiugongge-topic-bingo.src.offline",
+      "type": "cites",
+      "from": "fw.jiugongge-topic-bingo",
+      "to": "src.workshop.offline.aug.d1-d3",
+      "confidence": 0.95,
+      "summary": "九宫格 named on Day 2 offline slides"
+    },
+    {
+      "id": "e.includes.umbrella.fw.jiugongge-topic-bingo",
+      "type": "includes",
+      "from": "fw.founder-ip-system-intensive",
+      "to": "fw.jiugongge-topic-bingo",
+      "confidence": 0.85,
+      "summary": "Part of Founder IP System Intensive Day 2"
+    },
+    {
+      "id": "e.supports.fw.thirty-day-content-system.fw.jiugongge-topic-bingo",
+      "type": "supports",
+      "from": "fw.jiugongge-topic-bingo",
+      "to": "fw.thirty-day-content-system",
+      "confidence": 0.9,
+      "summary": "九宫格 expands into 30天内容系统 per D2 slide"
+    },
+    {
+      "id": "e.cites.fw.kama-muta.src.offline",
+      "type": "cites",
+      "from": "fw.kama-muta",
+      "to": "src.workshop.offline.aug.d1-d3",
+      "confidence": 0.9,
+      "summary": "Kama Muta on offline workshop slides"
+    },
+    {
+      "id": "e.includes.umbrella.fw.kama-muta",
+      "type": "includes",
+      "from": "fw.founder-ip-system-intensive",
+      "to": "fw.kama-muta",
+      "confidence": 0.8,
+      "summary": "Part of Founder IP System Intensive"
+    },
+    {
+      "id": "e.cites.fw.four-content-assets.src.offline",
+      "type": "cites",
+      "from": "fw.four-content-assets",
+      "to": "src.workshop.offline.aug.d1-d3",
+      "confidence": 0.9,
+      "summary": "四种内容资产 on offline workshop slides"
+    },
+    {
+      "id": "e.includes.umbrella.fw.four-content-assets",
+      "type": "includes",
+      "from": "fw.founder-ip-system-intensive",
+      "to": "fw.four-content-assets",
+      "confidence": 0.8,
+      "summary": "Part of Founder IP System Intensive"
+    },
+    {
+      "id": "e.cites.fw.comment-reply-three-lines.src.offline",
+      "type": "cites",
+      "from": "fw.comment-reply-three-lines",
+      "to": "src.workshop.offline.aug.d1-d3",
+      "confidence": 0.9,
+      "summary": "评论回应三句法 on offline workshop slides"
+    },
+    {
+      "id": "e.includes.umbrella.fw.comment-reply-three-lines",
+      "type": "includes",
+      "from": "fw.founder-ip-system-intensive",
+      "to": "fw.comment-reply-three-lines",
+      "confidence": 0.8,
+      "summary": "Part of Founder IP System Intensive"
+    },
+    {
+      "id": "e.cites.fw.seven-day-startup-calendar.src.offline",
+      "type": "cites",
+      "from": "fw.seven-day-startup-calendar",
+      "to": "src.workshop.offline.aug.d1-d3",
+      "confidence": 0.9,
+      "summary": "7天启动内容日历 on offline workshop slides"
+    },
+    {
+      "id": "e.includes.umbrella.fw.seven-day-startup-calendar",
+      "type": "includes",
+      "from": "fw.founder-ip-system-intensive",
+      "to": "fw.seven-day-startup-calendar",
+      "confidence": 0.8,
+      "summary": "Part of Founder IP System Intensive"
+    },
+    {
+      "id": "e.supports.fw.four-content-assets.fw.content-asset-stack",
+      "type": "supports",
+      "from": "fw.four-content-assets",
+      "to": "fw.content-asset-stack",
+      "confidence": 0.85,
+      "summary": "Four types sit inside / next to Content Asset Stack teaching"
+    },
+    {
+      "id": "e.supports.fw.comment-reply.fw.break-shield",
+      "type": "supports",
+      "from": "fw.comment-reply-three-lines",
+      "to": "fw.break-shield",
+      "confidence": 0.7,
+      "summary": "Reply formula sits near comment-shield teaching on Day 1"
+    },
+    {
+      "id": "e.cites.fw.trust-compound-formula.src.offline",
+      "type": "cites",
+      "from": "fw.trust-compound-formula",
+      "to": "src.workshop.offline.aug.d1-d3",
+      "confidence": 0.9,
+      "summary": "信任复利公式 on offline slides"
+    },
+    {
+      "id": "e.includes.umbrella.fw.trust-compound-formula",
+      "type": "includes",
+      "from": "fw.founder-ip-system-intensive",
+      "to": "fw.trust-compound-formula",
+      "confidence": 0.75,
+      "summary": "Part of Founder IP System Intensive"
+    },
+    {
+      "id": "e.cites.fw.comment-classification.src.offline",
+      "type": "cites",
+      "from": "fw.comment-classification",
+      "to": "src.workshop.offline.aug.d1-d3",
+      "confidence": 0.9,
+      "summary": "评论分类 on offline slides"
+    },
+    {
+      "id": "e.includes.umbrella.fw.comment-classification",
+      "type": "includes",
+      "from": "fw.founder-ip-system-intensive",
+      "to": "fw.comment-classification",
+      "confidence": 0.75,
+      "summary": "Part of Founder IP System Intensive"
+    },
+    {
+      "id": "e.cites.fw.positioning-three-line-map.src.offline",
+      "type": "cites",
+      "from": "fw.positioning-three-line-map",
+      "to": "src.workshop.offline.aug.d1-d3",
+      "confidence": 0.9,
+      "summary": "定位一句话：三行地图 on offline slides"
+    },
+    {
+      "id": "e.includes.umbrella.fw.positioning-three-line-map",
+      "type": "includes",
+      "from": "fw.founder-ip-system-intensive",
+      "to": "fw.positioning-three-line-map",
+      "confidence": 0.75,
+      "summary": "Part of Founder IP System Intensive"
+    },
+    {
+      "id": "e.cites.fw.brand-pillars.src.offline",
+      "type": "cites",
+      "from": "fw.brand-pillars",
+      "to": "src.workshop.offline.aug.d1-d3",
+      "confidence": 0.9,
+      "summary": "Brand Pillars on offline slides"
+    },
+    {
+      "id": "e.includes.umbrella.fw.brand-pillars",
+      "type": "includes",
+      "from": "fw.founder-ip-system-intensive",
+      "to": "fw.brand-pillars",
+      "confidence": 0.75,
+      "summary": "Part of Founder IP System Intensive"
+    },
+    {
+      "id": "e.cites.fw.wrong-vs-right-shoot.src.offline",
+      "type": "cites",
+      "from": "fw.wrong-vs-right-shoot",
+      "to": "src.workshop.offline.aug.d1-d3",
+      "confidence": 0.9,
+      "summary": "错拍 vs 对拍 on offline slides"
+    },
+    {
+      "id": "e.includes.umbrella.fw.wrong-vs-right-shoot",
+      "type": "includes",
+      "from": "fw.founder-ip-system-intensive",
+      "to": "fw.wrong-vs-right-shoot",
+      "confidence": 0.75,
+      "summary": "Part of Founder IP System Intensive"
+    },
+    {
+      "id": "e.cites.fw.founder-story-openers.src.offline",
+      "type": "cites",
+      "from": "fw.founder-story-openers",
+      "to": "src.workshop.offline.aug.d1-d3",
+      "confidence": 0.9,
+      "summary": "Founder Story 开头三种模型 on offline slides"
+    },
+    {
+      "id": "e.includes.umbrella.fw.founder-story-openers",
+      "type": "includes",
+      "from": "fw.founder-ip-system-intensive",
+      "to": "fw.founder-story-openers",
+      "confidence": 0.75,
+      "summary": "Part of Founder IP System Intensive"
+    },
+    {
+      "id": "e.cites.fw.founder-ip-one-page-map.src.offline",
+      "type": "cites",
+      "from": "fw.founder-ip-one-page-map",
+      "to": "src.workshop.offline.aug.d1-d3",
+      "confidence": 0.9,
+      "summary": "Founder IP 一页地图 on offline slides"
+    },
+    {
+      "id": "e.includes.umbrella.fw.founder-ip-one-page-map",
+      "type": "includes",
+      "from": "fw.founder-ip-system-intensive",
+      "to": "fw.founder-ip-one-page-map",
+      "confidence": 0.75,
+      "summary": "Part of Founder IP System Intensive"
+    },
+    {
+      "id": "e.cites.fw.publish-checklist.src.offline",
+      "type": "cites",
+      "from": "fw.publish-checklist",
+      "to": "src.workshop.offline.aug.d1-d3",
+      "confidence": 0.9,
+      "summary": "发布前检查清单 on offline slides"
+    },
+    {
+      "id": "e.includes.umbrella.fw.publish-checklist",
+      "type": "includes",
+      "from": "fw.founder-ip-system-intensive",
+      "to": "fw.publish-checklist",
+      "confidence": 0.75,
+      "summary": "Part of Founder IP System Intensive"
+    },
+    {
+      "id": "e.cites.fw.belief-shift-market-education.src.offline",
+      "type": "cites",
+      "from": "fw.belief-shift-market-education",
+      "to": "src.workshop.offline.aug.d1-d3",
+      "confidence": 0.9,
+      "summary": "Belief Shift（内容不是发布，是市场教育） on offline slides"
+    },
+    {
+      "id": "e.includes.umbrella.fw.belief-shift-market-education",
+      "type": "includes",
+      "from": "fw.founder-ip-system-intensive",
+      "to": "fw.belief-shift-market-education",
+      "confidence": 0.75,
+      "summary": "Part of Founder IP System Intensive"
+    },
+    {
+      "id": "e.cites.fw.four-horsemen-of-content.src.offline",
+      "type": "cites",
+      "from": "fw.four-horsemen-of-content",
+      "to": "src.workshop.offline.aug.d1-d3",
+      "confidence": 0.9,
+      "summary": "杀死内容的四骑士 on offline slides"
+    },
+    {
+      "id": "e.includes.umbrella.fw.four-horsemen-of-content",
+      "type": "includes",
+      "from": "fw.founder-ip-system-intensive",
+      "to": "fw.four-horsemen-of-content",
+      "confidence": 0.75,
+      "summary": "Part of Founder IP System Intensive"
+    },
+    {
+      "id": "e.cites.fw.content-failure-map.src.offline",
+      "type": "cites",
+      "from": "fw.content-failure-map",
+      "to": "src.workshop.offline.aug.d1-d3",
+      "confidence": 0.9,
+      "summary": "Content Failure Map / 内容失败地图 on offline slides"
+    },
+    {
+      "id": "e.includes.umbrella.fw.content-failure-map",
+      "type": "includes",
+      "from": "fw.founder-ip-system-intensive",
+      "to": "fw.content-failure-map",
+      "confidence": 0.75,
+      "summary": "Part of Founder IP System Intensive"
+    },
+    {
+      "id": "e.cites.fw.content-audit.src.offline",
+      "type": "cites",
+      "from": "fw.content-audit",
+      "to": "src.workshop.offline.aug.d1-d3",
+      "confidence": 0.9,
+      "summary": "Content Audit on offline slides"
+    },
+    {
+      "id": "e.includes.umbrella.fw.content-audit",
+      "type": "includes",
+      "from": "fw.founder-ip-system-intensive",
+      "to": "fw.content-audit",
+      "confidence": 0.75,
+      "summary": "Part of Founder IP System Intensive"
+    },
+    {
+      "id": "e.cites.fw.ai-content-audit-prompt.src.offline",
+      "type": "cites",
+      "from": "fw.ai-content-audit-prompt",
+      "to": "src.workshop.offline.aug.d1-d3",
+      "confidence": 0.9,
+      "summary": "AI Content Audit Prompt on offline slides"
+    },
+    {
+      "id": "e.includes.umbrella.fw.ai-content-audit-prompt",
+      "type": "includes",
+      "from": "fw.founder-ip-system-intensive",
+      "to": "fw.ai-content-audit-prompt",
+      "confidence": 0.75,
+      "summary": "Part of Founder IP System Intensive"
+    },
+    {
+      "id": "e.cites.fw.crossing-lines.src.offline",
+      "type": "cites",
+      "from": "fw.crossing-lines",
+      "to": "src.workshop.offline.aug.d1-d3",
+      "confidence": 0.9,
+      "summary": "穿心线 on offline slides"
+    },
+    {
+      "id": "e.includes.umbrella.fw.crossing-lines",
+      "type": "includes",
+      "from": "fw.founder-ip-system-intensive",
+      "to": "fw.crossing-lines",
+      "confidence": 0.75,
+      "summary": "Part of Founder IP System Intensive"
+    },
+    {
+      "id": "e.cites.fw.pre-shoot-six-questions.src.offline",
+      "type": "cites",
+      "from": "fw.pre-shoot-six-questions",
+      "to": "src.workshop.offline.aug.d1-d3",
+      "confidence": 0.9,
+      "summary": "拍前六问 on offline slides"
+    },
+    {
+      "id": "e.includes.umbrella.fw.pre-shoot-six-questions",
+      "type": "includes",
+      "from": "fw.founder-ip-system-intensive",
+      "to": "fw.pre-shoot-six-questions",
+      "confidence": 0.75,
+      "summary": "Part of Founder IP System Intensive"
+    },
+    {
+      "id": "e.cites.fw.hook-formula.src.offline",
+      "type": "cites",
+      "from": "fw.hook-formula",
+      "to": "src.workshop.offline.aug.d1-d3",
+      "confidence": 0.9,
+      "summary": "Hook Formula on offline slides"
+    },
+    {
+      "id": "e.includes.umbrella.fw.hook-formula",
+      "type": "includes",
+      "from": "fw.founder-ip-system-intensive",
+      "to": "fw.hook-formula",
+      "confidence": 0.75,
+      "summary": "Part of Founder IP System Intensive"
+    },
+    {
+      "id": "e.cites.fw.opens-60s-five-act.src.offline",
+      "type": "cites",
+      "from": "fw.opens-60s-five-act",
+      "to": "src.workshop.offline.aug.d1-d3",
+      "confidence": 0.9,
+      "summary": "OPENS 60秒五幕剧 on offline slides"
+    },
+    {
+      "id": "e.includes.umbrella.fw.opens-60s-five-act",
+      "type": "includes",
+      "from": "fw.founder-ip-system-intensive",
+      "to": "fw.opens-60s-five-act",
+      "confidence": 0.75,
+      "summary": "Part of Founder IP System Intensive"
+    },
+    {
+      "id": "e.cites.fw.cta-structure.src.offline",
+      "type": "cites",
+      "from": "fw.cta-structure",
+      "to": "src.workshop.offline.aug.d1-d3",
+      "confidence": 0.9,
+      "summary": "CTA Structure on offline slides"
+    },
+    {
+      "id": "e.includes.umbrella.fw.cta-structure",
+      "type": "includes",
+      "from": "fw.founder-ip-system-intensive",
+      "to": "fw.cta-structure",
+      "confidence": 0.75,
+      "summary": "Part of Founder IP System Intensive"
+    },
+    {
+      "id": "e.cites.fw.fib-publish-triangle.src.offline",
+      "type": "cites",
+      "from": "fw.fib-publish-triangle",
+      "to": "src.workshop.offline.aug.d1-d3",
+      "confidence": 0.9,
+      "summary": "FIB Publish Triangle on offline slides"
+    },
+    {
+      "id": "e.includes.umbrella.fw.fib-publish-triangle",
+      "type": "includes",
+      "from": "fw.founder-ip-system-intensive",
+      "to": "fw.fib-publish-triangle",
+      "confidence": 0.75,
+      "summary": "Part of Founder IP System Intensive"
+    },
+    {
+      "id": "e.cites.fw.publishable-standard.src.offline",
+      "type": "cites",
+      "from": "fw.publishable-standard",
+      "to": "src.workshop.offline.aug.d1-d3",
+      "confidence": 0.9,
+      "summary": "可发布标准（看得懂/听得完/记得住/愿行动） on offline slides"
+    },
+    {
+      "id": "e.includes.umbrella.fw.publishable-standard",
+      "type": "includes",
+      "from": "fw.founder-ip-system-intensive",
+      "to": "fw.publishable-standard",
+      "confidence": 0.75,
+      "summary": "Part of Founder IP System Intensive"
+    },
+    {
+      "id": "e.cites.fw.authority-opportunity-map.src.offline",
+      "type": "cites",
+      "from": "fw.authority-opportunity-map",
+      "to": "src.workshop.offline.aug.d1-d3",
+      "confidence": 0.9,
+      "summary": "权威机会地图 on offline slides"
+    },
+    {
+      "id": "e.includes.umbrella.fw.authority-opportunity-map",
+      "type": "includes",
+      "from": "fw.founder-ip-system-intensive",
+      "to": "fw.authority-opportunity-map",
+      "confidence": 0.75,
+      "summary": "Part of Founder IP System Intensive"
+    },
+    {
+      "id": "e.cites.fw.flywheel-eight-steps.src.offline",
+      "type": "cites",
+      "from": "fw.flywheel-eight-steps",
+      "to": "src.workshop.offline.aug.d1-d3",
+      "confidence": 0.9,
+      "summary": "飞轮八步详解 on offline slides"
+    },
+    {
+      "id": "e.includes.umbrella.fw.flywheel-eight-steps",
+      "type": "includes",
+      "from": "fw.founder-ip-system-intensive",
+      "to": "fw.flywheel-eight-steps",
+      "confidence": 0.75,
+      "summary": "Part of Founder IP System Intensive"
+    },
+    {
+      "id": "e.cites.fw.story-bank.src.offline",
+      "type": "cites",
+      "from": "fw.story-bank",
+      "to": "src.workshop.offline.aug.d1-d3",
+      "confidence": 0.9,
+      "summary": "STORY BANK / 故事库 on offline slides"
+    },
+    {
+      "id": "e.includes.umbrella.fw.story-bank",
+      "type": "includes",
+      "from": "fw.founder-ip-system-intensive",
+      "to": "fw.story-bank",
+      "confidence": 0.75,
+      "summary": "Part of Founder IP System Intensive"
+    },
+    {
+      "id": "e.cites.fw.content-bank.src.offline",
+      "type": "cites",
+      "from": "fw.content-bank",
+      "to": "src.workshop.offline.aug.d1-d3",
+      "confidence": 0.9,
+      "summary": "CONTENT BANK / 内容库 on offline slides"
+    },
+    {
+      "id": "e.includes.umbrella.fw.content-bank",
+      "type": "includes",
+      "from": "fw.founder-ip-system-intensive",
+      "to": "fw.content-bank",
+      "confidence": 0.75,
+      "summary": "Part of Founder IP System Intensive"
+    },
+    {
+      "id": "e.cites.fw.ignorance-tax.src.offline",
+      "type": "cites",
+      "from": "fw.ignorance-tax",
+      "to": "src.workshop.offline.aug.d1-d3",
+      "confidence": 0.9,
+      "summary": "无知税 on offline slides"
+    },
+    {
+      "id": "e.includes.umbrella.fw.ignorance-tax",
+      "type": "includes",
+      "from": "fw.founder-ip-system-intensive",
+      "to": "fw.ignorance-tax",
+      "confidence": 0.75,
+      "summary": "Part of Founder IP System Intensive"
+    },
+    {
+      "id": "e.cites.fw.business-diagnostic.src.offline",
+      "type": "cites",
+      "from": "fw.business-diagnostic",
+      "to": "src.workshop.offline.aug.d1-d3",
+      "confidence": 0.9,
+      "summary": "Business Diagnostic™ on offline slides"
+    },
+    {
+      "id": "e.includes.umbrella.fw.business-diagnostic",
+      "type": "includes",
+      "from": "fw.founder-ip-system-intensive",
+      "to": "fw.business-diagnostic",
+      "confidence": 0.75,
+      "summary": "Part of Founder IP System Intensive"
+    },
+    {
+      "id": "e.cites.fw.amplifier-effect.src.offline",
+      "type": "cites",
+      "from": "fw.amplifier-effect",
+      "to": "src.workshop.offline.aug.d1-d3",
+      "confidence": 0.9,
+      "summary": "THE AMPLIFIER EFFECT / 放大器效应 on offline slides"
+    },
+    {
+      "id": "e.includes.umbrella.fw.amplifier-effect",
+      "type": "includes",
+      "from": "fw.founder-ip-system-intensive",
+      "to": "fw.amplifier-effect",
+      "confidence": 0.75,
+      "summary": "Part of Founder IP System Intensive"
+    },
+    {
+      "id": "e.cites.fw.revenue-flywheel.src.offline",
+      "type": "cites",
+      "from": "fw.revenue-flywheel",
+      "to": "src.workshop.offline.aug.d1-d3",
+      "confidence": 0.9,
+      "summary": "Revenue Flywheel™ on offline slides"
+    },
+    {
+      "id": "e.includes.umbrella.fw.revenue-flywheel",
+      "type": "includes",
+      "from": "fw.founder-ip-system-intensive",
+      "to": "fw.revenue-flywheel",
+      "confidence": 0.75,
+      "summary": "Part of Founder IP System Intensive"
+    },
+    {
+      "id": "e.cites.fw.ninety-day-roadmap.src.offline",
+      "type": "cites",
+      "from": "fw.ninety-day-roadmap",
+      "to": "src.workshop.offline.aug.d1-d3",
+      "confidence": 0.9,
+      "summary": "90-DAY ROADMAP on offline slides"
+    },
+    {
+      "id": "e.includes.umbrella.fw.ninety-day-roadmap",
+      "type": "includes",
+      "from": "fw.founder-ip-system-intensive",
+      "to": "fw.ninety-day-roadmap",
+      "confidence": 0.75,
+      "summary": "Part of Founder IP System Intensive"
+    },
+    {
+      "id": "e.cites.fw.content-foundation-forms.src.offline",
+      "type": "cites",
+      "from": "fw.content-foundation-forms",
+      "to": "src.workshop.offline.aug.d1-d3",
+      "confidence": 0.9,
+      "summary": "CONTENT FOUNDATION（YAPPING / TALKING HEAD） on offline slides"
+    },
+    {
+      "id": "e.includes.umbrella.fw.content-foundation-forms",
+      "type": "includes",
+      "from": "fw.founder-ip-system-intensive",
+      "to": "fw.content-foundation-forms",
+      "confidence": 0.75,
+      "summary": "Part of Founder IP System Intensive"
+    },
+    {
+      "id": "e.cites.fw.format-map.src.offline",
+      "type": "cites",
+      "from": "fw.format-map",
+      "to": "src.workshop.offline.aug.d1-d3",
+      "confidence": 0.9,
+      "summary": "FORMAT MAP on offline slides"
+    },
+    {
+      "id": "e.includes.umbrella.fw.format-map",
+      "type": "includes",
+      "from": "fw.founder-ip-system-intensive",
+      "to": "fw.format-map",
+      "confidence": 0.75,
+      "summary": "Part of Founder IP System Intensive"
+    },
+    {
+      "id": "e.cites.fw.media-company.src.offline",
+      "type": "cites",
+      "from": "fw.media-company",
+      "to": "src.workshop.offline.aug.d1-d3",
+      "confidence": 0.9,
+      "summary": "MEDIA COMPANY / 行业升级 on offline slides"
+    },
+    {
+      "id": "e.includes.umbrella.fw.media-company",
+      "type": "includes",
+      "from": "fw.founder-ip-system-intensive",
+      "to": "fw.media-company",
+      "confidence": 0.75,
+      "summary": "Part of Founder IP System Intensive"
+    },
+    {
+      "id": "e.cites.fw.self-diagnostic.src.offline",
+      "type": "cites",
+      "from": "fw.self-diagnostic",
+      "to": "src.workshop.offline.aug.d1-d3",
+      "confidence": 0.9,
+      "summary": "SELF DIAGNOSTIC / 自我诊断 on offline slides"
+    },
+    {
+      "id": "e.includes.umbrella.fw.self-diagnostic",
+      "type": "includes",
+      "from": "fw.founder-ip-system-intensive",
+      "to": "fw.self-diagnostic",
+      "confidence": 0.75,
+      "summary": "Part of Founder IP System Intensive"
+    },
+    {
+      "id": "e.cites.fw.customer-trust-guide.src.offline",
+      "type": "cites",
+      "from": "fw.customer-trust-guide",
+      "to": "src.workshop.offline.aug.d1-d3",
+      "confidence": 0.9,
+      "summary": "客户信任指南（Lead Magnet） on offline slides"
+    },
+    {
+      "id": "e.includes.umbrella.fw.customer-trust-guide",
+      "type": "includes",
+      "from": "fw.founder-ip-system-intensive",
+      "to": "fw.customer-trust-guide",
+      "confidence": 0.75,
+      "summary": "Part of Founder IP System Intensive"
+    },
+    {
+      "id": "e.cites.fw.five-jobs-trust-guide.src.offline",
+      "type": "cites",
+      "from": "fw.five-jobs-trust-guide",
+      "to": "src.workshop.offline.aug.d1-d3",
+      "confidence": 0.9,
+      "summary": "THE FIVE JOBS（客户信任指南五工作） on offline slides"
+    },
+    {
+      "id": "e.includes.umbrella.fw.five-jobs-trust-guide",
+      "type": "includes",
+      "from": "fw.founder-ip-system-intensive",
+      "to": "fw.five-jobs-trust-guide",
+      "confidence": 0.75,
+      "summary": "Part of Founder IP System Intensive"
+    },
+    {
+      "id": "e.cites.fw.pdf-blueprint-trust-guide.src.offline",
+      "type": "cites",
+      "from": "fw.pdf-blueprint-trust-guide",
+      "to": "src.workshop.offline.aug.d1-d3",
+      "confidence": 0.9,
+      "summary": "PDF Blueprint（7页客户信任指南骨架） on offline slides"
+    },
+    {
+      "id": "e.includes.umbrella.fw.pdf-blueprint-trust-guide",
+      "type": "includes",
+      "from": "fw.founder-ip-system-intensive",
+      "to": "fw.pdf-blueprint-trust-guide",
+      "confidence": 0.75,
+      "summary": "Part of Founder IP System Intensive"
+    },
+    {
+      "id": "e.cites.fw.five-systems-accelerator.src.offline",
+      "type": "cites",
+      "from": "fw.five-systems-accelerator",
+      "to": "src.workshop.offline.aug.d1-d3",
+      "confidence": 0.9,
+      "summary": "五大系统（Accelerator） on offline slides"
+    },
+    {
+      "id": "e.includes.umbrella.fw.five-systems-accelerator",
+      "type": "includes",
+      "from": "fw.founder-ip-system-intensive",
+      "to": "fw.five-systems-accelerator",
+      "confidence": 0.75,
+      "summary": "Part of Founder IP System Intensive"
+    },
+    {
+      "id": "e.supports.crossing.jiugongge",
+      "type": "supports",
+      "from": "fw.crossing-lines",
+      "to": "fw.jiugongge-topic-bingo",
+      "confidence": 0.8,
+      "summary": "穿心线 operates on 九宫格"
+    },
+    {
+      "id": "e.supports.flywheel8.flywheel",
+      "type": "supports",
+      "from": "fw.flywheel-eight-steps",
+      "to": "fw.founder-ip-flywheel",
+      "confidence": 0.8,
+      "summary": "八步详解 of Founder IP flywheel"
+    },
+    {
+      "id": "e.supports.bizdiag.sre",
+      "type": "supports",
+      "from": "fw.business-diagnostic",
+      "to": "fw.scalable-revenue-engine",
+      "confidence": 0.8,
+      "summary": "Diagnostic inside revenue engine block"
+    },
+    {
+      "id": "e.supports.revfly.sre",
+      "type": "supports",
+      "from": "fw.revenue-flywheel",
+      "to": "fw.scalable-revenue-engine",
+      "confidence": 0.8,
+      "summary": "Revenue Flywheel™ in SRE block"
+    },
+    {
+      "id": "e.supports.fivejobs.ctg",
+      "type": "supports",
+      "from": "fw.five-jobs-trust-guide",
+      "to": "fw.customer-trust-guide",
+      "confidence": 0.8,
+      "summary": "Five jobs of trust guide"
+    },
+    {
+      "id": "e.supports.pdf.ctg",
+      "type": "supports",
+      "from": "fw.pdf-blueprint-trust-guide",
+      "to": "fw.customer-trust-guide",
+      "confidence": 0.8,
+      "summary": "PDF skeleton for trust guide"
+    },
+    {
+      "id": "e.supports.openers.story",
+      "type": "supports",
+      "from": "fw.founder-story-openers",
+      "to": "fw.story-founder-story",
+      "confidence": 0.8,
+      "summary": "Openers for Founder Story"
+    },
+    {
+      "id": "e.supports.brandpillars.matrix",
+      "type": "supports",
+      "from": "fw.brand-pillars",
+      "to": "fw.content-matrix-3x6",
+      "confidence": 0.8,
+      "summary": "Pillars feed content matrix"
+    },
+    {
+      "id": "e.supports.audit.5track",
+      "type": "supports",
+      "from": "fw.content-audit",
+      "to": "fw.five-track-trust-matrix",
+      "confidence": 0.8,
+      "summary": "Audit uses five-track classification"
+    },
+    {
+      "id": "e.cites.two-kinds.src",
+      "type": "cites",
+      "from": "fw.two-kinds-student-two-methods",
+      "to": "src.stakeholder.jeff-ai-gpt.framework-needed",
+      "confidence": 0.92,
+      "summary": "Source cites two-kinds framework"
+    },
+    {
+      "id": "e.cites.three-c.src",
+      "type": "cites",
+      "from": "fw.three-c-method",
+      "to": "src.stakeholder.jeff-ai-gpt.framework-needed",
+      "confidence": 0.92,
+      "summary": "Source cites three C"
+    },
+    {
+      "id": "e.cites.three-r.src",
+      "type": "cites",
+      "from": "fw.three-r-method",
+      "to": "src.stakeholder.jeff-ai-gpt.framework-needed",
+      "confidence": 0.92,
+      "summary": "Source cites three R"
+    },
+    {
+      "id": "e.cites.goat.src",
+      "type": "cites",
+      "from": "fw.goat-four-beats",
+      "to": "src.stakeholder.jeff-ai-gpt.framework-needed",
+      "confidence": 0.9,
+      "summary": "Source cites GOAT"
+    },
+    {
+      "id": "e.cites.story-search.src",
+      "type": "cites",
+      "from": "fw.story-structure-search",
+      "to": "src.stakeholder.jeff-ai-gpt.framework-needed",
+      "confidence": 0.9,
+      "summary": "Source cites longer story structure"
+    },
+    {
+      "id": "e.cites.eight-open.src",
+      "type": "cites",
+      "from": "fw.eight-ways-to-open",
+      "to": "src.stakeholder.jeff-ai-gpt.framework-needed",
+      "confidence": 0.9,
+      "summary": "Source cites eight openings"
+    },
+    {
+      "id": "e.cites.hit100.src",
+      "type": "cites",
+      "from": "fw.hit-100x-followers",
+      "to": "src.stakeholder.jeff-ai-gpt.framework-needed",
+      "confidence": 0.92,
+      "summary": "Source cites 100x hit"
+    },
+    {
+      "id": "e.cites.waffle.src",
+      "type": "cites",
+      "from": "fw.waffle-grid",
+      "to": "src.stakeholder.jeff-ai-gpt.framework-needed",
+      "confidence": 0.9,
+      "summary": "Source cites waffle"
+    },
+    {
+      "id": "e.cites.checklists.src",
+      "type": "cites",
+      "from": "fw.content-not-working-checklists",
+      "to": "src.stakeholder.jeff-ai-gpt.framework-needed",
+      "confidence": 0.9,
+      "summary": "Source cites diagnose checklists"
+    },
+    {
+      "id": "e.cites.pos4q.src",
+      "type": "cites",
+      "from": "fw.positioning-four-questions",
+      "to": "src.stakeholder.jeff-ai-gpt.framework-needed",
+      "confidence": 0.9,
+      "summary": "Source cites positioning four questions"
+    },
+    {
+      "id": "e.cites.brandstance.src",
+      "type": "cites",
+      "from": "fw.brand-stance-model",
+      "to": "src.stakeholder.jeff-ai-gpt.framework-needed",
+      "confidence": 0.85,
+      "summary": "Source cites brand stance recommendation"
+    },
+    {
+      "id": "e.cites.captions6.src",
+      "type": "cites",
+      "from": "fw.six-caption-angles",
+      "to": "src.stakeholder.jeff-ai-gpt.framework-needed",
+      "confidence": 0.9,
+      "summary": "Source cites six caption angles"
+    },
+    {
+      "id": "e.cites.layers4.src",
+      "type": "cites",
+      "from": "fw.four-content-layers",
+      "to": "src.stakeholder.jeff-ai-gpt.framework-needed",
+      "confidence": 0.92,
+      "summary": "Source cites 4 content layers"
+    },
+    {
+      "id": "e.cites.authladder.src",
+      "type": "cites",
+      "from": "fw.content-authority-ladder",
+      "to": "src.stakeholder.jeff-ai-gpt.framework-needed",
+      "confidence": 0.92,
+      "summary": "Source cites authority ladder"
+    },
+    {
+      "id": "e.cites.borrowclaim.src",
+      "type": "cites",
+      "from": "cl.borrowed-content-no-authority",
+      "to": "src.stakeholder.jeff-ai-gpt.framework-needed",
+      "confidence": 0.9,
+      "summary": "Claim from Framework Needed PDF"
+    },
+    {
+      "id": "e.includes.two-kinds.three-c",
+      "type": "includes",
+      "from": "fw.two-kinds-student-two-methods",
+      "to": "fw.three-c-method",
+      "confidence": 0.9,
+      "summary": "Umbrella includes three C route"
+    },
+    {
+      "id": "e.includes.two-kinds.three-r",
+      "type": "includes",
+      "from": "fw.two-kinds-student-two-methods",
+      "to": "fw.three-r-method",
+      "confidence": 0.9,
+      "summary": "Umbrella includes three R route"
+    },
+    {
+      "id": "e.supports.eight.goat",
+      "type": "supports",
+      "from": "fw.eight-ways-to-open",
+      "to": "fw.goat-four-beats",
+      "confidence": 0.8,
+      "summary": "Openings feed Grab beat"
+    },
+    {
+      "id": "e.supports.waffle.jiugongge",
+      "type": "supports",
+      "from": "fw.waffle-grid",
+      "to": "fw.jiugongge-topic-bingo",
+      "confidence": 0.75,
+      "summary": "Same 3x3 idea-grid family; parallel names"
+    },
+    {
+      "id": "e.supports.layers.ladder",
+      "type": "supports",
+      "from": "fw.four-content-layers",
+      "to": "fw.content-authority-ladder",
+      "confidence": 0.85,
+      "summary": "Same Story/Case/POV/News labels as ladder"
+    },
+    {
+      "id": "e.supports.brandstance.iptriangle",
+      "type": "supports",
+      "from": "fw.brand-stance-model",
+      "to": "fw.ip-influence-triangle",
+      "confidence": 0.7,
+      "summary": "Stance for/against overlaps triangle; third leg pending"
+    },
+    {
+      "id": "e.supports.pos4q.threeline",
+      "type": "supports",
+      "from": "fw.positioning-four-questions",
+      "to": "fw.positioning-three-line-map",
+      "confidence": 0.7,
+      "summary": "Related positioning job; different question set"
+    },
+    {
+      "id": "e.supports.goat.opens",
+      "type": "supports",
+      "from": "fw.goat-four-beats",
+      "to": "fw.opens-60s-five-act",
+      "confidence": 0.65,
+      "summary": "Related short-video beat teaching; different names"
+    },
+    {
+      "id": "e.supports.eight.hook",
+      "type": "supports",
+      "from": "fw.eight-ways-to-open",
+      "to": "fw.hook-formula",
+      "confidence": 0.7,
+      "summary": "Related opening craft"
+    },
+    {
+      "id": "e.warns_against.threer.borrow-only",
+      "type": "warns_against",
+      "from": "fw.three-r-method",
+      "to": "cl.borrowed-content-no-authority",
+      "confidence": 0.85,
+      "summary": "Three R warns: do not stay on borrowed material forever"
+    },
+    {
+      "id": "e.supports.checklists.waffle",
+      "type": "supports",
+      "from": "fw.content-not-working-checklists",
+      "to": "fw.waffle-grid",
+      "confidence": 0.8,
+      "summary": "No-ideas checklist uses the grid"
+    },
+    {
+      "id": "e.supports.checklists.twokinds",
+      "type": "supports",
+      "from": "fw.content-not-working-checklists",
+      "to": "fw.two-kinds-student-two-methods",
+      "confidence": 0.8,
+      "summary": "Checklists use loud/quiet route"
     }
   ]
 }

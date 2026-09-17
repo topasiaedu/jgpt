@@ -11,7 +11,9 @@
     "start": "next start",
     "lint": "eslint",
     "test:probe": "npx --yes tsx scripts/test-probe.ts",
+    "test:module-probe": "npx --yes tsx scripts/test-module-probe.ts",
     "test:strip-dash": "npx --yes tsx scripts/test-strip-dash.ts",
+    "test:sanitize-reply": "npx --yes tsx scripts/test-sanitize-reply.ts",
     "test:long-chat": "npx --yes tsx scripts/test-long-chat.ts"
   },
   "dependencies": {

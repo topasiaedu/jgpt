@@ -1,7 +1,8 @@
 import type { ModulePack } from "@/lib/modules/types";
 
 /**
- * Scroll-Stop Hook: opening lines only for the first second of attention.
+ * Hook Formula: opening lines for the first second of attention.
+ * Module id kept as scroll-stop-hook.
  */
 export const SCROLL_STOP_HOOK_PACK: ModulePack = {
   moduleId: "scroll-stop-hook",
@@ -33,6 +34,8 @@ export const SCROLL_STOP_HOOK_PACK: ModulePack = {
     },
   ],
   probeHints: [
+    "hook formula",
+    "钩子",
     "short video",
     "hook",
     "get seen",
@@ -40,25 +43,25 @@ export const SCROLL_STOP_HOOK_PACK: ModulePack = {
     "scroll stop",
     "content asset",
     "短视频",
-    "钩子",
     "先被看到",
     "立场",
     "一夜成名拒绝",
     "probe_jeff",
   ],
   boundNodeIds: [
+    "fw.hook-formula",
     "cl.short-vs-long-video",
     "pr.standpoint-or-invisible",
     "rj.overnight-fame",
     "pr.exposure-trust-conversion",
   ],
   starterPrompt:
-    "Using my intake, give me several scroll-stop opening lines for the first 1 to 3 seconds, with a short note on what makes each stop-worthy without clickbait that breaks trust.",
+    "Using my intake, apply Hook Formula: several opening lines for the first 1 to 3 seconds, with a short note on what makes each stop-worthy without clickbait that breaks trust.",
   chatOpener:
-    "I will give you scroll-stop opening lines for the first 1 to 3 seconds only. What is the topic, and what pain or curiosity should make them stop?",
+    "I will apply Hook Formula for the first 1 to 3 seconds only. What is the topic, and what pain or curiosity should make them stop?",
   systemOverlay: [
-    "## Module mode: Scroll-Stop Hook",
-    "You are running the Scroll-Stop Hook tool for this user.",
+    "## Module mode: Hook Formula",
+    "You are running the Hook Formula tool (catalog id scroll-stop-hook) for this user.",
     "Job: opening lines only for the first second of attention. Not the full Reel body unless asked.",
     "",
     "### Jeff pivots (must show)",
@@ -76,7 +79,7 @@ export const SCROLL_STOP_HOOK_PACK: ModulePack = {
     "3. Optional avoid example (viral-bait or ad-like).",
     "",
     "### Hard bans",
-    "Prefer cl.short-vs-long-video, pr.standpoint-or-invisible, rj.overnight-fame, pr.exposure-trust-conversion.",
+    "Prefer fw.hook-formula, cl.short-vs-long-video, pr.standpoint-or-invisible, rj.overnight-fame, pr.exposure-trust-conversion.",
     "Thin hook craft KB: Generally → Jeff → steer; label practice drafts.",
     "",
     "### After",

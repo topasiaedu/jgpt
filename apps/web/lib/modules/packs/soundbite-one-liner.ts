@@ -1,7 +1,8 @@
 import type { ModulePack } from "@/lib/modules/types";
 
 /**
- * Soundbite One-Liner: short punches in THEIR niche voice.
+ * Memory Hook / 记忆钩子 (金句一句话 job).
+ * Module id kept as soundbite-one-liner for stable routes.
  */
 export const SOUNDBITE_ONE_LINER_PACK: ModulePack = {
   moduleId: "soundbite-one-liner",
@@ -34,32 +35,35 @@ export const SOUNDBITE_ONE_LINER_PACK: ModulePack = {
     },
   ],
   probeHints: [
+    "memory hook",
+    "记忆钩子",
+    "金句",
     "standpoint",
     "soundbite",
     "one liner",
     "advice vs ego",
     "lichang",
     "personal IP",
-    "金句",
     "立场",
     "建议 vs 自我",
     "内容资产",
     "probe_jeff",
   ],
   boundNodeIds: [
+    "fw.memory-hook",
     "pr.standpoint-or-invisible",
     "tm.lichang",
     "pr.advice-vs-ego",
     "cl.content-not-ads",
   ],
   starterPrompt:
-    "Using my intake, craft several one-liners in MY niche voice, plus a note on which fit advice tone versus ego flex.",
+    "Using my intake, craft Memory Hook candidates: one retellable line plus optional scene and result, in MY niche voice, with advice vs ego notes.",
   chatOpener:
-    "I will craft one-liners in your niche voice that stick as advice, not ego. What belief should people remember about how you work?",
+    "I will craft a Memory Hook / 记忆钩子: one line people can retell (then scene and result). What belief should people remember about how you work?",
   systemOverlay: [
-    "## Module mode: Soundbite One-Liner",
-    "You are running the Soundbite One-Liner tool for this user.",
-    "Job: short punches in their niche voice that carry standpoint.",
+    "## Module mode: Memory Hook / 记忆钩子",
+    "You are running the Memory Hook tool (catalog id soundbite-one-liner) for this user.",
+    "Job: Jeff Memory Hook structure: 一句话, then 一个场景, then 一个结果 when ready. Niche voice, not slogan spam.",
     "",
     "### Conversational collect (chat-first; no form)",
     "Slots live in conversation history. Ask at most 1 to 2 questions per turn.",
@@ -67,7 +71,8 @@ export const SOUNDBITE_ONE_LINER_PACK: ModulePack = {
     "When enough is known, or the user says just write it, deliver the full output and name assumptions.",
     "",
     "### Output format (when ready to generate)",
-    "6 to 10 one-liners. Mark each: advice-fit or ego-risk.",
+    "6 to 10 memory-hook lines (一句话). For the top 2 to 3, also sketch 一个场景 and 一个结果.",
+    "Mark each line: advice-fit or ego-risk.",
     "Use their words; avoid fake list. Optional caption/on-screen variants.",
     "",
     "### Jeff distinctiveness (hard)",
@@ -75,10 +80,10 @@ export const SOUNDBITE_ONE_LINER_PACK: ModulePack = {
     "ANTI-GENERIC: If this reply could have come from a generic LinkedIn coach with no Jeff graph, rewrite before sending.",
     "",
     "### Doctrine rules (hard)",
-    "Standpoint over slogan spam. No overnight-fame punches. Never invent Jeff niche case studies as doctrine.",
+    "Bind to fw.memory-hook. Standpoint over slogan spam. No overnight-fame. Never invent Jeff niche case studies as doctrine.",
     "",
     "### Evidence binding",
-    "Prefer: pr.standpoint-or-invisible, tm.lichang, pr.advice-vs-ego, cl.content-not-ads when in the pack.",
+    "Prefer: fw.memory-hook, pr.standpoint-or-invisible, tm.lichang, pr.advice-vs-ego, cl.content-not-ads when in the pack.",
     "Sources still come only from probe / probe_jeff.",
     "",
     "### After the lines",

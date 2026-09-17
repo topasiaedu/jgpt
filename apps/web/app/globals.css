@@ -770,11 +770,6 @@ a.example-chip-link {
   text-underline-offset: 0.22em;
 }
 
-.app-nav-sep {
-  color: var(--stone);
-  user-select: none;
-}
-
 .app-footer {
   margin-top: auto;
   padding-top: 0.85rem;
@@ -875,10 +870,11 @@ a.example-chip-link {
 
 .tools-featured-list-compact {
   gap: 0.45rem;
+  max-width: 28rem;
 }
 
 @media (min-width: 640px) {
-  .tools-featured-list {
+  .tools-featured-list:not(.tools-featured-list-compact) {
     grid-template-columns: repeat(3, minmax(0, 1fr));
   }
 }
@@ -887,6 +883,10 @@ a.example-chip-link {
   min-height: 5.25rem;
   padding: 0.75rem 0.85rem;
   background: var(--bg-warm);
+}
+
+.tools-card-start-here {
+  border-color: color-mix(in srgb, var(--accent) 35%, var(--line) 65%);
 }
 
 .tools-card-cat {
@@ -898,65 +898,6 @@ a.example-chip-link {
   color: var(--accent-deep);
 }
 
-.tools-search {
-  margin-bottom: 0.85rem;
-}
-
-.tools-search-input {
-  width: 100%;
-  max-width: 28rem;
-  padding: 0.65rem 0.8rem;
-  border: 1px solid var(--line);
-  border-radius: 8px;
-  font: inherit;
-  font-size: 0.95rem;
-  color: var(--ink);
-  background: var(--surface);
-}
-
-.tools-search-input:focus {
-  outline: 2px solid var(--accent);
-  outline-offset: 1px;
-}
-
-.tools-rail-nav {
-  display: flex;
-  gap: 0.45rem;
-  overflow-x: auto;
-  padding-bottom: 0.55rem;
-  margin-bottom: 1rem;
-  -webkit-overflow-scrolling: touch;
-  scrollbar-width: thin;
-  scroll-snap-type: x mandatory;
-  scroll-padding-inline: 0.25rem;
-}
-
-.tools-rail-chip {
-  flex-shrink: 0;
-  border: 1px solid var(--line);
-  border-radius: 999px;
-  background: var(--surface);
-  color: var(--muted);
-  font: inherit;
-  font-size: 0.8rem;
-  font-weight: 600;
-  padding: 0.4rem 0.75rem;
-  cursor: pointer;
-  white-space: nowrap;
-  scroll-snap-align: start;
-}
-
-.tools-rail-chip:hover {
-  border-color: var(--accent);
-  color: var(--ink);
-}
-
-.tools-rail-chip-active {
-  border-color: var(--accent);
-  background: color-mix(in srgb, var(--accent) 12%, var(--surface) 88%);
-  color: var(--accent-deep);
-}
-
 .tools-empty,
 .tools-loading {
   margin: 0;
@@ -965,16 +906,40 @@ a.example-chip-link {
 
 .tools-category {
   margin-bottom: 1.75rem;
-  scroll-margin-top: 4.5rem;
+  scroll-margin-top: 5.25rem;
 }
 
 .tools-category-title {
-  margin: 0 0 0.75rem;
+  margin: 0 0 0.35rem;
   padding-bottom: 0.35rem;
   border-bottom: 1px solid var(--line);
   font-family: var(--font-headline);
   font-size: 1.05rem;
   font-weight: 650;
+  display: flex;
+  align-items: baseline;
+  gap: 0.45rem;
+}
+
+.tools-category-num {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 1.35rem;
+  height: 1.35rem;
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--accent) 14%, var(--surface) 86%);
+  color: var(--accent-deep);
+  font-size: 0.78rem;
+  font-weight: 700;
+  line-height: 1;
+}
+
+.tools-category-blurb {
+  margin: 0 0 0.85rem;
+  color: var(--muted);
+  font-size: 0.9rem;
+  line-height: 1.45;
 }
 
 .tools-card-list {
@@ -1514,12 +1479,6 @@ a.example-chip-link {
     flex-shrink: 0;
     scroll-snap-align: start;
     min-height: 2.5rem;
-  }
-
-  .tools-rail-chip {
-    font-size: 0.85rem;
-    padding: 0.5rem 0.9rem;
-    min-height: 2.4rem;
   }
 
   .module-chat-toolbar {
