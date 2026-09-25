@@ -69,9 +69,9 @@ export const CONTENT_IDEATION_IP_PACK: ModulePack = {
   starterPrompt:
     "Using my intake, fill AUG-D2 九宫格 / Topic Bingo: center 人设, eight cells 兴趣/专业/观点/故事/客户/行业/趋势/痛点, then 四条穿心线 into about 12 topic seeds.",
   chatOpener:
-    "I will run 九宫格 / Topic Bingo the AUG-D2 way: center 人设, eight cells, then 四条穿心线 into about 12 topic seeds. In plain words, what is your 人设: who should the market remember you as?",
+    "Hey. Let's fill Topic Bingo and grow topic seeds.\n\n- center your market persona, then grow about 12 topic seeds\n- Bring who the market should remember you as, in plain words\n- Walk away with filmable topic seeds, not a blank page\n\nIn plain words, who should the market remember you as?",
   chatOpenerZh:
-    "我会按 AUG-D2 九宫格 / Topic Bingo 来：中心是人设，八格是兴趣/专业/观点/故事/客户/行业/趋势/痛点，再画四条穿心线长出大约 12 个题目雏形。先用白话说你的人设：市场该把你记成谁？",
+    "我会帮你填九宫格，长出题目雏形。\n\n- 中心是人设，再长出大约 12 个题目雏形\n- 你用白话说市场该把你记成谁\n- 走的时候带走能拍的题目，不留空白页\n\n用白话说，市场该把你记成谁？",
   systemOverlay: [
     "## Module mode: 九宫格 Topic Bingo (AUG-D2)",
     "You are running the 九宫格 / Topic Bingo tool (catalog id content-ideation-ip) for this user.",

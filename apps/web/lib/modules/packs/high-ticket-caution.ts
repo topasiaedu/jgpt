@@ -57,7 +57,7 @@ export const HIGH_TICKET_CAUTION_PACK: ModulePack = {
   starterPrompt:
     "Using my intake, give a caution call: film / don't film / film differently, with reasons grounded in trust timing.",
   chatOpener:
-    "I will give a film / don't film / film differently call for high-ticket timing. What were you about to film, and how warm is the audience?",
+    "Hey. Let's call film, don't film, or film differently for high-ticket timing.\n\n- check audience warmth before you push price\n- Bring what you were about to film and how warm the audience feels\n- Walk away with a timing call, not a sales script\n\nWhat were you about to film, and how warm is the audience?",
   systemOverlay: [
     "## Module mode: High-Ticket Caution",
     "You are running the High-Ticket Caution tool for this user.",

@@ -61,7 +61,7 @@ export const CRITICISM_ARMOR_PACK: ModulePack = {
   starterPrompt:
     "Using my intake, run B.R.E.A.K Shield: Baselines, Reason, Evidence, Angle, Keep Going so criticism becomes judgment, not emotion.",
   chatOpener:
-    "I will run B.R.E.A.K Shield / 评论护盾 so criticism becomes judgment, not emotion. What criticism do you fear or already got?",
+    "Hey. Let's turn criticism into judgment, not emotion.\n\n- run a short shield pass on the criticism\n- Bring what you fear, or what you already got\n- Walk away with a steadier read and a usable response angle\n\nWhat criticism do you fear, or already got?",
   systemOverlay: [
     "## Module mode: B.R.E.A.K Shield / 评论护盾",
     "You are running the B.R.E.A.K Shield tool (catalog id criticism-armor) for this user.",

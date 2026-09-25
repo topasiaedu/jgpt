@@ -54,7 +54,7 @@ export const COMMENT_REPLY_THREE_LINES_PACK: ModulePack = {
   starterPrompt:
     "Using my intake, draft 评论回应三句法 replies: 接住, 澄清, 拉回主轴 (plus stop-drain / keep-publishing notes when needed).",
   chatOpener:
-    "I will draft 评论回应三句法 replies so target customers see your judgment, not a fight. Paste the comment you want to answer.",
+    "Hey. Let's draft a three-line comment reply.\n\n- catch, clarify, and pull back to your main line\n- Paste the comment you want to answer\n- Walk away with a reply that shows judgment, not a fight\n\nPaste the comment you want to answer?",
   systemOverlay: [
     "## Module mode: 评论回应三句法",
     "You are running the 评论回应三句法 tool for this user.",

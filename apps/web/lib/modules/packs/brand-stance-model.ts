@@ -50,9 +50,9 @@ export const BRAND_STANCE_MODEL_PACK: ModulePack = {
   starterPrompt:
     "Using my intake, draft Brand Stance for / against only. If I named a real gap, map it to 真实缺口. Do not invent known-for doing. Label any third-leg talk as Suggested pending Jeff.",
   chatOpener:
-    "I will draft Brand Stance: what you stand for and what you stand against. The Suggested third leg (known for doing) is not confirmed Jeff IP yet. What do you stand for?",
+    "Hey. Let's draft a clear brand stance.\n\n- write what you stand for and what you stand against\n- Bring one belief you will not trade away\n- Walk away with two clean legs of stance\n\nWhat do you stand for?",
   chatOpenerZh:
-    "我会写品牌立场的两腿：坚持什么、反对什么。Suggested 第三腿（known for doing）尚未确认为 Jeff IP。你坚持什么？",
+    "我会帮你起草清楚的品牌立场。\n\n- 咱们写坚持什么、反对什么\n- 你带一句不会拿去换流量的信念\n- 走的时候带走两腿干净立场\n\n你坚持什么？",
   systemOverlay: [
     "## Module mode: Brand Stance Model (Suggested / conditional)",
     "You are running the Brand Stance Model tool (catalog id brand-stance-model) for this user.",

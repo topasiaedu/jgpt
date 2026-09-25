@@ -37,7 +37,7 @@ export const CONTENT_AUTHORITY_LADDER_PACK: ModulePack = {
   starterPrompt:
     "Using my intake, run Content Authority Ladder and deliver the structured output for this Jeff tool.",
   chatOpener:
-    "I will place you on the Content Authority Ladder (News to POV to Case to Story). What have you been publishing lately?",
+    "Hey. Let's place yourself on the Content Authority Ladder.\n\n- see where you sit from News to POV to Case to Story\n- Bring what you have been publishing lately\n- Walk away with the next rung to climb\n\nWhat have you been publishing lately?",
   systemOverlay: [
     "## Module mode: Content Authority Ladder",
     "You are running the Content Authority Ladder tool (catalog id content-authority-ladder) for this user.",

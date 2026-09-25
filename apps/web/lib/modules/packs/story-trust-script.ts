@@ -80,9 +80,9 @@ export const STORY_TRUST_SCRIPT_PACK: ModulePack = {
   starterPrompt:
     "Using my intake, write an S.T.O.R.Y trust script (Situation, Turning Point, Obstacle, Reason, Yield) using only MY story facts. Illustrative for MY practice; do not invent Jeff case studies.",
   chatOpener:
-    "I will shape your story with S.T.O.R.Y (Situation / Turning Point / Obstacle / Reason / Yield), using your facts only. What was the starting situation?",
+    "Hey. Let's shape a story that builds trust.\n\n- use your facts only, beat by beat\n- Bring the starting situation in plain words\n- Walk away with a story script people can believe\n\nWhat was the starting situation?",
   chatOpenerZh:
-    "我会用 S.T.O.R.Y（起点处境 / 最大冲突 / 困难选择 / 你坚持什么 / 你要影响谁）写你的故事信任脚本，只用你的事实。起点处境是什么？",
+    "我会帮你把故事写成能建立信任的脚本。\n\n- 只用你的事实，一拍一拍写\n- 你用白话带上起点处境\n- 走的时候带走别人愿意相信的故事脚本\n\n起点处境是什么？",
   systemOverlay: [
     "## Module mode: Story Trust Script (S.T.O.R.Y)",
     "You are running the Story Trust Script tool for this user.",

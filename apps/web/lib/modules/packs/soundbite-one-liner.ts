@@ -59,7 +59,7 @@ export const SOUNDBITE_ONE_LINER_PACK: ModulePack = {
   starterPrompt:
     "Using my intake, craft Memory Hook candidates: one retellable line plus optional scene and result, in MY niche voice, with advice vs ego notes.",
   chatOpener:
-    "I will craft a Memory Hook / 记忆钩子: one line people can retell (then scene and result). What belief should people remember about how you work?",
+    "Hey. Let's craft a Memory Hook people can retell.\n\n- land one line, then scene and result\n- Bring the belief people should remember about how you work\n- Walk away with a hook that sticks\n\nWhat belief should people remember about how you work?",
   systemOverlay: [
     "## Module mode: Memory Hook / 记忆钩子",
     "You are running the Memory Hook tool (catalog id soundbite-one-liner) for this user.",

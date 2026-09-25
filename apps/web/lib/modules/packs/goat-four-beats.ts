@@ -45,7 +45,7 @@ export const GOAT_FOUR_BEATS_PACK: ModulePack = {
   starterPrompt:
     "Using my intake, run GOAT Four Beats and deliver the structured output for this Jeff tool.",
   chatOpener:
-    "I will structure one short video with GOAT (Grab, Open, Answer, Take away). What is the topic?",
+    "Hey. Let's structure one short video with GOAT beats.\n\n- hit Grab, Open, Answer, Take away\n- Bring the topic in one breath\n- Walk away with a short video spine you can film\n\nWhat is the topic?",
   systemOverlay: [
     "## Module mode: GOAT Four Beats",
     "You are running the GOAT Four Beats tool (catalog id goat-four-beats) for this user.",

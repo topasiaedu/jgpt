@@ -81,23 +81,16 @@ export function parseHomeHandoffSearchParams(searchParams: {
 }
 
 /**
- * Builds the visible first assistant turn. Pack opener stays primary;
- * home intent (if any) is acknowledged in one short line above it.
- * Locale controls the handoff prefix only; home `q` text is kept as the user wrote it.
+ * Builds the visible first assistant turn from the pack opener only.
+ * Home intent (if any) stays silent via `?q=` / formatHomeIntentHint, not a visible prefix.
+ * Signature keeps optional homeIntent/locale for call-site compatibility; they are not shown.
  */
 export function buildToolChatOpener(
   packOpener: string,
-  homeIntent: string | undefined,
+  homeIntent?: string | undefined,
   locale: Locale = "en",
 ): string {
-  if (homeIntent === undefined || homeIntent.length === 0) {
-    return packOpener;
-  }
-
-  const prefix =
-    locale === "zh"
-      ? `你在首页提到：${homeIntent}`
-      : `You mentioned on home: ${homeIntent}`;
-
-  return `${prefix}\n\n${packOpener}`;
+  void homeIntent;
+  void locale;
+  return packOpener;
 }

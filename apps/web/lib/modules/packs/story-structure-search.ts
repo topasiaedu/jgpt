@@ -52,7 +52,7 @@ export const STORY_STRUCTURE_SEARCH_PACK: ModulePack = {
   starterPrompt:
     "Using my intake, run Story Structure (Problem to Search) and deliver the structured output for this Jeff tool.",
   chatOpener:
-    "I will build the longer story structure (Problem to Search to Story to Solution to What next). What problem opens the story?",
+    "Hey. Let's build a longer story structure.\n\n- move Problem to Search to Story to Solution to What next\n- Bring the problem that opens the story\n- Walk away with a structure you can teach from\n\nWhat problem opens the story?",
   systemOverlay: [
     "## Module mode: Story Structure (Problem to Search)",
     "You are running the Story Structure (Problem to Search) tool (catalog id story-structure-search) for this user.",

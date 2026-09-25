@@ -45,7 +45,7 @@ export const FOUR_CONTENT_LAYERS_PACK: ModulePack = {
   starterPrompt:
     "Using my intake, run The 4 Content Layers and deliver the structured output for this Jeff tool.",
   chatOpener:
-    "I will plan The 4 Content Layers (Story, Case, POV, News). Who do you serve?",
+    "Hey. Let's plan The 4 Content Layers.\n\n- place Story, Case, POV, and News for your lane\n- Bring who you serve\n- Walk away with a simple layer plan\n\nWho do you serve?",
   systemOverlay: [
     "## Module mode: The 4 Content Layers",
     "You are running the The 4 Content Layers tool (catalog id four-content-layers) for this user.",

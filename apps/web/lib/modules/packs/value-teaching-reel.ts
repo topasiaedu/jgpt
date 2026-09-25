@@ -54,7 +54,7 @@ export const VALUE_TEACHING_REEL_PACK: ModulePack = {
   starterPrompt:
     "Using my intake, script a value-led Reel that teaches one tip openly, then adds a light next step. Keep convert soft.",
   chatOpener:
-    "I will script a value-led Reel that teaches one tip openly, then a light next step. What is the one tip you can teach in under a minute?",
+    "Hey. Let's script a value-led Reel.\n\n- teach one tip openly, then a light next step\n- Bring one tip you can teach in under a minute\n- Walk away with a Reel that gives first, then invites\n\nWhat is the one tip you can teach in under a minute?",
   systemOverlay: [
     "## Module mode: Value Teaching Reel",
     "You are running the Value Teaching Reel tool for this user.",

@@ -56,7 +56,7 @@ export const HOOK_REWRITER_PACK: ModulePack = {
   starterPrompt:
     "Using my intake, rewrite only the open: multiple stronger hooks for the same piece, no trust-breaking clickbait.",
   chatOpener:
-    "I will rewrite only the open into stronger hooks without trust-breaking clickbait. Paste the current hook or the body topic.",
+    "Hey. Let's rewrite only the open into stronger hooks.\n\n- avoid trust-breaking clickbait\n- Paste the current hook or the body topic\n- Walk away with stronger opens, body left intact\n\nPaste the current hook or the body topic?",
   systemOverlay: [
     "## Module mode: Hook Rewriter",
     "You are running the Hook Rewriter tool for this user.",

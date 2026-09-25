@@ -146,6 +146,111 @@ export function extractApiErrorMessage(data: unknown, status: number): string {
   return `Chat request failed (HTTP ${String(status)}).`;
 }
 
+export type RecommendApiSuccess = {
+  ok: true;
+  moduleIds: string[];
+  status: "ok" | "vague" | "too_short";
+};
+
+export type RecommendApiFailure = {
+  ok: false;
+  error: string;
+};
+
+export type RecommendApiResult = RecommendApiSuccess | RecommendApiFailure;
+
+/**
+ * POSTs a home draft to /api/recommend for as-you-type tool cards.
+ * Lightweight: validated catalog ids only, no coaching essay.
+ */
+export async function postRecommend(options: {
+  draft: string;
+  locale: "zh" | "en";
+  signal?: AbortSignal;
+}): Promise<RecommendApiResult> {
+  let response: Response;
+  try {
+    response = await fetch("/api/recommend", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        draft: options.draft,
+        locale: options.locale,
+      }),
+      signal: options.signal,
+    });
+  } catch (error) {
+    if (error instanceof DOMException && error.name === "AbortError") {
+      return { ok: false, error: "aborted" };
+    }
+    return {
+      ok: false,
+      error: "Could not reach the recommend API (network error).",
+    };
+  }
+
+  try {
+    const rawBody: string = await response.text();
+    const data: unknown = parseJsonBody(rawBody);
+
+    if (data === null) {
+      return { ok: false, error: formatNonJsonApiError(response.status, rawBody) };
+    }
+
+    if (!response.ok) {
+      return { ok: false, error: extractApiErrorMessage(data, response.status) };
+    }
+
+    if (!isRecommendResponseBody(data)) {
+      return {
+        ok: false,
+        error: `Unexpected response from recommend API (HTTP ${String(response.status)}).`,
+      };
+    }
+
+    return {
+      ok: true,
+      moduleIds: data.moduleIds,
+      status: data.status,
+    };
+  } catch (error) {
+    const detail: string = error instanceof Error ? error.message : "unknown error";
+    return {
+      ok: false,
+      error: `Recommend request failed while reading the response: ${detail}`,
+    };
+  }
+}
+
+/**
+ * Narrows unknown JSON to the lightweight recommend response shape.
+ */
+function isRecommendResponseBody(value: unknown): value is {
+  moduleIds: string[];
+  status: "ok" | "vague" | "too_short";
+} {
+  if (typeof value !== "object" || value === null) {
+    return false;
+  }
+
+  if (!("moduleIds" in value) || !("status" in value)) {
+    return false;
+  }
+
+  const moduleIds = (value as { moduleIds: unknown }).moduleIds;
+  const status = (value as { status: unknown }).status;
+
+  if (!Array.isArray(moduleIds) || !moduleIds.every((entry) => typeof entry === "string")) {
+    return false;
+  }
+
+  if (status !== "ok" && status !== "vague" && status !== "too_short") {
+    return false;
+  }
+
+  return true;
+}
+
 /**
  * Narrows unknown JSON to the expected chat response shape.
  */

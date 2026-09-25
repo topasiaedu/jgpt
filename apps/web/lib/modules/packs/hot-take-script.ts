@@ -55,7 +55,7 @@ export const HOT_TAKE_SCRIPT_PACK: ModulePack = {
   starterPrompt:
     "Using my intake, write a short hot-take script with stance, reason, and a landing that protects relationship with the viewer. Keep it advice, not ego.",
   chatOpener:
-    "I will turn a sharp standpoint into a hot-take script that lands as advice, not flex. What claim are you willing to own in one sentence?",
+    "Hey. Let's turn a sharp claim into a hot-take script.\n\n- land advice, not a flex\n- Bring one claim you are willing to own in a sentence\n- Walk away with a script that takes a side cleanly\n\nWhat claim are you willing to own in one sentence?",
   systemOverlay: [
     "## Module mode: Hot Take Script",
     "You are running the Hot Take Script tool for this user.",

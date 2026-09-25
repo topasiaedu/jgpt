@@ -55,7 +55,7 @@ export const ADVICE_VS_EGO_COACH_PACK: ModulePack = {
   starterPrompt:
     "Using my intake, give a go / fix pre-shoot checklist: lines to cut or reframe so I show up as advice for the viewer, not ego for myself.",
   chatOpener:
-    "I will give a go / fix pre-shoot checklist so you show up as advice for the viewer, not ego for yourself. What do you plan to say on camera?",
+    "Hey. Let's check advice vs ego before you film.\n\n- run a short pre-shoot checklist\n- Bring what you plan to say on camera\n- Walk away with a go or fix call that protects the viewer\n\nWhat do you plan to say on camera?",
   systemOverlay: [
     "## Module mode: Advice vs Ego Coach",
     "You are running the Advice vs Ego Coach tool for this user.",

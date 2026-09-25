@@ -54,7 +54,7 @@ export const DIRECTION_FIXER_PACK: ModulePack = {
   starterPrompt:
     "Using my intake, make a direction call: one primary lane, one secondary lane, and what to stop doing for now. Do not tell me to just post more.",
   chatOpener:
-    "I will make a direction call: primary lane, secondary lane, and what to stop. What have you been posting, and what outcome do you actually want?",
+    "Hey. Let's make a direction call.\n\n- name primary lane, secondary lane, and what to stop\n- Bring what you have been posting and the outcome you want\n- Walk away with a clear keep / cut decision\n\nWhat have you been posting, and what outcome do you actually want?",
   systemOverlay: [
     "## Module mode: Direction Fixer",
     "You are running the Direction Fixer tool for this user.",

@@ -61,7 +61,7 @@ export const FIRST_IMPRESSION_SCRIPT_PACK: ModulePack = {
   starterPrompt:
     "Using my intake, write a first-impression script: viewpoint, discussion beat, then light traffic invite. Asset tone, not overnight fame.",
   chatOpener:
-    "I will write a first-impression script: viewpoint first, then light traffic. What event or moment are you reacting to?",
+    "Hey. Let's write a first-impression script.\n\n- lead with viewpoint, then light traffic\n- Bring the event or moment you are reacting to\n- Walk away with a clean open that sounds like you\n\nWhat event or moment are you reacting to?",
   systemOverlay: [
     "## Module mode: First Impression Script",
     "You are running the First Impression Script tool for this user.",

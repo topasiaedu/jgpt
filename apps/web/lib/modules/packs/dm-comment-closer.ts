@@ -55,7 +55,7 @@ export const DM_COMMENT_CLOSER_PACK: ModulePack = {
   starterPrompt:
     "Using my intake, draft a reply that moves warm interest toward a clear next step. Include a softer and a firmer variant.",
   chatOpener:
-    "I will draft a reply that moves warm interest to a clear next step. Paste the comment or DM.",
+    "Hey. Let's move warm interest to a clear next step.\n\n- draft a reply that stays human and clear\n- Paste the comment or DM\n- Walk away with a next-step reply you can send\n\nPaste the comment or DM?",
   systemOverlay: [
     "## Module mode: DM / Comment Closer",
     "You are running the DM / Comment Closer tool for this user.",

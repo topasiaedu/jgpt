@@ -60,9 +60,9 @@ export const FAQ_CONTENT_BANK_PACK: ModulePack = {
   starterPrompt:
     "Using my intake, build a CONTENT BANK inventory: for each item tag 题材 / 分类 / 形式 / 状态 using Jeff axes (AUG-D3).",
   chatOpener:
-    "I will inventory a CONTENT BANK on Jeff axes: 题材 / 分类 / 形式 / 状态. Paste raw material (questions, views, myths, or stories). FAQ questions count as 题材 inputs only.",
+    "Hey. Let's build a CONTENT BANK.\n\n- sort topics, categories, formats, and status\n- Paste questions, views, myths, or stories you already have\n- Walk away with a bank you can pull from, not a one-off post\n\nWhat material can you paste first (questions, views, myths, or stories)?",
   chatOpenerZh:
-    "我会按 Jeff CONTENT BANK（题材 / 分类 / 形式 / 状态）帮你建内容库。把素材贴过来（问题、观点、误区、故事都可以）。FAQ 问题只进题材，不是整套任务。",
+    "我会帮你建内容库 CONTENT BANK。\n\n- 咱们整理题材、分类、形式与状态\n- 把已有的问题、观点、误区或故事贴过来\n- 走的时候带走可反复取用的库，不是一次性帖子\n\n你先能贴哪一类素材（问题、观点、误区或故事）？",
   systemOverlay: [
     "## Module mode: CONTENT BANK / 内容库",
     "You are running the CONTENT BANK tool (catalog id faq-content-bank) for this user.",

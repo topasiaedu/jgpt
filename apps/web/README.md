@@ -70,6 +70,8 @@ npm run test:probe
 | --- | --- | --- |
 | `OPENAI_API_KEY` | Yes | your server key |
 | `OPENAI_MODEL` | No | `gpt-4.1-mini` (default if unset) |
+| `OPENAI_QA_ENABLED` | No | unset = on for module chat; `0` / `false` / `off` disables |
+| `OPENAI_QA_MODEL` | No | `gpt-4.1-nano` (judge only; repair uses `OPENAI_MODEL`) |
 
 Set these under Project → Settings → Environment Variables for **Production** (and Preview if you use preview URLs), then **Redeploy**. Never expose `OPENAI_API_KEY` to the browser.
 

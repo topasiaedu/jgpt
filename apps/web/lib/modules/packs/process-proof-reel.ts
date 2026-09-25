@@ -62,7 +62,7 @@ export const PROCESS_PROOF_REEL_PACK: ModulePack = {
   starterPrompt:
     "Using my intake, write a shootable process-proof Reel: hook, how-we-work beat, soft close. Keep it advice-led, not ego flex.",
   chatOpener:
-    "I will write a process-proof Reel that shows how you work so trust can build. What is one process step you can honestly show on camera?",
+    "Hey. Let's write a process-proof Reel.\n\n- show how you work so trust can build\n- Bring one process step you can honestly show on camera\n- Walk away with a Reel that proves craft, not hype\n\nWhat is one process step you can honestly show on camera?",
   systemOverlay: [
     "## Module mode: Process Proof Reel",
     "You are running the Process Proof Reel tool for this user.",

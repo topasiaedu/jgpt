@@ -6,24 +6,18 @@ These files are implementation briefs for Cursor (or other) coding agents workin
 
 | File | Use |
 | --- | --- |
-| [01-what-we-are-doing.md](01-what-we-are-doing.md) | IP modules product + architecture context (read first for Tools pack work) |
-| [02-implementation-agent-prompts.md](02-implementation-agent-prompts.md) | Copy-paste prompts for module phases A to D |
-| [03-ui-redesign-what-we-are-doing.md](03-ui-redesign-what-we-are-doing.md) | Influence Engine Coach UI/UX redesign context (brand, IA, locked decisions) |
-| [04-ui-redesign-agent-prompts.md](04-ui-redesign-agent-prompts.md) | Copy-paste prompts for redesign phases U1 to U3 |
-| [05-artemo-flow-what-we-are-doing.md](05-artemo-flow-what-we-are-doing.md) | Locked Artemo-style user flow (home recommend → tool chat; All Tools card wall baseline) |
-| [06-artemo-flow-agent-prompts.md](06-artemo-flow-agent-prompts.md) | Copy-paste prompts for flow phases F1 to F3 |
-| [07-tools-journey-ux-what-we-are-doing.md](07-tools-journey-ux-what-we-are-doing.md) | **Current:** `/tools` journey rail UX (scroll stages, core vs practice, start-here) |
-| [08-tools-journey-ux-agent-prompts.md](08-tools-journey-ux-agent-prompts.md) | **Current:** Copy-paste prompts for Tools journey phases A to C |
+| [09-reply-and-recommend-ux-what-we-are-doing.md](09-reply-and-recommend-ux-what-we-are-doing.md) | **Current:** reply brevity, Artemo under-input recommend, opener + question bullets |
+| [10-reply-and-recommend-ux-agent-prompts.md](10-reply-and-recommend-ux-agent-prompts.md) | **Current:** Copy-paste prompts for phases R1 to R3 |
 
-Engineering SoT for decisions remains `dev-wiki/` (especially `accomplishments-and-decisions.md`). Prefer that over chat history.
+Older numbered briefs (`01` to `08`) were removed from disk after prior ships. Prefer `dev-wiki/accomplishments-and-decisions.md` and dated `dev-wiki/sessions/` pages for historical engineering SoT. Doc `09` narrowly supersedes `05`/`06` **recommend presentation** only (cards under input as-you-type); home ask → tool chat and catalog/packs rules still stand.
 
-**Flow note (2026-09-10):** Briefs `05` / `06` lock home recommend → tool chat. Keep brand chrome from U1 to U3. Keep module packs from `01` / `02`.
+Engineering SoT for decisions remains `dev-wiki/`. Prefer that over chat history.
 
-**Tools IA note (2026-09-18):** Briefs `07` / `08` supersede F2’s “card wall only / no journey framing” **for `/tools` only**. Journey returns as sticky numbered rail with **scroll-to-section** (not filter-away). Home flow from `05` / `06` stays. Language-lock / quote sanitizer work is a **separate** track; do not expand `08` into it.
+**Reply / recommend note (2026-09-22):** Briefs `09` / `10` lock: less framework lecturing, Artemo-style home recommend under the composer (debounced), conversational tool openers with bullets, clarifying questions as bullets when asking two.
 
 ## Access wall
 
 - Student runtime mounts Jeff teaching only.
 - Never paste these handoff docs into student answers or teaching ingest.
 - Module **product** copy lives under `apps/web/` (catalog, overlays). Doctrine stays in `jeff-*`.
-- UI redesign, flow, and Tools journey briefs are chrome / UX only. They are not teaching doctrine.
+- These briefs are chrome / UX / prompt-product only. They are not teaching doctrine.

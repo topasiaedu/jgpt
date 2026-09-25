@@ -177,3 +177,16 @@ Expanded Tools from the curated 15 to the full proposed set (39 ready packs), in
 
 - `/tools` sticky numbered journey rail scrolls to stage sections (does not filter). Core cards stay visible; practice under collapsed 「更多练习工具」; single 「从这里开始」 → `ip-stage-check`. Search still reaches all modules.
 - Phase C: ZH/EN journey chrome copy polish; membership audit helper (`auditJourneyMembership`) wired in ToolsGrid (dev warn only). No jeff-wiki / jeff-graph ingest. Language-lock / quote sanitizer workstreams left alone.
+
+## 2026-09-18: Frameworks ship + pack deepen + SoT (builder log)
+
+- Commits on main: `733752b` (workshop frameworks into tools journey, locale lock, probe fidelity); `fd54b88` (P0 packs deepened to Jeff slide steps).
+- Later UX: core-only `/tools`; search, pill rail, 「更多练习」, Ask Jeff removed from that surface (supersedes rail+search intermediate).
+- Deleted all paste-ready agent prompt files and obsolete handoff briefs under `raw/agent-handoff/` (kept pointer README only). Folded session record into `dev-wiki/sessions/2026-09-tools-journey-and-fidelity.md` and updated `accomplishments-and-decisions.md`. **BUILDER ONLY; not jeff teaching ingest.**
+
+## 2026-09-22: Reply + recommend UX pass (R1 to R3)
+
+- **R1:** Home Artemo recommend: debounced as-you-type `/api/recommend` (ids only, no coach essay); cards under composer; path/example chips demoted.
+- **R2:** All 55 pack `chatOpener` EN + ZH map rewritten to conversational greeting + markdown bullets + one question; `defaultChatOpener` matched.
+- **R3:** Shared prompts: apply frameworks do not teach them; max 1 to 2 clarifying questions; if two, use markdown bullets (softened form-like-list ban).
+- **BUILDER ONLY; not jeff teaching ingest.** No commit in this pass unless Stanley asks.

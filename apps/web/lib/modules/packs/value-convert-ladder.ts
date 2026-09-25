@@ -63,9 +63,9 @@ export const VALUE_CONVERT_LADDER_PACK: ModulePack = {
   starterPrompt:
     "Using my intake, name the Jeff 客户购买路径 (paths 1 to 7) that fits, map where people drop off on that path, and prescribe the next content moves. No generic rung ladder theater.",
   chatOpener:
-    "I will name your 客户购买路径 (paths 1 to 7) and map where people drop off. What do you teach for free, and what do you sell?",
+    "Hey. Let's map where people drop on the path to buy.\n\n- name your customer path and the weak step\n- Bring what you teach for free and what you sell\n- Walk away with a drop-off call, not a funnel theory class\n\nWhat do you teach for free, and what do you sell?",
   chatOpenerZh:
-    "我会点名你的客户购买路径（路径1 to 7），并标出掉点。你免费教什么，卖的是什么？",
+    "我会帮你看客户购买路径上掉在哪。\n\n- 点名路径，并标出弱的一步\n- 你带上免费教什么、卖的是什么\n- 走的时候带走掉点判断，不听漏斗理论课\n\n你免费教什么，卖的是什么？",
   systemOverlay: [
     "## Module mode: Value → Convert Ladder (客户购买路径)",
     "You are running the Value → Convert Ladder tool for this user.",

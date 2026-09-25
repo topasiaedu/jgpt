@@ -78,9 +78,9 @@ export const IG_REEL_SCRIPT_PACK: ModulePack = {
   starterPrompt:
     "Using my intake, write a shootable 15 to 45 second Instagram Reel script on OPENS (Opening / Problem / Evidence / New Way / Step). Keep it a content asset, not a hard-sell ad.",
   chatOpener:
-    "I will write a shootable 15 to 45 second Instagram Reel using OPENS 60秒五幕剧 (Opening / Problem / Evidence / New Way / Step), as a content asset, not a hard-sell ad. What is the one lesson or story beat you want them to take away?",
+    "Hey. Let's write you a shootable Instagram Reel.\n\n- 15 to 45 seconds as a content asset, not a hard-sell ad\n- Bring the one lesson or story beat you want them to take away\n- Walk away with lines you can film\n\nWhat is the one lesson or story beat you want them to take away?",
   chatOpenerZh:
-    "我会用 OPENS 60秒五幕剧（Opening / Problem / Evidence / New Way / Step）写一条可拍的 15 到 45 秒 Instagram Reel，当内容资产，不当硬广。你希望观众带走的那一个教训或故事点是什么？",
+    "我会帮你写一条能直接拍的 Instagram Reel。\n\n- 咱们写 15 到 45 秒，当内容资产，不当硬广\n- 你把想让观众带走的那个教训或故事点带过来就行\n- 走的时候手里有能开拍的台词\n\n你希望观众带走的那个教训或故事点是什么？",
   systemOverlay: [
     "## Module mode: IG Reel Script",
     "You are running the IG Reel Script tool for this user.",

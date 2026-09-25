@@ -68,9 +68,9 @@ export const SCROLL_STOP_HOOK_PACK: ModulePack = {
   starterPrompt:
     "Using my intake, apply Hook Formula (对象＋痛点＋反差/结果＋好奇): several opening lines for the first 1 to 3 seconds, each annotated with all four legs.",
   chatOpener:
-    "I will apply Hook Formula: 对象＋痛点＋反差/结果＋好奇, for the first 1 to 3 seconds only. Who is the 对象, and what 痛点 should stop them?",
+    "Hey. Let's sharpen the first 1 to 3 seconds.\n\n- craft a scroll-stop open only\n- Bring who you are talking to and the pain that should stop them\n- Walk away with stronger opens, not a full script rewrite\n\nWho is the viewer, and what pain should stop them?",
   chatOpenerZh:
-    "我会用 Hook Formula（对象＋痛点＋反差/结果＋好奇）只打磨前 1 到 3 秒。对象是谁，哪一个痛点该让他们停下来？",
+    "我会帮你打磨前 1 到 3 秒的停滑开场。\n\n- 只打磨开场，不重写整支脚本\n- 你带上对象，以及该让他们停下来的痛点\n- 走的时候带走更强开场句\n\n对象是谁，哪一个痛点该让他们停下来？",
   systemOverlay: [
     "## Module mode: Hook Formula",
     "You are running the Hook Formula tool (catalog id scroll-stop-hook) for this user.",

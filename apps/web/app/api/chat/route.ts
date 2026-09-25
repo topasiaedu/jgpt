@@ -11,18 +11,20 @@ import {
   appendModuleSystemOverlay,
   buildModuleProbeQuery,
 } from "@/lib/modules/modulePrompt";
+import { getModuleById } from "@/lib/modules/catalog";
 import { getModulePack } from "@/lib/modules/packs";
 import { HOME_INTENT_Q_MAX_CHARS } from "@/lib/modules/homeHandoff";
 import { appendHomeRecommendOverlay } from "@/lib/modules/recommend";
 import { generateJeffReply, getOpenAIConfig } from "@/lib/openai";
 import { mergeBoundNodesIntoProbe, probeTeaching } from "@/lib/probe";
 import { DEFAULT_LOCALE, parseLocale, type Locale } from "@/lib/i18n/messages";
+import { runModuleResponseQa } from "@/lib/responseQa";
 import { sanitizeAssistantReply } from "@/lib/sanitizeAssistantReply";
 import { buildSystemPrompt } from "@/lib/systemPrompt";
 
 /** fs-based probe + OpenAI tool loop; must not run on Edge. */
 export const runtime = "nodejs";
-/** Tool loops need headroom beyond the default 10s Hobby / 15s Pro limit. */
+/** Tool loops + optional module QA/repair need headroom beyond the default 10s Hobby / 15s Pro limit. */
 export const maxDuration = 60;
 /** Always run on the server; never statically cache chat. */
 export const dynamic = "force-dynamic";
@@ -30,6 +32,7 @@ export const dynamic = "force-dynamic";
 /**
  * POST /api/chat: fresh probe this turn + dialogue-only history + optional probe_jeff tools.
  * Optional moduleId enables named IP module packs (same closed-doctrine stack).
+ * Module path runs a second ask-match QA call (+ at most one repair) after the primary reply.
  * Legacy intake map is optional; chat-first modules rely on conversation history.
  * Soft-fails with JSON error if OPENAI_API_KEY is missing.
  * Always returns JSON so the client never has to parse an HTML error page for app errors.
@@ -150,8 +153,27 @@ async function handleChatPost(
       recommendMode,
     });
 
+    // Module/tool path only: second-model ask-match QA + at most one repair.
+    // Home recommend stays out of scope. Soft-fails to the original reply.
+    let finalReply: string = reply;
+    if (pack !== undefined && typeof moduleId === "string") {
+      const moduleDef = getModuleById(moduleId);
+      const moduleTitle: string =
+        moduleDef !== undefined ? moduleDef.title : moduleId;
+      const qa = await runModuleResponseQa({
+        apiKey,
+        repairModel: model,
+        locale,
+        moduleId,
+        moduleTitle,
+        messages: dialogue,
+        draftReply: reply,
+      });
+      finalReply = qa.reply;
+    }
+
     const response: ChatResponseBody = {
-      reply: sanitizeAssistantReply(reply, locale),
+      reply: sanitizeAssistantReply(finalReply, locale),
       sources,
       ...(recommendMode && recommendedModuleIds.length > 0
         ? { recommendedModuleIds }

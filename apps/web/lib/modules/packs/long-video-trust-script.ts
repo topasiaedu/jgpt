@@ -72,9 +72,9 @@ export const LONG_VIDEO_TRUST_SCRIPT_PACK: ModulePack = {
   starterPrompt:
     "Using my intake, outline a long trust-path video: place Trust Evidence types (结果/过程/角色/人品), frame as 看见你→理解你→相信你→问你→买你 where useful, and close with a soft next step. Structure for MY craft.",
   chatOpener:
-    "I will outline a longer trust-building teach as a trust path (not stock YouTube filler), placing Trust Evidence types. What topic can you teach for 5 to 15 minutes without fluff?",
+    "Hey. Let's outline a longer trust teach.\n\n- build a trust path, not stock filler\n- Bring a topic you can teach for 5 to 15 minutes without fluff\n- Walk away with an outline that earns trust\n\nWhat topic can you teach for 5 to 15 minutes without fluff?",
   chatOpenerZh:
-    "我会按信任路径搭长视频大纲（不是通用 YouTube 模板），并放入信任证据类型。有哪个题目你能讲 5 到 15 分钟还不注水？",
+    "我会帮你搭长视频信任大纲。\n\n- 走信任路径，不堆通用注水模板\n- 你带上一个能讲 5 到 15 分钟还不注水的题目\n- 走的时候带走能建立信任的大纲\n\n有哪个题目你能讲 5 到 15 分钟还不注水？",
   systemOverlay: [
     "## Module mode: Long Video Trust Script",
     "You are running the Long Video Trust Script tool for this user.",

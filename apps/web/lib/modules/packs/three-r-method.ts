@@ -47,7 +47,7 @@ export const THREE_R_METHOD_PACK: ModulePack = {
   starterPrompt:
     "Using my intake, run Three R Method and deliver the structured output for this Jeff tool.",
   chatOpener:
-    "I will run the Three R routine for a reserved owner. What industry or craft should the reads come from?",
+    "Hey. Let's run the Three R routine for a reserved owner.\n\n- build a quieter, steady capture habit\n- Bring the industry or craft the reads should come from\n- Walk away with a routine you can keep without forcing loud energy\n\nWhat industry or craft should the reads come from?",
   systemOverlay: [
     "## Module mode: Three R Method",
     "You are running the Three R Method tool (catalog id three-r-method) for this user.",

@@ -9,6 +9,7 @@ import { mergeSourcesById } from "@/lib/mergeSources";
 import {
   RECOMMEND_MAX,
   RECOMMEND_MIN,
+  buildLightweightRecommendSystemPrompt,
   validateRecommendedModuleIds,
 } from "@/lib/modules/recommend";
 import type { ProbeResult } from "@/lib/probe";
@@ -290,6 +291,59 @@ export async function generateJeffReply(options: {
       recommendedModuleIds,
     };
   }
+}
+
+/**
+ * Lightweight home recommend: one constrained completion, ids only.
+ * No Jeff probe, no coaching essay. Returns [] when vague or invalid.
+ */
+export async function generateHomeRecommendIds(options: {
+  apiKey: string;
+  model: string;
+  draft: string;
+}): Promise<string[]> {
+  const client = new OpenAI({ apiKey: options.apiKey });
+  const draft: string = options.draft.trim();
+  if (draft.length === 0) {
+    return [];
+  }
+
+  const completion = await client.chat.completions.create({
+    model: options.model,
+    temperature: 0.2,
+    messages: [
+      { role: "system", content: buildLightweightRecommendSystemPrompt() },
+      { role: "user", content: draft },
+    ],
+    tools: [RECOMMEND_MODULES_TOOL],
+    tool_choice: "auto",
+  });
+
+  const choice = completion.choices[0];
+  if (choice === undefined || choice.message === undefined) {
+    return [];
+  }
+
+  const toolCalls = choice.message.tool_calls;
+  if (toolCalls === undefined || toolCalls.length === 0) {
+    return [];
+  }
+
+  for (const toolCall of toolCalls) {
+    if (toolCall.type !== "function") {
+      continue;
+    }
+    if (toolCall.function.name !== "recommend_modules") {
+      continue;
+    }
+    const args = parseRecommendModulesArgs(toolCall.function.arguments);
+    if (args === null) {
+      continue;
+    }
+    return validateRecommendedModuleIds(args.moduleIds);
+  }
+
+  return [];
 }
 
 /**

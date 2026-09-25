@@ -20,11 +20,18 @@ export type MessageKey =
   | "emptyHint"
   | "recommendTitle"
   | "recommendOpen"
+  | "recommendTipVague"
+  | "recommendLoading"
+  | "recommendError"
+  | "recommendTipTooShort"
+  | "homeComposerTip"
   | "example1"
   | "example2"
   | "example3"
   | "composerLabel"
   | "composerPlaceholder"
+  | "composerPlaceholderCreate"
+  | "composerPrefix"
   | "send"
   | "sending"
   | "thinking"
@@ -43,7 +50,6 @@ export type MessageKey =
   | "toolsTitle"
   | "toolsSubtitle"
   | "toolsBack"
-  | "toolsFeaturedTitle"
   | "toolsBadgeReady"
   | "toolsBadgeSoon"
   | "catIdeation"
@@ -90,20 +96,27 @@ const zh: MessageTable = {
   productName: "Influence Engine Coach",
   productTagline: "个人 IP 教练",
   navTools: "全部工具",
-  homeAsk: "今天要做什么 IP 内容？",
-  homePromise: "说清楚你今天想做的内容，我会推荐 2 到 4 个合适工具。",
+  homeAsk: "今天想创造什么？",
+  homePromise: "在下面说出今天要做的内容，合适工具会出现在输入框下方。",
   pathStart: "不确定阶段时再诊断",
   pathTools: "浏览全部工具",
   pathJumpReel: "写一条 Reel",
   pathJumpStandpoint: "立一个立场",
-  emptyHint: "也可以直接点一个方向：",
+  emptyHint: "也可以点一句话填进输入框：",
   recommendTitle: "推荐工具",
   recommendOpen: "打开工具",
+  recommendTipVague: "再说具体一点你要做什么内容，我再给你合适的工具。",
+  recommendLoading: "正在匹配工具…",
+  recommendError: "现在匹配不到工具。请检查网络后点发送再试一次。",
+  recommendTipTooShort: "再多写几个字，说清楚你想做什么内容。",
+  homeComposerTip: "提示：说得越具体，下方推荐越准。例如：「一条讲成交的 IG Reel 脚本」",
   example1: "我想写一条 IG Reel，讲我怎么帮客户成交。",
   example2: "我想立一个清晰立场，让对的人一眼认出我。",
   example3: "我想把一条长视频改成能建立信任的脚本。",
   composerLabel: "消息",
-  composerPlaceholder: "今天要做什么 IP 内容？",
+  composerPlaceholder: "继续说，或换一个内容任务…",
+  composerPlaceholderCreate: "一条 IG 脚本…",
+  composerPrefix: "我想做",
   send: "发送",
   sending: "发送中…",
   thinking: "思考中…",
@@ -122,7 +135,6 @@ const zh: MessageTable = {
   toolsTitle: "全部工具",
   toolsSubtitle: "按五步旅程浏览命名工具。",
   toolsBack: "全部工具",
-  toolsFeaturedTitle: "从这里开始",
   toolsBadgeReady: "可用",
   toolsBadgeSoon: "即将上线",
   catIdeation: "选题构思",
@@ -168,20 +180,28 @@ const en: MessageTable = {
   productName: "Influence Engine Coach",
   productTagline: "Personal IP coach",
   navTools: "All Tools",
-  homeAsk: "What IP content do you want to make today?",
-  homePromise: "Tell me what you want to create today. I will recommend 2 to 4 fitting tools.",
+  homeAsk: "What do you want to create today?",
+  homePromise: "Type what you want to make below. Fitting tools appear under the input.",
   pathStart: "Stage check if you are stuck",
   pathTools: "Browse all tools",
   pathJumpReel: "Write a Reel",
   pathJumpStandpoint: "Build a standpoint",
-  emptyHint: "Or try one of these directions:",
+  emptyHint: "Or tap a line to fill the input:",
   recommendTitle: "Recommended tools",
   recommendOpen: "Open tool",
+  recommendTipVague: "Say a bit more about what you want to make, then I can suggest tools.",
+  recommendLoading: "Matching tools…",
+  recommendError: "Could not match tools right now. Check your connection, then tap send to try again.",
+  recommendTipTooShort: "Add a few more words about what you want to create.",
+  homeComposerTip:
+    "Tip: The more details you provide, the better the tools under the input. For example: \"an IG Reel script about closing deals\"",
   example1: "I want an IG Reel about how I help clients close deals.",
   example2: "I want a clear standpoint so the right people recognize me.",
   example3: "I want to turn a long video into a trust-building script.",
   composerLabel: "Message",
-  composerPlaceholder: "What IP content do you want to make today?",
+  composerPlaceholder: "Keep going, or name another content job…",
+  composerPlaceholderCreate: "ig script…",
+  composerPrefix: "I want to create a",
   send: "Send",
   sending: "Sending…",
   thinking: "Thinking…",
@@ -203,7 +223,6 @@ const en: MessageTable = {
   toolsTitle: "All Tools",
   toolsSubtitle: "Browse named tools along the five stage journey.",
   toolsBack: "All Tools",
-  toolsFeaturedTitle: "Start here",
   toolsBadgeReady: "Ready",
   toolsBadgeSoon: "Soon",
   catIdeation: "Ideation",

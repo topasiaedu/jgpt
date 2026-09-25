@@ -38,7 +38,7 @@ export const SIX_CAPTION_ANGLES_PACK: ModulePack = {
   starterPrompt:
     "Using my intake, run Six Caption Angles and deliver the structured output for this Jeff tool.",
   chatOpener:
-    "I will write Six Caption Angles as one-liners under the video. What does the video already do, in one breath?",
+    "Hey. Let's write six caption angles as one-liners under the video.\n\n- give six angles, not six full essays\n- Bring what the video already does, in one breath\n- Walk away with paste-ready one-liners\n\nWhat does the video already do, in one breath?",
   systemOverlay: [
     "## Module mode: Six Caption Angles",
     "You are running the Six Caption Angles tool (catalog id six-caption-angles) for this user.",

@@ -51,7 +51,7 @@ export const POSITIONING_FOUR_QUESTIONS_PACK: ModulePack = {
   starterPrompt:
     "Using my intake, run Positioning Four Questions and deliver the structured output for this Jeff tool.",
   chatOpener:
-    "I will run Positioning Four Questions, then the crown. What do you sell, in plain words?",
+    "Hey. Let's answer the four positioning questions.\n\n- tighten who you are for, what you stand for, proof, and the ask\n- Bring your current one-liner if you have one\n- Walk away with clearer answers you can reuse in content\n\nWho are you trying to be obvious for right now?",
   systemOverlay: [
     "## Module mode: Positioning Four Questions",
     "You are running the Positioning Four Questions tool (catalog id positioning-four-questions) for this user.",

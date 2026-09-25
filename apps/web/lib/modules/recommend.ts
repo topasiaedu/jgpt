@@ -95,7 +95,7 @@ function recommendLanguageLock(locale: Locale): string {
 
 /**
  * Appends home recommend-mode instructions after the base Jeff system prompt.
- * Only for free chat (no moduleId).
+ * Only for free chat (no moduleId). Keep coaching brief; UI cards carry the tools.
  */
 export function appendHomeRecommendOverlay(
   baseSystemPrompt: string,
@@ -111,11 +111,36 @@ export function appendHomeRecommendOverlay(
     "Your job: coach briefly, then recommend 2 to 4 real tools from the catalog below when the intent is clear enough.",
     "When you recommend, you MUST call the recommend_modules tool with catalog module ids only (never invent ids).",
     "Pick tools that match the create intent (Reel, standpoint, trust script, caption, etc.). Do not force ip-stage-check unless the user is stuck on stage or asks where to start.",
-    "After recommend_modules returns, give a short 1-on-1 coaching reply. Mention the tools by title in plain speech; the UI will also show clickable cards.",
+    "After recommend_modules returns, give a short 1-on-1 coaching reply (1 to 3 sentences). Mention the tools by title in plain speech; the UI will also show clickable cards.",
     "If the message is too vague to pick tools, ask one sharp clarifying question and do NOT call recommend_modules yet.",
-    "Do not dump a curriculum. Do not pretend you opened a tool chat. Deep work happens after they click a tool.",
+    "Do not dump a curriculum. Do not teach frameworks. Do not pretend you opened a tool chat. Deep work happens after they click a tool.",
     "",
     recommendLanguageLock(locale),
+    "",
+    "## Recommendable tools (id: title)",
+    catalogLines,
+  ].join("\n");
+}
+
+/** Min draft length before the lightweight as-you-type recommend API fires. */
+export const RECOMMEND_DRAFT_MIN_CHARS = 8;
+
+/**
+ * System prompt for the lightweight home recommend path (ids only, no coaching essay).
+ */
+export function buildLightweightRecommendSystemPrompt(): string {
+  const catalogLines: string = formatRecommendCatalogForPrompt();
+
+  return [
+    "You pick Jeff IP tools from a fixed catalog for Influence Engine Coach home recommend.",
+    "The user typed a short create-intent draft. They have not opened a tool chat yet.",
+    "If the draft clearly states what IP content they want to make, call recommend_modules with 2 to 4 catalog module ids only.",
+    "Pick tools that match the create intent (Reel, standpoint, trust script, caption, etc.).",
+    "Do not force ip-stage-check unless the draft is about stage diagnosis or where to start.",
+    "Never invent ids. Use catalog ids only.",
+    "If the draft is too vague (greetings, noise, or no clear create job), do NOT call recommend_modules.",
+    "When vague, reply with the single word VAGUE and nothing else.",
+    "Do not write coaching, curriculum, or tool descriptions. Ids via the tool, or VAGUE.",
     "",
     "## Recommendable tools (id: title)",
     catalogLines,

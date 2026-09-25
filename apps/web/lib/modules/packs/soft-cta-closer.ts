@@ -62,9 +62,9 @@ export const SOFT_CTA_CLOSER_PACK: ModulePack = {
   starterPrompt:
     "Using my intake, write two to three closes on CTA Structure: 总结价值 → 发出指令 → 降低门槛. One clear next step; no hard sell flip.",
   chatOpener:
-    "I will write soft closes with CTA Structure (总结价值 → 发出指令 → 降低门槛). What value did you already teach, and what next step do you want?",
+    "Hey. Let's write a soft close.\n\n- summarize value, give a clear ask, and lower the barrier\n- Bring what you already taught and the next step you want\n- Walk away with a close that invites, not hard-sells\n\nWhat value did you already teach, and what next step do you want?",
   chatOpenerZh:
-    "我会按 CTA Structure（总结价值 → 发出指令 → 降低门槛）写软收尾。你已经教了什么价值，想要的下一步是什么？",
+    "我会帮你写软收尾。\n\n- 总结价值、发出指令、降低门槛\n- 你带上已经教了什么价值，以及想要的下一步\n- 走的时候带走邀请式收尾，不硬卖\n\n你已经教了什么价值，想要的下一步是什么？",
   systemOverlay: [
     "## Module mode: Soft CTA Closer (CTA Structure)",
     "You are running the Soft CTA Closer tool for this user.",

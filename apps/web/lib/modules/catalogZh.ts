@@ -13,18 +13,18 @@ export type ModuleZhCopy = {
 
 export const MODULE_ZH_COPY: Record<string, ModuleZhCopy> = {
   "ip-stage-check": {
-    title: "IP阶段诊断",
+    title: "SELF DIAGNOSTIC / 自我诊断",
     description: [
-      "做什么：跑 Jeff SELF DIAGNOSTIC / 自我诊断（AUG-D3）：先问「内容还是系统」，再过六项是/否检查。答不出的项就是下一阶段要修的。曝光→信任→成交只作诊断后的次要对照，不能取代六项检查。",
+      "做什么：帮你看清卡在「内容」还是「系统」。一起过六项诚实是/否检查；答不出的项，就是下一阶段要修的。",
       "需要准备：你在做什么，以及对六项的诚实是/否：最适合的三种内容、稳定连发四周、流量/信任/成交分工、选题到发布流程、每周按数据调整、内容已接询问/交付/成交。",
       "何时使用：刚开始做个人IP、沉寂一阵之后，或别人只叫你「多发」却没用的时候。",
       "你会得到：内容 vs 系统判断、六项记分卡（引用你的回答），以及未通过项组成的下一阶段清单（不是罐头式工具轮盘）。",
     ].join("\n\n"),
   },
   "standpoint-builder": {
-    title: "立场构建器",
+    title: "IP影响力三角",
     description: [
-      "做什么：按 Jeff「IP影响力三角」写满三腿：坚持什么 / 反对什么 / 真实缺口（FLAW），再加一句市场对你的印象。",
+      "做什么：帮你写满 IP影响力三角：坚持什么、反对什么、真实缺口，再加一句市场现在怎么看你。",
       "需要准备：你坚持什么、反对什么、真实缺口／人性面，以及市场现在怎么看你的一句话。",
       "何时使用：开拍前、改简介前、内容听起来谁都能发，或只有观点没有真实缺口时。",
       "你会得到：三角三腿加一句市场印象。主交付不是单句上镜开场或 Reel opener。",
@@ -51,25 +51,25 @@ export const MODULE_ZH_COPY: Record<string, ModuleZhCopy> = {
   "who-i-serve": {
     title: "定位一句话：三行地图",
     description: [
-      "做什么：按 Jeff「定位一句话：三行地图」（AUG-D1 p038）写满三行：我是谁 / 我帮谁 / 解决什么，让市场最快理解你能帮谁。",
+      "做什么：帮你写清三行：我是谁、我帮谁、解决什么，让陌生人最快听懂你的工作是给谁的。",
       "需要准备：我是谁（身份、行业、经验、角色）、我帮谁、解决什么。",
       "何时使用：写产品或脚本之前、定位变成长自我介绍，或内容只讲自己不讲给谁时。",
-      "你会得到：三行地图（OCR 验收）。串联金句与内容角度仅在你事后要求时补。",
+      "你会得到：填好的三行地图。串联金句与内容角度，仅在你事后要求时补。",
     ].join("\n\n"),
   },
   "ip-pillars": {
-    title: "Brand Pillars",
+    title: "Brand Pillars / 品牌支柱",
     description: [
-      "做什么：按 Jeff Brand Pillars 四步（AUG-D1 p049）：WHO+痛点 → 列10个市场问题 → 归成3到5组 → 留成长期支柱。",
+      "做什么：把你服务谁与痛点，变成长期 Brand Pillars。先列市场最常问的问题，再归成 3 到 5 个你能长期教的主题。",
       "需要准备：你服务谁与痛点，以及市场最常问的10个问题。",
       "何时使用：信息流显得随机、周中没灵感，或需要长期栏目再写脚本时。",
       "你会得到：10个问题、由问题归出的3到5个支柱与示例角度。本工具不做「被看见／信任／转化」轮换。",
     ].join("\n\n"),
   },
   "ig-reel-script": {
-    title: "IG Reel脚本",
+    title: "OPENS 60秒五幕剧",
     description: [
-      "做什么：用 OPENS 60秒五幕剧（Opening / Problem / Evidence / New Way / Step）写出可拍的 15 到 45 秒 Instagram Reel。当内容资产，不当硬广。不把 OPENS 改名叫 GOAT。",
+      "做什么：用 OPENS（Opening、Problem、Evidence、New Way、Step）写出可拍的 15 到 45 秒 Instagram Reel。当教学资产，不当硬广。",
       "需要准备：赛道或行业、受众、立场或产品角度、一个教训或故事节拍、语言偏好、可选一种四种内容资产类型，以及收尾要多软。",
       "何时使用：这周就要拍一条具体 Reel，或草稿听起来像广告而不是教学资产时。",
       "你会得到：五幕 OPENS 脚本、可选字幕提示、可选资产类型标签，以及不承诺一夜成名的 Step。",
@@ -78,7 +78,7 @@ export const MODULE_ZH_COPY: Record<string, ModuleZhCopy> = {
   "scroll-stop-hook": {
     title: "Hook Formula",
     description: [
-      "做什么：用 AUG-D2 Hook Formula（对象＋痛点＋反差/结果＋好奇）只打磨开场句，用第一秒换来注意力，不写完整 Reel。",
+      "做什么：用 Hook Formula（对象＋痛点＋反差或结果＋好奇）只打磨开场句，用第一秒换来注意力，不写完整 Reel。",
       "需要准备：对象、痛点、反差/结果、好奇（主题与语言可选）。",
       "何时使用：视频中间不错但第一帧就被划走，或想先在脑中对比几版钩子再拍时。",
       "你会得到：多条开场，每条标齐四腿；缺腿的直接淘汰。",
@@ -139,18 +139,18 @@ export const MODULE_ZH_COPY: Record<string, ModuleZhCopy> = {
     ].join("\n\n"),
   },
   "story-trust-script": {
-    title: "故事信任脚本",
+    title: "S.T.O.R.Y Founder Story",
     description: [
-      "做什么：把个人或客户故事做成 S.T.O.R.Y 创始人故事信任脚本（起点处境 / 最大冲突 / 困难选择 / 你坚持什么 / 你要影响谁），不把 Jeff 案例发明成教条。",
+      "做什么：把个人或客户故事做成 S.T.O.R.Y 创始人故事信任脚本（起点处境、最大冲突、困难选择、你坚持什么、你要影响谁），用你的真实事实，不借别人的戏剧。",
       "需要准备：每个 S.T.O.R.Y 步骤的事实，以及哪些要保持私密。更长的 Problem→Search 弧线请用「故事结构（问题到寻找）」。",
       "何时使用：纯技巧显得干，或需要人味证明你的立场是活出来的时。",
-      "你会得到：填满你故事事实的 S.T.O.R.Y 脚本；故事是举例，不是通用的 Jeff 病案脚本。",
+      "你会得到：填满你故事事实的 S.T.O.R.Y 脚本。故事是举例，不是通用病案脚本。",
     ].join("\n\n"),
   },
   "authority-relatable-mixer": {
     title: "权威与亲和混搭",
     description: [
-      "做什么：在 WS09 角色约束下混搭权威与亲和（艺人→距离感，直播主→信任感，老师 vs 博主内容组合不同）。可选内容角色 3+2 组合提示。",
+      "做什么：按你的角色（艺人、直播主、老师或博主）混搭权威与亲和，看起来可信但不冷，温暖但不掉信任。",
       "需要准备：主角色（艺人 / 直播主 / 老师 / 博主）、平常怎么出现、哪里觉得僵或太随意，以及受众要信任你需要什么。",
       "何时使用：看起来专业但冷、温暖但不可信，或人设乱切没有计划时。",
       "你会得到：受角色约束的混搭简报：多露什么、少露什么，以及一个不破角色的可拍节拍。",
@@ -159,7 +159,7 @@ export const MODULE_ZH_COPY: Record<string, ModuleZhCopy> = {
   "faq-content-bank": {
     title: "CONTENT BANK / 内容库",
     description: [
-      "做什么：按 Jeff CONTENT BANK（AUG-D3）四轴建内容库：题材（问题/观点/误区/故事）、分类（教育/信任/证明/引流/转化）、形式（口播/对谈/清单/案例/Vlog）、状态。FAQ 问题只作为题材输入。",
+      "做什么：按四轴建 CONTENT BANK 内容库（题材、分类、形式、状态），让问题、观点、误区、故事变成可拍库存，而不是便利贴堆。",
       "需要准备：素材（问题、观点、误区、故事）、赛道、可选偏好形式与状态，以及不能上镜的边界。",
       "何时使用：需要内容库存盘而不是随便列选题，或私信反复问的问题该进库当题材时。",
       "你会得到：每条都标齐四轴的库存表，可直接去拍。不是自造的看见/信任/成交标签方案。",
@@ -177,7 +177,7 @@ export const MODULE_ZH_COPY: Record<string, ModuleZhCopy> = {
   "soundbite-one-liner": {
     title: "Memory Hook / 记忆钩子",
     description: [
-      "做什么：按 Jeff Memory Hook（一句话、一个场景、一个结果）打磨赛道里能复述的金句，带着立场。",
+      "做什么：帮你打磨 Memory Hook：一句能复述的金句（加上场景与结果），带着立场，不像口号刷屏。",
       "需要准备：你的赛道、希望被记住的信念、你真正会说的词，以及说出口就假的词。",
       "何时使用：文案、字幕、简介，或教学后的收束金句。",
       "你会得到：多条一句话，并标明哪条偏建议语气、哪条偏自我炫耀。",
@@ -186,7 +186,7 @@ export const MODULE_ZH_COPY: Record<string, ModuleZhCopy> = {
   "content-asset-planner": {
     title: "四种内容资产",
     description: [
-      "做什么：按 Jeff「四种内容资产」（AUG-D1 p016）把帖子归类并排期：曝光 / 认知 / 信任 / 成交。只管资产类型，不管堆叠漏斗。",
+      "做什么：帮你把帖子归类并排期成四种内容资产：曝光、认知、信任、成交，让每一条知道本周自己的工作。",
       "需要准备：你的阶段、可拍档期、不用假研究也能讲的主题，以及可选平台。",
       "何时使用：周初、乱发一阵之后，或帖子说不清自己是哪一类资产时。",
       "你会得到：周清单，每格一个类型标签。堆叠路径请用「Content Asset Stack / 内容资产堆叠」工具。",
@@ -195,7 +195,7 @@ export const MODULE_ZH_COPY: Record<string, ModuleZhCopy> = {
   "content-asset-stack": {
     title: "Content Asset Stack / 内容资产堆叠",
     description: [
-      "做什么：按 Jeff Content Asset Stack / 内容资产堆叠（AUG-D1 p015）判断内容把人带到哪一步：看见 → 记住 → 相信 → 询问 → 成交。",
+      "做什么：帮你判断内容把人带到内容资产堆叠的哪一步：看见、记住、相信、询问、成交，以及如何往前推一步。",
       "需要准备：内容草稿或选题、给谁看、对方现在在哪一步、你想推进到哪一步。",
       "何时使用：内容发出去却堆不出信任证据，或还没「相信」就硬推「成交」时。",
       "你会得到：堆叠路径诊断，以及如何让这条内容往前推一步。四种资产类型请用「四种内容资产」工具。",
@@ -211,9 +211,9 @@ export const MODULE_ZH_COPY: Record<string, ModuleZhCopy> = {
     ].join("\n\n"),
   },
   "value-convert-ladder": {
-    title: "价值到转化阶梯",
+    title: "客户购买路径",
     description: [
-      "做什么：点名你的客户购买路径（路径1 to 7），标出掉点，让转化内容不突然冒出来。",
+      "做什么：点名你的客户购买路径（路径1到7），标出掉点，让转化内容不突然冒出来。",
       "需要准备：你免费教什么、你卖什么、人们掉在哪，以及可选：你觉得自己走哪条路径。",
       "何时使用：信任内容从不变成对话，或转化帖显得突兀时。",
       "你会得到：点名的路径（路径1 内容→私讯→客户、路径2 内容→信任→到店/询问、路径3 内容→转介绍，或路径4 to 7 长决策）、掉点图与内容动作。不是泛泛的软卖阶梯。",
@@ -240,10 +240,10 @@ export const MODULE_ZH_COPY: Record<string, ModuleZhCopy> = {
   "content-ideation-ip": {
     title: "九宫格 Topic Bingo",
     description: [
-      "做什么：按 Jeff AUG-D2 九宫格 / Topic Bingo：中心是人设，八格是兴趣/专业/观点/故事/客户/行业/趋势/痛点，再画四条穿心线长出大约 12 个题目雏形。不是 The Waffle 的格式×主题倍增。",
+      "做什么：帮你填好九宫格 Topic Bingo：中心是人设，八格是兴趣、专业、观点、故事、客户、行业、趋势、痛点，再画四条穿心线，长出大约 12 个能拍的题目雏形。",
       "需要准备：你的人设，以及八格关键词（兴趣、专业、观点、故事、客户、行业、趋势、痛点），来自真实做事。",
       "何时使用：面对空白页，或点子随机、不像你的个人IP时。",
-      "你会得到：一张标着 Jeff 格名的九宫格、四条穿心线方向、大约 12 个题目雏形。若要格式×主题冲向约 100 条片，请用 The Waffle。",
+      "你会得到：一张格名清楚的九宫格、四条穿心线方向、大约 12 个题目雏形。若要格式×主题冲向约 100 条，请用 The Waffle。",
     ].join("\n\n"),
   },
   "advice-vs-ego-coach": {
@@ -252,13 +252,13 @@ export const MODULE_ZH_COPY: Record<string, ModuleZhCopy> = {
       "做什么：开拍前检查清单，让你以给观众建议的方式出现，而不是为自己秀自我。",
       "需要准备：你打算说什么、对他们为什么重要，以及你忍不住想留的炫耀句。",
       "何时使用：马上要拍，或过去视频有用却像在自我表扬时。",
-      "你会得到：可拍 / 需改清单、该删或改写的句子，以及 Jeff 如何把建议和自我分开的提醒。",
+      "你会得到：可拍／需改清单、该删或改写的句子，以及如何把建议和自我分开的提醒。",
     ].join("\n\n"),
   },
   "comment-reply-three-lines": {
     title: "评论回应三句法",
     description: [
-      "做什么：按 Jeff「评论回应三句法」（AUG-D1 p028）起草回复：接住、澄清、拉回主轴，让目标客户看见你的判断，而不是赢网友。",
+      "做什么：用三拍起草评论回复：接住、澄清、拉回主轴，让目标客户看见你的判断，而不是赢网友。",
       "需要准备：要回的评论、你的立场或事实、以及原内容服务的人。",
       "何时使用：苛刻评论之后、反复被问同一句、或想把推回变成教学回复时。",
       "你会得到：两三版短回复草稿，并注明何时停止消耗、如何继续发布。",
@@ -267,14 +267,14 @@ export const MODULE_ZH_COPY: Record<string, ModuleZhCopy> = {
   "criticism-armor": {
     title: "B.R.E.A.K Shield / 评论护盾",
     description: [
-      "做什么：按 Jeff B.R.E.A.K Shield / 评论护盾（AUG-D1 p026）把批评变成判断：Baselines、Reason、Evidence、Angle、Keep Going。",
+      "做什么：陪你走 B.R.E.A.K Shield 评论护盾（Baselines、Reason、Evidence、Angle、Keep Going），把批评变成清楚判断，而不是情绪打转。",
       "需要准备：你怕什么批评或已经收到什么、你的基本预设，以及这个月继续行动长什么样。",
       "何时使用：苛刻反馈之后、脆弱帖之前，或成长太暴露想放弃时。",
       "你会得到：短 B.R.E.A.K 计划：什么不动、什么是噪音、回或不回，以及如何继续发。",
     ].join("\n\n"),
   },
   "bianhao-coach": {
-    title: "变好羞耻症教练",
+    title: "变好羞耻症",
     description: [
       "做什么：陪你过变好羞耻症：你变好、上镜，或长出旧规范之外的样子时，来自家人或同辈的压力。",
       "需要准备：谁在施压、他们说什么、你在建什么，以及这个月持续是什么样子。",
@@ -301,7 +301,7 @@ export const MODULE_ZH_COPY: Record<string, ModuleZhCopy> = {
     ].join("\n\n"),
   },
   "soft-cta-closer": {
-    title: "软转化收尾",
+    title: "CTA Structure",
     description: [
       "做什么：按 CTA Structure 收尾：总结价值 → 发出指令 → 降低门槛，又不把整帖翻成硬卖。",
       "需要准备：你已教的价值、想要的一个下一步、如何降低门槛，以及受众有多暖。",
@@ -324,7 +324,7 @@ export const MODULE_ZH_COPY: Record<string, ModuleZhCopy> = {
       "做什么：起草回复，把评论或私信里的暖意向推到清楚的下一步，不做压迫表演。",
       "需要准备：评论或私信（可贴）、对方像想要什么，以及你能诚实提供的下一步。",
       "何时使用：暖线索因为回得糊而冷掉，或第一句就过推销时。",
-      "你会得到：一版回复，再加更软与更明确的变体。保持教练感，不把 Jeff 销售稿发明成教条。",
+      "你会得到：一版回复，再加更软与更明确的变体。保持教练感，不编造销售话术当教条。",
     ].join("\n\n"),
   },
   "offer-explanation-simple": {
@@ -333,7 +333,7 @@ export const MODULE_ZH_COPY: Record<string, ModuleZhCopy> = {
       "做什么：用白话解释你卖什么，让陌生人听懂结果，不要行话，也不要假稀缺。",
       "需要准备：你卖什么、给谁、结果是什么，以及它不是什么。",
       "何时使用：简介、置顶评论、落地页短文，或你无法一口气说清产品时。",
-      "你会得到：一段白话产品说明和一句更短的话。不发明 Jeff 漏斗或定价架构，事实来自你的输入。",
+      "你会得到：一段白话产品说明和一句更短的话。不发明漏斗或定价架构，事实来自你的输入。",
     ].join("\n\n"),
   },
   "script-humanizer": {
@@ -409,7 +409,7 @@ export const MODULE_ZH_COPY: Record<string, ModuleZhCopy> = {
     ].join("\n\n"),
   },
   "waffle-grid": {
-    title: "The Waffle（华夫饼九宫格）",
+    title: "The Waffle",
     description: [
       "做什么：填 3×3 waffle：中间是你是谁、帮谁；周围八格是你拥有的主题；再用格式×主题冲向约100条。",
       "需要准备：中心格、主题种子、你会拍的格式。",
@@ -418,7 +418,7 @@ export const MODULE_ZH_COPY: Record<string, ModuleZhCopy> = {
     ].join("\n\n"),
   },
   "content-not-working-checklists": {
-    title: "内容失效诊断清单",
+    title: "Fixing content that is not working",
     description: [
       "做什么：按固定顺序跑两套教练清单。A（没人看）：生意→方法→用词→定位。B（没得拍）：先修定位→外向/内向→填格→用 AI 起草。先定位，再谈灯光技巧。",
       "需要准备：症状、实际卖什么、外向还是内向、客户怎么说话、当前定位猜测。",
@@ -427,7 +427,7 @@ export const MODULE_ZH_COPY: Record<string, ModuleZhCopy> = {
     ].join("\n\n"),
   },
   "positioning-four-questions": {
-    title: "定位四问（加王冠）",
+    title: "Four questions, then the crown",
     description: [
       "做什么：答完四问，再钉「你最什么」，窄到能称王的真实品类。",
       "需要准备：卖什么、卖给谁、为什么卖、你最什么。",
@@ -438,18 +438,18 @@ export const MODULE_ZH_COPY: Record<string, ModuleZhCopy> = {
   "brand-stance-model": {
     title: "品牌立场模型",
     description: [
-      "做什么：写出坚持什么、反对什么。Suggested 第三腿（known for doing）尚未确认为 Jeff IP。",
+      "做什么：帮你用白话写出坚持什么、反对什么。若还需要真实缺口第三腿，请优先用 IP影响力三角。",
       "需要准备：坚持、反对；若有真实缺口可另填，不要编造 known-for。",
-      "何时使用：要跑 stakeholder 立场工作表，但不把 Suggested 当教义。AUG 三角请优先用立场构建器。",
-      "你会得到：两腿立场；可选对照真实缺口。不发明 known-for。",
+      "何时使用：先要一份简单的坚持／反对草稿，再决定是否做完整的 IP影响力三角时。",
+      "你会得到：坚持与反对两腿；可选对照真实缺口。不编造「别人知道你在做什么」的第三腿。",
     ].join("\n\n"),
   },
   "goat-four-beats": {
-    title: "GOAT 四拍",
+    title: "GOAT / Four Beats",
     description: [
       "做什么：用 Grab / Open / Answer / Take away 结构一条短视频。",
       "需要准备：主题、观众最大问题、他们带走的一件事。",
-      "何时使用：需要学生最记得的短结构，而不是整套 OPENS 重写时。",
+      "何时使用：需要 Grab／Open／Answer／Take away 短结构，而不是整套 OPENS 重写时。",
       "你会得到：GOAT 节拍脚本。与 OPENS/Hook Formula 相关但命名不同。",
     ].join("\n\n"),
   },
@@ -481,7 +481,7 @@ export const MODULE_ZH_COPY: Record<string, ModuleZhCopy> = {
     ].join("\n\n"),
   },
   "six-caption-angles": {
-    title: "字幕六角度",
+    title: "Six caption angles",
     description: [
       "做什么：用六个角度写一行字幕，让字幕不跟视频抢戏。",
       "需要准备：视频已经做了什么、观众说不出口的感觉。",

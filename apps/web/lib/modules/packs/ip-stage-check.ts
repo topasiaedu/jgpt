@@ -72,9 +72,9 @@ export const IP_STAGE_CHECK_PACK: ModulePack = {
   starterPrompt:
     "Using my intake, run SELF DIAGNOSTIC / 自我诊断: 内容还是系统, six yes/no checks, then name the unanswered checks as the next stage to fix.",
   chatOpener:
-    "I will run SELF DIAGNOSTIC / 自我诊断: do you currently own content, or a system? First check: do you know which three content types fit you best? Yes or no, and a one-line why.",
+    "Hey. Let's check what stage your IP is in right now.\n\n- sort whether you mainly own content, or a working system\n- Bring a honest yes or no on which content types fit you\n- Walk away with a clear next stage, not a lecture\n\nDo you already know which three content types fit you best?",
   chatOpenerZh:
-    "我会跑 SELF DIAGNOSTIC / 自我诊断：你现在拥有的，是内容还是系统？第一项：你知道哪三种内容最适合自己吗？先答是或否，并用一句话说明。",
+    "我会帮你看清现在个人 IP 卡在哪个阶段。\n\n- 咱们先看你现在主要有内容，还是已有能运转的系统\n- 你只要诚实回答哪些内容类型适合自己\n- 走的时候带走下一步，不听长篇理论\n\n你已经知道哪三种内容最适合自己吗？",
   systemOverlay: [
     "## Module mode: SELF DIAGNOSTIC / 自我诊断 (IP Stage Check)",
     "You are running the IP Stage Check tool (catalog id ip-stage-check) as AUG-D3 SELF DIAGNOSTIC for this user.",

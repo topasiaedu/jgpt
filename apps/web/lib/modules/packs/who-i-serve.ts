@@ -51,9 +51,9 @@ export const WHO_I_SERVE_PACK: ModulePack = {
   starterPrompt:
     "Using my intake, write only the 定位一句话：三行地图 lines (我是谁 / 我帮谁 / 解决什么). Pass OCR acceptance: positioning helps the market understand who you help, not a long self-intro.",
   chatOpener:
-    "I will build Jeff's 定位一句话：三行地图: 我是谁, 我帮谁, 解决什么. Start with 我是谁: identity, industry, experience, role in plain words.",
+    "Hey. Let's write your three-line positioning map.\n\n- fill who you are, who you help, and what you solve\n- Bring plain words about your identity and role\n- Walk away with one clear map, not jargon\n\nIn plain words, who are you in this market?",
   chatOpenerZh:
-    "我会按「定位一句话：三行地图」写满三行：我是谁 / 我帮谁 / 解决什么。先用白话说「我是谁」：身份、行业、经验、角色？",
+    "我会帮你写满定位三行地图。\n\n- 咱们写：我是谁、我帮谁、解决什么\n- 你用白话说身份与角色即可\n- 走的时候带走一张清楚地图，不堆术语\n\n用白话说，市场里你是谁？",
   systemOverlay: [
     "## Module mode: 定位一句话：三行地图",
     "You are running the 定位一句话：三行地图 tool (catalog id who-i-serve) for this user.",

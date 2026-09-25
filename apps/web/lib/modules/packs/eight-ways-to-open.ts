@@ -43,9 +43,9 @@ export const EIGHT_WAYS_TO_OPEN_PACK: ModulePack = {
   starterPrompt:
     "Using my intake, run Eight Ways to Open: one line per way (or skip with reason), mark the strongest two, and apply loudest-ten-seconds-first.",
   chatOpener:
-    "I will draft openings with the Eight Ways to Open (first three seconds), then apply loudest-ten-seconds-first. What is the topic, and what is the viewer biggest problem?",
+    "Hey. Let's pick stronger ways to open.\n\n- try several open patterns on your topic\n- Bring the topic or draft open you have now\n- Walk away with a few usable opens to test\n\nWhat topic or current open should we start from?",
   chatOpenerZh:
-    "我会用开场八法打前三秒，再套「先剪、把最响十秒挪到最前」。主题是什么，观众最大的问题是什么？",
+    "我会帮你选出更强的开场方式。\n\n- 在你的题目上试几种开场\n- 你带上题目或现有开场\n- 走的时候带走几个可试的开场\n\n从哪个题目或现有开场开始？",
   systemOverlay: [
     "## Module mode: Eight Ways to Open",
     "You are running the Eight Ways to Open tool (catalog id eight-ways-to-open) for this user.",

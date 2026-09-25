@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import type { ReactNode } from "react";
-import { Inter, Manrope, Noto_Sans_SC } from "next/font/google";
+import { Instrument_Serif, Inter, Manrope, Noto_Sans_SC, Noto_Serif_SC } from "next/font/google";
 
 import Providers from "@/components/Providers";
 
@@ -25,6 +25,20 @@ const inter = Inter({
   display: "swap",
 });
 
+const instrumentSerif = Instrument_Serif({
+  subsets: ["latin"],
+  weight: "400",
+  variable: "--font-instrument-serif",
+  display: "swap",
+});
+
+const notoSerifSc = Noto_Serif_SC({
+  subsets: ["latin"],
+  weight: ["500", "600"],
+  variable: "--font-noto-serif-sc",
+  display: "swap",
+});
+
 export const metadata: Metadata = {
   title: "Influence Engine Coach",
   description: "Influence Engine personal IP coach for Brand Warriors practice.",
@@ -32,15 +46,23 @@ export const metadata: Metadata = {
 
 /**
  * Root layout for Influence Engine Coach.
- * Manrope headlines + Noto Sans SC body; Inter as EN fallback.
+ * Manrope headlines + Noto Sans SC body; Instrument / Noto Serif for create ask.
  */
 export default function RootLayout({
   children,
 }: Readonly<{
   children: ReactNode;
 }>) {
+  const fontClasses: string = [
+    manrope.variable,
+    notoSansSc.variable,
+    inter.variable,
+    instrumentSerif.variable,
+    notoSerifSc.variable,
+  ].join(" ");
+
   return (
-    <html lang="zh-Hans" className={`${manrope.variable} ${notoSansSc.variable} ${inter.variable}`}>
+    <html lang="zh-Hans" className={fontClasses}>
       <body>
         <Providers>{children}</Providers>
       </body>

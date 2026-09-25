@@ -52,7 +52,7 @@ export const THREE_C_METHOD_PACK: ModulePack = {
   starterPrompt:
     "Using my intake, run Three C Method and deliver the structured output for this Jeff tool.",
   chatOpener:
-    "I will run the Three C method for an outgoing owner. What market are you speaking to?",
+    "Hey. Let's run the Three C method for an outgoing owner.\n\n- build a simple routine that fits a louder energy\n- Bring the market you are speaking to\n- Walk away with concrete next captures\n\nWhat market are you speaking to?",
   systemOverlay: [
     "## Module mode: Three C Method",
     "You are running the Three C Method tool (catalog id three-c-method) for this user.",

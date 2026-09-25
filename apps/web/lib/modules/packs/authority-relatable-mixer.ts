@@ -64,9 +64,9 @@ export const AUTHORITY_RELATABLE_MIXER_PACK: ModulePack = {
   starterPrompt:
     "Using my intake and WS09 role constraints (艺人/直播主/老师/博主), give a mix brief: what this role can show, what it must not overplay, and one filmable beat.",
   chatOpener:
-    "I will mix authority and relatability using Jeff WS09 role constraints (艺人 / 直播主 / 老师 / 博主). Which role is closest to how you sell trust?",
+    "Hey. Let's mix authority with relatability.\n\n- balance how you sell trust on camera\n- Bring which role feels closest: performer, host, teacher, or blogger\n- Walk away with a mix that fits how you actually sell trust\n\nWhich role is closest to how you sell trust?",
   chatOpenerZh:
-    "我会按 WS09 角色约束（艺人 / 直播主 / 老师 / 博主）帮你混搭权威与亲和。你最接近哪一种角色？",
+    "我会帮你混搭权威与亲和。\n\n- 咱们调镜头上怎么卖信任的比例\n- 你带上最接近的角色：艺人、直播主、老师或博主\n- 走的时候带走贴合你真实卖信任方式的混搭\n\n你最接近哪一种角色？",
   systemOverlay: [
     "## Module mode: Authority Relatable Mixer",
     "You are running the Authority Relatable Mixer tool for this user.",

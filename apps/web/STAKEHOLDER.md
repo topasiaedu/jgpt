@@ -17,6 +17,8 @@ Tools include the **full proposed module set** (not only the original 15), inclu
 
 **Quality bar:** module answers should feel like Jeff's aide (曝光→信任→成交, 立场, content assets ≠ ads, advice vs ego, direction ≠ volume), not a generic personal-brand GPT. If a reply could have come from any LinkedIn coach with no Jeff teaching, report it.
 
+**Ask-match QA (module chat):** after the main reply, a second (usually cheaper) model checks whether the deliverable matches the ask (e.g. a 1-minute script must not be a 5-line stub). On fail, the server rewrites once before you see the answer. Home free-chat recommend is not in this loop. Builders can disable with `OPENAI_QA_ENABLED=0`.
+
 This is a **draft** teaching graph from early transcript ingest. It is not the full Jeff corpus. Do not treat every answer as settled IP doctrine.
 
 Footer: quiet draft disclaimer + soft **线上学完整系统 / Learn the system live** link to the Influence Engine webinar opt-in. No countdown, scarcity, or form capture inside the coach.

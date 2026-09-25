@@ -49,9 +49,9 @@ export const IP_PILLARS_PACK: ModulePack = {
   starterPrompt:
     "Using my intake, run Jeff Brand Pillars four steps: WHO+痛点, list 10 market questions, cluster to 3 to 5 themes, then durable pillars. Do not deliver pillars until 10 questions exist. Do not use see/trust/convert rotation.",
   chatOpener:
-    "I will run Jeff Brand Pillars in four steps: WHO+痛点, list 10 market questions, cluster to 3 to 5, then durable pillars. Who do you serve, and what pain do they feel?",
+    "Hey. Let's lock durable Brand Pillars.\n\n- move from who you serve to lasting topic pillars\n- Bring who you serve and the pain they feel\n- Walk away with 3 to 5 pillars you can keep teaching\n\nWho do you serve, and what pain do they feel?",
   chatOpenerZh:
-    "我会按 Jeff Brand Pillars 四步走：WHO+痛点 → 列10个市场问题 → 归成3到5组 → 留成长期支柱。先说你服务谁、他们的痛点是什么？",
+    "我会帮你定下能长期用的品牌支柱。\n\n- 从你服务谁，走到可长期讲的题目支柱\n- 你带上服务对象和他们的痛点\n- 走的时候带走 3 到 5 个能持续教的支柱\n\n你服务谁，他们的痛点是什么？",
   systemOverlay: [
     "## Module mode: Brand Pillars",
     "You are running the Brand Pillars tool (catalog id ip-pillars) for this user.",
