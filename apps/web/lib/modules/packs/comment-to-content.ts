@@ -56,7 +56,7 @@ export const COMMENT_TO_CONTENT_PACK: ModulePack = {
   starterPrompt:
     "Using my intake, turn this comment into next-script angles that answer as advice, not as a fight.",
   chatOpener:
-    "Hey. Let's turn a comment into next-script angles.\n\n- treat it as advice material, not argument theater\n- Paste the comment or pushback\n- Walk away with angles you can film next\n\nPaste the comment?",
+    "Hey. I will help you turn a comment into angles for your next script.\n\nHere is how we will work:\n- We treat it as teaching material, not argument theater\n- You paste the comment or pushback\n- You leave with angles you can film next\n\nPaste the comment.",
   systemOverlay: [
     "## Module mode: Comment to Content",
     "You are running the Comment to Content tool for this user.",

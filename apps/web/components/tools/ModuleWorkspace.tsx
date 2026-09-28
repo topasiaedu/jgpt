@@ -3,7 +3,6 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 
-import AppFooter from "@/components/AppFooter";
 import AppNav from "@/components/AppNav";
 import ModuleChatShell from "@/components/tools/ModuleChatShell";
 import ModuleIntroModal, {
@@ -11,7 +10,6 @@ import ModuleIntroModal, {
   writeSkipIntro,
 } from "@/components/tools/ModuleIntroModal";
 import { useI18n } from "@/lib/i18n/LocaleProvider";
-import { categoryMessageKey } from "@/lib/i18n/messages";
 import { getModuleStatus } from "@/lib/modules/catalog";
 import {
   buildToolChatOpener,
@@ -24,7 +22,7 @@ import type { ModuleDefinition } from "@/lib/modules/types";
 
 type ModuleWorkspaceProps = {
   module: ModuleDefinition;
-  /** Raw Next.js searchParams for optional `?from=home&q=` handoff. */
+  /** Raw Next.js searchParams for optional `?from=home|studio&q=` handoff. */
   searchParams?: {
     from?: string | string[];
     q?: string | string[];
@@ -34,7 +32,8 @@ type ModuleWorkspaceProps = {
 /**
  * Module route body: land straight in chat with seeded opener.
  * Intro modal is on demand only (never auto-shown on land).
- * Optional home intent via `?from=home&q=` (not a form).
+ * Optional home/studio intent via `?from=…&q=` (not a form).
+ * Hook Studio batch UI is a top-nav page at `/studio`, not merged here.
  */
 export default function ModuleWorkspace({
   module,
@@ -103,23 +102,21 @@ export default function ModuleWorkspace({
             {t("toolsBack")}
           </Link>
         </p>
-        <div className="module-workspace-heading">
-          <span className="module-workspace-chip">{display.title}</span>
-          <p className="subtitle">{t(categoryMessageKey(module.category))}</p>
-        </div>
+        <h1 className="title">{display.title}</h1>
       </header>
 
       {!hydrated ? (
         <p className="tools-loading">{t("moduleLoading")}</p>
       ) : showChat ? (
-        <ModuleChatShell
-          key={chatMountKey}
-          moduleId={module.id}
-          moduleTitle={display.title}
-          chatOpener={chatOpener}
-          homeIntent={homeIntent}
-          onShowIntroAgain={handleShowIntroAgain}
-        />
+        <div className="module-workspace-body">
+          <ModuleChatShell
+            key={chatMountKey}
+            moduleId={module.id}
+            moduleTitle={display.title}
+            chatOpener={chatOpener}
+            homeIntent={homeIntent}
+          />
+        </div>
       ) : (
         <section className="module-placeholder" aria-label={t("moduleSoonTitle")}>
           <h2 className="module-placeholder-title">{t("moduleSoonTitle")}</h2>
@@ -138,8 +135,6 @@ export default function ModuleWorkspace({
         onClose={handleCloseIntro}
         onStart={handleStartFromIntro}
       />
-
-      <AppFooter />
     </div>
   );
 }

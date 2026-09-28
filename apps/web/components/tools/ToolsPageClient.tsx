@@ -1,6 +1,5 @@
 "use client";
 
-import AppFooter from "@/components/AppFooter";
 import AppNav from "@/components/AppNav";
 import ToolsGrid from "@/components/tools/ToolsGrid";
 import { useI18n } from "@/lib/i18n/LocaleProvider";
@@ -19,7 +18,6 @@ export default function ToolsPageClient() {
         <p className="subtitle">{t("toolsSubtitle")}</p>
       </header>
       <ToolsGrid />
-      <AppFooter />
     </div>
   );
 }

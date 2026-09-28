@@ -55,7 +55,7 @@ export const BULLET_CAPTION_PACK: ModulePack = {
   starterPrompt:
     "Using my intake, write a supporting caption with short bullets, a soft close, and optional on-screen text echoes.",
   chatOpener:
-    "Hey. Let's write a supporting caption with short bullets and a soft close.\n\n- support the Reel, not compete with it\n- Bring the Reel topic or a short script summary\n- Walk away with a caption you can paste\n\nWhat is the Reel topic or script summary?",
+    "Hey. I will help you write a caption that supports the Reel with short bullets and a soft close.\n\nHere is how we will work:\n- The caption supports the video. It does not compete with it\n- You share the Reel topic or a short script summary\n- You leave with a caption you can paste\n\nWhat is the Reel topic or script summary?",
   systemOverlay: [
     "## Module mode: Bullet Caption Pack",
     "You are running the Bullet Caption Pack tool for this user.",

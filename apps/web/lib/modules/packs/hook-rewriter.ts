@@ -2,9 +2,28 @@ import type { ModulePack } from "@/lib/modules/types";
 
 /**
  * Hook Rewriter: same script, stronger open.
+ * Quality Runtime (Q4): Collect → Confirm → Deliver → Refine on hook-line family.
+ * Also reused by Hook Studio Rewrite mode overlay swap (Studio markers force Deliver).
  */
 export const HOOK_REWRITER_PACK: ModulePack = {
   moduleId: "hook-rewriter",
+  qualityRuntime: true,
+  qualityFamily: "hook-line",
+  confirmBlurb:
+    "Mirror the rewrite plan in 2 to 4 bullets: what stays in the body, audience, how many stronger opens, and any assumptions. Ask for go-ahead before the dense rewritten opens. Do not rewrite the full Reel body.",
+  deliverableSectionOrder: [
+    "5 to 8 rewritten opens",
+    "Why each open earns the first seconds",
+    "Film-first pick",
+    "Named refine levers",
+  ],
+  refineLevers: [
+    "sharper open",
+    "clearer audience hit",
+    "stronger standpoint hint",
+    "less clickbait risk",
+    "which hook to film first",
+  ],
   intakeFields: [
     {
       id: "script",
@@ -32,6 +51,82 @@ export const HOOK_REWRITER_PACK: ModulePack = {
       required: false,
     },
   ],
+  qualitySlots: [
+    {
+      id: "script",
+      label: "Full script or current hook + body topic",
+      criticality: "critical",
+      probeHint: "Paste current hook, or hook plus body topic. Body stays intact.",
+      placeholder: "Paste script or at least hook + topic",
+      multiline: true,
+      idkOptions: [
+        "Paste only the current open line (scaffold; they paste).",
+        "Paste one sentence body topic if the open is missing (scaffold; they paste).",
+        "Paste open + one-line body summary (scaffold; they paste).",
+        "Or paste whatever draft they have in their own words.",
+      ],
+    },
+    {
+      id: "audience",
+      label: "Audience",
+      criticality: "critical",
+      probeHint: "Who should stop scrolling in the first seconds?",
+      placeholder: "Who should stop scrolling",
+      idkOptions: [
+        "People who already like the topic but scroll past weak opens (scaffold; they correct).",
+        "A specific role that feels unseen (scaffold; they name the role).",
+        "Warm followers who need a sharper first line (scaffold; they correct).",
+        "Or name the audience in their own words.",
+      ],
+    },
+    {
+      id: "bodyTopic",
+      label: "Body topic that must stay",
+      criticality: "critical",
+      probeHint: "What the body teaches so rewrites do not change the piece.",
+      placeholder: "One line on what the body is about",
+      idkOptions: [
+        "Same tip as the current draft, only the open changes (scaffold; they confirm).",
+        "Same story beat, stronger first seconds (scaffold; they confirm).",
+        "Same standpoint, less fluff in second one (scaffold; they confirm).",
+        "Or say the body topic in one plain sentence.",
+      ],
+    },
+    {
+      id: "standpoint",
+      label: "Standpoint to imply",
+      criticality: "optional",
+      probeHint: "Optional edge the hook should hint without hard pitch.",
+      placeholder: "Optional edge the hook should hint",
+    },
+    {
+      id: "avoid",
+      label: "Clickbait to avoid",
+      criticality: "optional",
+      probeHint: "Optional hype or lies they refuse.",
+      placeholder: "Hype or lies you refuse",
+    },
+  ],
+  idkOptionsBySlotId: {
+    script: [
+      "Paste only the current open line (scaffold; they paste).",
+      "Paste one sentence body topic if the open is missing (scaffold; they paste).",
+      "Paste open + one-line body summary (scaffold; they paste).",
+      "Or paste whatever draft they have in their own words.",
+    ],
+    audience: [
+      "People who already like the topic but scroll past weak opens (scaffold; they correct).",
+      "A specific role that feels unseen (scaffold; they name the role).",
+      "Warm followers who need a sharper first line (scaffold; they correct).",
+      "Or name the audience in their own words.",
+    ],
+    bodyTopic: [
+      "Same tip as the current draft, only the open changes (scaffold; they confirm).",
+      "Same story beat, stronger first seconds (scaffold; they confirm).",
+      "Same standpoint, less fluff in second one (scaffold; they confirm).",
+      "Or say the body topic in one plain sentence.",
+    ],
+  },
   probeHints: [
     "hook",
     "scroll stop",
@@ -56,27 +151,43 @@ export const HOOK_REWRITER_PACK: ModulePack = {
   starterPrompt:
     "Using my intake, rewrite only the open: multiple stronger hooks for the same piece, no trust-breaking clickbait.",
   chatOpener:
-    "Hey. Let's rewrite only the open into stronger hooks.\n\n- avoid trust-breaking clickbait\n- Paste the current hook or the body topic\n- Walk away with stronger opens, body left intact\n\nPaste the current hook or the body topic?",
+    "Hey. I will help you rewrite only the opening into stronger hooks.\n\nHere is how we will work:\n- We collect the current open or body topic, then I confirm before the dense rewrites\n- You keep the body; we avoid trust-breaking clickbait\n- You leave with stronger opens only, not a full new script\n\nPaste the current hook or the body topic.",
+  chatOpenerZh:
+    "我会帮你只改开场，写成更强钩子。\n\n我们这样配合：\n- 先收齐现有开场或正文主题，确认后再给密实改写\n- 正文不动，也不做砸信任的标题党\n- 你会带走更强开场，不是整支新脚本\n\n请贴上现有钩子或正文主题。",
   systemOverlay: [
-    "## Module mode: Hook Rewriter",
+    "## Module mode: Hook Rewriter (qualityRuntime Hook/Line)",
     "You are running the Hook Rewriter tool for this user.",
-    "Job: keep body; rewrite opens that earn the first seconds.",
+    "Job: keep body; rewrite opens that earn the first seconds. Not a full IG Reel rewrite.",
+    "Lifecycle is hard: Collect → Confirm → Deliver → Refine. Do not dense-dump in Collect. Confirm before the first rewritten batch unless they explicitly say just write it after criticals are filled.",
     "",
-    "### Conversational collect (chat-first; no form)",
-    "Slots live in conversation history. Ask at most 1 to 2 questions per turn.",
-    "Prefer Jeff-shaped asks over a generic business questionnaire.",
-    "When enough is known, or the user says just write it, deliver the full output and name assumptions.",
+    "### Critical slots (Collect gate)",
+    "Need before Confirm: current hook or script paste, audience, and the body topic that must stay.",
+    "Ask at most 1 to 2 questions per Collect turn. Prefer Jeff-shaped asks.",
+    "If they say I do not know / blank, offer pack IDK choices. Do not invent niche facts.",
+    "User owns niche facts. Jeff owns craft (open rewrite without trust-breaking clickbait).",
     "",
-    "### Output format (when ready to generate)",
-    "5 to 8 rewritten hooks. Note which to film first.",
+    "### Confirm (before first dense Deliver)",
+    "Mirror the plan in 2 to 4 bullets. Name assumptions honestly. Ask for go-ahead.",
+    "Do not write the full rewritten open batch in Confirm.",
+    "",
+    "### Deliverable shape (opens only)",
+    "1. 5 to 8 rewritten hooks.",
+    "2. Brief why each open earns the first seconds (Jeff reason, not viral guarantee).",
+    "3. Note which to film first.",
+    "4. End with named refine levers.",
     "No overnight-fame / viral-guarantee hooks. No clickbait that breaks trust.",
+    "Ground every open in their paste and audience. Different inputs must produce different opens.",
+    "",
+    "### Refine",
+    "After a dense rewrite batch exists, tweak named levers only. Do not re-interrogate filled critical slots.",
     "",
     "### Jeff distinctiveness (hard)",
     "Use Jeff mechanisms in the user's language: get seen before trust before deal; standpoint; content assets not ads; advice vs ego; direction beats volume; value then convert where relevant.",
     "ANTI-GENERIC: If this reply could have come from a generic LinkedIn coach with no Jeff graph, rewrite before sending.",
     "",
     "### Doctrine rules (hard)",
-    "Never invent Jeff niche case studies as doctrine.",
+    "Never invent Jeff niche case studies as doctrine. No overnight-fame.",
+    "Do not turn this tool into a full script writer.",
     "",
     "### Evidence binding",
     "Prefer: cl.short-vs-long-video, pr.exposure-trust-conversion, pr.standpoint-or-invisible, cl.content-not-ads, rj.overnight-fame when in the pack.",

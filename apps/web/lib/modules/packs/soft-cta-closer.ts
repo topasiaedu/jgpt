@@ -4,9 +4,28 @@ import type { ModulePack } from "@/lib/modules/types";
  * Soft CTA Closer: CTA Structure skeleton
  * 总结价值 → 发出指令 → 降低门槛 (`fw.cta-structure`).
  * Practice journey module; packs/routes kept.
+ * Quality Runtime (Q4): reply-micro-convert family.
+ * Chosen over comment-to-content for this wave (close craft vs next-script angles).
  */
 export const SOFT_CTA_CLOSER_PACK: ModulePack = {
   moduleId: "soft-cta-closer",
+  qualityRuntime: true,
+  qualityFamily: "reply-micro-convert",
+  confirmBlurb:
+    "If needed, mirror in one short beat: value taught, one clear ask, and how you lower the barrier. For short closes you may deliver when criticals are filled.",
+  deliverableSectionOrder: [
+    "2 to 3 soft close options",
+    "Each option: 总结价值 → 发出指令 → 降低门槛",
+    "Recommend one",
+    "Named refine levers",
+  ],
+  refineLevers: [
+    "clearer 总结价值",
+    "sharper 发出指令",
+    "lower 降低门槛",
+    "warmer tone",
+    "which close to use",
+  ],
   intakeFields: [
     {
       id: "valueTaught",
@@ -41,6 +60,95 @@ export const SOFT_CTA_CLOSER_PACK: ModulePack = {
       multiline: true,
     },
   ],
+  qualitySlots: [
+    {
+      id: "valueTaught",
+      label: "Value you already taught (总结价值)",
+      criticality: "critical",
+      probeHint: "The tip or belief already taught before the close.",
+      placeholder: "The tip or belief in the piece",
+      multiline: true,
+      idkOptions: [
+        "One concrete tip they already taught in the piece (scaffold; they name it).",
+        "One belief they want remembered (scaffold; they name it).",
+        "One problem they already named for the viewer (scaffold; they name it).",
+        "Or say the value taught in one plain sentence.",
+      ],
+    },
+    {
+      id: "nextStep",
+      label: "One clear instruction (发出指令)",
+      criticality: "critical",
+      probeHint: "One clear next step: follow, save, DM, book. Not a stack of asks.",
+      placeholder: "Follow, save, DM, book",
+      idkOptions: [
+        "Save this for later (scaffold; they correct).",
+        "DM one keyword for the next tip (scaffold; they correct).",
+        "Book a short call if they already trust you (scaffold; they correct).",
+        "Or name one honest next step.",
+      ],
+    },
+    {
+      id: "lowBarrier",
+      label: "How you lower the barrier (降低门槛)",
+      criticality: "critical",
+      probeHint: "Why the next step is easy or low risk.",
+      placeholder: "Why this next step is easy / low risk",
+      idkOptions: [
+        "It takes under a minute and needs no payment yet (scaffold; they reword).",
+        "They can stay anonymous in a comment or save (scaffold; they reword).",
+        "They already have what they need to try one small step (scaffold; they reword).",
+        "Or say how you lower the barrier in one line.",
+      ],
+    },
+    {
+      id: "warmth",
+      label: "Audience warmth",
+      criticality: "critical",
+      probeHint: "Cold, warm, or already trusting: match firmness to warmth.",
+      placeholder: "Cold, warm, or already trusting",
+      idkOptions: [
+        "Cold: new viewers who just met you (scaffold; they correct).",
+        "Warm: followers who have seen a few teaches (scaffold; they correct).",
+        "Already trusting: people who DM or book already (scaffold; they correct).",
+        "Or say how warm the audience is.",
+      ],
+    },
+    {
+      id: "draftClose",
+      label: "Current close (optional)",
+      criticality: "optional",
+      probeHint: "Optional paste of a current close to tighten.",
+      placeholder: "Paste if you have one",
+      multiline: true,
+    },
+  ],
+  idkOptionsBySlotId: {
+    valueTaught: [
+      "One concrete tip they already taught in the piece (scaffold; they name it).",
+      "One belief they want remembered (scaffold; they name it).",
+      "One problem they already named for the viewer (scaffold; they name it).",
+      "Or say the value taught in one plain sentence.",
+    ],
+    nextStep: [
+      "Save this for later (scaffold; they correct).",
+      "DM one keyword for the next tip (scaffold; they correct).",
+      "Book a short call if they already trust you (scaffold; they correct).",
+      "Or name one honest next step.",
+    ],
+    lowBarrier: [
+      "It takes under a minute and needs no payment yet (scaffold; they reword).",
+      "They can stay anonymous in a comment or save (scaffold; they reword).",
+      "They already have what they need to try one small step (scaffold; they reword).",
+      "Or say how you lower the barrier in one line.",
+    ],
+    warmth: [
+      "Cold: new viewers who just met you (scaffold; they correct).",
+      "Warm: followers who have seen a few teaches (scaffold; they correct).",
+      "Already trusting: people who DM or book already (scaffold; they correct).",
+      "Or say how warm the audience is.",
+    ],
+  },
   probeHints: [
     "CTA Structure",
     "总结价值",
@@ -62,27 +170,31 @@ export const SOFT_CTA_CLOSER_PACK: ModulePack = {
   starterPrompt:
     "Using my intake, write two to three closes on CTA Structure: 总结价值 → 发出指令 → 降低门槛. One clear next step; no hard sell flip.",
   chatOpener:
-    "Hey. Let's write a soft close.\n\n- summarize value, give a clear ask, and lower the barrier\n- Bring what you already taught and the next step you want\n- Walk away with a close that invites, not hard-sells\n\nWhat value did you already teach, and what next step do you want?",
+    "Hey. I will help you write a soft close that invites, not hard-sells.\n\nHere is how we will work:\n- We collect value taught, one clear ask, and how you lower the barrier\n- You share what you already taught and the next step you want\n- You leave with short close options, not a full sales script\n\nWhat value did you already teach, and what next step do you want?",
   chatOpenerZh:
-    "我会帮你写软收尾。\n\n- 总结价值、发出指令、降低门槛\n- 你带上已经教了什么价值，以及想要的下一步\n- 走的时候带走邀请式收尾，不硬卖\n\n你已经教了什么价值，想要的下一步是什么？",
+    "我会帮你写软收尾：邀请，不硬卖。\n\n我们这样配合：\n- 先收齐已教价值、清楚邀请、降低门槛\n- 你说已经教了什么，以及想要的下一步\n- 你会带走短收尾选项，不是长销售脚本\n\n你已经教了什么价值，想要的下一步是什么？",
   systemOverlay: [
-    "## Module mode: Soft CTA Closer (CTA Structure)",
+    "## Module mode: Soft CTA Closer (CTA Structure) (qualityRuntime Reply/Micro-convert)",
     "You are running the Soft CTA Closer tool for this user.",
     "Exact Jeff framework: CTA Structure (`fw.cta-structure`).",
     "Skeleton (hard): 总结价值 → 发出指令 → 降低门槛.",
-    "Job: end a value piece with one clear next step without hard-sell flip.",
+    "Job: end a value piece with one clear next step without hard-sell flip. Not a Reel script.",
+    "Lifecycle: Collect criticals, then short-but-complete Deliver. Confirm is light for this family. Refine after closes exist.",
     "",
-    "### Conversational collect (chat-first; no form)",
-    "Slots live in conversation history. Ask at most 1 to 2 questions per turn.",
-    "Prefer Jeff-shaped asks over a generic business questionnaire.",
-    "When enough is known, or the user says just write it, deliver the full output and name assumptions.",
+    "### Critical slots (Collect gate)",
+    "Need before Deliver: value taught, one clear instruction, how you lower the barrier, and audience warmth.",
+    "Ask at most 1 to 2 questions per Collect turn.",
+    "If they say I do not know / blank, offer pack IDK choices. Do not invent niche facts or funnel systems.",
     "",
-    "### Output format (when ready to generate)",
+    "### Deliverable shape (short-but-complete)",
     "2 to 3 soft close options. Each option must show all three beats:",
     "1. 总结价值 (restate the value taught).",
     "2. 发出指令 (one clear next step).",
     "3. 降低门槛 (why it is easy / low risk).",
-    "Recommend one. Keep asset tone.",
+    "Recommend one. Keep asset tone. End with named refine levers.",
+    "",
+    "### Refine",
+    "After closes exist, tweak named levers only. Do not re-ask filled critical slots.",
     "",
     "### Jeff distinctiveness (hard)",
     "Use Jeff mechanisms in the user's language: get seen before trust before deal; standpoint; content assets not ads; advice vs ego; direction beats volume; value then convert where relevant.",

@@ -46,7 +46,35 @@ export function buildToolHrefFromHome(
 }
 
 /**
- * Reads optional home handoff from Next.js searchParams (string or string[]).
+ * Builds a Hook Formula chat deep link from a Studio card (silent intent hint).
+ */
+export function buildToolHrefFromStudio(
+  moduleId: string,
+  hookText: string,
+): string {
+  const base: string = `/tools/${moduleId}`;
+  const capped: string = capHomeIntentQ(hookText);
+  if (capped.length === 0) {
+    return base;
+  }
+
+  const params: URLSearchParams = new URLSearchParams();
+  params.set("from", "studio");
+  params.set("q", capped);
+  return `${base}?${params.toString()}`;
+}
+
+/**
+ * Hook Studio batch page (top nav).
+ */
+export function buildHookStudioHref(_moduleId?: string): string {
+  void _moduleId;
+  return "/studio";
+}
+
+/**
+ * Reads optional home or studio handoff from Next.js searchParams (string or string[]).
+ * `from=home` and `from=studio` both carry a length-capped silent intent `q`.
  */
 export function parseHomeHandoffSearchParams(searchParams: {
   from?: string | string[];
@@ -69,13 +97,14 @@ export function parseHomeHandoffSearchParams(searchParams: {
         : "";
 
   const fromHome: boolean = fromValue === "home";
-  if (!fromHome) {
+  const fromStudio: boolean = fromValue === "studio";
+  if (!fromHome && !fromStudio) {
     return { fromHome: false, intentQ: undefined };
   }
 
   const capped: string = capHomeIntentQ(qValue);
   return {
-    fromHome: true,
+    fromHome: fromHome || fromStudio,
     intentQ: capped.length > 0 ? capped : undefined,
   };
 }

@@ -29,7 +29,7 @@ export function getPackChatOpener(pack: ModulePack, locale: Locale): string {
  */
 export function defaultChatOpener(locale: Locale): string {
   if (locale === "zh") {
-    return "我会陪你跑完这个 IP 工具。\n\n- 先说清楚你这次要带走的一件事\n- 你用白话回答就行\n- 需要时我直接交一版草稿\n\n你这次最需要拿到的一件事是什么？";
+    return "我会陪你跑完这个 IP 工具。\n\n我们这样配合：\n- 先说清楚你这次要带走的一件事\n- 你用白话回答就行\n- 需要时我直接交一版草稿\n\n你这次最需要拿到的一件事是什么？";
   }
-  return "Hey. Let's finish this IP tool together.\n\n- Name the one outcome you need from this session\n- Answer in plain words as we go\n- I will draft when you are ready\n\nWhat is the one thing you need from this session?";
+  return "Hey. I will help you finish this IP tool.\n\nHere is how we will work:\n- Name the one outcome you need from this session\n- Answer in plain words as we go\n- I will draft when you are ready\n\nWhat is the one thing you need from this session?";
 }

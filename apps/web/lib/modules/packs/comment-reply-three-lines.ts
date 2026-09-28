@@ -2,9 +2,27 @@ import type { ModulePack } from "@/lib/modules/types";
 
 /**
  * 评论回应三句法 (D1 p028). In-thread reply craft only.
+ * Quality Runtime (Q4): reply-micro-convert family (short-but-complete; confirm light).
  */
 export const COMMENT_REPLY_THREE_LINES_PACK: ModulePack = {
   moduleId: "comment-reply-three-lines",
+  qualityRuntime: true,
+  qualityFamily: "reply-micro-convert",
+  confirmBlurb:
+    "If needed, mirror in one short beat: comment caught, standpoint, and that you will draft 接住 → 澄清 → 拉回主轴 options. For short replies you may deliver when criticals are filled.",
+  deliverableSectionOrder: [
+    "2 to 3 reply drafts (接住 → 澄清 → 拉回主轴)",
+    "Stop-drain / keep-publishing notes",
+    "Teach / clarify / boundary tags",
+    "Named refine levers",
+  ],
+  refineLevers: [
+    "softer 接住",
+    "clearer 澄清",
+    "stronger 拉回主轴",
+    "firmer boundary",
+    "which reply to post",
+  ],
   intakeFields: [
     {
       id: "comment",
@@ -33,6 +51,76 @@ export const COMMENT_REPLY_THREE_LINES_PACK: ModulePack = {
       required: false,
     },
   ],
+  qualitySlots: [
+    {
+      id: "comment",
+      label: "Comment or pushback to answer",
+      criticality: "critical",
+      probeHint: "Paste the comment, DM, or pushback to answer.",
+      placeholder: "Paste the comment, DM, or pushback",
+      multiline: true,
+      idkOptions: [
+        "Paste a short skeptical comment about your tip (scaffold; they paste).",
+        "Paste a price or timing pushback (scaffold; they paste).",
+        "Paste a personal attack that still needs a calm reply (scaffold; they paste).",
+        "Or paste the real comment in their own words.",
+      ],
+    },
+    {
+      id: "standpoint",
+      label: "Your standpoint / facts",
+      criticality: "critical",
+      probeHint: "What you believe or know to be true here. Advice over ego.",
+      placeholder: "What you believe or know to be true here",
+      multiline: true,
+      idkOptions: [
+        "You teach systems, not overnight results (scaffold; they reword).",
+        "Criticism is signal or noise; you keep publishing either way (scaffold; they reword).",
+        "You answer for the ideal customer watching, not to win strangers (scaffold; they reword).",
+        "Or say your standpoint in one plain sentence.",
+      ],
+    },
+    {
+      id: "audience",
+      label: "Who this content was for",
+      criticality: "critical",
+      probeHint: "The person the original post serves (ideal customer, not the troll).",
+      placeholder: "The person the original post serves",
+      idkOptions: [
+        "The buyer who is quietly reading the thread (scaffold; they name them).",
+        "Warm followers who need judgment, not a fight (scaffold; they correct).",
+        "A specific role your post was teaching (scaffold; they name the role).",
+        "Or name who the content was for.",
+      ],
+    },
+    {
+      id: "goal",
+      label: "Reply goal",
+      criticality: "optional",
+      probeHint: "Optional: teach, clarify, invite, or set a boundary.",
+      placeholder: "Teach, clarify, invite, or set a boundary",
+    },
+  ],
+  idkOptionsBySlotId: {
+    comment: [
+      "Paste a short skeptical comment about your tip (scaffold; they paste).",
+      "Paste a price or timing pushback (scaffold; they paste).",
+      "Paste a personal attack that still needs a calm reply (scaffold; they paste).",
+      "Or paste the real comment in their own words.",
+    ],
+    standpoint: [
+      "You teach systems, not overnight results (scaffold; they reword).",
+      "Criticism is signal or noise; you keep publishing either way (scaffold; they reword).",
+      "You answer for the ideal customer watching, not to win strangers (scaffold; they reword).",
+      "Or say your standpoint in one plain sentence.",
+    ],
+    audience: [
+      "The buyer who is quietly reading the thread (scaffold; they name them).",
+      "Warm followers who need judgment, not a fight (scaffold; they correct).",
+      "A specific role your post was teaching (scaffold; they name the role).",
+      "Or name who the content was for.",
+    ],
+  },
   probeHints: [
     "评论回应三句法",
     "comment reply",
@@ -54,23 +142,32 @@ export const COMMENT_REPLY_THREE_LINES_PACK: ModulePack = {
   starterPrompt:
     "Using my intake, draft 评论回应三句法 replies: 接住, 澄清, 拉回主轴 (plus stop-drain / keep-publishing notes when needed).",
   chatOpener:
-    "Hey. Let's draft a three-line comment reply.\n\n- catch, clarify, and pull back to your main line\n- Paste the comment you want to answer\n- Walk away with a reply that shows judgment, not a fight\n\nPaste the comment you want to answer?",
+    "Hey. I will help you draft a three-line comment reply.\n\nHere is how we will work:\n- We catch the comment, clarify, then pull back to your main point\n- You paste the comment you want to answer\n- You leave with short reply options that show judgment, not a fight or a full script\n\nPaste the comment you want to answer.",
+  chatOpenerZh:
+    "我会帮你按三句法起草评论回复。\n\n我们这样配合：\n- 接住、澄清、再拉回主轴\n- 你把要回的评论贴过来\n- 你会带走短而完整的回复选项，不是整支脚本\n\n请贴上要回的评论。",
   systemOverlay: [
-    "## Module mode: 评论回应三句法",
+    "## Module mode: 评论回应三句法 (qualityRuntime Reply/Micro-convert)",
     "You are running the 评论回应三句法 tool for this user.",
-    "Exact Jeff slide title (AUG-D1 p028). Job: draft in-thread replies.",
+    "Exact Jeff slide title (AUG-D1 p028). Job: draft in-thread replies. Not a Reel script.",
     "Framing: 回应不是为了赢网友，是为了让目标客户看见你的判断.",
     "Slide moves (title says 三句; body lists more): 接住, 澄清, 拉回主轴, 停止消耗, 继续发布.",
     "Do not invent a different formula name. Do not run B.R.E.A.K Shield here; that is a separate module.",
+    "Lifecycle: Collect criticals, then short-but-complete Deliver. Confirm is light for this family (optional one-beat mirror). Refine after drafts exist.",
     "",
-    "### Conversational collect (chat-first; no form)",
-    "Slots live in conversation history. Ask at most 1 to 2 questions per turn.",
-    "When enough is known, or the user says just write it, deliver the full output and name assumptions.",
+    "### Critical slots (Collect gate)",
+    "Need before Deliver: the comment, standpoint/facts, and who the original content was for.",
+    "Ask at most 1 to 2 questions per Collect turn.",
+    "If they say I do not know / blank, offer pack IDK choices. Do not invent niche facts.",
     "",
-    "### Output format (when ready to generate)",
+    "### Deliverable shape (short-but-complete)",
     "1. Two to three reply drafts using 接住 → 澄清 → 拉回主轴.",
     "2. Note when to 停止消耗 (stop draining) and how to 继续发布 (next content).",
     "3. Mark each draft: teach / clarify / boundary.",
+    "4. End with named refine levers.",
+    "Do not write a full content script here.",
+    "",
+    "### Refine",
+    "After drafts exist, tweak named levers only. Do not re-ask filled critical slots.",
     "",
     "### Jeff distinctiveness (hard)",
     "Advice vs ego. Standpoint. Content assets not ads.",

@@ -63,7 +63,7 @@ export const LEARNING_JOURNEY_SERIES_PACK: ModulePack = {
   starterPrompt:
     "Using my intake, map a 3 to 5 episode learning-journey series with purpose tags and soft continuity between parts.",
   chatOpener:
-    "Hey. Let's map a short learning-journey series.\n\n- set soft continuity across a few pieces\n- Bring where you started and the turning point that matters\n- Walk away with a series order people can follow\n\nWhere did you start, and what turning point matters most?",
+    "Hey. I will help you map a short learning-journey series with soft continuity.\n\nHere is how we will work:\n- We set an order people can follow across a few pieces\n- You share where you started and the turning point that matters\n- You leave with a series order you can film\n\nWhere did you start, and what turning point matters most?",
   systemOverlay: [
     "## Module mode: Learning Journey Series",
     "You are running the Learning Journey Series tool for this user.",

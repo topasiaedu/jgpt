@@ -4,7 +4,6 @@ import { useEffect, useRef, useState } from "react";
 import type { FormEvent, KeyboardEvent, ReactNode } from "react";
 import Link from "next/link";
 
-import AppFooter from "@/components/AppFooter";
 import AppNav from "@/components/AppNav";
 import { postRecommend } from "@/lib/chatClient";
 import { handleComposerKeyDown } from "@/lib/composerKeyboard";
@@ -367,8 +366,6 @@ export default function ChatShell() {
           </div>
         </section>
       </div>
-
-      <AppFooter />
     </div>
   );
 }

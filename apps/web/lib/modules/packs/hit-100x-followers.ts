@@ -42,7 +42,7 @@ export const HIT_100X_FOLLOWERS_PACK: ModulePack = {
   starterPrompt:
     "Using my intake, run What Counts as a Hit (100x) and deliver the structured output for this Jeff tool.",
   chatOpener:
-    "Hey. Let's check what counts as a hit for your size.\n\n- use the 100 times followers definition\n- Bring about how many followers you have now\n- Walk away with a clearer hit bar for your account\n\nAbout how many followers do you have right now?",
+    "Hey. I will help you define what counts as a hit for your account size.\n\nHere is how we will work:\n- We use one hundred times your followers as the hit bar\n- You share about how many followers you have now\n- You leave with a clearer hit bar for your account\n\nAbout how many followers do you have right now?",
   systemOverlay: [
     "## Module mode: What Counts as a Hit (100x)",
     "You are running the What Counts as a Hit (100x) tool (catalog id hit-100x-followers) for this user.",

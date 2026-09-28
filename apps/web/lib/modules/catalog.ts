@@ -11,10 +11,10 @@ export const MODULE_CATALOG: ModuleDefinition[] = [
     category: "Ideation",
     status: "ready",
     description: [
-      "What it does: Helps you see whether you are stuck on content or on system. You walk six honest yes/no checks; anything you cannot answer yet becomes the next stage to fix.",
+      "What it does: Helps you see whether you are stuck on content or on system. You walk six honest yes/no checks; anything you cannot answer yet becomes the next stage to fix. Collect, confirm, then a dense diagnostic (not a Reel script).",
       "What to input: What you do, plus honest yes/no on: best three content types, four weeks of stable publishing, traffic/trust/deal roles, topic-to-publish flow, weekly data adjust, and inquire/delivery/deal connection.",
       "When to use: At the start of personal IP work, after a quiet stretch, or when advice to post more is not helping.",
-      "What you get: A content vs system framing, a six-check scorecard citing your answers, and a next-stage list of unanswered checks (not a canned module roulette).",
+      "What you get: A content vs system framing, a six-check scorecard citing your answers, and a ranked next-stage list of unanswered checks (not a canned module roulette, not a script).",
     ].join("\n\n"),
   },
   {
@@ -59,10 +59,10 @@ export const MODULE_CATALOG: ModuleDefinition[] = [
     category: "IP Positioning",
     status: "ready",
     description: [
-      "What it does: Helps you write three clear lines: who you are, who you help, and what you solve, so strangers quickly understand who your work is for.",
+      "What it does: Helps you write three clear lines: who you are, who you help, and what you solve, so strangers quickly understand who your work is for. Collect, confirm, then a dense map (not a Reel script).",
       "What to input: Who I am (identity, industry, experience, role), who I help, and what I solve (problem or change the market buys).",
       "When to use: Before offers or scripts, when positioning is a long bio, or when content talks about you without naming who it is for.",
-      "What you get: The three map lines, filled in. A stitched one-liner and content angles only if you ask after.",
+      "What you get: The three map lines, filled in. A stitched one-liner and content angles only if you ask after. Never a spoken Reel as the primary job.",
     ].join("\n\n"),
   },
   {
@@ -83,10 +83,10 @@ export const MODULE_CATALOG: ModuleDefinition[] = [
     category: "Content",
     status: "ready",
     description: [
-      "What it does: Writes a shootable 15 to 45 second Instagram Reel using OPENS (Opening, Problem, Evidence, New Way, Step). Teaching asset style, not a hard-sell ad.",
-      "What to input: Niche or industry, audience, standpoint or offer angle, one lesson or story beat, language preference, optional 四种内容资产 type, and how soft the close should be.",
+      "What it does: Writes a shootable Instagram Reel about 60 seconds and above using OPENS (Opening, Problem, Evidence, New Way, Step). Teaching asset style, not a hard-sell ad.",
+      "What to input: Niche or industry, audience, standpoint or offer angle, one lesson or story beat, language preference, soft close preference, and optional 四种内容资产 type.",
       "When to use: When you need a concrete Reel to film this week, or when drafts keep sounding like ads instead of teaching assets.",
-      "What you get: A five-beat OPENS script, optional on-screen text, optional one asset-type tag, and a Step that invites without overnight-fame promises.",
+      "What you get: A dense five-beat OPENS script (~60s+), optional on-screen text, optional one asset-type tag, and a Step that invites without overnight-fame promises.",
     ].join("\n\n"),
   },
   {
@@ -95,10 +95,11 @@ export const MODULE_CATALOG: ModuleDefinition[] = [
     category: "Content",
     status: "ready",
     description: [
-      "What it does: Crafts opening lines with Hook Formula (who + pain + contrast or result + curiosity) so the first second earns attention, without writing the full Reel.",
+      "What it does: Crafts opening lines with Hook Formula (who + pain + contrast or result + curiosity) so the first second earns attention, without writing the full Reel. Collect, confirm, then dense annotated opens.",
       "What to input: 对象, 痛点, 反差/结果, and 好奇 (topic and language optional).",
       "When to use: When the body of your video is fine but people scroll past the first frame, or when you want several hook options to A/B mentally before filming.",
-      "What you get: Multiple opening lines, each annotated with all four legs. Incomplete lines are rejected.",
+      "What you get: Multiple opening lines, each annotated with all four legs. Incomplete lines are rejected. Never a full spoken Reel as the primary job.",
+      "Batch surface: use the Hook Studio tab in the top nav (`/studio`) for profile + modes + copyable cards. This chat page is for collect/confirm/refine.",
     ].join("\n\n"),
   },
   {
@@ -107,10 +108,10 @@ export const MODULE_CATALOG: ModuleDefinition[] = [
     category: "Content",
     status: "ready",
     description: [
-      "What it does: Scripts a Reel that teaches one tip openly, then adds a light next step. Value first; soft convert later.",
-      "What to input: The one tip you can teach in under a minute, who it helps, and what gentle next step (follow, save, DM keyword, or booking) feels honest.",
+      "What it does: Scripts a dense Reel at about 60 seconds and above that teaches one tip openly, then adds a light next step. Value first; soft convert later.",
+      "What to input: The one tip you can teach at about 60 seconds and above, who it helps, and what gentle next step (follow, save, DM keyword, or booking) feels honest.",
       "When to use: When you want trust-building content, or when your feed is all promo and no teaching.",
-      "What you get: A value-led Reel outline with a clear teaching beat and a light invite that does not flip into a hard pitch.",
+      "What you get: A dense value-led Reel script with a clear teaching beat and a light invite that does not flip into a hard pitch.",
     ].join("\n\n"),
   },
   {
@@ -119,10 +120,10 @@ export const MODULE_CATALOG: ModuleDefinition[] = [
     category: "Content",
     status: "ready",
     description: [
-      "What it does: Turns a sharp standpoint into an on-camera hot take that still reads as advice, not ego performance.",
+      "What it does: Turns a sharp standpoint into a dense on-camera hot take at about 60 seconds and above that still reads as advice, not ego performance.",
       "What to input: The claim you want to make, who it challenges, and the practical truth behind the heat.",
       "When to use: When you need contrast in a crowded niche, or when soft educational posts are not showing your edge.",
-      "What you get: A short hot-take script with stance, reason, and a landing that protects relationship with the viewer.",
+      "What you get: A dense hot-take script with stance, reason, and a landing that protects relationship with the viewer.",
     ].join("\n\n"),
   },
   {
@@ -131,10 +132,10 @@ export const MODULE_CATALOG: ModuleDefinition[] = [
     category: "Content",
     status: "ready",
     description: [
-      "What it does: Scripts a short Reel that shows why customers choose you and how you work, as advice for the viewer rather than ego flex.",
+      "What it does: Scripts a dense Reel at about 60 seconds and above that shows why customers choose you and how you work, as advice for the viewer rather than ego flex.",
       "What to input: Why people pick you, one step of your process you can show on camera, and what the viewer should take away even if they never buy.",
       "When to use: When you need proof content without a hard sell, or when your feed claims expertise but never shows the work.",
-      "What you get: A process-proof Reel script (hook, how we work beat, soft close) that stays advice-led.",
+      "What you get: A dense process-proof Reel script (hook, how we work beat, soft close) that stays advice-led.",
     ].join("\n\n"),
   },
   {
@@ -143,10 +144,10 @@ export const MODULE_CATALOG: ModuleDefinition[] = [
     category: "Content",
     status: "ready",
     description: [
-      "What it does: Turns an event or viewpoint into a first-impression piece: open discussion, then light traffic toward your space.",
+      "What it does: Turns an event or viewpoint into a dense first-impression piece at about 60 seconds and above: open discussion, then light traffic toward your space.",
       "What to input: The event or moment, your viewpoint on it, who should care, and where you want curious people to go next (profile, follow, save, or soft invite).",
       "When to use: After a talk, launch, news moment, or industry event when you want presence without overnight-fame framing.",
-      "What you get: A short first-impression script: viewpoint → discussion beat → traffic invite that stays asset-like.",
+      "What you get: A dense first-impression script: viewpoint, discussion beat, then traffic invite that stays asset-like.",
     ].join("\n\n"),
   },
   {
@@ -335,7 +336,7 @@ export const MODULE_CATALOG: ModuleDefinition[] = [
     category: "Trust",
     status: "ready",
     description: [
-      "What it does: Drafts in-thread replies in three beats: catch, clarify, return to the main point, so your ideal customers see judgment, not a fight with strangers.",
+      "What it does: Drafts short in-thread replies in three beats: catch, clarify, return to the main point, so your ideal customers see judgment, not a fight with strangers. Collect criticals, then short-but-complete options (not a Reel script).",
       "What to input: The comment to answer, your standpoint or facts, and who the original content was for.",
       "When to use: After a spicy comment or DM, when the same pushback repeats, or when you want a reply that teaches without winning the internet.",
       "What you get: Two to three reply drafts plus notes on when to stop draining energy and how to keep publishing.",
@@ -395,7 +396,7 @@ export const MODULE_CATALOG: ModuleDefinition[] = [
     category: "Convert",
     status: "ready",
     description: [
-      "What it does: Ends a value piece with CTA Structure: 总结价值 → 发出指令 → 降低门槛, without flipping the whole post into a hard sell.",
+      "What it does: Ends a value piece with CTA Structure: 总结价值 → 发出指令 → 降低门槛, without flipping the whole post into a hard sell. Collect criticals, then short-but-complete closes (not a Reel script).",
       "What to input: The value you already taught, the one next step you want, how you lower the barrier, and how warm the audience is.",
       "When to use: When your teach is strong but the ending trails off, or when closes feel either missing or too pushy.",
       "What you get: Two to three soft close options, each showing all three CTA Structure beats, plus guidance to pick one.",
@@ -419,7 +420,7 @@ export const MODULE_CATALOG: ModuleDefinition[] = [
     category: "Convert",
     status: "ready",
     description: [
-      "What it does: Drafts a reply that moves warm interest in comments or DMs toward a clear next step without pressure theater.",
+      "What it does: Drafts a short reply that moves warm interest in comments or DMs toward a clear next step without pressure theater. Collect criticals, then short-but-complete variants (not a Reel script).",
       "What to input: The comment or DM (paste), what they seem to want, and the next step you can honestly offer.",
       "When to use: When warm leads go cold because your replies are vague, or when you over-pitch in the first reply.",
       "What you get: A reply draft plus a softer and firmer variant. Stay coach-like; do not invent sales scripts as doctrine.",
@@ -467,7 +468,7 @@ export const MODULE_CATALOG: ModuleDefinition[] = [
     category: "Content",
     status: "ready",
     description: [
-      "What it does: Keeps your script body and rewrites only the open so the first seconds earn attention without clickbait that breaks trust.",
+      "What it does: Keeps your script body and rewrites only the open so the first seconds earn attention without clickbait that breaks trust. Collect, confirm, then dense rewritten opens (not a full Reel rewrite).",
       "What to input: Paste the full script or at least the current hook plus the body topic, and the audience.",
       "When to use: When the middle is strong but people leave in second one, or when you want several stronger opens for the same piece.",
       "What you get: Multiple rewritten hooks plus a note on which to film first.",
@@ -587,10 +588,10 @@ export const MODULE_CATALOG: ModuleDefinition[] = [
     category: "Content",
     status: "ready",
     description: [
-      "What it does: Structures one short video as Grab, Open a question, Answer it, Take it away.",
+      "What it does: Structures one dense short video at about 60 seconds and above as Grab, Open a question, Answer it, Take it away.",
       "What to input: Topic, the viewer biggest problem, and the one thing they should keep.",
-      "When to use: When you need a short Grab / Open / Answer / Take-away structure, not a full OPENS rewrite.",
-      "What you get: A GOAT beat script. Related to OPENS / Hook Formula; different named beats.",
+      "When to use: When you need a Grab / Open / Answer / Take-away structure, not a full OPENS rewrite.",
+      "What you get: A dense GOAT beat script. Related to OPENS / Hook Formula; different named beats.",
     ].join("\n\n"),
   },
   {
@@ -599,10 +600,10 @@ export const MODULE_CATALOG: ModuleDefinition[] = [
     category: "Content",
     status: "ready",
     description: [
-      "What it does: Builds the longer story arc: Problem, Search, Story, Solution, What next.",
+      "What it does: Builds a dense longer story arc: Problem, Search, Story, Solution, What next.",
       "What to input: The opening problem, the search, the solution, and what next for the viewer.",
       "When to use: When a story is only something that happened because the search is missing.",
-      "What you get: A five-beat longer story outline. Related to S.T.O.R.Y; different named steps.",
+      "What you get: A dense five-beat longer story outline. Related to S.T.O.R.Y; different named steps.",
     ].join("\n\n"),
   },
   {
@@ -611,8 +612,8 @@ export const MODULE_CATALOG: ModuleDefinition[] = [
     category: "Content",
     status: "ready",
     description: [
-      "What it does: Drafts first-three-second openings across eight named ways (Strong feeling; Argument; View people fight about; Everyone cares; Breaking pattern; Myth; Unanswered question; News), plus loudest-ten-seconds-first editing.",
-      "What to input: Topic, viewer biggest problem, and optional loudest moment already filmed.",
+      "What it does: Drafts first-three-second openings across eight named ways (Strong feeling; Argument; View people fight about; Everyone cares; Breaking pattern; Myth; Unanswered question; News), plus loudest-ten-seconds-first editing. Collect, confirm, then dense opens (not a full Reel script).",
+      "What to input: Topic, viewer biggest problem, who watches, and optional loudest moment already filmed.",
       "When to use: When strong videos die on a weak open, or you open with an introduction.",
       "What you get: One line per way (or skip with reason), strongest two to film, and the edit rule. Complements Hook Formula.",
     ].join("\n\n"),

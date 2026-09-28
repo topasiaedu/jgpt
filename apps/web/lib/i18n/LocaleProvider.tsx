@@ -36,7 +36,7 @@ type LocaleProviderProps = {
 
 /**
  * Client locale provider. Default zh. Persists to localStorage.
- * Footer toggle switches zh↔en. First visit may follow browser EN preference.
+ * Nav locale toggle switches zh↔en. First visit may follow browser EN preference.
  */
 export default function LocaleProvider({ children }: LocaleProviderProps) {
   const [locale, setLocaleState] = useState<Locale>(DEFAULT_LOCALE);

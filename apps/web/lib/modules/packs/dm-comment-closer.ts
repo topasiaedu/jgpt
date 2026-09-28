@@ -3,9 +3,27 @@ import type { ModulePack } from "@/lib/modules/types";
 /**
  * DM / Comment Closer: reply that moves warm interest.
  * Convert KB thin: Generally → Jeff → steer.
+ * Quality Runtime (Q4): reply-micro-convert family (short-but-complete; confirm light).
  */
 export const DM_COMMENT_CLOSER_PACK: ModulePack = {
   moduleId: "dm-comment-closer",
+  qualityRuntime: true,
+  qualityFamily: "reply-micro-convert",
+  confirmBlurb:
+    "If needed, mirror in one short beat: their message, what they want, and the honest next step. For short replies you may deliver when criticals are filled.",
+  deliverableSectionOrder: [
+    "Main reply draft",
+    "Softer variant",
+    "Firmer variant",
+    "Named refine levers",
+  ],
+  refineLevers: [
+    "softer tone",
+    "firmer next step",
+    "clearer offer boundary",
+    "shorter reply",
+    "which variant to send",
+  ],
   intakeFields: [
     {
       id: "message",
@@ -33,6 +51,75 @@ export const DM_COMMENT_CLOSER_PACK: ModulePack = {
       required: false,
     },
   ],
+  qualitySlots: [
+    {
+      id: "message",
+      label: "Comment or DM",
+      criticality: "critical",
+      probeHint: "Paste their comment or DM.",
+      placeholder: "Paste their message",
+      multiline: true,
+      idkOptions: [
+        "Paste a warm \"how much / how do I start\" message (scaffold; they paste).",
+        "Paste a curious comment that needs a next step (scaffold; they paste).",
+        "Paste a hesitant DM that wants reassurance first (scaffold; they paste).",
+        "Or paste the real message in their own words.",
+      ],
+    },
+    {
+      id: "theyWant",
+      label: "What they seem to want",
+      criticality: "critical",
+      probeHint: "Info, price, booking, or reassurance: name the ask without inventing it.",
+      placeholder: "Info, price, booking, reassurance",
+      idkOptions: [
+        "They want a clear next conversation, not a hard pitch (scaffold; they correct).",
+        "They want price or timing info (scaffold; they correct).",
+        "They want reassurance that this is for them (scaffold; they correct).",
+        "Or say what they seem to want in one line.",
+      ],
+    },
+    {
+      id: "nextStep",
+      label: "Next step you can honestly offer",
+      criticality: "critical",
+      probeHint: "What you can actually do next. No invented offer architecture.",
+      placeholder: "What you can actually do next",
+      idkOptions: [
+        "Invite a short DM reply with one keyword (scaffold; they correct).",
+        "Offer a booking or call link you already use (scaffold; they correct).",
+        "Point them to one free tip, then a soft invite (scaffold; they correct).",
+        "Or name the honest next step in their words.",
+      ],
+    },
+    {
+      id: "firmness",
+      label: "Preferred firmness",
+      criticality: "optional",
+      probeHint: "Optional softer or clearer preference.",
+      placeholder: "Softer or clearer",
+    },
+  ],
+  idkOptionsBySlotId: {
+    message: [
+      "Paste a warm \"how much / how do I start\" message (scaffold; they paste).",
+      "Paste a curious comment that needs a next step (scaffold; they paste).",
+      "Paste a hesitant DM that wants reassurance first (scaffold; they paste).",
+      "Or paste the real message in their own words.",
+    ],
+    theyWant: [
+      "They want a clear next conversation, not a hard pitch (scaffold; they correct).",
+      "They want price or timing info (scaffold; they correct).",
+      "They want reassurance that this is for them (scaffold; they correct).",
+      "Or say what they seem to want in one line.",
+    ],
+    nextStep: [
+      "Invite a short DM reply with one keyword (scaffold; they correct).",
+      "Offer a booking or call link you already use (scaffold; they correct).",
+      "Point them to one free tip, then a soft invite (scaffold; they correct).",
+      "Or name the honest next step in their words.",
+    ],
+  },
   probeHints: [
     "DM",
     "comment",
@@ -55,22 +142,29 @@ export const DM_COMMENT_CLOSER_PACK: ModulePack = {
   starterPrompt:
     "Using my intake, draft a reply that moves warm interest toward a clear next step. Include a softer and a firmer variant.",
   chatOpener:
-    "Hey. Let's move warm interest to a clear next step.\n\n- draft a reply that stays human and clear\n- Paste the comment or DM\n- Walk away with a next-step reply you can send\n\nPaste the comment or DM?",
+    "Hey. I will help you move warm interest in a comment or DM into a clear next step.\n\nHere is how we will work:\n- We collect the message, what they want, and your honest next step\n- You paste the comment or DM\n- You leave with short reply variants you can send, not a long sales script\n\nPaste the comment or DM.",
+  chatOpenerZh:
+    "我会帮你把评论或私信里的兴趣，推进到清楚的下一步。\n\n我们这样配合：\n- 先收齐对方原话、他们想要什么、你能诚实提供的下一步\n- 你把评论或私信贴过来\n- 你会带走可直接发出的短回复，不是长销售脚本\n\n请贴上评论或私信。",
   systemOverlay: [
-    "## Module mode: DM / Comment Closer",
+    "## Module mode: DM / Comment Closer (qualityRuntime Reply/Micro-convert)",
     "You are running the DM / Comment Closer tool for this user.",
-    "Job: reply draft that moves warm interest without pressure theater.",
+    "Job: reply draft that moves warm interest without pressure theater. Not a Reel script.",
+    "Lifecycle: Collect criticals, then short-but-complete Deliver. Confirm is light for this family. Refine after drafts exist.",
     "",
-    "### Conversational collect (chat-first; no form)",
-    "Slots live in conversation history. Ask at most 1 to 2 questions per turn.",
-    "Prefer Jeff-shaped asks over a generic business questionnaire.",
-    "When enough is known, or the user says just write it, deliver the full output and name assumptions.",
+    "### Critical slots (Collect gate)",
+    "Need before Deliver: their message, what they seem to want, and the next step you can honestly offer.",
+    "Ask at most 1 to 2 questions per Collect turn.",
+    "If they say I do not know / blank, offer pack IDK choices. Do not invent niche facts or offer architecture.",
     "",
-    "### Output format (when ready to generate)",
+    "### Deliverable shape (short-but-complete)",
     "1. Main reply draft.",
     "2. Softer variant.",
     "3. Firmer variant.",
-    "Coach-like; people first.",
+    "4. End with named refine levers.",
+    "Coach-like; people first. No pressure theater.",
+    "",
+    "### Refine",
+    "After drafts exist, tweak named levers only. Do not re-ask filled critical slots.",
     "",
     "### Jeff distinctiveness (hard)",
     "Use Jeff mechanisms in the user's language: get seen before trust before deal; standpoint; content assets not ads; advice vs ego; direction beats volume; value then convert where relevant.",

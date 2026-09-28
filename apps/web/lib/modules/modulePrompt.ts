@@ -3,6 +3,13 @@ import { getModuleById } from "@/lib/modules/catalog";
 import type { IntakeField, ModulePack } from "@/lib/modules/types";
 import type { GraphNode } from "@/lib/graphTypes";
 import { loadTeachingGraph } from "@/lib/probe";
+import type { ChatMessage } from "@/lib/chatTypes";
+import {
+  buildQualityRuntimeInjection,
+  formatQualitySlotChecklist,
+  isQualityRuntimeEnabled,
+  resolveQualitySlots,
+} from "@/lib/modules/qualityRuntime";
 
 /** Cap bound-node briefs so module prompts stay denser than free chat without dumping the wiki. */
 const MAX_BOUND_NODE_BRIEFS: number = 6;
@@ -133,9 +140,14 @@ export function formatBoundNodeBriefs(boundNodeIds: string[] | undefined): strin
 
 /**
  * Shared chat-first + Jeff-distinctiveness rules injected for every module pack.
+ * When qualityRuntime is on, soft "just write it when enough" is replaced by the
+ * hard Collect → Confirm → Deliver → Refine block from qualityRuntime injection.
  */
 export function buildSharedModuleRules(pack: ModulePack): string {
-  const slotBlock: string = formatSlotChecklist(pack.intakeFields);
+  const qualityOn: boolean = isQualityRuntimeEnabled(pack);
+  const slotBlock: string = qualityOn
+    ? formatQualitySlotChecklist(resolveQualitySlots(pack))
+    : formatSlotChecklist(pack.intakeFields);
   const boundBriefs: string = formatBoundNodeBriefs(pack.boundNodeIds);
   const catalogTitle: string | undefined = getModuleById(pack.moduleId)?.title;
   const toolLabel: string =
@@ -153,18 +165,34 @@ export function buildSharedModuleRules(pack: ModulePack): string {
         ].join("\n")
       : "";
 
+  const collectRules: string[] = qualityOn
+    ? [
+        "## Module conversation mode (hard; qualityRuntime chat-first)",
+        "There is no intake form. Collect what you need through conversation.",
+        "Lifecycle is enforced below: Collect → Confirm → Deliver → Refine.",
+        "Ask at most 1 to 2 clarifying questions per Collect/Confirm turn. Never dump an interrogation wall (3+ questions / intake form).",
+        "If you ask two clarifying questions in one turn, format them as a markdown bullet or numbered list (not a prose row).",
+        "Typed slots (critical vs optional):",
+        slotBlock,
+        "Do not skip Confirm when the family contract requires it, unless the user explicitly says just write it / 直接写一版 after critical slots are filled (then deliver with named assumptions).",
+        "Do not wait for a form object. Conversation history (and optional home intent hint) is the source of answers.",
+      ]
+    : [
+        "## Module conversation mode (hard; Artemo-style chat-first)",
+        "There is no intake form. Collect what you need through conversation.",
+        "Clarify then deliver in this same tool chat:",
+        "Ask at most 1 to 2 clarifying questions per turn. Never dump an interrogation wall (3+ questions / intake form).",
+        "If you ask two clarifying questions in one turn, format them as a markdown bullet or numbered list (not a prose row). Short clarifying-question bullets are allowed.",
+        "Internal slots to gather before the full deliverable:",
+        slotBlock,
+        "When slots are filled enough for a useful deliverable, produce the full module output in that same turn.",
+        "If the user already answered enough on home or in prior turns, do not re-ask everything. Ask only what this tool still needs, then deliver.",
+        "If the user says \"just write it\" / \"直接写一版\" and you already have enough to draft, skip remaining questions, do best effort, name assumptions clearly, then deliver.",
+        "Do not wait for a form object. Conversation history (and optional home intent hint) is the source of answers.",
+      ];
+
   return [
-    "## Module conversation mode (hard; Artemo-style chat-first)",
-    "There is no intake form. Collect what you need through conversation.",
-    "Clarify then deliver in this same tool chat:",
-    "Ask at most 1 to 2 clarifying questions per turn. Never dump an interrogation wall (3+ questions / intake form).",
-    "If you ask two clarifying questions in one turn, format them as a markdown bullet or numbered list (not a prose row). Short clarifying-question bullets are allowed.",
-    "Internal slots to gather before the full deliverable:",
-    slotBlock,
-    "When slots are filled enough for a useful deliverable, produce the full module output in that same turn.",
-    "If the user already answered enough on home or in prior turns, do not re-ask everything. Ask only what this tool still needs, then deliver.",
-    "If the user says \"just write it\" / \"直接写一版\" and you already have enough to draft, skip remaining questions, do best effort, name assumptions clearly, then deliver.",
-    "Do not wait for a form object. Conversation history (and optional home intent hint) is the source of answers.",
+    ...collectRules,
     "",
     "## Stay on this tool's job (hard; redirect drift)",
     `This chat is bound to tool ${toolLabel}. "Back" means this pack's overlay deliverable and the clarifying slots above, not a new topic.`,
@@ -176,7 +204,9 @@ export function buildSharedModuleRules(pack: ModulePack): string {
     "",
     "## Stuck / avoidance in tool chat (firm but warm; not fierce)",
     "If they say \"I don't know\" / \"不知道\", or ask for a safe word-for-word script before giving the real content this tool needs (story, lesson, who they help, standpoint):",
-    "Name the gap plainly. Push for ONE real detail. Do not paper over with a generic safe draft.",
+    qualityOn
+      ? "Name the gap plainly. Use the I-don't-know option engine (concrete choices / micro-examples that do not invent niche facts). Push for ONE real detail."
+      : "Name the gap plainly. Push for ONE real detail. Do not paper over with a generic safe draft.",
     "Warm teacher's pet of Jeff: firm, clear, kind. No scolding, no humiliation, no fierce energy.",
     "Short spoken punches. One clear ask. Still max 1 to 2 clarifying questions; bullets if two.",
     "",
@@ -374,6 +404,8 @@ export function formatHomeIntentHint(homeIntent: string | undefined): string {
 
 /**
  * Appends module overlay + shared Jeff/chat rules after the base Jeff system prompt.
+ * When pack.qualityRuntime is true, also injects Collect → Confirm → Deliver → Refine,
+ * mode-aware budgets, and the IDK option stub (messages required for mode detection).
  */
 export function appendModuleSystemOverlay(options: {
   baseSystemPrompt: string;
@@ -381,11 +413,29 @@ export function appendModuleSystemOverlay(options: {
   intake: Record<string, string> | undefined;
   homeIntent?: string;
   locale: Locale;
+  /**
+   * Dialogue for qualityRuntime mode detection.
+   * Ignored when qualityRuntime is off (legacy path unchanged).
+   */
+  messages?: ChatMessage[];
 }): string {
   const intakeBlock: string = formatIntakeForPrompt(options.intake, options.pack.intakeFields);
   const shared: string = buildSharedModuleRules(options.pack);
   const homeHint: string = formatHomeIntentHint(options.homeIntent);
   const localeLock: string = moduleLocaleLockReminder(options.locale);
+
+  const qualityBlock: string = (() => {
+    if (!isQualityRuntimeEnabled(options.pack)) {
+      return "";
+    }
+    const messages: ChatMessage[] = options.messages ?? [];
+    const injection = buildQualityRuntimeInjection({
+      pack: options.pack,
+      messages,
+      intake: options.intake,
+    });
+    return injection.promptBlock;
+  })();
 
   return [
     options.baseSystemPrompt,
@@ -395,6 +445,7 @@ export function appendModuleSystemOverlay(options: {
     options.pack.systemOverlay,
     "",
     shared,
+    ...(qualityBlock.length > 0 ? ["", qualityBlock] : []),
     ...(homeHint.length > 0 ? ["", homeHint] : []),
     "",
     "## OPTIONAL SESSION NOTES (legacy intake map; usually empty)",

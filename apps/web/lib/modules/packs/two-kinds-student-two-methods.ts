@@ -47,7 +47,7 @@ export const TWO_KINDS_STUDENT_TWO_METHODS_PACK: ModulePack = {
   starterPrompt:
     "Using my intake, run Two Kinds of Student, Two Methods and deliver the structured output for this Jeff tool.",
   chatOpener:
-    "Hey. Let's sort loud vs quiet and pick the matching route.\n\n- match you to Three C or Three R\n- Bring whether you are more outgoing or reserved on camera\n- Walk away with a route that fits your energy\n\nAre you more outgoing on camera, or more reserved?",
+    "Hey. I will help you sort loud versus quiet energy and pick the matching route.\n\nHere is how we will work:\n- We match you to Three C or Three R\n- You share whether you are more outgoing or reserved on camera\n- You leave with a route that fits your energy\n\nAre you more outgoing on camera, or more reserved?",
   systemOverlay: [
     "## Module mode: Two Kinds of Student, Two Methods",
     "You are running the Two Kinds of Student, Two Methods tool (catalog id two-kinds-student-two-methods) for this user.",

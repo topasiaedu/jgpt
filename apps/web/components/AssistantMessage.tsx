@@ -1,19 +1,92 @@
 /**
- * Renders assistant reply text as short paragraphs and simple lists.
+ * Renders assistant reply text as short paragraphs, lists, and light Markdown.
  * Keeps formatting readable without a full markdown dependency.
+ * XSS-safe: model text stays in React text nodes (never HTML strings).
  */
 
+import { Fragment } from "react";
+import type { ReactNode } from "react";
+
+type HeadingLevel = 1 | 2 | 3;
+
 type Block =
-  | { kind: "paragraph"; text: string }
+  | { kind: "paragraph"; lines: string[] }
   | { kind: "ul"; items: string[] }
-  | { kind: "ol"; items: string[] };
+  | { kind: "ol"; items: string[] }
+  | { kind: "hr" }
+  | { kind: "heading"; level: HeadingLevel; text: string };
 
 type AssistantMessageProps = {
   content: string;
 };
 
+/** True when a trimmed line is a Markdown horizontal rule. */
+function isHorizontalRule(trimmed: string): boolean {
+  return /^(-{3,}|\*{3,}|_{3,})$/.test(trimmed);
+}
+
 /**
- * Splits raw assistant text into paragraph and list blocks.
+ * Parses inline **bold**, *italic*, and `code` into React nodes.
+ * Bold is matched before italic so **labels** stay intact.
+ */
+function renderInline(text: string): ReactNode {
+  const nodes: ReactNode[] = [];
+  const pattern: RegExp = /\*\*([^*]+)\*\*|\*([^*]+)\*|`([^`]+)`/g;
+  let lastIndex = 0;
+  let key = 0;
+  let match: RegExpExecArray | null = pattern.exec(text);
+
+  while (match !== null) {
+    if (match.index > lastIndex) {
+      nodes.push(text.slice(lastIndex, match.index));
+    }
+
+    const boldText: string | undefined = match[1];
+    const italicText: string | undefined = match[2];
+    const codeText: string | undefined = match[3];
+
+    if (boldText !== undefined) {
+      nodes.push(<strong key={`b-${key}`}>{boldText}</strong>);
+    } else if (italicText !== undefined) {
+      nodes.push(<em key={`i-${key}`}>{italicText}</em>);
+    } else if (codeText !== undefined) {
+      nodes.push(
+        <code key={`c-${key}`} className="assistant-code">
+          {codeText}
+        </code>,
+      );
+    }
+
+    key += 1;
+    lastIndex = match.index + match[0].length;
+    match = pattern.exec(text);
+  }
+
+  if (lastIndex < text.length) {
+    nodes.push(text.slice(lastIndex));
+  }
+
+  if (nodes.length === 0) {
+    return text;
+  }
+
+  return nodes;
+}
+
+/**
+ * Renders one or more paragraph lines, preserving single newlines as breaks.
+ */
+function renderParagraphLines(lines: string[]): ReactNode {
+  return lines.map((line, index) => (
+    <Fragment key={`line-${index}`}>
+      {index > 0 ? <br /> : null}
+      {renderInline(line)}
+    </Fragment>
+  ));
+}
+
+/**
+ * Splits raw assistant text into paragraph, list, heading, and rule blocks.
  * Blank lines become separate beats so \n\n spacing shows in the UI.
  */
 function parseBlocks(content: string): Block[] {
@@ -27,10 +100,7 @@ function parseBlocks(content: string): Block[] {
     if (paragraphLines.length === 0) {
       return;
     }
-    const text: string = paragraphLines.join(" ").trim();
-    if (text.length > 0) {
-      blocks.push({ kind: "paragraph", text });
-    }
+    blocks.push({ kind: "paragraph", lines: paragraphLines });
     paragraphLines = [];
   };
 
@@ -52,6 +122,23 @@ function parseBlocks(content: string): Block[] {
     if (trimmed.length === 0) {
       flushParagraph();
       flushList();
+      continue;
+    }
+
+    if (isHorizontalRule(trimmed)) {
+      flushParagraph();
+      flushList();
+      blocks.push({ kind: "hr" });
+      continue;
+    }
+
+    const headingMatch: RegExpMatchArray | null = trimmed.match(/^(#{1,3})\s+(.+)$/);
+    if (headingMatch !== null && headingMatch[1] !== undefined && headingMatch[2] !== undefined) {
+      flushParagraph();
+      flushList();
+      const hashCount: number = headingMatch[1].length;
+      const level: HeadingLevel = hashCount === 3 ? 3 : hashCount === 2 ? 2 : 1;
+      blocks.push({ kind: "heading", level, text: headingMatch[2].trim() });
       continue;
     }
 
@@ -86,7 +173,7 @@ function parseBlocks(content: string): Block[] {
   flushList();
 
   if (blocks.length === 0 && content.trim().length > 0) {
-    return [{ kind: "paragraph", text: content.trim() }];
+    return [{ kind: "paragraph", lines: [content.trim()] }];
   }
 
   return blocks;
@@ -101,10 +188,35 @@ export default function AssistantMessage({ content }: AssistantMessageProps) {
   return (
     <div className="message-body message-body-assistant">
       {blocks.map((block, index) => {
+        if (block.kind === "hr") {
+          return <hr key={`hr-${index}`} className="assistant-hr" />;
+        }
+        if (block.kind === "heading") {
+          const headingClass = `assistant-heading assistant-heading-${block.level}`;
+          if (block.level === 1) {
+            return (
+              <h3 key={`h-${index}`} className={headingClass}>
+                {renderInline(block.text)}
+              </h3>
+            );
+          }
+          if (block.level === 2) {
+            return (
+              <h4 key={`h-${index}`} className={headingClass}>
+                {renderInline(block.text)}
+              </h4>
+            );
+          }
+          return (
+            <h5 key={`h-${index}`} className={headingClass}>
+              {renderInline(block.text)}
+            </h5>
+          );
+        }
         if (block.kind === "paragraph") {
           return (
             <p key={`p-${index}`} className="assistant-p">
-              {block.text}
+              {renderParagraphLines(block.lines)}
             </p>
           );
         }
@@ -112,7 +224,7 @@ export default function AssistantMessage({ content }: AssistantMessageProps) {
           return (
             <ul key={`ul-${index}`} className="assistant-ul">
               {block.items.map((item, itemIndex) => (
-                <li key={`uli-${itemIndex}`}>{item}</li>
+                <li key={`uli-${itemIndex}`}>{renderInline(item)}</li>
               ))}
             </ul>
           );
@@ -120,7 +232,7 @@ export default function AssistantMessage({ content }: AssistantMessageProps) {
         return (
           <ol key={`ol-${index}`} className="assistant-ol">
             {block.items.map((item, itemIndex) => (
-              <li key={`oli-${itemIndex}`}>{item}</li>
+              <li key={`oli-${itemIndex}`}>{renderInline(item)}</li>
             ))}
           </ol>
         );

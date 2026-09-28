@@ -3,9 +3,28 @@ import type { ModulePack } from "@/lib/modules/types";
 /**
  * Eight Ways to Open: stakeholder Framework Needed PDF tool.
  * Elevated draft doctrine; not approved.
+ * Quality Runtime (Q4): Collect → Confirm → Deliver → Refine on hook-line family.
+ * Chosen over soundbite-one-liner for this wave (open patterns vs memory one-liner).
  */
 export const EIGHT_WAYS_TO_OPEN_PACK: ModulePack = {
   moduleId: "eight-ways-to-open",
+  qualityRuntime: true,
+  qualityFamily: "hook-line",
+  confirmBlurb:
+    "Mirror the open plan in 2 to 4 bullets: topic, viewer biggest problem, optional loudest moment, and that you will walk all eight ways. Ask for go-ahead before the dense open set. Do not write a full Reel script.",
+  deliverableSectionOrder: [
+    "Eight ways in order (line or skip with reason)",
+    "Strongest two to film",
+    "Loudest-ten-seconds-first edit rule",
+    "Named refine levers",
+  ],
+  refineLevers: [
+    "stronger feeling open",
+    "clearer argument open",
+    "better myth or question open",
+    "loudest moment moved front",
+    "which of the top two to film first",
+  ],
   intakeFields: [
     {
       id: "topic",
@@ -28,6 +47,76 @@ export const EIGHT_WAYS_TO_OPEN_PACK: ModulePack = {
       multiline: true,
     },
   ],
+  qualitySlots: [
+    {
+      id: "topic",
+      label: "Topic",
+      criticality: "critical",
+      probeHint: "What the video is about in plain words.",
+      placeholder: "What the video is about",
+      idkOptions: [
+        "One tip they already teach weekly (scaffold; they name it).",
+        "One story beat from real work (scaffold; they name it).",
+        "One myth their market still believes (scaffold; they name it).",
+        "Or name the topic in one plain sentence.",
+      ],
+    },
+    {
+      id: "viewerProblem",
+      label: "Biggest viewer problem",
+      criticality: "critical",
+      probeHint: "Lead with the viewer biggest problem, not an introduction.",
+      placeholder: "Lead with this",
+      multiline: true,
+      idkOptions: [
+        "They open with intros and lose the first three seconds (scaffold; they reword).",
+        "They bury the loudest moment later in the cut (scaffold; they reword).",
+        "They teach useful tips but never stop the scroll (scaffold; they reword).",
+        "Or name the viewer problem in their own words.",
+      ],
+    },
+    {
+      id: "audience",
+      label: "Who watches",
+      criticality: "critical",
+      probeHint: "Who should feel spoken to in the first three seconds.",
+      placeholder: "Who this open is for",
+      idkOptions: [
+        "A specific role stuck on this topic (scaffold; they name the role).",
+        "Warm followers who already like them but scroll past weak opens (scaffold; they correct).",
+        "New viewers who need the problem named in second one (scaffold; they correct).",
+        "Or name who watches in their own words.",
+      ],
+    },
+    {
+      id: "loudestMoment",
+      label: "Loudest moment already filmed or planned",
+      criticality: "optional",
+      probeHint: "Optional ten seconds worth moving to the front.",
+      placeholder: "The ten seconds worth moving to the front",
+      multiline: true,
+    },
+  ],
+  idkOptionsBySlotId: {
+    topic: [
+      "One tip they already teach weekly (scaffold; they name it).",
+      "One story beat from real work (scaffold; they name it).",
+      "One myth their market still believes (scaffold; they name it).",
+      "Or name the topic in one plain sentence.",
+    ],
+    viewerProblem: [
+      "They open with intros and lose the first three seconds (scaffold; they reword).",
+      "They bury the loudest moment later in the cut (scaffold; they reword).",
+      "They teach useful tips but never stop the scroll (scaffold; they reword).",
+      "Or name the viewer problem in their own words.",
+    ],
+    audience: [
+      "A specific role stuck on this topic (scaffold; they name the role).",
+      "Warm followers who already like them but scroll past weak opens (scaffold; they correct).",
+      "New viewers who need the problem named in second one (scaffold; they correct).",
+      "Or name who watches in their own words.",
+    ],
+  },
   probeHints: [
     "eight ways to open",
     "first three seconds",
@@ -43,13 +132,14 @@ export const EIGHT_WAYS_TO_OPEN_PACK: ModulePack = {
   starterPrompt:
     "Using my intake, run Eight Ways to Open: one line per way (or skip with reason), mark the strongest two, and apply loudest-ten-seconds-first.",
   chatOpener:
-    "Hey. Let's pick stronger ways to open.\n\n- try several open patterns on your topic\n- Bring the topic or draft open you have now\n- Walk away with a few usable opens to test\n\nWhat topic or current open should we start from?",
+    "Hey. I will help you try several ways to open the first three seconds of a video.\n\nHere is how we will work:\n- We collect topic and viewer problem, then I confirm before the dense eight-way set\n- You bring the topic or a draft open you have now\n- You leave with usable opens only, not a full Reel script\n\nWhat topic or current open should we start from?",
   chatOpenerZh:
-    "我会帮你选出更强的开场方式。\n\n- 在你的题目上试几种开场\n- 你带上题目或现有开场\n- 走的时候带走几个可试的开场\n\n从哪个题目或现有开场开始？",
+    "我会帮你试几种开场方式，打磨视频前三秒。\n\n我们这样配合：\n- 先收齐题目与观众最大问题，确认后再给密实八法开场\n- 你带上题目或现有开场\n- 你会带走可试的开场，不是整支 Reel 脚本\n\n从哪个题目或现有开场开始？",
   systemOverlay: [
-    "## Module mode: Eight Ways to Open",
+    "## Module mode: Eight Ways to Open (qualityRuntime Hook/Line)",
     "You are running the Eight Ways to Open tool (catalog id eight-ways-to-open) for this user.",
-    "Job: Write openings for the first three seconds using the eight ways below, plus loudest-moment-first edit rule.",
+    "Job: Write openings for the first three seconds using the eight ways below, plus loudest-moment-first edit rule. Not a full Reel script.",
+    "Lifecycle is hard: Collect → Confirm → Deliver → Refine. Do not dense-dump in Collect. Confirm before the first eight-way set unless they explicitly say just write it after criticals are filled.",
     "Bind fw.eight-ways-to-open.",
     "",
     "### The eight openings (paste from Framework Needed; teach by name)",
@@ -67,16 +157,26 @@ export const EIGHT_WAYS_TO_OPEN_PACK: ModulePack = {
     "Most students open with what they planned to say, which is almost never the best part.",
     "Lead with the viewer biggest problem, not an introduction. Reject intro-first opens.",
     "",
-    "### Conversational collect (chat-first; no form)",
-    "Slots live in conversation history. Ask at most 1 to 2 questions per turn.",
-    "Prefer Jeff-shaped asks over a generic business questionnaire.",
-    "When enough is known, or the user says just write it, deliver the full output and name assumptions.",
+    "### Critical slots (Collect gate)",
+    "Need before Confirm: topic, viewer biggest problem, and who watches.",
+    "Loudest moment optional.",
+    "Ask at most 1 to 2 questions per Collect turn.",
+    "If they say I do not know / blank, offer pack IDK choices. Do not invent niche facts.",
     "",
-    "### Output format (when ready to generate)",
+    "### Confirm (before first dense Deliver)",
+    "Mirror the plan in 2 to 4 bullets. Name assumptions honestly. Ask for go-ahead.",
+    "Do not walk all eight ways in Confirm.",
+    "",
+    "### Deliverable shape (opens only)",
     "1. Walk all eight ways in order. For each: one opening line, OR skip with a one-line reason why it does not fit.",
     "2. Mark the strongest two to film (name the way + the line).",
     "3. Restate the edit rule: cut first, move loudest ten seconds to the front.",
     "4. Optional: if they already named a loudest moment, show how it becomes the open.",
+    "5. End with named refine levers.",
+    "Ground every line in their topic and problem. Different inputs must produce different opens.",
+    "",
+    "### Refine",
+    "After a dense eight-way set exists, tweak named levers only. Do not re-interrogate filled critical slots.",
     "",
     "### Jeff distinctiveness (hard)",
     "Use Jeff mechanisms in the user's language: get seen before trust before deal; standpoint; content assets not ads; advice vs ego; direction beats volume.",
@@ -85,6 +185,7 @@ export const EIGHT_WAYS_TO_OPEN_PACK: ModulePack = {
     "### Doctrine rules (hard)",
     "Bind to fw.eight-ways-to-open. Labels like Suggested/draft are not confirmed IP. Never invent Jeff niche case studies.",
     "Do not rename these eight ways into Hook Formula legs or GOAT beats. Complementary tools stay separate.",
+    "No overnight-fame. Do not turn this into a full IG script writer.",
     "",
     "### Evidence binding",
     "Prefer boundNodeIds when in the evidence pack. Sources still come only from probe / probe_jeff.",

@@ -8,6 +8,10 @@ import type {
 } from "@/lib/chatTypes";
 import { buildProbeQuery, toDialogueOnly } from "@/lib/dialogue";
 import {
+  appendHookStudioBatchContract,
+  resolvePackForHookStudioBatch,
+} from "@/lib/hookStudio/studioBatchOverlay";
+import {
   appendModuleSystemOverlay,
   buildModuleProbeQuery,
 } from "@/lib/modules/modulePrompt";
@@ -15,10 +19,15 @@ import { getModuleById } from "@/lib/modules/catalog";
 import { getModulePack } from "@/lib/modules/packs";
 import { HOME_INTENT_Q_MAX_CHARS } from "@/lib/modules/homeHandoff";
 import { appendHomeRecommendOverlay } from "@/lib/modules/recommend";
+import {
+  detectLifecycleMode,
+  isQualityRuntimeEnabled,
+  systemPromptFormattingOverride,
+} from "@/lib/modules/qualityRuntime";
 import { generateJeffReply, getOpenAIConfig } from "@/lib/openai";
 import { mergeBoundNodesIntoProbe, probeTeaching } from "@/lib/probe";
 import { DEFAULT_LOCALE, parseLocale, type Locale } from "@/lib/i18n/messages";
-import { runModuleResponseQa } from "@/lib/responseQa";
+import { latestUserAsk, runModuleResponseQa } from "@/lib/responseQa";
 import { sanitizeAssistantReply } from "@/lib/sanitizeAssistantReply";
 import { buildSystemPrompt } from "@/lib/systemPrompt";
 
@@ -96,14 +105,31 @@ async function handleChatPost(
     typeof body.homeIntent === "string" && body.homeIntent.trim().length > 0
       ? body.homeIntent.trim().slice(0, HOME_INTENT_Q_MAX_CHARS)
       : undefined;
-  const pack = typeof moduleId === "string" ? getModulePack(moduleId) : undefined;
+  const catalogPack = typeof moduleId === "string" ? getModulePack(moduleId) : undefined;
 
-  if (typeof moduleId === "string" && moduleId.trim().length > 0 && pack === undefined) {
+  if (typeof moduleId === "string" && moduleId.trim().length > 0 && catalogPack === undefined) {
     return NextResponse.json(
       { error: `Unknown or not-yet-wired moduleId: ${moduleId}` },
       { status: 400 },
     );
   }
+
+  /**
+   * Hook Studio H2/H3: on scroll-stop-hook, Studio batch markers select overlays.
+   * Rewrite swaps Hook Rewriter overlay for that turn; competitor/repeat keep
+   * Hook Formula pack and append thin mode doctrine + JSON contract.
+   * Page moduleId stays scroll-stop-hook. Module QA skipped on all Studio batches.
+   */
+  const latestAsk: string = latestUserAsk(dialogue);
+  const studioResolved =
+    catalogPack !== undefined
+      ? resolvePackForHookStudioBatch({
+          pack: catalogPack,
+          latestUserMessage: latestAsk,
+        })
+      : { pack: undefined, studioMode: null };
+  const pack = studioResolved.pack;
+  const studioMode = studioResolved.studioMode;
 
   const query: string =
     pack !== undefined
@@ -128,10 +154,17 @@ async function handleChatPost(
     evidencePackText: probe.evidencePackText,
     coverage: probe.coverage,
     locale,
+    ...(pack !== undefined && isQualityRuntimeEnabled(pack)
+      ? {
+          formattingOverride: systemPromptFormattingOverride(
+            detectLifecycleMode({ pack, messages: dialogue, intake }).replyBudget,
+          ),
+        }
+      : {}),
   });
 
   const recommendMode: boolean = pack === undefined;
-  const systemPrompt: string =
+  const moduleSystemPrompt: string =
     pack !== undefined
       ? appendModuleSystemOverlay({
           baseSystemPrompt,
@@ -139,8 +172,19 @@ async function handleChatPost(
           intake,
           homeIntent,
           locale,
+          messages: dialogue,
         })
       : appendHomeRecommendOverlay(baseSystemPrompt, locale);
+  const systemPrompt: string =
+    pack !== undefined
+      ? appendHookStudioBatchContract({
+          systemPrompt: moduleSystemPrompt,
+          studioMode:
+            catalogPack !== undefined && catalogPack.moduleId === "scroll-stop-hook"
+              ? studioMode
+              : null,
+        })
+      : moduleSystemPrompt;
 
   try {
     const { reply, sources, recommendedModuleIds } = await generateJeffReply({
@@ -155,8 +199,13 @@ async function handleChatPost(
 
     // Module/tool path only: second-model ask-match QA + at most one repair.
     // Home recommend stays out of scope. Soft-fails to the original reply.
+    // Hook Studio batches skip QA: repair prompt forbids JSON and would break cards.
     let finalReply: string = reply;
-    if (pack !== undefined && typeof moduleId === "string") {
+    if (
+      pack !== undefined &&
+      typeof moduleId === "string" &&
+      !(catalogPack !== undefined && catalogPack.moduleId === "scroll-stop-hook" && studioMode !== null)
+    ) {
       const moduleDef = getModuleById(moduleId);
       const moduleTitle: string =
         moduleDef !== undefined ? moduleDef.title : moduleId;

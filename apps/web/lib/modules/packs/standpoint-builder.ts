@@ -64,9 +64,9 @@ export const STANDPOINT_BUILDER_PACK: ModulePack = {
   starterPrompt:
     "Using my intake, fill Jeff IP Influence Triangle: 坚持什么, 反对什么, 真实缺口 (FLAW), plus one market-impression sentence. Do not collapse this into a single camera opener.",
   chatOpener:
-    "Hey. Let's lock a clear standpoint people can recognize.\n\n- fill what you stand for, what you stand against, and your real gap\n- Bring one belief you insist on that others soft-pedal\n- Walk away with a sharp standpoint line, not a framework class\n\nWhat do you insist on in your work that others avoid saying?",
+    "Hey. I will help you lock a clear standpoint people can recognize.\n\nHere is how we will work:\n- We fill what you stand for, what you stand against, and your real gap\n- You bring one belief you insist on that others soft-pedal\n- You leave with a sharp standpoint line, not a framework class\n\nWhat do you insist on in your work that others avoid saying?",
   chatOpenerZh:
-    "我会帮你立一个别人一眼能认出的立场。\n\n- 咱们写满：坚持什么、反对什么、真实缺口\n- 你带一句别人常回避、但你坚持的主张\n- 走的时候带走锋利立场句，不听框架课\n\n你在工作里坚持什么，是别人常回避的？",
+    "我会帮你立一个别人一眼能认出的立场。\n\n我们这样配合：\n- 写满：坚持什么、反对什么、真实缺口\n- 你带一句别人常回避、但你坚持的主张\n- 你会带走锋利立场句，不听框架课\n\n你在工作里坚持什么，是别人常回避的？",
   systemOverlay: [
     "## Module mode: Standpoint Builder (IP Influence Triangle)",
     "You are running the Standpoint Builder tool for this user.",

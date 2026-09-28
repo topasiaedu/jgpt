@@ -61,7 +61,7 @@ export const CONTENT_ASSET_PLANNER_PACK: ModulePack = {
   starterPrompt:
     "Using my intake, classify and plan posts using 四种内容资产 only (曝光 / 认知 / 信任 / 成交), sized to my filming slots.",
   chatOpener:
-    "Hey. Let's plan with the four content assets.\n\n- classify posts as exposure, awareness, trust, or convert\n- Bring whether you are mainly unseen, building trust, or converting\n- Walk away with a simple plan, not a funnel lecture\n\nAre you mainly unseen, building trust, or converting?",
+    "Hey. I will help you plan posts with the four content assets: exposure, awareness, trust, and convert.\n\nHere is how we will work:\n- We classify what each post is for\n- You share whether you are mainly unseen, building trust, or converting\n- You leave with a simple plan, not a funnel lecture\n\nAre you mainly unseen, building trust, or converting?",
   systemOverlay: [
     "## Module mode: 四种内容资产",
     "You are running the 四种内容资产 tool (catalog id content-asset-planner) for this user.",

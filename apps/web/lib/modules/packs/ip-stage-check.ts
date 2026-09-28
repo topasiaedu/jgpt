@@ -4,9 +4,29 @@ import type { ModulePack } from "@/lib/modules/types";
  * IP Stage Check: AUG-D3 SELF DIAGNOSTIC / 自我诊断 (内容还是系统 + six yes/no).
  * Module id kept as ip-stage-check for stable routes and start module.
  * Exposure → trust → deal is secondary steer only, not a replacement for the six checks.
+ * Quality Runtime (Q3): Collect → Confirm → Deliver → Refine on diagnosis family.
+ * Diagnosis flagship: diagnostic brief + ranked next actions. Never a Reel script.
  */
 export const IP_STAGE_CHECK_PACK: ModulePack = {
   moduleId: "ip-stage-check",
+  qualityRuntime: true,
+  qualityFamily: "diagnosis",
+  confirmBlurb:
+    "Mirror the diagnostic plan in 2 to 4 bullets: niche context, how you will score the six yes/no checks, that unanswered checks become the next stage, and any assumptions. Ask for go-ahead before the dense scorecard. Do not write a Reel script.",
+  deliverableSectionOrder: [
+    "Framing call (内容还是系统)",
+    "Six-check scorecard (01 to 06)",
+    "Ranked next stage (unanswered checks)",
+    "Optional light ETC steer",
+    "Named refine levers",
+  ],
+  refineLevers: [
+    "clearer framing call",
+    "tighter scorecard cites",
+    "re-ranked next checks",
+    "more concrete top action",
+    "lighter ETC steer",
+  ],
   intakeFields: [
     {
       id: "context",
@@ -51,6 +71,145 @@ export const IP_STAGE_CHECK_PACK: ModulePack = {
       required: true,
     },
   ],
+  qualitySlots: [
+    {
+      id: "context",
+      label: "What you do / niche",
+      criticality: "critical",
+      probeHint: "Plain words for business, craft, or role. They own niche facts.",
+      placeholder: "Business, craft, or role in plain words",
+      idkOptions: [
+        "Solo founder shipping personal IP content (scaffold; they correct the niche).",
+        "Expert or educator with a small team (scaffold; they correct).",
+        "Operator building trust before offers (scaffold; they correct).",
+        "Or name what you do in one plain sentence.",
+      ],
+    },
+    {
+      id: "check01",
+      label: "Check 01: three content types",
+      criticality: "critical",
+      probeHint: "Yes/no plus one-line evidence: do they know their best three content types?",
+      placeholder: "Yes/no: do you know which three content types fit you best?",
+      idkOptions: [
+        "No: still guessing which three content types fit.",
+        "Unclear: have favorites but not locked to three.",
+        "Yes: can name three types with one example each (they supply examples).",
+        "Or answer yes/no in their own words with one cite.",
+      ],
+    },
+    {
+      id: "check02",
+      label: "Check 02: four weeks publish",
+      criticality: "critical",
+      probeHint: "Yes/no: stable continuous publishing for four weeks?",
+      placeholder: "Yes/no: stable continuous publishing for four weeks?",
+      idkOptions: [
+        "No: publishing is bursty or stopped.",
+        "Unclear: posted sometimes but not four stable weeks.",
+        "Yes: can point to about four continuous weeks (they cite).",
+        "Or answer yes/no with one honest cite.",
+      ],
+    },
+    {
+      id: "check03",
+      label: "Check 03: traffic / trust / deal roles",
+      criticality: "critical",
+      probeHint: "Yes/no: do they know which content owns traffic, trust, deal?",
+      placeholder: "Yes/no: do you know which content owns traffic, trust, deal?",
+      idkOptions: [
+        "No: every post tries to do everything.",
+        "Unclear: feel the split but cannot assign pieces.",
+        "Yes: can name which piece owns traffic, trust, or deal (they cite).",
+        "Or answer yes/no with one honest cite.",
+      ],
+    },
+    {
+      id: "check04",
+      label: "Check 04: topic-to-publish flow",
+      criticality: "critical",
+      probeHint:
+        "Yes/no: topic → script → shoot → edit → publish exists (solo counts if the flow exists).",
+      placeholder: "Yes/no: team (or solo) has topic → script → shoot → edit → publish flow?",
+      idkOptions: [
+        "No: each piece starts from scratch with no flow.",
+        "Unclear: some steps exist, others are improvised.",
+        "Yes: can name the steps they actually run (solo or team).",
+        "Or answer yes/no with one honest cite.",
+      ],
+    },
+    {
+      id: "check05",
+      label: "Check 05: weekly data adjust",
+      criticality: "critical",
+      probeHint: "Yes/no: can they adjust weekly from data?",
+      placeholder: "Yes/no: can you adjust weekly from data?",
+      idkOptions: [
+        "No: post and move on without weekly review.",
+        "Unclear: glance at numbers but do not change next week.",
+        "Yes: can name one weekly adjust habit (they cite).",
+        "Or answer yes/no with one honest cite.",
+      ],
+    },
+    {
+      id: "check06",
+      label: "Check 06: inquire / deliver / deal",
+      criticality: "critical",
+      probeHint:
+        "Yes/no: content connects inquire, delivery, and deal. Do not invent ManyChat as required doctrine.",
+      placeholder: "Yes/no: content already connects inquire, automated delivery, and deal?",
+      idkOptions: [
+        "No: comments or DMs do not connect to delivery or deal.",
+        "Unclear: inquiries happen but the path is messy.",
+        "Yes: can name how inquire → delivery → deal works today (they cite).",
+        "Or answer yes/no with one honest cite.",
+      ],
+    },
+  ],
+  idkOptionsBySlotId: {
+    context: [
+      "Solo founder shipping personal IP content (scaffold; they correct the niche).",
+      "Expert or educator with a small team (scaffold; they correct).",
+      "Operator building trust before offers (scaffold; they correct).",
+      "Or name what you do in one plain sentence.",
+    ],
+    check01: [
+      "No: still guessing which three content types fit.",
+      "Unclear: have favorites but not locked to three.",
+      "Yes: can name three types with one example each (they supply examples).",
+      "Or answer yes/no in their own words with one cite.",
+    ],
+    check02: [
+      "No: publishing is bursty or stopped.",
+      "Unclear: posted sometimes but not four stable weeks.",
+      "Yes: can point to about four continuous weeks (they cite).",
+      "Or answer yes/no with one honest cite.",
+    ],
+    check03: [
+      "No: every post tries to do everything.",
+      "Unclear: feel the split but cannot assign pieces.",
+      "Yes: can name which piece owns traffic, trust, or deal (they cite).",
+      "Or answer yes/no with one honest cite.",
+    ],
+    check04: [
+      "No: each piece starts from scratch with no flow.",
+      "Unclear: some steps exist, others are improvised.",
+      "Yes: can name the steps they actually run (solo or team).",
+      "Or answer yes/no with one honest cite.",
+    ],
+    check05: [
+      "No: post and move on without weekly review.",
+      "Unclear: glance at numbers but do not change next week.",
+      "Yes: can name one weekly adjust habit (they cite).",
+      "Or answer yes/no with one honest cite.",
+    ],
+    check06: [
+      "No: comments or DMs do not connect to delivery or deal.",
+      "Unclear: inquiries happen but the path is messy.",
+      "Yes: can name how inquire → delivery → deal works today (they cite).",
+      "Or answer yes/no with one honest cite.",
+    ],
+  },
   probeHints: [
     "自我诊断",
     "内容还是系统",
@@ -72,13 +231,15 @@ export const IP_STAGE_CHECK_PACK: ModulePack = {
   starterPrompt:
     "Using my intake, run SELF DIAGNOSTIC / 自我诊断: 内容还是系统, six yes/no checks, then name the unanswered checks as the next stage to fix.",
   chatOpener:
-    "Hey. Let's check what stage your IP is in right now.\n\n- sort whether you mainly own content, or a working system\n- Bring a honest yes or no on which content types fit you\n- Walk away with a clear next stage, not a lecture\n\nDo you already know which three content types fit you best?",
+    "Hey. I will help you check what stage your personal IP is in right now.\n\nHere is how we will work:\n- We collect honest yes or no checks, then I confirm before the dense scorecard\n- You share what you do and six short evidence answers\n- You leave with a stage read and ranked next actions, not a Reel script\n\nDo you already know which three content types fit you best?",
   chatOpenerZh:
-    "我会帮你看清现在个人 IP 卡在哪个阶段。\n\n- 咱们先看你现在主要有内容，还是已有能运转的系统\n- 你只要诚实回答哪些内容类型适合自己\n- 走的时候带走下一步，不听长篇理论\n\n你已经知道哪三种内容最适合自己吗？",
+    "我会帮你看清现在个人 IP 卡在哪个阶段。\n\n我们这样配合：\n- 先收齐诚实是/否检查，确认后再写密实记分卡\n- 你说你在做什么，并给六项简短证据\n- 你会带走阶段判断与排序后的下一步，不是 Reel 脚本\n\n你已经知道哪三种内容最适合自己吗？",
   systemOverlay: [
-    "## Module mode: SELF DIAGNOSTIC / 自我诊断 (IP Stage Check)",
+    "## Module mode: SELF DIAGNOSTIC / 自我诊断 (qualityRuntime Diagnosis)",
     "You are running the IP Stage Check tool (catalog id ip-stage-check) as AUG-D3 SELF DIAGNOSTIC for this user.",
     "Job: Answer the framing question 你现在拥有的，是内容还是系统？ then walk six yes/no checks. Unanswered checks ARE the next stage to fix.",
+    "Deliver a diagnostic brief with ranked next actions. Never an Instagram Reel script.",
+    "Lifecycle is hard: Collect → Confirm → Deliver → Refine. Do not dense-dump in Collect. Confirm before the first full scorecard unless they explicitly say just write it after criticals are filled.",
     "",
     "### Framing (hard)",
     "Open and return to: 内容还是系统 (content vs system readiness).",
@@ -93,27 +254,35 @@ export const IP_STAGE_CHECK_PACK: ModulePack = {
     "06. 内容已接询问/自动化交付/成交？ (inquire path, delivery automation, deal; do not invent ManyChat as required doctrine)",
     "Slide close: 答不出的地方，就是下一阶段最需要解决的问题.",
     "",
-    "### Conversational collect (chat-first; no form)",
-    "Need enough context to score the six checks. Ask 1 to 2 questions per turn.",
-    "Prefer yes/no + one-line evidence. If they already answered a check, do not re-ask it.",
-    "When enough is known, or the user says just write it, deliver the full diagnostic and name assumptions.",
+    "### Critical slots (Collect gate)",
+    "Need before Confirm: niche context plus honest answers (or clear Unclear) for checks 01 to 06.",
+    "Ask 1 to 2 questions per Collect turn. Prefer yes/no + one-line evidence. If they already answered a check, do not re-ask it.",
+    "If they say I do not know / blank, offer pack IDK choices. Do not invent niche facts or private metrics.",
+    "User owns niche facts. Jeff owns craft (SELF DIAGNOSTIC shape, ranked next actions).",
     "",
-    "### Output shape (scaffold; must track their answers)",
+    "### Confirm (before first dense Deliver)",
+    "Mirror the diagnostic plan in 2 to 4 bullets. Name assumptions honestly. Ask for go-ahead.",
+    "Do not write the full scorecard in Confirm.",
+    "",
+    "### Deliverable shape (dense diagnosis; not a script)",
     "1. Framing call: closer to 内容 or 系统, with 1 to 2 sentences grounded in their facts.",
     "2. Scorecard: each of 01 to 06 as Yes / No / Unclear, plus a short cite of their words.",
     "3. Next stage: the unanswered (No/Unclear) checks, in priority order. That list IS the next work. Do not replace it with a canned module roulette.",
     "4. Optional secondary steer only AFTER the scorecard: if useful, map one unanswered check lightly onto get seen → trust → deal (曝光→信任→成交). Never let ETC stage labels replace the six checks.",
     "5. At most one optional next tool name, and only if it clearly helps the top unanswered check. Prefer naming the check to fix over listing many modules.",
+    "6. End with named refine levers (clearer framing, re-ranked next checks, more concrete top action, and so on).",
+    "Ground every line in their concrete answers. Different inputs must produce different scorecards.",
+    "Write the whole diagnostic in the locked UI locale language.",
     "",
     "### Soft next-step rule (hard)",
     "Ban spinning a random next-module roulette (Standpoint Builder, Boss Brand Brief, Lean IP Setup, IG Reel Script, …) as the default ending.",
     "Default next step = the highest-priority unanswered diagnostic check, stated as a concrete action.",
     "",
+    "### Refine",
+    "After a dense diagnostic exists, tweak named levers only. Do not re-interrogate filled critical slots.",
+    "",
     "### Hard bans",
     "No overnight-fame. No inventing niche Jeff cases. Prefer fw.self-diagnostic; also pr.exposure-trust-conversion, pr.direction-beats-volume, rj.volume-equals-money, cl.content-not-ads when relevant.",
     "Thin: Generally → Jeff → steer.",
-    "",
-    "### After",
-    "One question that locks the top unanswered check they will fix next.",
   ].join("\n"),
 };

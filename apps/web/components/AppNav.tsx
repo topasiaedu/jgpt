@@ -4,19 +4,26 @@ import Image from "next/image";
 import Link from "next/link";
 
 import { useI18n } from "@/lib/i18n/LocaleProvider";
+import type { Locale } from "@/lib/i18n/messages";
 
-export type AppNavActive = "home" | "tools";
+export type AppNavActive = "home" | "tools" | "studio";
 
 type AppNavProps = {
   active: AppNavActive;
 };
 
 /**
- * Top product nav: Influence Engine Coach wordmark + All Tools.
- * Home free chat stays at `/` via the brand mark; no Ask Jeff nav item.
+ * Top product nav: brand mark (home) + All Tools + Hook Studio + locale toggle.
  */
 export default function AppNav({ active }: AppNavProps) {
-  const { t } = useI18n();
+  const { locale, setLocale, t } = useI18n();
+
+  /**
+   * Sets chrome locale from the language control.
+   */
+  function handleLocaleChange(next: Locale): void {
+    setLocale(next);
+  }
 
   return (
     <div className="app-nav-bar">
@@ -34,15 +41,50 @@ export default function AppNav({ active }: AppNavProps) {
           <span className="app-nav-tagline">{t("productTagline")}</span>
         </span>
       </Link>
-      <nav className="app-nav" aria-label="Primary">
-        <Link
-          href="/tools"
-          className={active === "tools" ? "app-nav-link app-nav-link-active" : "app-nav-link"}
-          aria-current={active === "tools" ? "page" : undefined}
-        >
-          {t("navTools")}
-        </Link>
-      </nav>
+      <div className="app-nav-actions">
+        <nav className="app-nav" aria-label="Primary">
+          <Link
+            href="/tools"
+            className={active === "tools" ? "app-nav-link app-nav-link-active" : "app-nav-link"}
+            aria-current={active === "tools" ? "page" : undefined}
+          >
+            {t("navTools")}
+          </Link>
+          <Link
+            href="/studio"
+            className={active === "studio" ? "app-nav-link app-nav-link-active" : "app-nav-link"}
+            aria-current={active === "studio" ? "page" : undefined}
+          >
+            {t("navStudio")}
+          </Link>
+        </nav>
+        <div className="locale-toggle" role="group" aria-label={t("localeToggleLabel")}>
+          <button
+            type="button"
+            className={
+              locale === "zh" ? "locale-toggle-btn locale-toggle-btn-active" : "locale-toggle-btn"
+            }
+            aria-pressed={locale === "zh"}
+            onClick={() => {
+              handleLocaleChange("zh");
+            }}
+          >
+            {t("localeToggleZh")}
+          </button>
+          <button
+            type="button"
+            className={
+              locale === "en" ? "locale-toggle-btn locale-toggle-btn-active" : "locale-toggle-btn"
+            }
+            aria-pressed={locale === "en"}
+            onClick={() => {
+              handleLocaleChange("en");
+            }}
+          >
+            {t("localeToggleEn")}
+          </button>
+        </div>
+      </div>
     </div>
   );
 }

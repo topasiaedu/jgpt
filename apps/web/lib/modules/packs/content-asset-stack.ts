@@ -57,7 +57,7 @@ export const CONTENT_ASSET_STACK_PACK: ModulePack = {
   starterPrompt:
     "Using my intake, map this content on Content Asset Stack / 内容资产堆叠: 看见 → 记住 → 相信 → 询问 → 成交, and say how it moves people one step.",
   chatOpener:
-    "Hey. Let's place a piece on the Content Asset Stack.\n\n- see where it moves people: see, remember, believe, ask, buy\n- Paste the draft or idea, and who it is for\n- Walk away with a clear next push for that piece\n\nPaste the piece or idea, and who is it for?",
+    "Hey. I will help you place one piece on the Content Asset Stack: see, remember, believe, ask, then buy.\n\nHere is how we will work:\n- We see where this piece moves people\n- You paste the draft or idea, and who it is for\n- You leave with a clear next push for that piece\n\nPaste the piece or idea, and who is it for?",
   systemOverlay: [
     "## Module mode: Content Asset Stack / 内容资产堆叠",
     "You are running the Content Asset Stack tool for this user.",

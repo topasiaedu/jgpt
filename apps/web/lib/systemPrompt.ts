@@ -16,6 +16,12 @@ export type SystemPromptInput = {
   coverage: "in" | "out";
   /** Chosen UI locale; locks all assistant output language. */
   locale: Locale;
+  /**
+   * Optional formatting override for qualityRuntime dense Deliver / Refine turns.
+   * When non-empty, appended under Formatting (hard) and wins over Max ~3 paragraphs.
+   * Home free chat and legacy module packs leave this undefined.
+   */
+  formattingOverride?: string;
 };
 
 /** Keep the system message lean so Vercel hobby/pro duration stays safe. */
@@ -85,7 +91,23 @@ function languageLockHardRules(locale: Locale): string {
  * Inline sound rules used when sound-profile.md cannot be read, and always
  * repeated as hard constraints so the model cannot drift into ChatGPT coach tone.
  */
-function inlineSoundHardRules(locale: Locale): string {
+function inlineSoundHardRules(locale: Locale, formattingOverride?: string): string {
+  const formattingBlock: string[] = [
+    "### Formatting (hard; readability)",
+    "Max ~3 short paragraphs, OR one short paragraph + a short numbered or bullet list (2 to 4 items).",
+    "Put a blank line between beats (paragraph / list / closing question).",
+    "Clarifying questions: ask at most 1 to 2 per turn. If you ask two in one turn, format them as a markdown bullet or numbered list (not a prose row).",
+    "Ban long interrogations (3+ questions / intake walls). Short clarifying-question bullets are allowed and preferred when asking two.",
+    "End with one direct question when you need an answer, or with the two question bullets above. No dense walls. No stacked bold headers.",
+    "Lists are encouraged for concrete moves and for clarifying questions (2 items).",
+  ];
+
+  const overrideTrimmed: string =
+    typeof formattingOverride === "string" ? formattingOverride.trim() : "";
+  if (overrideTrimmed.length > 0) {
+    formattingBlock.push(overrideTrimmed);
+  }
+
   return [
     "## Sound profile (priority)",
     languageLockHardRules(locale),
@@ -108,13 +130,7 @@ function inlineSoundHardRules(locale: Locale): string {
     "Use Jeff moves and pack steps to do the work. Prefer a deliverable or one next move over definitions.",
     "Ban curriculum dumps and openings like \"Framework X is…\" / \"OPENS is…\" / \"Brand Pillars means…\".",
     "Naming a Jeff move lightly once is fine when it steers the work. Explaining what the whole model is is not.",
-    "### Formatting (hard; readability)",
-    "Max ~3 short paragraphs, OR one short paragraph + a short numbered or bullet list (2 to 4 items).",
-    "Put a blank line between beats (paragraph / list / closing question).",
-    "Clarifying questions: ask at most 1 to 2 per turn. If you ask two in one turn, format them as a markdown bullet or numbered list (not a prose row).",
-    "Ban long interrogations (3+ questions / intake walls). Short clarifying-question bullets are allowed and preferred when asking two.",
-    "End with one direct question when you need an answer, or with the two question bullets above. No dense walls. No stacked bold headers.",
-    "Lists are encouraged for concrete moves and for clarifying questions (2 items).",
+    ...formattingBlock,
     "### Dash punctuation (hard ban; never output)",
     "Never output em dash (—), en dash (–), or spaced hyphen as punctuation (\"word - word\").",
     "Prefer a period, comma, colon, or a new sentence. Example: \"Get seen first. Nobody knows you yet.\" not \"Get seen first — nobody…\".",
@@ -155,7 +171,7 @@ export function buildSystemPrompt(input: SystemPromptInput): string {
   const doDont: string = clipVoicePack(loadVoiceMarkdown("do-dont.md"), 3000);
 
   const voiceSections: string[] = [
-    inlineSoundHardRules(input.locale),
+    inlineSoundHardRules(input.locale, input.formattingOverride),
     "",
   ];
 

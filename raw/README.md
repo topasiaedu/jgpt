@@ -6,7 +6,7 @@ Sources land here first. Compilers read them; they do not rewrite them in place.
 
 | Path | Put |
 | --- | --- |
-| [`agent-handoff/`](agent-handoff/) | Builder briefs (not teaching). **Current:** `09` / `10` reply + Artemo recommend + openers. Engineering SoT also: [`dev-wiki/accomplishments-and-decisions.md`](../dev-wiki/accomplishments-and-decisions.md). |
+| [`agent-handoff/`](agent-handoff/) | Builder briefs + product decisions (not teaching). **Current SoT:** `15` Hook Studio + Quality Runtime + UI cleanup. Context briefs: `13` / `11` / `09`. No `*agent-prompts*` under `raw/`. Engineering SoT also: [`dev-wiki/accomplishments-and-decisions.md`](../dev-wiki/accomplishments-and-decisions.md). |
 
 **Do not ingest `agent-handoff/` into `jeff-wiki` / `jeff-graph`.** It is builder process, not Jeff doctrine. After a ship, prefer folding the record into `dev-wiki/` and trimming paste-ready prompts if ingest risk returns.
 

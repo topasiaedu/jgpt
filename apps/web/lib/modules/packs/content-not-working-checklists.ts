@@ -61,9 +61,9 @@ export const CONTENT_NOT_WORKING_CHECKLISTS_PACK: ModulePack = {
   starterPrompt:
     "Using my intake, run Content Not Working Checklists A and/or B in exact Jeff order, cite my facts at each gate, and name next tools when ideas are empty.",
   chatOpener:
-    "Hey. Let's run the Content Not Working checklists.\n\n- check positioning before camera tricks\n- Bring the main symptom: nobody watching, no ideas to film, or both\n- Walk away with a diagnosis and the next fix\n\nIs the main symptom nobody watching, no ideas to film, or both?",
+    "Hey. I will help you run the Content Not Working checklists.\n\nHere is how we will work:\n- We check positioning before camera tricks\n- You name the main symptom: nobody watching, no ideas to film, or both\n- You leave with a diagnosis and the next fix\n\nIs the main symptom nobody watching, no ideas to film, or both?",
   chatOpenerZh:
-    "我会帮你跑「内容失效」两套清单。\n\n- 先定位，再谈拍摄技巧\n- 你带上主症状：没人看、没得拍，或两个都有\n- 走的时候带走诊断和下一步修正\n\n主症状是没人看、没得拍，还是两个都有？",
+    "我会帮你跑「内容失效」两套清单。\n\n我们这样配合：\n- 先看定位，再谈拍摄技巧\n- 你点名主症状：没人看、没得拍，或两个都有\n- 你会带走诊断和下一步修正\n\n主症状是没人看、没得拍，还是两个都有？",
   systemOverlay: [
     "## Module mode: Content Not Working Checklists",
     "You are running the Content Not Working Checklists tool (catalog id content-not-working-checklists) for this user.",

@@ -8,6 +8,9 @@
  * Scope: module chat only (home recommend stays out). Soft-fails to the
  * original reply if the judge errors or returns unusable JSON.
  *
+ * Q0 note: ask-match only. Family-contract / lifecycle golden evals land later
+ * (after Q1 fixtures). Do not treat this file as Collect→Confirm enforcement.
+ *
  * Env:
  * - OPENAI_QA_ENABLED: set to "0" / "false" / "off" to skip QA (default: on)
  * - OPENAI_QA_MODEL: judge model id (default: gpt-4.1-nano). Repair uses the

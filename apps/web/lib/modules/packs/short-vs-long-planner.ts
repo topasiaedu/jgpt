@@ -54,7 +54,7 @@ export const SHORT_VS_LONG_PLANNER_PACK: ModulePack = {
   starterPrompt:
     "Using my intake, plan which topics go short vs long, and how that supports see → trust without volume-equals-money thinking.",
   chatOpener:
-    "Hey. Let's plan which topics go short vs long.\n\n- serve see then trust, not volume-equals-money\n- Bring where you are in stage right now\n- Walk away with a simple short vs long map\n\nWhat stage are you in right now?",
+    "Hey. I will help you plan which topics go short versus long.\n\nHere is how we will work:\n- We serve get-seen then trust, not volume-equals-money\n- You share where you are in stage right now\n- You leave with a simple short versus long map\n\nWhat stage are you in right now?",
   systemOverlay: [
     "## Module mode: Short vs Long Planner",
     "You are running the Short vs Long Planner tool for this user.",

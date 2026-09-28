@@ -54,7 +54,7 @@ export const AD_VS_ASSET_CHECKER_PACK: ModulePack = {
   starterPrompt:
     "Using my intake, judge whether my draft reads like a sales ad or a content asset. Explain why, then rewrite toward asset while keeping the point.",
   chatOpener:
-    "Hey. Let's check if a draft reads like an ad or an asset.\n\n- diagnose the draft, then rewrite toward asset\n- Paste the draft you want checked\n- Walk away with a clearer asset version\n\nPaste the draft you want checked?",
+    "Hey. I will help you check whether a draft sounds like a hard sell ad, or like a useful content asset.\n\nHere is how we will work:\n- We diagnose the draft, then rewrite it toward an asset\n- You paste the draft you want checked\n- You leave with a clearer asset version\n\nPaste the draft you want checked.",
   systemOverlay: [
     "## Module mode: Ad vs Asset Checker",
     "You are running the Ad vs Asset Checker tool for this user.",

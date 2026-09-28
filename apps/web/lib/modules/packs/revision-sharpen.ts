@@ -55,7 +55,7 @@ export const REVISION_SHARPEN_PACK: ModulePack = {
   starterPrompt:
     "Using my intake, sharpen this draft: one diagnosis of what was wrong, one move you made, and the tightened version.",
   chatOpener:
-    "Hey. Let's sharpen a draft with one diagnosis and one move.\n\n- keep the one point that must survive\n- Paste the draft and name that must-keep point\n- Walk away with a tighter draft, not a full rewrite for fun\n\nPaste the draft, and what is the one point that must survive?",
+    "Hey. I will help you sharpen a draft with one diagnosis and one move.\n\nHere is how we will work:\n- We keep the one point that must survive\n- You paste the draft and name that must-keep point\n- You leave with a tighter draft, not a rewrite for fun\n\nPaste the draft, and what is the one point that must survive?",
   systemOverlay: [
     "## Module mode: Revision Sharpen",
     "You are running the Revision Sharpen tool for this user.",
