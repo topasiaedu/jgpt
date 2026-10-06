@@ -10,6 +10,7 @@ import {
   buildQualitySlotsFromIntake,
 } from "@/lib/modules/qualityRuntime/familyOverlay";
 import { getFamilyDeliverableContract } from "@/lib/modules/qualityRuntime/families";
+import { SCRIPT_SPOKEN_TIMING_CALIBRATION } from "@/lib/modules/qualityRuntime/spokenTiming";
 import type { QualityFamilyId, QualitySlot } from "@/lib/modules/qualityRuntime/types";
 import type { ModulePack } from "@/lib/modules/types";
 
@@ -132,6 +133,7 @@ export function injectLifecycleIntoOverlay(
     "Write the whole deliverable in the locked UI locale language.",
     "End with named refine levers.",
     "",
+    ...(spec.qualityFamily === "script-spoken" ? [SCRIPT_SPOKEN_TIMING_CALIBRATION, ""] : []),
     "### Refine",
     "After a dense deliverable exists, tweak named levers only. Do not re-interrogate filled critical slots.",
     `Named levers: ${spec.refineLevers.join("; ")}.`,

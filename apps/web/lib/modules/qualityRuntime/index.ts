@@ -49,6 +49,11 @@ export {
 export { buildQualityRuntimeInjection } from "@/lib/modules/qualityRuntime/inject";
 
 export {
+  SCRIPT_SPOKEN_DENSITY_NOTE,
+  SCRIPT_SPOKEN_TIMING_CALIBRATION,
+} from "@/lib/modules/qualityRuntime/spokenTiming";
+
+export {
   buildLifecycleOpener,
   buildLifecycleOpenerZh,
   buildQualitySlotsFromIntake,

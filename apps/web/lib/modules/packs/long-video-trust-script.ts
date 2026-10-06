@@ -241,6 +241,7 @@ export const LONG_VIDEO_TRUST_SCRIPT_PACK: ModulePack = {
     "",
     "### Deliverable shape (dense; 5 to 15 minutes)",
     "Frame as a trust path, not stock YouTube boilerplate (no generic intro/hooks/outro theater).",
+    "If you stamp beat timestamps or a total runtime, spoken lines must fill that time (EN ~130 to 160 WPM; ZH ~220 to 280 CPM). Do not claim 3 to 15 minutes on a thin stub.",
     "1. Open: why this matters for trust (align to Trust Engine when useful: 看见你 → 理解你 → 相信你 → 问你 → 买你).",
     "2. Teaching sections (3 to 5): speakable beats.",
     "3. Trust Evidence placement (required): label which sections prove 结果证据 / 过程证据 / 角色证据 / 人品证据. At least two types must appear; name gaps honestly.",

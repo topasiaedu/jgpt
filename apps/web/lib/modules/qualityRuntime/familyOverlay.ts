@@ -5,6 +5,7 @@
  */
 
 import { getFamilyDeliverableContract } from "@/lib/modules/qualityRuntime/families";
+import { SCRIPT_SPOKEN_TIMING_CALIBRATION } from "@/lib/modules/qualityRuntime/spokenTiming";
 import type { QualityFamilyId, QualitySlot } from "@/lib/modules/qualityRuntime/types";
 import type { IntakeField } from "@/lib/modules/types";
 
@@ -138,6 +139,13 @@ export function joinQualityRuntimeOverlay(parts: FamilyOverlayParts): string {
     "Write the whole deliverable in the locked UI locale language.",
     "End with named refine levers.",
     "",
+  );
+
+  if (parts.familyId === "script-spoken") {
+    lines.push(SCRIPT_SPOKEN_TIMING_CALIBRATION, "");
+  }
+
+  lines.push(
     "### Refine",
     "After a dense deliverable exists, tweak named levers only. Do not re-interrogate filled critical slots.",
     "Named levers:",

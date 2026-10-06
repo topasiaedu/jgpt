@@ -17,6 +17,7 @@ import {
   resolveQualitySlots,
 } from "@/lib/modules/qualityRuntime/slots";
 import { buildReplyBudgetInjection } from "@/lib/modules/qualityRuntime/budgets";
+import { SCRIPT_SPOKEN_TIMING_CALIBRATION } from "@/lib/modules/qualityRuntime/spokenTiming";
 import type {
   LifecycleDetection,
   LifecycleMode,
@@ -388,6 +389,9 @@ export function buildLifecycleModeRules(options: {
           `Family deliverable job: ${contract.deliverableJob}`,
           `Density: ${contract.densityNote}`,
           `Section order stub: ${contract.sectionOrder.join(" → ")}`,
+          ...(options.pack.qualityFamily === "script-spoken"
+            ? ["", SCRIPT_SPOKEN_TIMING_CALIBRATION]
+            : []),
         ]
       : ["Family deliverable contract: stub not selected yet; follow pack overlay job shape."];
 
@@ -441,6 +445,11 @@ export function buildLifecycleModeRules(options: {
           "Produce the full job-shaped dense deliverable now.",
           `Follow section order: ${sectionOrder.join(" → ")}`,
           "Ground every beat in their concrete answers. Name assumptions where gaps remain.",
+          ...(options.pack.qualityFamily === "script-spoken"
+            ? [
+                "Spoken timing: claimed minutes/seconds must match spoken volume (EN ~130 to 160 WPM; ZH ~220 to 280 CPM).",
+              ]
+            : []),
           "End with named refine levers they can pull next:",
           ...levers.map((lever) => `- ${lever}`),
           "Do not restart a full interrogation.",
@@ -452,6 +461,11 @@ export function buildLifecycleModeRules(options: {
           "Do NOT re-ask filled critical slots. Do NOT restart Collect from scratch.",
           "Named levers:",
           ...levers.map((lever) => `- ${lever}`),
+          ...(options.pack.qualityFamily === "script-spoken"
+            ? [
+                "If they challenge WPM/timing/duration, re-check spoken volume vs claimed runtime and expand or shorten claims.",
+              ]
+            : []),
           "Keep changes grounded in their prior answers.",
         ];
       default: {

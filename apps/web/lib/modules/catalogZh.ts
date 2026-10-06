@@ -392,7 +392,7 @@ export const MODULE_ZH_COPY: Record<string, ModuleZhCopy> = {
     ].join("\n\n"),
   },
   "three-c-method": {
-    title: "Three C 方法",
+    title: "三C方法",
     description: [
       "做什么：给外向老板做会起反应的内容：Controversial / Common interest / Conflict，再明确站边。",
       "需要准备：谁在看、一个争议观点、市场正在讨论的事、值得公开谈的冲突。",
@@ -401,7 +401,7 @@ export const MODULE_ZH_COPY: Record<string, ModuleZhCopy> = {
     ].join("\n\n"),
   },
   "three-r-method": {
-    title: "Three R 方法",
+    title: "三R方法",
     description: [
       "做什么：给内敛老板做先读后说的例行：新闻/书/文章，再加上你的观点与经历。",
       "需要准备：行业、这周能读什么、来源没写到的你的实战看法。",
@@ -428,12 +428,12 @@ export const MODULE_ZH_COPY: Record<string, ModuleZhCopy> = {
     ].join("\n\n"),
   },
   "positioning-four-questions": {
-    title: "四问加品类之王",
+    title: "一句话定位法",
     description: [
-      "做什么：答完四问，再钉「你最什么」，窄到能称王的真实品类。",
-      "需要准备：卖什么、卖给谁、为什么卖、你最什么。",
+      "做什么：回答 4 个问题把生意切细，做到细分第一，让人一句话就能帮你转介绍。",
+      "需要准备：卖什么、卖给谁、为什么卖，以及你在这个细分里最强的一点。",
       "何时使用：一句话介绍不出来，或收窄像在赶客时。",
-      "你会得到：四问答案、品类之王句，以及 Who are you / Why you。与三行地图相关但问题集不同。",
+      "你会得到：四个问题的清楚答案、一句别人能帮你转介绍的定位，以及 Who are you / Why you。跟三行地图相关，但问法不一样。",
     ].join("\n\n"),
   },
   "brand-stance-model": {

@@ -3,6 +3,7 @@
  * Minimal Q0 registry; Q1+ packs implement overlays against these shapes.
  */
 
+import { SCRIPT_SPOKEN_DENSITY_NOTE } from "@/lib/modules/qualityRuntime/spokenTiming";
 import type { FamilyDeliverableContract, QualityFamilyId } from "@/lib/modules/qualityRuntime/types";
 
 /**
@@ -48,7 +49,7 @@ export const FAMILY_DELIVERABLE_CONTRACTS: Record<QualityFamilyId, FamilyDeliver
     familyId: "script-spoken",
     deliverableJob: "Shootable spoken script at about 60 seconds and above.",
     sectionOrder: ["timed-beats", "on-screen-text", "soft-step", "named-levers"],
-    densityNote: "Dense speakable beats (~60s+ default). Confirm before first full script.",
+    densityNote: SCRIPT_SPOKEN_DENSITY_NOTE,
     requireConfirmBeforeDeliver: true,
   },
   "hook-line": {

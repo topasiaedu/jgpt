@@ -283,7 +283,7 @@ export const IG_REEL_SCRIPT_PACK: ModulePack = {
     "6. On-screen text: short cues per beat.",
     "7. Optional: one 四种内容资产 tag for the whole Reel.",
     "8. End with named refine levers (tighter Opening, stronger Evidence, softer Step, and so on).",
-    "Timing across beats should read as about 60 seconds and above, not a thin short cut.",
+    "Timing across beats should read as about 60 seconds and above, not a thin short cut. Spoken volume must match: EN ~130 to 160 words for ~60s; ZH ~220 to 280 characters for ~60s.",
     "Ground every beat in their concrete answers. Different inputs must produce different scripts.",
     "Write the whole script in the locked UI locale language.",
     "",
