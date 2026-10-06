@@ -4,24 +4,18 @@
 
 These files are builder briefs and **product / repo decision records** for work on `apps/web`. They sit under `raw/` so they stay out of the compiled teaching vault.
 
-**Agent copy-paste prompt files (`*agent-prompts*`) were removed** so they cannot enter wiki ingest. Do not re-add paste-ready agent prompts under `raw/`.
-
 | File | Use |
 | --- | --- |
-| [15-hook-studio-and-quality-runtime-decisions.md](15-hook-studio-and-quality-runtime-decisions.md) | **Current SoT:** decisions + shipped state for Hook Studio, Quality Runtime (Q0–Q5), and recent UI cleanup |
-| [13-artemo-quality-runtime-what-we-are-doing.md](13-artemo-quality-runtime-what-we-are-doing.md) | Context brief: Artemo-level Quality Runtime + family migration (platform spine + pack templates) |
-| [11-hook-studio-ux-what-we-are-doing.md](11-hook-studio-ux-what-we-are-doing.md) | Context brief: Hook Studio on Hook Formula (Maria-shaped UX, Jeff doctrine) |
-| [09-reply-and-recommend-ux-what-we-are-doing.md](09-reply-and-recommend-ux-what-we-are-doing.md) | Prior: reply brevity, Artemo under-input recommend, opener + question bullets |
+| [16-feedback-round-what-we-are-doing.md](16-feedback-round-what-we-are-doing.md) | **Current SoT for this round:** ZH 口语化, list numbering, one-line openers, clarity, Jeff's <<framework>>, anti-derail, remove Hook Studio |
+| [17-feedback-round-agent-prompts.md](17-feedback-round-agent-prompts.md) | **Paste-ready prompts** for Agents A–E (temporary; not teaching doctrine) |
+| [15-hook-studio-and-quality-runtime-decisions.md](15-hook-studio-and-quality-runtime-decisions.md) | Prior shipped state for Hook Studio + Quality Runtime (history; doc 16 wins on Hook Studio removal) |
+| [13-artemo-quality-runtime-what-we-are-doing.md](13-artemo-quality-runtime-what-we-are-doing.md) | Context: Quality Runtime family migration |
+| [11-hook-studio-ux-what-we-are-doing.md](11-hook-studio-ux-what-we-are-doing.md) | Context: original Hook Studio UX brief (superseded on removal by 16) |
+| [09-reply-and-recommend-ux-what-we-are-doing.md](09-reply-and-recommend-ux-what-we-are-doing.md) | Prior: reply brevity / recommend UX |
 
-Older numbered briefs (`01` to `08`, and all `*agent-prompts*` including former `10` / `12` / `14`) were removed from disk after ships. Prefer `dev-wiki/accomplishments-and-decisions.md` and dated `dev-wiki/sessions/` pages for broader engineering history.
+## Prompt policy (2026-10-06)
 
-Engineering SoT for decisions also remains `dev-wiki/`. Prefer durable decision docs (like `15`) over chat history. Prefer `dev-wiki/` when folding long-lived engineering notes outside this folder.
-
-**Quality Runtime note (2026-09-29):** Both layers required (code spine + per-pack overlays that fit family templates). No soft “ask denser” bandaid across 55 overlays. Script family defaults ~60s+. Q0 → Q5 shipped; see doc `15`.
-
-**Hook Studio note (2026-09-28 / 29):** Top-nav `/studio`, Jeff Hook Formula brain, Maria UX shape only, Studio batch force-Deliver. See docs `11` and `15`.
-
-**Reply / recommend note (2026-09-22):** Brief `09` locks: less framework lecturing, Artemo-style home recommend under the composer (debounced), conversational tool openers with bullets, clarifying questions as bullets when asking two.
+Paste-ready agent prompts were previously removed from `raw/` to avoid wiki ingest mistakes. **Doc 17 re-adds them for this feedback round by explicit human request.** Keep the "not teaching / do not ingest" banner. Prefer deleting or archiving `*agent-prompts*` after the round ships if you want the old policy back.
 
 ## Access wall
 

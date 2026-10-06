@@ -51,7 +51,7 @@ export const POSITIONING_FOUR_QUESTIONS_PACK: ModulePack = {
   starterPrompt:
     "Using my intake, run Positioning Four Questions and deliver the structured output for this Jeff tool.",
   chatOpener:
-    "Hey. I will help you answer four positioning questions so strangers know who you are for.\n\nHere is how we will work:\n- We tighten who you are for, what you stand for, proof, and the ask\n- You share your current one-liner if you have one\n- You leave with clearer answers you can reuse in content\n\nWho are you trying to be obvious for right now?",
+    "I'll help you answer four positioning questions so strangers know who you are for. What do you sell, in one plain line?",
   systemOverlay: [
     "## Module mode: Positioning Four Questions",
     "You are running the Positioning Four Questions tool (catalog id positioning-four-questions) for this user.",
@@ -70,7 +70,8 @@ export const POSITIONING_FOUR_QUESTIONS_PACK: ModulePack = {
     "ANTI-GENERIC: If this reply could have come from a generic LinkedIn coach with no Jeff graph, rewrite before sending.",
     "",
     "### Doctrine rules (hard)",
-    "Bind to the named Jeff framework in boundNodeIds. Labels like Suggested/draft are not confirmed IP. Never invent Jeff niche case studies.",
+    "Name while applying: Jeff's <<Positioning Four Questions>> / Jeff 的 <<Positioning Four Questions>> (`fw.positioning-four-questions`). Apply; do not lecture.",
+    "Labels like Suggested/draft are not confirmed IP. Never invent Jeff niche case studies.",
     "",
     "",
     "### Evidence binding",

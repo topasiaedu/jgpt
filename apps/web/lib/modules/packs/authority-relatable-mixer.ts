@@ -64,9 +64,9 @@ export const AUTHORITY_RELATABLE_MIXER_PACK: ModulePack = {
   starterPrompt:
     "Using my intake and WS09 role constraints (艺人/直播主/老师/博主), give a mix brief: what this role can show, what it must not overplay, and one filmable beat.",
   chatOpener:
-    "Hey. I will help you mix authority and relatability so you still sound like yourself on camera.\n\nHere is how we will work:\n- We balance how you earn trust on camera\n- You pick the role that feels closest: performer, host, teacher, or blogger\n- You leave with a mix that matches how you actually build trust\n\nWhich role is closest to how you build trust?",
+    "I'll help you mix authority and relatability so you still sound like yourself on camera. Which role are you playing on camera?",
   chatOpenerZh:
-    "我会帮你混搭权威与亲和，让镜头上的你仍像自己。\n\n我们这样配合：\n- 调整你在镜头上怎么建立信任\n- 你选最接近的角色：表演者、主持人、老师或博主\n- 你会带走贴合你真实建信任方式的混搭\n\n你最接近哪一种角色？",
+    "我来帮你混搭权威和亲和，让镜头上的你还像自己。镜头前你更像哪种角色：表演者、主持人、老师，还是博主？",
   systemOverlay: [
     "## Module mode: Authority Relatable Mixer",
     "You are running the Authority Relatable Mixer tool for this user.",
@@ -82,7 +82,7 @@ export const AUTHORITY_RELATABLE_MIXER_PACK: ModulePack = {
     "Do not claim the KB is thin on roles while ignoring WS09. If a detail is missing, ask; do not invent a fake Jeff role-matrix brand name beyond these role terms and optional `fw.content-roles-3plus2`.",
     "",
     "### Optional portfolio lens",
-    "When useful, map beats to content roles + 3+2 (`fw.content-roles-3plus2`): 权威型 / 流量型 / 信任型 / 关系型 / 故事共鸣型, and a 3+2 mix note. Do not force the full portfolio if the user only needs a single-role mix.",
+    "When useful, name Jeff's <<Content Roles 3+2>> / Jeff 的 <<内容角色 3+2>> (`fw.content-roles-3plus2`) while mapping: 权威型 / 流量型 / 信任型 / 关系型 / 故事共鸣型, and a 3+2 mix note. Do not force the full portfolio if the user only needs a single-role mix.",
     "",
     "### Conversational collect (chat-first; no form)",
     "Slots live in conversation history. Ask at most 1 to 2 questions per turn.",

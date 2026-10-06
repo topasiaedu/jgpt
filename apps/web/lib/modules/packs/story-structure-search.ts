@@ -179,9 +179,9 @@ export const STORY_STRUCTURE_SEARCH_PACK: ModulePack = {
   starterPrompt:
     "Using my intake, run Story Structure (Problem to Search) and deliver a dense five-beat spoken outline for this Jeff tool.",
   chatOpener:
-    "Hey. I will help you build a dense longer story structure: Problem, Search, Story, Solution, What next.\n\nHere is how we will work:\n- We collect criticals, then I confirm the plan before the full outline\n- You share the problem, the search, the solution, and what next\n- You leave with a teachable story arc (Search creates the story)\n\nWhat problem opens the story?",
+    "I'll help you build a dense longer story structure: Problem, Search, Story, Solution, What next. What problem opens the story?",
   chatOpenerZh:
-    "我会帮你搭密实更长的故事结构：问题、寻找、故事、解法、下一步。\n\n我们这样配合：\n- 先收齐关键信息，确认计划后再写完整大纲\n- 你说问题、寻找、解法、观众下一步\n- 你会带走能教学的故事弧（寻找创造故事）\n\n打开故事的问题是什么？",
+    "我来帮你搭密实更长的故事结构：问题、寻找、故事、解法、下一步。打开故事的问题是什么？",
   systemOverlay: [
     "## Module mode: Story Structure (Problem to Search) (qualityRuntime Script/Spoken)",
     "You are running the Story Structure (Problem to Search) tool (catalog id story-structure-search) for this user.",
@@ -222,7 +222,8 @@ export const STORY_STRUCTURE_SEARCH_PACK: ModulePack = {
     "After a dense outline exists, tweak named levers only. Do not re-interrogate filled critical slots.",
     "",
     "### Hard bans",
-    "Bind to fw.story-structure-search. Never invent Jeff niche case studies as doctrine. No overnight-fame.",
+    "Name while applying: Jeff's <<Story Structure (Problem to Search)>> / Jeff 的 <<Story Structure (Problem to Search)>> (`fw.story-structure-search`). Apply; do not lecture.",
+    "Never invent Jeff niche case studies as doctrine. No overnight-fame.",
     "Prefer boundNodeIds when in the evidence pack. Sources only from probe / probe_jeff.",
   ].join("\n"),
 };

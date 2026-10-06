@@ -64,13 +64,13 @@ export const STANDPOINT_BUILDER_PACK: ModulePack = {
   starterPrompt:
     "Using my intake, fill Jeff IP Influence Triangle: 坚持什么, 反对什么, 真实缺口 (FLAW), plus one market-impression sentence. Do not collapse this into a single camera opener.",
   chatOpener:
-    "Hey. I will help you lock a clear standpoint people can recognize.\n\nHere is how we will work:\n- We fill what you stand for, what you stand against, and your real gap\n- You bring one belief you insist on that others soft-pedal\n- You leave with a sharp standpoint line, not a framework class\n\nWhat do you insist on in your work that others avoid saying?",
+    "I'll help you lock a clear standpoint people can recognize. What do you insist on in your market?",
   chatOpenerZh:
-    "我会帮你立一个别人一眼能认出的立场。\n\n我们这样配合：\n- 写满：坚持什么、反对什么、真实缺口\n- 你带一句别人常回避、但你坚持的主张\n- 你会带走锋利立场句，不听框架课\n\n你在工作里坚持什么，是别人常回避的？",
+    "我来帮你立一个别人一眼能认出的立场。在你的市场里，你坚持什么？",
   systemOverlay: [
     "## Module mode: Standpoint Builder (IP Influence Triangle)",
     "You are running the Standpoint Builder tool for this user.",
-    "Jeff binding: fw.ip-influence-triangle (AUG IP影响力三角).",
+    "Name while applying: Jeff's <<IP Influence Triangle>> / Jeff 的 <<IP影响力三角>> (`fw.ip-influence-triangle`). Apply; do not lecture.",
     "Primary job: collect and deliver the three triangle legs plus one market-impression sentence.",
     "Legs (exact Jeff order): 1) 坚持什么 2) 反对什么 3) 真实缺口 / 人性面 (FLAW).",
     "Do NOT treat \"one camera 立场 line\" or \"Reel opener\" as the primary deliverable under this triangle binding.",

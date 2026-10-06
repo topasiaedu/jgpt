@@ -80,10 +80,7 @@ export function assertHookOrReplyPackContract(
       overlay.includes("Confirm"),
       `${pack.moduleId} Hook/Line overlay must name Confirm`,
     );
-    assert(
-      /confirm|确认/i.test(openerBlob),
-      `${pack.moduleId} Hook/Line openers should mention confirm before dense deliver`,
-    );
+    // Chat openers are one job line + one ask; Confirm lives in overlay / lifecycle, not opener copy.
   }
 
   return criticalIds;

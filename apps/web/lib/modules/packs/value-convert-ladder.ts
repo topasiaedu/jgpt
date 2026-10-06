@@ -63,13 +63,13 @@ export const VALUE_CONVERT_LADDER_PACK: ModulePack = {
   starterPrompt:
     "Using my intake, name the Jeff 客户购买路径 (paths 1 to 7) that fits, map where people drop off on that path, and prescribe the next content moves. No generic rung ladder theater.",
   chatOpener:
-    "Hey. I will help you map where people drop on the path to buy.\n\nHere is how we will work:\n- We name your customer path and the weak step\n- You share what you teach for free and what you sell\n- You leave with a drop-off call, not a funnel theory class\n\nWhat do you teach for free, and what do you sell?",
+    "I'll help you map where people drop on the path to buy. What do you teach for free right now?",
   chatOpenerZh:
-    "我会帮你看客户购买路径上掉在哪。\n\n我们这样配合：\n- 点名路径，并标出弱的一步\n- 你说免费教什么、卖的是什么\n- 你会带走掉点判断，不听漏斗理论课\n\n你免费教什么，卖的是什么？",
+    "我来帮你看客户购买路径上掉在哪。你现在免费教什么？",
   systemOverlay: [
     "## Module mode: Value → Convert Ladder (客户购买路径)",
     "You are running the Value → Convert Ladder tool for this user.",
-    "Exact Jeff framework: Customer purchase paths 1 to 7 / 客户购买路径 (`fw.customer-purchase-paths`).",
+    "Name while applying: Jeff's <<客户购买路径>> / Jeff 的 <<客户购买路径>> (`fw.customer-purchase-paths`). Apply; do not lecture.",
     "Job: name the path, map drop-off, and prescribe content moves so convert does not appear out of nowhere.",
     "",
     "### Path vocabulary (hard; use Jeff terms)",

@@ -154,9 +154,9 @@ export const HOT_TAKE_SCRIPT_PACK: ModulePack = {
   starterPrompt:
     "Using my intake, write a dense ~60s+ hot-take script with stance, reason, and a landing that protects relationship with the viewer. Keep it advice, not ego.",
   chatOpener:
-    "Hey. I will help you turn a sharp claim into a dense hot-take script at about 60 seconds and above that lands as advice, not a flex.\n\nHere is how we will work:\n- We collect a few criticals, then I confirm the plan before the full cut\n- You bring one claim, what it challenges, and the practical truth\n- You leave with a speakable script you can film\n\nWhat claim are you willing to own in one sentence?",
+    "I'll help you turn a sharp claim into a dense hot-take script at about 60 seconds and above that lands as advice, not a flex. What claim are you willing to own in one sentence?",
   chatOpenerZh:
-    "我会帮你把锋利主张写成密实热观点脚本，大约 60 秒及以上，落点是建议，不是炫耀。\n\n我们这样配合：\n- 先收齐关键信息，确认计划后再写完整版\n- 你带一句主张、它挑战什么、以及实用真相\n- 你会带走能直接拍的口播脚本\n\n你愿意用一句话认领的主张是什么？",
+    "我来帮你把锋利主张写成密实热观点脚本，大约 60 秒及以上，落点是建议，不是炫耀。你愿意用一句话认领的主张是什么？",
   systemOverlay: [
     "## Module mode: Hot Take Script (qualityRuntime Script/Spoken)",
     "You are running the Hot Take Script tool for this user.",

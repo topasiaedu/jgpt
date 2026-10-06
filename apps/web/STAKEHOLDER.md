@@ -26,7 +26,7 @@ Footer: quiet draft disclaimer + soft **线上学完整系统 / Learn the system
 ## How to try home → recommend → tool
 
 1. Open the shared Vercel URL (or run locally: see README).
-2. Stay on **Ask Jeff**, or open `/`. First visit may show a short dark brand moment; dismiss or tap Continue once.
+2. Stay on **Ask Jeff**, or open `/`. You land directly on the home chat experience.
 3. Answer「今天要做什么 IP 内容？」in the composer (or tap an example). You should see **2 to 4** recommended tool cards under the reply when intent is clear.
 4. Open a recommended card. URL may include `?from=home&q=…`. You land in a **fresh** tool chat with a conversational opener (and a short note of your home intent when `q` is present).
 5. Reply in chat. Expect 1 to 2 clarifying questions per turn, then a deliverable in that same chat. Sources chip + panel still apply.

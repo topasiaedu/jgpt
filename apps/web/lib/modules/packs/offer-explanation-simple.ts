@@ -56,7 +56,7 @@ export const OFFER_EXPLANATION_SIMPLE_PACK: ModulePack = {
   starterPrompt:
     "Using my intake, write a plain-language offer paragraph and a shorter line. No invented funnel or pricing architecture.",
   chatOpener:
-    "Hey. I will help you explain your offer in plain language a stranger can understand.\n\nHere is how we will work:\n- We write a clear paragraph without invented funnel jargon\n- You share what you sell and who it is for\n- You leave with words you can reuse\n\nWhat do you sell, and who is it for?",
+    "I'll help you explain your offer in plain language a stranger can understand. What do you sell, in plain words?",
   systemOverlay: [
     "## Module mode: Offer Explanation (Simple)",
     "You are running the Offer Explanation (Simple) tool for this user.",

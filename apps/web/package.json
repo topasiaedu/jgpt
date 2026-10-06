@@ -14,6 +14,7 @@
     "test:module-probe": "npx --yes tsx scripts/test-module-probe.ts",
     "test:strip-dash": "npx --yes tsx scripts/test-strip-dash.ts",
     "test:sanitize-reply": "npx --yes tsx scripts/test-sanitize-reply.ts",
+    "test:assistant-lists": "npx --yes tsx scripts/test-assistant-message-lists.ts",
     "test:response-qa": "npx --yes tsx scripts/test-response-qa.ts",
     "test:long-chat": "npx --yes tsx scripts/test-long-chat.ts"
   },

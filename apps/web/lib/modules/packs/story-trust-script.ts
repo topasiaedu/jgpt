@@ -230,13 +230,13 @@ export const STORY_TRUST_SCRIPT_PACK: ModulePack = {
   starterPrompt:
     "Using my intake, write a dense S.T.O.R.Y trust script (Situation, Turning Point, Obstacle, Reason, Yield) using only MY story facts. Illustrative for MY practice; do not invent Jeff case studies.",
   chatOpener:
-    "Hey. I will help you shape a dense story that builds trust, using your facts only.\n\nHere is how we will work:\n- We collect the S.T.O.R.Y criticals, then I confirm before the full script\n- You share Situation through Yield in plain words\n- You leave with a speakable trust script people can believe\n\nWhat was the starting situation?",
+    "I'll help you shape a dense story that builds trust, using your facts only. What was the starting situation?",
   chatOpenerZh:
-    "我会帮你把故事写成密实、能建立信任的脚本，只用你的事实。\n\n我们这样配合：\n- 先收齐 S.T.O.R.Y 关键信息，确认后再写完整版\n- 你用白话说清从起点处境到你要影响谁\n- 你会带走别人愿意相信的口播故事脚本\n\n起点处境是什么？",
+    "我来帮你把故事写成密实、能建立信任的脚本，只用你的事实。起点处境是什么？",
   systemOverlay: [
     "## Module mode: Story Trust Script (S.T.O.R.Y) (qualityRuntime Script/Spoken)",
     "You are running the Story Trust Script tool for this user.",
-    "Exact Jeff framework: S.T.O.R.Y Founder Story (`fw.story-founder-story`).",
+    "Name while applying: Jeff's <<S.T.O.R.Y Founder Story>> / Jeff 的 <<S.T.O.R.Y Founder Story>> (`fw.story-founder-story`). Apply; do not lecture.",
     "Job: turn their personal or client story into a dense trust-path script, not a resume and not a 15 second ad.",
     "Lifecycle is hard: Collect → Confirm → Deliver → Refine. Do not dense-dump in Collect. Confirm before the first full script unless they explicitly say just write it after criticals are filled.",
     "Steps (use these names; do not invent Setup / Turn / Belief land):",

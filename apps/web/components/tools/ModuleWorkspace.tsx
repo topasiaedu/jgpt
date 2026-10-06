@@ -22,7 +22,7 @@ import type { ModuleDefinition } from "@/lib/modules/types";
 
 type ModuleWorkspaceProps = {
   module: ModuleDefinition;
-  /** Raw Next.js searchParams for optional `?from=home|studio&q=` handoff. */
+  /** Raw Next.js searchParams for optional `?from=home&q=` handoff. */
   searchParams?: {
     from?: string | string[];
     q?: string | string[];
@@ -32,8 +32,7 @@ type ModuleWorkspaceProps = {
 /**
  * Module route body: land straight in chat with seeded opener.
  * Intro modal is on demand only (never auto-shown on land).
- * Optional home/studio intent via `?from=…&q=` (not a form).
- * Hook Studio batch UI is a top-nav page at `/studio`, not merged here.
+ * Optional home intent via `?from=home&q=` (not a form).
  */
 export default function ModuleWorkspace({
   module,

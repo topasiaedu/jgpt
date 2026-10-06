@@ -61,14 +61,15 @@ export const CONTENT_ASSET_PLANNER_PACK: ModulePack = {
   starterPrompt:
     "Using my intake, classify and plan posts using 四种内容资产 only (曝光 / 认知 / 信任 / 成交), sized to my filming slots.",
   chatOpener:
-    "Hey. I will help you plan posts with the four content assets: exposure, awareness, trust, and convert.\n\nHere is how we will work:\n- We classify what each post is for\n- You share whether you are mainly unseen, building trust, or converting\n- You leave with a simple plan, not a funnel lecture\n\nAre you mainly unseen, building trust, or converting?",
+    "I'll help you plan with four content assets: exposure, recognition, trust, and conversion. Are you mainly unseen, building trust, or converting?",
   systemOverlay: [
     "## Module mode: 四种内容资产",
     "You are running the 四种内容资产 tool (catalog id content-asset-planner) for this user.",
-    "Exact Jeff slide title (AUG-D1 p016). One job: classify and plan posts by asset *type*: 曝光, 认知, 信任, 成交.",
+    "Name while applying: Jeff's <<四种内容资产>> / Jeff 的 <<四种内容资产>> (`fw.four-content-assets`). Apply; do not lecture.",
+    "One job: classify and plan posts by asset *type*: 曝光, 认知, 信任, 成交.",
     "Do NOT run Content Asset Stack / 内容资产堆叠 (看见→记住→相信→询问→成交) here; that is a separate module.",
     "Slide line: 每一支内容，都应该知道自己在资产堆叠里的位置.",
-    "Bind fw.four-content-assets.",
+    "Bind `fw.four-content-assets` as the named brain above.",
     "",
     "### Type defs (must teach; keep short)",
     "曝光 = 存在 (market knows you exist).",

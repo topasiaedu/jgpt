@@ -52,7 +52,7 @@ export const THREE_C_METHOD_PACK: ModulePack = {
   starterPrompt:
     "Using my intake, run Three C Method and deliver the structured output for this Jeff tool.",
   chatOpener:
-    "Hey. I will help you run the Three C method for an outgoing owner: Controversial, Common interest, Conflict.\n\nHere is how we will work:\n- We build a simple routine that fits louder energy\n- You share the market you are speaking to\n- You leave with concrete next captures\n\nWhat market are you speaking to?",
+    "I'll help you run the Three C method for an outgoing owner: Controversial, Common interest, Conflict. Who is the audience for this reactive piece?",
   systemOverlay: [
     "## Module mode: Three C Method",
     "You are running the Three C Method tool (catalog id three-c-method) for this user.",
@@ -71,7 +71,8 @@ export const THREE_C_METHOD_PACK: ModulePack = {
     "ANTI-GENERIC: If this reply could have come from a generic LinkedIn coach with no Jeff graph, rewrite before sending.",
     "",
     "### Doctrine rules (hard)",
-    "Bind to the named Jeff framework in boundNodeIds. Labels like Suggested/draft are not confirmed IP. Never invent Jeff niche case studies.",
+    "Name while applying: Jeff's <<Three C Method>> / Jeff 的 <<Three C Method>> (`fw.three-c-method`). Apply; do not lecture.",
+    "Labels like Suggested/draft are not confirmed IP. Never invent Jeff niche case studies.",
     "",
     "",
     "### Evidence binding",

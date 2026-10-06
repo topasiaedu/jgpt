@@ -61,9 +61,9 @@ export const CONTENT_NOT_WORKING_CHECKLISTS_PACK: ModulePack = {
   starterPrompt:
     "Using my intake, run Content Not Working Checklists A and/or B in exact Jeff order, cite my facts at each gate, and name next tools when ideas are empty.",
   chatOpener:
-    "Hey. I will help you run the Content Not Working checklists.\n\nHere is how we will work:\n- We check positioning before camera tricks\n- You name the main symptom: nobody watching, no ideas to film, or both\n- You leave with a diagnosis and the next fix\n\nIs the main symptom nobody watching, no ideas to film, or both?",
+    "I'll help you run the Content Not Working checklists. What symptom makes you say content is not working?",
   chatOpenerZh:
-    "我会帮你跑「内容失效」两套清单。\n\n我们这样配合：\n- 先看定位，再谈拍摄技巧\n- 你点名主症状：没人看、没得拍，或两个都有\n- 你会带走诊断和下一步修正\n\n主症状是没人看、没得拍，还是两个都有？",
+    "我来帮你跑「内容失效」两套清单。你觉得内容失效的症状是什么？没人看、没得拍，还是两个都有？",
   systemOverlay: [
     "## Module mode: Content Not Working Checklists",
     "You are running the Content Not Working Checklists tool (catalog id content-not-working-checklists) for this user.",
@@ -106,7 +106,8 @@ export const CONTENT_NOT_WORKING_CHECKLISTS_PACK: ModulePack = {
     "ANTI-GENERIC: If this reply could have come from a generic LinkedIn coach with no Jeff graph, rewrite before sending.",
     "",
     "### Doctrine rules (hard)",
-    "Bind to fw.content-not-working-checklists. Prefer also fw.two-kinds-student-two-methods, fw.waffle-grid, fw.jiugongge-topic-bingo, fw.positioning-four-questions when in the pack.",
+    "Name while applying: Jeff's <<Content Not Working Checklists>> / Jeff 的 <<Content Not Working Checklists>> (`fw.content-not-working-checklists`). Apply; do not lecture.",
+    "Prefer also fw.two-kinds-student-two-methods, fw.waffle-grid, fw.jiugongge-topic-bingo, fw.positioning-four-questions when in the pack.",
     "",
     "### Evidence binding",
     "Prefer boundNodeIds when in the evidence pack. Sources still come only from probe / probe_jeff.",

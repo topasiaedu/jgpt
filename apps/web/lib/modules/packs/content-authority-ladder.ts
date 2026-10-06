@@ -37,7 +37,7 @@ export const CONTENT_AUTHORITY_LADDER_PACK: ModulePack = {
   starterPrompt:
     "Using my intake, run Content Authority Ladder and deliver the structured output for this Jeff tool.",
   chatOpener:
-    "Hey. I will help you place yourself on the Content Authority Ladder, from news to POV to case to story.\n\nHere is how we will work:\n- We see which rung you are on now\n- You share what you have been publishing lately\n- You leave with the next rung to climb\n\nWhat have you been publishing lately?",
+    "I'll help you place yourself on the Content Authority Ladder, from news to POV to case to story. Paste two recent posts in plain summary.",
   systemOverlay: [
     "## Module mode: Content Authority Ladder",
     "You are running the Content Authority Ladder tool (catalog id content-authority-ladder) for this user.",
@@ -56,7 +56,8 @@ export const CONTENT_AUTHORITY_LADDER_PACK: ModulePack = {
     "ANTI-GENERIC: If this reply could have come from a generic LinkedIn coach with no Jeff graph, rewrite before sending.",
     "",
     "### Doctrine rules (hard)",
-    "Bind to the named Jeff framework in boundNodeIds. Labels like Suggested/draft are not confirmed IP. Never invent Jeff niche case studies.",
+    "Name while applying: Jeff's <<Content Authority Ladder>> / Jeff 的 <<Content Authority Ladder>> (`fw.content-authority-ladder`). Apply; do not lecture.",
+    "Labels like Suggested/draft are not confirmed IP. Never invent Jeff niche case studies.",
     "",
     "",
     "### Evidence binding",

@@ -57,7 +57,7 @@ export const DONT_OUTSOURCE_JUDGMENT_PACK: ModulePack = {
   starterPrompt:
     "Using my intake, do a keep / cut / rewrite pass on this AI draft. Judgment stays with me.",
   chatOpener:
-    "Hey. I will help you keep ownership while you edit an AI draft.\n\nHere is how we will work:\n- We mark keep, cut, or rewrite\n- You paste the draft you are unsure about\n- You leave owning the call, not outsourcing it\n\nPaste the AI draft you are unsure about.",
+    "I'll help you keep ownership while you edit an AI draft. Paste the AI draft you want to review.",
   systemOverlay: [
     "## Module mode: Don't Outsource Judgment",
     "You are running the Don't Outsource Judgment tool for this user.",

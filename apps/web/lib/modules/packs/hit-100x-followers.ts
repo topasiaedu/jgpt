@@ -42,7 +42,7 @@ export const HIT_100X_FOLLOWERS_PACK: ModulePack = {
   starterPrompt:
     "Using my intake, run What Counts as a Hit (100x) and deliver the structured output for this Jeff tool.",
   chatOpener:
-    "Hey. I will help you define what counts as a hit for your account size.\n\nHere is how we will work:\n- We use one hundred times your followers as the hit bar\n- You share about how many followers you have now\n- You leave with a clearer hit bar for your account\n\nAbout how many followers do you have right now?",
+    "I'll help you define what counts as a hit for your account size. About how many followers do you have?",
   systemOverlay: [
     "## Module mode: What Counts as a Hit (100x)",
     "You are running the What Counts as a Hit (100x) tool (catalog id hit-100x-followers) for this user.",
@@ -61,7 +61,8 @@ export const HIT_100X_FOLLOWERS_PACK: ModulePack = {
     "ANTI-GENERIC: If this reply could have come from a generic LinkedIn coach with no Jeff graph, rewrite before sending.",
     "",
     "### Doctrine rules (hard)",
-    "Bind to the named Jeff framework in boundNodeIds. Labels like Suggested/draft are not confirmed IP. Never invent Jeff niche case studies.",
+    "Name while applying: Jeff's <<What Counts as a Hit (100x)>> / Jeff 的 <<What Counts as a Hit (100x)>> (`fw.hit-100x-followers`). Apply; do not lecture.",
+    "Labels like Suggested/draft are not confirmed IP. Never invent Jeff niche case studies.",
     "",
     "",
     "### Evidence binding",

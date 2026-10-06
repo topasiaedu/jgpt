@@ -3,7 +3,6 @@ import type { ModulePack } from "@/lib/modules/types";
 /**
  * Hook Rewriter: same script, stronger open.
  * Quality Runtime (Q4): Collect → Confirm → Deliver → Refine on hook-line family.
- * Also reused by Hook Studio Rewrite mode overlay swap (Studio markers force Deliver).
  */
 export const HOOK_REWRITER_PACK: ModulePack = {
   moduleId: "hook-rewriter",
@@ -151,12 +150,13 @@ export const HOOK_REWRITER_PACK: ModulePack = {
   starterPrompt:
     "Using my intake, rewrite only the open: multiple stronger hooks for the same piece, no trust-breaking clickbait.",
   chatOpener:
-    "Hey. I will help you rewrite only the opening into stronger hooks.\n\nHere is how we will work:\n- We collect the current open or body topic, then I confirm before the dense rewrites\n- You keep the body; we avoid trust-breaking clickbait\n- You leave with stronger opens only, not a full new script\n\nPaste the current hook or the body topic.",
+    "I'll help you rewrite only the opening into stronger hooks. Paste the current hook or the body topic.",
   chatOpenerZh:
-    "我会帮你只改开场，写成更强钩子。\n\n我们这样配合：\n- 先收齐现有开场或正文主题，确认后再给密实改写\n- 正文不动，也不做砸信任的标题党\n- 你会带走更强开场，不是整支新脚本\n\n请贴上现有钩子或正文主题。",
+    "我来帮你只改开场，写成更强钩子。把现有钩子或正文主题贴过来。",
   systemOverlay: [
     "## Module mode: Hook Rewriter (qualityRuntime Hook/Line)",
     "You are running the Hook Rewriter tool for this user.",
+    "Name while applying: Jeff's <<Hook Formula>> / Jeff 的 <<Hook Formula>> (`fw.hook-formula`) when rewriting opens. Apply; do not lecture.",
     "Job: keep body; rewrite opens that earn the first seconds. Not a full IG Reel rewrite.",
     "Lifecycle is hard: Collect → Confirm → Deliver → Refine. Do not dense-dump in Collect. Confirm before the first rewritten batch unless they explicitly say just write it after criticals are filled.",
     "",
@@ -175,7 +175,8 @@ export const HOOK_REWRITER_PACK: ModulePack = {
     "2. Brief why each open earns the first seconds (Jeff reason, not viral guarantee).",
     "3. Note which to film first.",
     "4. End with named refine levers.",
-    "No overnight-fame / viral-guarantee hooks. No clickbait that breaks trust.",
+    "Keep the body topic intact. Rewrite opens only. Prefer a short rewrite note on what changed vs the pasted open.",
+    "No overnight-fame / viral-guarantee hooks. No clickbait that breaks trust. Ban Maria principle labels.",
     "Ground every open in their paste and audience. Different inputs must produce different opens.",
     "",
     "### Refine",

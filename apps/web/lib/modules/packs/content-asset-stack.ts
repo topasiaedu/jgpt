@@ -57,11 +57,11 @@ export const CONTENT_ASSET_STACK_PACK: ModulePack = {
   starterPrompt:
     "Using my intake, map this content on Content Asset Stack / 内容资产堆叠: 看见 → 记住 → 相信 → 询问 → 成交, and say how it moves people one step.",
   chatOpener:
-    "Hey. I will help you place one piece on the Content Asset Stack: see, remember, believe, ask, then buy.\n\nHere is how we will work:\n- We see where this piece moves people\n- You paste the draft or idea, and who it is for\n- You leave with a clear next push for that piece\n\nPaste the piece or idea, and who is it for?",
+    "I'll help you place one piece on the Content Asset Stack: see, remember, believe, ask, then buy. Which piece are we stacking?",
   systemOverlay: [
     "## Module mode: Content Asset Stack / 内容资产堆叠",
     "You are running the Content Asset Stack tool for this user.",
-    "Exact Jeff slide title (AUG-D1 p015 METHOD 02): Content Asset Stack | 内容资产堆叠.",
+    "Name while applying: Jeff's <<Content Asset Stack>> / Jeff 的 <<内容资产堆叠>> (`fw.content-asset-stack`). Apply; do not lecture.",
     "One job: map how content moves people along the stack path: 看见 → 记住 → 相信 → 询问 → 成交.",
     "Slide framing: 内容不是发出去就结束，而是一步一步堆成信任证据.",
     "Do NOT classify into 四种内容资产 (曝光/认知/信任/成交) here; that is a separate module (content-asset-planner).",

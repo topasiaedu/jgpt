@@ -47,7 +47,7 @@ export const TWO_KINDS_STUDENT_TWO_METHODS_PACK: ModulePack = {
   starterPrompt:
     "Using my intake, run Two Kinds of Student, Two Methods and deliver the structured output for this Jeff tool.",
   chatOpener:
-    "Hey. I will help you sort loud versus quiet energy and pick the matching route.\n\nHere is how we will work:\n- We match you to Three C or Three R\n- You share whether you are more outgoing or reserved on camera\n- You leave with a route that fits your energy\n\nAre you more outgoing on camera, or more reserved?",
+    "I'll help you sort loud versus quiet energy and pick the matching method. Are you more loud-reactive or quiet-reserved on camera?",
   systemOverlay: [
     "## Module mode: Two Kinds of Student, Two Methods",
     "You are running the Two Kinds of Student, Two Methods tool (catalog id two-kinds-student-two-methods) for this user.",
@@ -66,7 +66,8 @@ export const TWO_KINDS_STUDENT_TWO_METHODS_PACK: ModulePack = {
     "ANTI-GENERIC: If this reply could have come from a generic LinkedIn coach with no Jeff graph, rewrite before sending.",
     "",
     "### Doctrine rules (hard)",
-    "Bind to the named Jeff framework in boundNodeIds. Labels like Suggested/draft are not confirmed IP. Never invent Jeff niche case studies.",
+    "Name while applying: Jeff's <<Two Kinds of Student, Two Methods>> / Jeff 的 <<Two Kinds of Student, Two Methods>> (`fw.two-kinds-student-two-methods`). Apply; do not lecture.",
+    "Labels like Suggested/draft are not confirmed IP. Never invent Jeff niche case studies.",
     "",
     "",
     "### Evidence binding",

@@ -45,7 +45,7 @@ export const FOUR_CONTENT_LAYERS_PACK: ModulePack = {
   starterPrompt:
     "Using my intake, run The 4 Content Layers and deliver the structured output for this Jeff tool.",
   chatOpener:
-    "Hey. I will help you plan the four content layers: Story, Case, POV, and News.\n\nHere is how we will work:\n- We place each layer for your lane\n- You share who you serve\n- You leave with a simple layer plan\n\nWho do you serve?",
+    "I'll help you plan the four content layers: Story, Case, POV, and News. Who do you serve?",
   systemOverlay: [
     "## Module mode: The 4 Content Layers",
     "You are running the The 4 Content Layers tool (catalog id four-content-layers) for this user.",
@@ -64,7 +64,8 @@ export const FOUR_CONTENT_LAYERS_PACK: ModulePack = {
     "ANTI-GENERIC: If this reply could have come from a generic LinkedIn coach with no Jeff graph, rewrite before sending.",
     "",
     "### Doctrine rules (hard)",
-    "Bind to the named Jeff framework in boundNodeIds. Labels like Suggested/draft are not confirmed IP. Never invent Jeff niche case studies.",
+    "Name while applying: Jeff's <<The 4 Content Layers>> / Jeff 的 <<The 4 Content Layers>> (`fw.four-content-layers`). Apply; do not lecture.",
+    "Labels like Suggested/draft are not confirmed IP. Never invent Jeff niche case studies.",
     "",
     "",
     "### Evidence binding",

@@ -43,10 +43,6 @@ Default chrome locale is **Chinese (zh)**. Use the footer **中文 / EN** toggle
 
 Footer includes a quiet **线上学完整系统 / Learn the system live** link to `https://webinar.influenceengine.co/opt-in`. No countdown or scarcity UI inside the coach.
 
-### First-visit brand moment
-
-Optional dark band (`#080808` + soft orange glow) shows once per browser until dismissed. Flag: `ie-coach-brand-moment-seen` in `localStorage`.
-
 Probe without OpenAI:
 
 ```bash

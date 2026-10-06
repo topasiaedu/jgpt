@@ -55,7 +55,7 @@ export const BOSS_BRAND_BRIEF_PACK: ModulePack = {
   starterPrompt:
     "Using my intake, write a short Boss Brand brief: positioning angle, filmable situations, and a simple do / don't list for looking like a brand without looking like an ad.",
   chatOpener:
-    "Hey. I will help you write a short founder brand brief you can film from.\n\nHere is how we will work:\n- We treat your face and role as the brand, with filmable scenes\n- You share your role and who should recognize you\n- You leave with clear do and don't lines, without sliding into ads\n\nWhat is your role, and who should recognize your face?",
+    "I'll help you write a short founder-face brand brief you can film from. What is your role on camera?",
   systemOverlay: [
     "## Module mode: Boss Brand Brief",
     "You are running the Boss Brand Brief tool for this user.",

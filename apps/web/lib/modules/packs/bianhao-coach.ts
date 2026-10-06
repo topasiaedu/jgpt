@@ -54,7 +54,7 @@ export const BIANHAO_COACH_PACK: ModulePack = {
   starterPrompt:
     "Using my intake, give a short 变好羞耻症 plan: what to ignore, what to reframe, and how to keep showing up without toughness theater.",
   chatOpener:
-    "Hey. I will help you handle pressure to \"get better at content\" without toughness theater.\n\nHere is how we will work:\n- We name the pressure and what still feels true for you\n- You share who is pushing you, and what they say\n- You leave with a calmer next move you can own\n\nWho is pressuring you to get better at content, and what do they say?",
+    "I'll help you face the pressure to make content \"better\" without forcing a stiff performance. Who is putting pressure on you as you improve?",
   systemOverlay: [
     "## Module mode: 变好羞耻症 Coach",
     "You are running the 变好羞耻症 Coach tool for this user.",

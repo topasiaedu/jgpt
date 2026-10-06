@@ -6,14 +6,14 @@ import Link from "next/link";
 import { useI18n } from "@/lib/i18n/LocaleProvider";
 import type { Locale } from "@/lib/i18n/messages";
 
-export type AppNavActive = "home" | "tools" | "studio";
+export type AppNavActive = "home" | "tools";
 
 type AppNavProps = {
   active: AppNavActive;
 };
 
 /**
- * Top product nav: brand mark (home) + All Tools + Hook Studio + locale toggle.
+ * Top product nav: brand mark (home) + All Tools + locale toggle.
  */
 export default function AppNav({ active }: AppNavProps) {
   const { locale, setLocale, t } = useI18n();
@@ -49,13 +49,6 @@ export default function AppNav({ active }: AppNavProps) {
             aria-current={active === "tools" ? "page" : undefined}
           >
             {t("navTools")}
-          </Link>
-          <Link
-            href="/studio"
-            className={active === "studio" ? "app-nav-link app-nav-link-active" : "app-nav-link"}
-            aria-current={active === "studio" ? "page" : undefined}
-          >
-            {t("navStudio")}
           </Link>
         </nav>
         <div className="locale-toggle" role="group" aria-label={t("localeToggleLabel")}>

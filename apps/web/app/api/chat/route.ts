@@ -8,10 +8,6 @@ import type {
 } from "@/lib/chatTypes";
 import { buildProbeQuery, toDialogueOnly } from "@/lib/dialogue";
 import {
-  appendHookStudioBatchContract,
-  resolvePackForHookStudioBatch,
-} from "@/lib/hookStudio/studioBatchOverlay";
-import {
   appendModuleSystemOverlay,
   buildModuleProbeQuery,
 } from "@/lib/modules/modulePrompt";
@@ -27,7 +23,7 @@ import {
 import { generateJeffReply, getOpenAIConfig } from "@/lib/openai";
 import { mergeBoundNodesIntoProbe, probeTeaching } from "@/lib/probe";
 import { DEFAULT_LOCALE, parseLocale, type Locale } from "@/lib/i18n/messages";
-import { latestUserAsk, runModuleResponseQa } from "@/lib/responseQa";
+import { runModuleResponseQa } from "@/lib/responseQa";
 import { sanitizeAssistantReply } from "@/lib/sanitizeAssistantReply";
 import { buildSystemPrompt } from "@/lib/systemPrompt";
 
@@ -114,22 +110,7 @@ async function handleChatPost(
     );
   }
 
-  /**
-   * Hook Studio H2/H3: on scroll-stop-hook, Studio batch markers select overlays.
-   * Rewrite swaps Hook Rewriter overlay for that turn; competitor/repeat keep
-   * Hook Formula pack and append thin mode doctrine + JSON contract.
-   * Page moduleId stays scroll-stop-hook. Module QA skipped on all Studio batches.
-   */
-  const latestAsk: string = latestUserAsk(dialogue);
-  const studioResolved =
-    catalogPack !== undefined
-      ? resolvePackForHookStudioBatch({
-          pack: catalogPack,
-          latestUserMessage: latestAsk,
-        })
-      : { pack: undefined, studioMode: null };
-  const pack = studioResolved.pack;
-  const studioMode = studioResolved.studioMode;
+  const pack = catalogPack;
 
   const query: string =
     pack !== undefined
@@ -175,16 +156,7 @@ async function handleChatPost(
           messages: dialogue,
         })
       : appendHomeRecommendOverlay(baseSystemPrompt, locale);
-  const systemPrompt: string =
-    pack !== undefined
-      ? appendHookStudioBatchContract({
-          systemPrompt: moduleSystemPrompt,
-          studioMode:
-            catalogPack !== undefined && catalogPack.moduleId === "scroll-stop-hook"
-              ? studioMode
-              : null,
-        })
-      : moduleSystemPrompt;
+  const systemPrompt: string = moduleSystemPrompt;
 
   try {
     const { reply, sources, recommendedModuleIds } = await generateJeffReply({
@@ -199,13 +171,8 @@ async function handleChatPost(
 
     // Module/tool path only: second-model ask-match QA + at most one repair.
     // Home recommend stays out of scope. Soft-fails to the original reply.
-    // Hook Studio batches skip QA: repair prompt forbids JSON and would break cards.
     let finalReply: string = reply;
-    if (
-      pack !== undefined &&
-      typeof moduleId === "string" &&
-      !(catalogPack !== undefined && catalogPack.moduleId === "scroll-stop-hook" && studioMode !== null)
-    ) {
+    if (pack !== undefined && typeof moduleId === "string") {
       const moduleDef = getModuleById(moduleId);
       const moduleTitle: string =
         moduleDef !== undefined ? moduleDef.title : moduleId;

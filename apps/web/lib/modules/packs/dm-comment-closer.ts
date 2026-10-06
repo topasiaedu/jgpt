@@ -142,9 +142,9 @@ export const DM_COMMENT_CLOSER_PACK: ModulePack = {
   starterPrompt:
     "Using my intake, draft a reply that moves warm interest toward a clear next step. Include a softer and a firmer variant.",
   chatOpener:
-    "Hey. I will help you move warm interest in a comment or DM into a clear next step.\n\nHere is how we will work:\n- We collect the message, what they want, and your honest next step\n- You paste the comment or DM\n- You leave with short reply variants you can send, not a long sales script\n\nPaste the comment or DM.",
+    "I'll help you move warm interest in a comment or DM into a clear next step. Paste the comment or DM.",
   chatOpenerZh:
-    "我会帮你把评论或私信里的兴趣，推进到清楚的下一步。\n\n我们这样配合：\n- 先收齐对方原话、他们想要什么、你能诚实提供的下一步\n- 你把评论或私信贴过来\n- 你会带走可直接发出的短回复，不是长销售脚本\n\n请贴上评论或私信。",
+    "我来帮你把评论或私信里的兴趣，推进到清楚的下一步。把评论或私信贴过来。",
   systemOverlay: [
     "## Module mode: DM / Comment Closer (qualityRuntime Reply/Micro-convert)",
     "You are running the DM / Comment Closer tool for this user.",

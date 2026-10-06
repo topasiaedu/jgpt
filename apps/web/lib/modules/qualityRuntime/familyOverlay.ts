@@ -158,45 +158,40 @@ export function joinQualityRuntimeOverlay(parts: FamilyOverlayParts): string {
 }
 
 /**
- * Builds a chat-first opener that states job, lifecycle, and first ask.
+ * Joins a job sentence and first ask into one opener line.
+ * Skips the separator after CJK sentence punctuation so ZH stays natural.
  */
-export function buildLifecycleOpener(opts: {
-  jobLine: string;
-  workBullets: [string, string, string];
-  firstAsk: string;
-  mentionConfirm: boolean;
-}): string {
-  const confirmBullet: string = opts.mentionConfirm
-    ? opts.workBullets[0]
-    : opts.workBullets[0];
-  return [
-    `Hey. ${opts.jobLine}`,
-    "",
-    "Here is how we will work:",
-    `- ${confirmBullet}`,
-    `- ${opts.workBullets[1]}`,
-    `- ${opts.workBullets[2]}`,
-    "",
-    opts.firstAsk,
-  ].join("\n");
+function joinJobAndAsk(jobLine: string, firstAsk: string): string {
+  const job: string = jobLine.trim();
+  const ask: string = firstAsk.trim();
+  if (job.length === 0) {
+    return ask;
+  }
+  if (ask.length === 0) {
+    return job;
+  }
+  const endsWithCjkPunct: boolean = /[。！？…]$/.test(job);
+  return endsWithCjkPunct ? `${job}${ask}` : `${job} ${ask}`;
 }
 
 /**
- * Builds a ZH chat-first opener mirroring EN lifecycle shape.
+ * Builds a chat-first opener: one job sentence + one concrete question.
+ * No "Here is how we will work" process bullets (Artemo one-liner shape).
+ */
+export function buildLifecycleOpener(opts: {
+  jobLine: string;
+  firstAsk: string;
+}): string {
+  return joinJobAndAsk(opts.jobLine, opts.firstAsk);
+}
+
+/**
+ * Builds a ZH chat-first opener: one job sentence + one concrete question.
+ * No "我们这样配合" process bullets. Callers supply 口语化 job/ask strings.
  */
 export function buildLifecycleOpenerZh(opts: {
   jobLine: string;
-  workBullets: [string, string, string];
   firstAsk: string;
 }): string {
-  return [
-    opts.jobLine,
-    "",
-    "我们这样配合：",
-    `- ${opts.workBullets[0]}`,
-    `- ${opts.workBullets[1]}`,
-    `- ${opts.workBullets[2]}`,
-    "",
-    opts.firstAsk,
-  ].join("\n");
+  return joinJobAndAsk(opts.jobLine, opts.firstAsk);
 }

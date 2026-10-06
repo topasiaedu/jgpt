@@ -54,7 +54,7 @@ export const PLATFORM_ADAPTER_PACK: ModulePack = {
   starterPrompt:
     "Using my intake, adapt this piece across the formats I listed without changing the core standpoint. Keep it asset-like.",
   chatOpener:
-    "Hey. I will help you adapt one piece across formats without losing your standpoint.\n\nHere is how we will work:\n- We keep the same spine and change the shape\n- You paste the source script or caption, and list the formats you need\n- You leave with format-ready versions\n\nPaste the source, and which formats do you need?",
+    "I'll help you adapt one piece across formats without losing your standpoint. Paste the source piece to adapt.",
   systemOverlay: [
     "## Module mode: Platform Adapter",
     "You are running the Platform Adapter tool for this user.",

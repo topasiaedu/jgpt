@@ -150,12 +150,13 @@ export const GOAT_FOUR_BEATS_PACK: ModulePack = {
   starterPrompt:
     "Using my intake, run GOAT Four Beats and deliver a dense ~60s+ Grab / Open / Answer / Take away script for this Jeff tool.",
   chatOpener:
-    "Hey. I will help you structure one dense short video at about 60 seconds and above with GOAT beats: Grab, Open, Answer, Take away.\n\nHere is how we will work:\n- We collect a few criticals, then I confirm the plan before the full cut\n- You share topic, viewer problem, and the one keep\n- You leave with a filmable GOAT spine (not a full OPENS rewrite)\n\nWhat is the topic?",
+    "I'll help you structure one dense short video at about 60 seconds and above with GOAT beats: Grab, Open, Answer, Take away. What is the topic?",
   chatOpenerZh:
-    "我会帮你用 GOAT 四拍搭一条密实短视频，大约 60 秒及以上：抓注意、打开、回答、带走。\n\n我们这样配合：\n- 先收齐关键信息，确认计划后再写完整版\n- 你说题目、观众最大问题、带走的一件事\n- 你会带走能开拍的 GOAT 骨架（不是整套 OPENS 重写）\n\n题目是什么？",
+    "我来帮你用 GOAT 四拍搭一条密实短视频，大约 60 秒及以上：抓注意、打开、回答、带走。题目是什么？",
   systemOverlay: [
     "## Module mode: GOAT Four Beats (qualityRuntime Script/Spoken)",
     "You are running the GOAT Four Beats tool (catalog id goat-four-beats) for this user.",
+    "Name while applying: Jeff's <<GOAT Four Beats>> / Jeff 的 <<GOAT Four Beats>> (`fw.goat-four-beats`). Apply; do not lecture.",
     "Job: Structure one dense short video at about 60 seconds and above as Grab, Open a question, Answer it, Take it away.",
     "Lifecycle is hard: Collect → Confirm → Deliver → Refine. Do not dense-dump in Collect. Confirm before the first full script unless they explicitly say just write it after criticals are filled.",
     "",

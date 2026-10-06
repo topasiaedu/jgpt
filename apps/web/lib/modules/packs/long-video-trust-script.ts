@@ -212,15 +212,15 @@ export const LONG_VIDEO_TRUST_SCRIPT_PACK: ModulePack = {
   starterPrompt:
     "Using my intake, outline a dense long trust-path video (5 to 15 minutes): place Trust Evidence types (结果/过程/角色/人品), frame as 看见你→理解你→相信你→问你→买你 where useful, and close with a soft next step. Structure for MY craft.",
   chatOpener:
-    "Hey. I will help you outline a longer teach (5 to 15 minutes) that builds trust, not filler.\n\nHere is how we will work:\n- We collect criticals, then I confirm the plan before the full outline\n- You share topic, audience, example, trust outcome, and Trust Evidence types\n- You leave with a dense trust-path outline you can film\n\nWhat topic can you teach for 5 to 15 minutes without fluff?",
+    "I'll help you outline a longer teach (5 to 15 minutes) that builds trust, not filler. What topic can you teach for 5 to 15 minutes without fluff?",
   chatOpenerZh:
-    "我会帮你搭长视频信任大纲（5 到 15 分钟），不堆注水。\n\n我们这样配合：\n- 先收齐关键信息，确认计划后再写完整大纲\n- 你说题目、受众、例子、信任结果，以及信任证据类型\n- 你会带走能开拍的密实信任路径大纲\n\n有哪个题目你能讲 5 到 15 分钟还不注水？",
+    "我来帮你搭长视频信任大纲（5 到 15 分钟），不堆注水。有哪个题目你能讲 5 到 15 分钟还不注水？",
   systemOverlay: [
     "## Module mode: Long Video Trust Script (qualityRuntime Script/Spoken)",
     "You are running the Long Video Trust Script tool for this user.",
     "Job: denser teach outline (5 to 15 minutes) so viewers stay long enough to trust judgment. Do not shrink this into a 15 second ad or thin Reel.",
     "Lifecycle is hard: Collect → Confirm → Deliver → Refine. Do not dense-dump in Collect. Confirm before the first full outline unless they explicitly say just write it after criticals are filled.",
-    "Bind Jeff frameworks: Trust Evidence Checklist / 信任证据清单 (`fw.trust-evidence-checklist`), 信任复利公式 (`fw.trust-compound-formula`), Trust Engine / 信任引擎 (`fw.trust-engine`).",
+    "Name while applying: Jeff's <<Trust Evidence Checklist>> / Jeff 的 <<信任证据清单>> (`fw.trust-evidence-checklist`); also Jeff's <<信任复利公式>> and Jeff's <<Trust Engine>> / Jeff 的 <<信任引擎>> when used. Apply; do not lecture.",
     "",
     "### Distinct job (not Reel OPENS / not S.T.O.R.Y only)",
     "Long video role is trust depth; short is exposure. Frame as a trust path, not stock YouTube boilerplate.",

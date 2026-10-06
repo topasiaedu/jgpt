@@ -49,13 +49,13 @@ export const IP_PILLARS_PACK: ModulePack = {
   starterPrompt:
     "Using my intake, run Jeff Brand Pillars four steps: WHO+痛点, list 10 market questions, cluster to 3 to 5 themes, then durable pillars. Do not deliver pillars until 10 questions exist. Do not use see/trust/convert rotation.",
   chatOpener:
-    "Hey. I will help you lock 3 to 5 Brand Pillars you can keep teaching.\n\nHere is how we will work:\n- We move from who you serve to lasting topic pillars\n- You share who you serve and the pain they feel\n- You leave with pillars you can reuse\n\nWho do you serve, and what pain do they feel?",
+    "I'll help you lock 3 to 5 durable content pillars you can teach for a long time. Who do you help, and what pain shows up weekly?",
   chatOpenerZh:
-    "我会帮你定下 3 到 5 个能长期教的品牌支柱。\n\n我们这样配合：\n- 从你服务谁，走到可长期讲的题目支柱\n- 你说服务对象和他们的痛点\n- 你会带走可反复用的支柱\n\n你服务谁，他们的痛点是什么？",
+    "我来帮你定下 3 到 5 个能长期教的品牌支柱。你帮谁，对方每周卡在什么痛点？",
   systemOverlay: [
     "## Module mode: Brand Pillars",
     "You are running the Brand Pillars tool (catalog id ip-pillars) for this user.",
-    "Jeff binding: fw.brand-pillars (AUG-D1 p049 Brand Pillars 怎么来：4步).",
+    "Name while applying: Jeff's <<Brand Pillars>> / Jeff 的 <<Brand Pillars>> (`fw.brand-pillars`). Apply; do not lecture.",
     "Job: form 3 to 5 durable content pillars by clustering market questions. Pillars = clusters of those questions.",
     "",
     "### Forced Jeff 4 steps (in order)",

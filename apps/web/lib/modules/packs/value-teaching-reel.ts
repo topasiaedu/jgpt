@@ -152,9 +152,9 @@ export const VALUE_TEACHING_REEL_PACK: ModulePack = {
   starterPrompt:
     "Using my intake, script a dense value-led Reel at about 60 seconds and above that teaches one tip openly, then adds a light next step. Keep convert soft.",
   chatOpener:
-    "Hey. I will help you script a value-led Reel at about 60 seconds and above: teach one tip openly, then a light next step.\n\nHere is how we will work:\n- We collect a few criticals, then I confirm the plan before the full cut\n- You share one tip, who it helps, a gentle next step, and language\n- You leave with a dense teach script you can film\n\nWhat is the one tip you can teach at about 60 seconds and above?",
+    "I'll help you script a value-led Reel at about 60 seconds and above: teach one tip openly, then a light next step. What is the one tip you can teach at about 60 seconds and above?",
   chatOpenerZh:
-    "我会帮你写一条价值向 Reel，大约 60 秒及以上：先公开教一招，再给一个轻下一步。\n\n我们这样配合：\n- 先收齐关键信息，确认计划后再写完整版\n- 你说那一招、帮谁、轻下一步，以及语言\n- 你会带走可拍的密实教学脚本\n\n你能用大约 60 秒及以上教完的那一招是什么？",
+    "我来帮你写一条价值向 Reel，大约 60 秒及以上：先公开教一招，再给一个轻下一步。你能用大约 60 秒及以上教完的那一招是什么？",
   systemOverlay: [
     "## Module mode: Value Teaching Reel (qualityRuntime Script/Spoken)",
     "You are running the Value Teaching Reel tool for this user.",

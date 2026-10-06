@@ -50,9 +50,9 @@ export const BRAND_STANCE_MODEL_PACK: ModulePack = {
   starterPrompt:
     "Using my intake, draft Brand Stance for / against only. If I named a real gap, map it to 真实缺口. Do not invent known-for doing. Label any third-leg talk as Suggested pending Jeff.",
   chatOpener:
-    "Hey. I will help you draft a clear brand stance.\n\nHere is how we will work:\n- We write what you stand for and what you stand against\n- You bring one belief you will not trade away\n- You leave with two clean legs of stance\n\nWhat do you stand for?",
+    "I'll help you draft a clear brand stance with a real gap. What do you stand for, in plain words?",
   chatOpenerZh:
-    "我会帮你起草清楚的品牌立场。\n\n我们这样配合：\n- 写清你坚持什么、反对什么\n- 你带一句不会拿去换流量的信念\n- 你会带走两腿干净立场\n\n你坚持什么？",
+    "我来帮你起草清楚的品牌立场。你坚持什么？用白话说。",
   systemOverlay: [
     "## Module mode: Brand Stance Model (Suggested / conditional)",
     "You are running the Brand Stance Model tool (catalog id brand-stance-model) for this user.",
@@ -82,7 +82,8 @@ export const BRAND_STANCE_MODEL_PACK: ModulePack = {
     "ANTI-GENERIC: If this reply could have come from a generic LinkedIn coach with no Jeff graph, rewrite before sending.",
     "",
     "### Doctrine rules (hard)",
-    "Bind fw.brand-stance-model as Suggested/conditional. Prefer fw.ip-influence-triangle when mapping a real gap.",
+    "Name while applying (Suggested/conditional): Jeff's <<Brand Stance Model>> / Jeff 的 <<Brand Stance Model>> (`fw.brand-stance-model`). Apply; do not lecture.",
+    "Prefer Jeff's <<IP Influence Triangle>> / Jeff 的 <<IP影响力三角>> (`fw.ip-influence-triangle`) when mapping a real gap.",
     "Labels like Suggested/draft are not confirmed IP. Never invent Jeff niche case studies.",
     "",
     "### Evidence binding",

@@ -47,7 +47,7 @@ export const THREE_R_METHOD_PACK: ModulePack = {
   starterPrompt:
     "Using my intake, run Three R Method and deliver the structured output for this Jeff tool.",
   chatOpener:
-    "Hey. I will help you run the Three R routine for a reserved owner: read, respond, then add your view.\n\nHere is how we will work:\n- We build a quieter, steady capture habit\n- You share the industry or craft the reads should come from\n- You leave with a routine you can keep without forcing loud energy\n\nWhat industry or craft should the reads come from?",
+    "I'll help you run the Three R routine for a reserved owner: read, respond, then add your view. What industry are you in?",
   systemOverlay: [
     "## Module mode: Three R Method",
     "You are running the Three R Method tool (catalog id three-r-method) for this user.",
@@ -66,7 +66,8 @@ export const THREE_R_METHOD_PACK: ModulePack = {
     "ANTI-GENERIC: If this reply could have come from a generic LinkedIn coach with no Jeff graph, rewrite before sending.",
     "",
     "### Doctrine rules (hard)",
-    "Bind to the named Jeff framework in boundNodeIds. Labels like Suggested/draft are not confirmed IP. Never invent Jeff niche case studies.",
+    "Name while applying: Jeff's <<Three R Method>> / Jeff 的 <<Three R Method>> (`fw.three-r-method`). Apply; do not lecture.",
+    "Labels like Suggested/draft are not confirmed IP. Never invent Jeff niche case studies.",
     "",
     "",
     "### Evidence binding",

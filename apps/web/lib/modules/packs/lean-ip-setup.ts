@@ -54,7 +54,7 @@ export const LEAN_IP_SETUP_PACK: ModulePack = {
   starterPrompt:
     "Using my intake, give a lean weekly IP rhythm (capture, light edit, post, review) and a minimum kit mindset for my hours and platforms.",
   chatOpener:
-    "Hey. I will help you set a lean weekly IP rhythm you can actually keep.\n\nHere is how we will work:\n- We design a simple capture and post cadence\n- You share an honest hours-per-week number\n- You leave with a rhythm that fits real life\n\nHow many honest hours a week can you give to capture and post?",
+    "I'll help you set a lean weekly IP rhythm you can actually keep. How many hours a week can you honestly give this?",
   systemOverlay: [
     "## Module mode: Lean IP Setup",
     "You are running the Lean IP Setup tool for this user.",

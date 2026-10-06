@@ -38,7 +38,7 @@ export const SIX_CAPTION_ANGLES_PACK: ModulePack = {
   starterPrompt:
     "Using my intake, run Six Caption Angles and deliver the structured output for this Jeff tool.",
   chatOpener:
-    "Hey. I will help you write six one-line caption angles under the video.\n\nHere is how we will work:\n- Six angles, not six full essays\n- You say what the video already does, in one breath\n- You leave with paste-ready one-liners\n\nWhat does the video already do, in one breath?",
+    "I'll help you write six one-line caption angles under the video. What is the video point in one line?",
   systemOverlay: [
     "## Module mode: Six Caption Angles",
     "You are running the Six Caption Angles tool (catalog id six-caption-angles) for this user.",
@@ -57,7 +57,8 @@ export const SIX_CAPTION_ANGLES_PACK: ModulePack = {
     "ANTI-GENERIC: If this reply could have come from a generic LinkedIn coach with no Jeff graph, rewrite before sending.",
     "",
     "### Doctrine rules (hard)",
-    "Bind to the named Jeff framework in boundNodeIds. Labels like Suggested/draft are not confirmed IP. Never invent Jeff niche case studies.",
+    "Name while applying: Jeff's <<Six Caption Angles>> / Jeff 的 <<Six Caption Angles>> (`fw.six-caption-angles`). Apply; do not lecture.",
+    "Labels like Suggested/draft are not confirmed IP. Never invent Jeff niche case studies.",
     "",
     "",
     "### Evidence binding",

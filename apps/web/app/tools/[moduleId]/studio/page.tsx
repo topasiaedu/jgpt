@@ -7,15 +7,15 @@ type LegacyStudioPageProps = {
 };
 
 /**
- * Legacy path: `/tools/scroll-stop-hook/studio` → `/studio`.
- * Other module ids bounce back to that tool's chat.
+ * Legacy nested Studio path. Batch UI removed; bounce to tool chat.
+ * Hook Formula ids land on `/tools/scroll-stop-hook`.
  */
 export default async function LegacyHookStudioRedirect({
   params,
-}: LegacyStudioPageProps) {
+}: LegacyStudioPageProps): Promise<never> {
   const { moduleId } = await params;
   if (moduleId === "scroll-stop-hook") {
-    redirect("/studio");
+    redirect("/tools/scroll-stop-hook");
   }
   redirect(`/tools/${moduleId}`);
 }

@@ -178,9 +178,9 @@ export const PROCESS_PROOF_REEL_PACK: ModulePack = {
   starterPrompt:
     "Using my intake, write a dense ~60s+ process-proof Reel: hook, how-we-work beat, soft close. Keep it advice-led, not ego flex.",
   chatOpener:
-    "Hey. I will help you write a dense process-proof Reel at about 60 seconds and above that shows how you work so trust can build.\n\nHere is how we will work:\n- We collect a few criticals, then I confirm the plan before the full cut\n- You share why people pick you, one process step, viewer takeaway, and how soft the close should be\n- You leave with a shootable script that stays advice-led\n\nWhat is one process step you can honestly show on camera?",
+    "I'll help you write a dense process-proof Reel at about 60 seconds and above that shows how you work so trust can build. What is one process step you can honestly show on camera?",
   chatOpenerZh:
-    "我会帮你写一条密实过程证明 Reel，大约 60 秒及以上，让人看见你怎么做事，好建立信任。\n\n我们这样配合：\n- 先收齐关键信息，确认计划后再写完整版\n- 你说人们为什么选你、一个流程步骤、观众带走什么、收尾要多软\n- 你会带走可拍、建议导向的脚本\n\n你能诚实上镜展示的一个流程步骤是什么？",
+    "我来帮你写一条密实过程证明 Reel，大约 60 秒及以上，让人看见你怎么做事，好建立信任。你能诚实上镜展示的一个流程步骤是什么？",
   systemOverlay: [
     "## Module mode: Process Proof Reel (qualityRuntime Script/Spoken)",
     "You are running the Process Proof Reel tool for this user.",

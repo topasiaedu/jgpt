@@ -62,13 +62,13 @@ export const TRUST_OFFER_BRIDGE_PACK: ModulePack = {
   starterPrompt:
     "Using my intake, name the 客户购买路径 this bridge serves, then write a short trust-to-offer bridge matched to that path. Assume trust is building; no overnight-fame or ad-as-asset framing.",
   chatOpener:
-    "Hey. I will help you bridge from earned trust into a clear offer.\n\nHere is how we will work:\n- We name your path, then write the bridge line\n- You share what trust you have earned and what you offer in plain words\n- You leave with a bridge that feels earned\n\nWhat trust have you earned, and what do you offer in plain words?",
+    "I'll help you bridge from earned trust into a clear offer. What trust have you already earned on camera?",
   chatOpenerZh:
-    "我会帮你从已建立的信任接到清楚的 offer。\n\n我们这样配合：\n- 先点名路径，再写桥段\n- 你说已赢得的信任，以及白话里你提供什么\n- 你会带走显得挣来的桥段\n\n你已经赢得什么信任，用白话你提供什么？",
+    "我来帮你从已建立的信任接到清楚的 offer。你已经在镜头前赢得了什么信任？",
   systemOverlay: [
     "## Module mode: Trust → Offer Bridge (客户购买路径)",
     "You are running the Trust → Offer Bridge tool for this user.",
-    "Exact Jeff framework: Customer purchase paths 1 to 7 / 客户购买路径 (`fw.customer-purchase-paths`).",
+    "Name while applying: Jeff's <<客户购买路径>> / Jeff 的 <<客户购买路径>> (`fw.customer-purchase-paths`). Apply; do not lecture.",
     "Job: bridge from earned trust into naming the offer and next conversation on a named path.",
     "",
     "### Path vocabulary (hard; use Jeff terms)",

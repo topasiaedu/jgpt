@@ -1,18 +1,8 @@
-import HookStudioWorkspace from "@/components/tools/HookStudioWorkspace";
-import { getModuleById } from "@/lib/modules/catalog";
-import { notFound } from "next/navigation";
-
-/** Hook Formula pack powers Hook Studio generation. */
-const HOOK_STUDIO_MODULE_ID = "scroll-stop-hook";
+import { redirect } from "next/navigation";
 
 /**
- * Top-nav Hook Studio page: batch opens only (not merged with chat).
+ * Legacy Hook Studio URL. Batch UI removed; send users to Hook Formula chat.
  */
-export default function StudioPage() {
-  const definition = getModuleById(HOOK_STUDIO_MODULE_ID);
-  if (definition === undefined) {
-    notFound();
-  }
-
-  return <HookStudioWorkspace module={definition} />;
+export default function StudioPage(): never {
+  redirect("/tools/scroll-stop-hook");
 }

@@ -8,7 +8,6 @@
  */
 
 import type { ChatMessage } from "@/lib/chatTypes";
-import { detectHookStudioBatchMode } from "@/lib/hookStudio/detectStudioBatch";
 import type { ModulePack } from "@/lib/modules/types";
 import { getFamilyDeliverableContract } from "@/lib/modules/qualityRuntime/families";
 import { looksLikeIdkOrBlank } from "@/lib/modules/qualityRuntime/idkOptions";
@@ -322,21 +321,6 @@ export function detectLifecycleMode(options: {
   const missingCriticalSlotIds: string[] = criticalSlots
     .filter((slot) => !slotLooksFilled(slot, options.messages, options.intake))
     .map((slot) => slot.id);
-
-  /**
-   * Hook Studio batch Generate already collected profile + mode input in the UI.
-   * Force Deliver so qualityRuntime Collect/Confirm cannot block JSON card batches.
-   */
-  const studioMode = detectHookStudioBatchMode(latestUser);
-  if (studioMode !== null) {
-    return {
-      mode: "deliver",
-      replyBudget: "dense",
-      reason: `hook_studio_batch:${studioMode}`,
-      missingCriticalSlotIds,
-      latestUserLooksLikeIdk: false,
-    };
-  }
 
   const denseAlready: boolean = priorDenseDeliverable(
     options.messages,

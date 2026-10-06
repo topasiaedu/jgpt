@@ -142,13 +142,14 @@ export const COMMENT_REPLY_THREE_LINES_PACK: ModulePack = {
   starterPrompt:
     "Using my intake, draft 评论回应三句法 replies: 接住, 澄清, 拉回主轴 (plus stop-drain / keep-publishing notes when needed).",
   chatOpener:
-    "Hey. I will help you draft a three-line comment reply.\n\nHere is how we will work:\n- We catch the comment, clarify, then pull back to your main point\n- You paste the comment you want to answer\n- You leave with short reply options that show judgment, not a fight or a full script\n\nPaste the comment you want to answer.",
+    "I'll help you draft a three-line comment reply. Paste the comment you want to answer.",
   chatOpenerZh:
-    "我会帮你按三句法起草评论回复。\n\n我们这样配合：\n- 接住、澄清、再拉回主轴\n- 你把要回的评论贴过来\n- 你会带走短而完整的回复选项，不是整支脚本\n\n请贴上要回的评论。",
+    "我来帮你按三句法起草评论回复。把要回的评论贴过来。",
   systemOverlay: [
     "## Module mode: 评论回应三句法 (qualityRuntime Reply/Micro-convert)",
     "You are running the 评论回应三句法 tool for this user.",
-    "Exact Jeff slide title (AUG-D1 p028). Job: draft in-thread replies. Not a Reel script.",
+    "Name while applying: Jeff's <<评论回应三句法>> / Jeff 的 <<评论回应三句法>> (`fw.comment-reply-three-lines`). Apply; do not lecture.",
+    "Job: draft in-thread replies. Not a Reel script.",
     "Framing: 回应不是为了赢网友，是为了让目标客户看见你的判断.",
     "Slide moves (title says 三句; body lists more): 接住, 澄清, 拉回主轴, 停止消耗, 继续发布.",
     "Do not invent a different formula name. Do not run B.R.E.A.K Shield here; that is a separate module.",

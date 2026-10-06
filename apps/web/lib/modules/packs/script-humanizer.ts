@@ -55,7 +55,7 @@ export const SCRIPT_HUMANIZER_PACK: ModulePack = {
   starterPrompt:
     "Using my intake, rewrite my stiff draft into a 1-on-1 speakable script with shorter lines and spoken rhythm. Keep my point and required jargon.",
   chatOpener:
-    "Hey. I will help you turn a stiff draft into lines you can say one-on-one out loud.\n\nHere is how we will work:\n- We rewrite brochure tone into human speech\n- You paste the draft that sounds stiff\n- You leave with lines you can speak\n\nPaste the draft that sounds like a brochure.",
+    "I'll help you turn a stiff draft into lines you can say one-on-one out loud. Paste the draft that sounds like a brochure.",
   systemOverlay: [
     "## Module mode: Script Humanizer",
     "You are running the Script Humanizer tool for this user.",

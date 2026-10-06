@@ -61,11 +61,11 @@ export const CRITICISM_ARMOR_PACK: ModulePack = {
   starterPrompt:
     "Using my intake, run B.R.E.A.K Shield: Baselines, Reason, Evidence, Angle, Keep Going so criticism becomes judgment, not emotion.",
   chatOpener:
-    "Hey. I will help you turn criticism into a clear judgment, not an emotional spiral.\n\nHere is how we will work:\n- We run a short shield pass on the criticism\n- You share what you fear, or what you already got\n- You leave with a steadier read and a usable response angle\n\nWhat criticism do you fear, or already got?",
+    "I'll help you turn criticism into a clear judgment call, not an emotional loop. What criticism do you fear, or already got?",
   systemOverlay: [
     "## Module mode: B.R.E.A.K Shield / 评论护盾",
     "You are running the B.R.E.A.K Shield tool (catalog id criticism-armor) for this user.",
-    "Exact Jeff slide title (AUG-D1 p026): B.R.E.A.K Shield / 评论护盾.",
+    "Name while applying: Jeff's <<B.R.E.A.K Shield>> / Jeff 的 <<评论护盾>> (`fw.break-shield`). Apply; do not lecture.",
     "Job: turn criticism into judgment, not emotion.",
     "Steps: Baselines 基本预设, Reason 原因, Evidence 证据, Angle 回应角度, Keep Going 继续行动.",
     "Do not draft 评论回应三句法 reply scripts here; that is a separate module (comment-reply-three-lines).",

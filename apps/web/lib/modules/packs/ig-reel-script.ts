@@ -233,9 +233,9 @@ export const IG_REEL_SCRIPT_PACK: ModulePack = {
   starterPrompt:
     "Using my intake, write a shootable Instagram Reel script about 60 seconds and above on OPENS (Opening / Problem / Evidence / New Way / Step). Keep it a content asset, not a hard-sell ad.",
   chatOpener:
-    "Hey. I will help you write a shootable Instagram Reel, about 60 seconds and above, as a teaching asset, not a hard-sell ad.\n\nHere is how we will work:\n- We collect a few criticals, then I confirm the plan before the full cut\n- You share niche, audience, standpoint, one lesson or story beat, language, and how soft the close should be\n- You leave with a dense OPENS five-beat script you can film\n\nWhat is the one lesson or story beat you want them to take away?",
+    "I'll help you write a shootable Instagram Reel, about 60 seconds and above, as a teaching asset, not a hard-sell ad. What is the one lesson or story beat you want them to take away?",
   chatOpenerZh:
-    "我会帮你写一条能直接拍的 Instagram Reel，大约 60 秒及以上，当教学资产，不当硬广。\n\n我们这样配合：\n- 先收齐关键信息，确认计划后再写完整版\n- 你说赛道、受众、立场、一个教训或故事节拍、语言，以及收尾要多软\n- 你会带走可拍的密实 OPENS 五幕脚本\n\n你希望观众带走的那个教训或故事节拍是什么？",
+    "我来帮你写一条能直接拍的 Instagram Reel，大约 60 秒及以上，当教学资产，不当硬广。你希望观众带走的那个教训或故事节拍是什么？",
   systemOverlay: [
     "## Module mode: IG Reel Script (qualityRuntime Script/Spoken)",
     "You are running the IG Reel Script tool for this user.",
@@ -243,7 +243,8 @@ export const IG_REEL_SCRIPT_PACK: ModulePack = {
     "Lifecycle is hard: Collect → Confirm → Deliver → Refine. Do not dense-dump in Collect. Confirm before the first full script unless they explicitly say just write it after criticals are filled.",
     "",
     "### Preferred scaffold (AUG-D2): OPENS 60秒五幕剧",
-    "Bind fw.opens-60s-five-act. Structure the Reel as five timed beats totaling about 60 seconds and above:",
+    "Name while applying: Jeff's <<OPENS 60s Five Act>> / Jeff 的 <<OPENS 60秒五幕>> (`fw.opens-60s-five-act`). Apply; do not lecture.",
+    "Structure the Reel as five timed beats totaling about 60 seconds and above:",
     "1. Opening 开场",
     "2. Problem 问题",
     "3. Evidence 证据",

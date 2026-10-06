@@ -69,12 +69,13 @@ export const CONTENT_IDEATION_IP_PACK: ModulePack = {
   starterPrompt:
     "Using my intake, fill AUG-D2 九宫格 / Topic Bingo: center 人设, eight cells 兴趣/专业/观点/故事/客户/行业/趋势/痛点, then 四条穿心线 into about 12 topic seeds.",
   chatOpener:
-    "Hey. I will help you fill Topic Bingo and grow about 12 filmable topic seeds.\n\nHere is how we will work:\n- We put your market persona in the center, then grow topics around it\n- You say, in plain words, who the market should remember you as\n- You leave with filmable topics, not a blank page\n\nIn plain words, who should the market remember you as?",
+    "I'll help you fill Topic Bingo and grow about 12 filmable topic seeds. Who are you in this market, in one line?",
   chatOpenerZh:
-    "我会帮你填九宫格 Topic Bingo，长出大约 12 个能拍的题目。\n\n我们这样配合：\n- 中心是人设，再往外长题目\n- 你用白话说市场该把你记成谁\n- 你会带走能拍的题目，不留空白页\n\n用白话说，市场该把你记成谁？",
+    "我来帮你填九宫格 Topic Bingo，长出大约 12 个能拍的题目。市场里你是谁，用一句话说？",
   systemOverlay: [
     "## Module mode: 九宫格 Topic Bingo (AUG-D2)",
     "You are running the 九宫格 / Topic Bingo tool (catalog id content-ideation-ip) for this user.",
+    "Name while applying: Jeff's <<九宫格 Topic Bingo>> / Jeff 的 <<九宫格 Topic Bingo>> (`fw.jiugongge-topic-bingo`). Apply; do not lecture.",
     "Job: Fill Jeff Day-2 Topic Bingo, then draw 四条穿心线 into about 12 topic seeds. Not random volume ideation. Not The Waffle multiplication plan.",
     "",
     "### Jeff grid structure (hard; use these exact cell labels)",

@@ -203,27 +203,21 @@ export function finalizeQ5Pack(base: ModulePack, spec: Q5MigrationSpec): ModuleP
 }
 
 /**
- * Helper to build EN/ZH lifecycle openers with a consistent shape.
+ * Helper to build EN/ZH one-line openers (job sentence + first ask).
  */
 export function q5Openers(opts: {
   jobEn: string;
   jobZh: string;
-  bulletsEn: [string, string, string];
-  bulletsZh: [string, string, string];
   askEn: string;
   askZh: string;
-  mentionConfirm: boolean;
 }): { chatOpener: string; chatOpenerZh: string } {
   return {
     chatOpener: buildLifecycleOpener({
       jobLine: opts.jobEn,
-      workBullets: opts.bulletsEn,
       firstAsk: opts.askEn,
-      mentionConfirm: opts.mentionConfirm,
     }),
     chatOpenerZh: buildLifecycleOpenerZh({
       jobLine: opts.jobZh,
-      workBullets: opts.bulletsZh,
       firstAsk: opts.askZh,
     }),
   };

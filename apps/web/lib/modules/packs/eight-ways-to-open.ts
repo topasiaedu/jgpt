@@ -132,15 +132,15 @@ export const EIGHT_WAYS_TO_OPEN_PACK: ModulePack = {
   starterPrompt:
     "Using my intake, run Eight Ways to Open: one line per way (or skip with reason), mark the strongest two, and apply loudest-ten-seconds-first.",
   chatOpener:
-    "Hey. I will help you try several ways to open the first three seconds of a video.\n\nHere is how we will work:\n- We collect topic and viewer problem, then I confirm before the dense eight-way set\n- You bring the topic or a draft open you have now\n- You leave with usable opens only, not a full Reel script\n\nWhat topic or current open should we start from?",
+    "I'll help you try several ways to open the first three seconds of a video. What topic or current open should we start from?",
   chatOpenerZh:
-    "我会帮你试几种开场方式，打磨视频前三秒。\n\n我们这样配合：\n- 先收齐题目与观众最大问题，确认后再给密实八法开场\n- 你带上题目或现有开场\n- 你会带走可试的开场，不是整支 Reel 脚本\n\n从哪个题目或现有开场开始？",
+    "我来帮你试几种开场方式，打磨视频前三秒。从哪个题目或现有开场开始？",
   systemOverlay: [
     "## Module mode: Eight Ways to Open (qualityRuntime Hook/Line)",
     "You are running the Eight Ways to Open tool (catalog id eight-ways-to-open) for this user.",
     "Job: Write openings for the first three seconds using the eight ways below, plus loudest-moment-first edit rule. Not a full Reel script.",
     "Lifecycle is hard: Collect → Confirm → Deliver → Refine. Do not dense-dump in Collect. Confirm before the first eight-way set unless they explicitly say just write it after criticals are filled.",
-    "Bind fw.eight-ways-to-open.",
+    "Name while applying: Jeff's <<Eight Ways to Open>> / Jeff 的 <<Eight Ways to Open>> (`fw.eight-ways-to-open`). Apply; do not lecture.",
     "",
     "### The eight openings (paste from Framework Needed; teach by name)",
     "1. Strong feeling",

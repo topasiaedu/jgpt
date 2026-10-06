@@ -1,6 +1,6 @@
 /**
  * Smoke eval for Quality Runtime Q4: Hook/Line + Reply family packs.
- * Offline only (no OpenAI). Asserts family opt-in + lifecycle walks + Studio batch force-Deliver.
+ * Offline only (no OpenAI). Asserts family opt-in + Collect → Confirm → Deliver → Refine walks.
  *
  * Migrated:
  * - Hook/Line: scroll-stop-hook, hook-rewriter, eight-ways-to-open
@@ -11,9 +11,6 @@
  */
 
 import type { ChatMessage } from "../lib/chatTypes";
-import { HOOK_STUDIO_MARKER_FROM_IDEA } from "../lib/hookStudio/composeUserMessage";
-import { parseHookStudioReply } from "../lib/hookStudio/parseHookStudioHooks";
-import { resolvePackForHookStudioBatch } from "../lib/hookStudio/studioBatchOverlay";
 import { MODULE_CATALOG } from "../lib/modules/catalog";
 import { MODULE_ZH_COPY } from "../lib/modules/catalogZh";
 import { COMMENT_REPLY_THREE_LINES_PACK } from "../lib/modules/packs/comment-reply-three-lines";
@@ -114,7 +111,6 @@ function walkScrollStopHookLifecycle(): {
   confirm: string;
   deliver: string;
   refine: string;
-  studioDeliver: string;
 } {
   const pack = SCROLL_STOP_HOOK_PACK;
 
@@ -200,38 +196,11 @@ function walkScrollStopHookLifecycle(): {
     `scroll-stop-hook expected refine, got ${refine.mode} (${refine.reason})`,
   );
 
-  const studioDeliver = detectLifecycleMode({
-    pack,
-    messages: [
-      {
-        role: "user",
-        content: [
-          HOOK_STUDIO_MARKER_FROM_IDEA,
-          "Profile:",
-          "Niche / industry: Type 1 diabetes education",
-          "Proof / lived edge: Daily systems from lived practice",
-          "Topics I can teach: sticky habits, app overwhelm",
-          "",
-          "Idea: stop chasing perfect numbers",
-        ].join("\n"),
-      },
-    ],
-  });
-  assert(
-    studioDeliver.mode === "deliver",
-    `Hook Studio batch must force deliver, got ${studioDeliver.mode} (${studioDeliver.reason})`,
-  );
-  assert(
-    studioDeliver.reason.startsWith("hook_studio_batch:"),
-    "Studio force-deliver reason must name hook_studio_batch",
-  );
-
   return {
     collect: collect.mode,
     confirm: confirm.mode,
     deliver: deliver.mode,
     refine: refine.mode,
-    studioDeliver: studioDeliver.mode,
   };
 }
 
@@ -291,53 +260,28 @@ function walkCommentReplyLifecycle(): {
   };
 }
 
-function assertStudioRegression(): void {
-  const studioResolved = resolvePackForHookStudioBatch({
-    pack: SCROLL_STOP_HOOK_PACK,
-    latestUserMessage: `${HOOK_STUDIO_MARKER_FROM_IDEA}\nProfile:\nNiche / industry: test`,
-  });
-  assert(studioResolved.studioMode === "from-idea", "Studio from-idea mode must detect");
+function assertHookFormulaOverlayReference(): void {
+  const overlay: string = SCROLL_STOP_HOOK_PACK.systemOverlay;
   assert(
-    studioResolved.pack.moduleId === "scroll-stop-hook",
-    "Studio from-idea must stay on scroll-stop-hook pack",
+    overlay.includes("Jeff's <<Hook Formula>>"),
+    "scroll-stop-hook overlay must name Jeff's <<Hook Formula>>",
   );
-
-  const rewriteResolved = resolvePackForHookStudioBatch({
-    pack: SCROLL_STOP_HOOK_PACK,
-    latestUserMessage: "[Hook Studio · rewrite]\nPaste: old open",
-  });
-  assert(rewriteResolved.studioMode === "rewrite", "Studio rewrite mode must detect");
   assert(
-    rewriteResolved.pack.systemOverlay.includes("Hook Rewriter"),
-    "Studio rewrite must swap Hook Rewriter overlay",
+    overlay.includes("Competitor samples"),
+    "scroll-stop-hook overlay must keep competitor-pattern reference",
   );
-
-  const parseResult = parseHookStudioReply(
-    [
-      "```json",
-      JSON.stringify({
-        hooks: [
-          {
-            hook_text: "Open A",
-            why_it_works: "Four legs land",
-            formula_legs: {
-              audience: "coaches",
-              pain: "invisible",
-              contrast_or_result: "seen then trusted",
-              curiosity: "what changed",
-            },
-            film_first: true,
-          },
-        ],
-      }),
-      "```",
-    ].join("\n"),
-    { mode: "from-idea" },
+  assert(
+    overlay.includes("Repeat a hit"),
+    "scroll-stop-hook overlay must keep repeat-a-hit reference",
   );
-  assert(parseResult.kind === "cards", "Studio parser must still yield cards");
-  if (parseResult.kind === "cards") {
-    assert(parseResult.cards.length === 1, "Studio parser card count");
-  }
+  assert(
+    overlay.includes("Maria principle"),
+    "scroll-stop-hook overlay must ban Maria principle labels",
+  );
+  assert(
+    !overlay.includes("Hook Studio batch"),
+    "scroll-stop-hook overlay must not keep Studio batch product contract",
+  );
 }
 
 function main(): void {
@@ -374,7 +318,7 @@ function main(): void {
 
   const hookModes = walkScrollStopHookLifecycle();
   const replyModes = walkCommentReplyLifecycle();
-  assertStudioRegression();
+  assertHookFormulaOverlayReference();
 
   console.log(
     JSON.stringify(
@@ -403,10 +347,9 @@ function main(): void {
         },
         scrollStopHookLifecycle: hookModes,
         commentReplyLifecycle: replyModes,
-        studioRegression: "parse + resolvePack + force-Deliver on Studio markers OK",
+        hookFormulaOverlayReference: "competitor/repeat/bans folded into chat overlay",
         residualRisks: [
           "Live model density is not executed here; browser QC still recommended.",
-          "Hook Studio rewrite overlay swap keeps scroll-stop-hook qualitySlots; Studio markers force Deliver.",
           "Q5 migrates soundbite-one-liner and comment-to-content via Q5_MIGRATIONS at registration.",
         ],
       },

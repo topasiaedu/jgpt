@@ -99,7 +99,6 @@ export const MODULE_CATALOG: ModuleDefinition[] = [
       "What to input: 对象, 痛点, 反差/结果, and 好奇 (topic and language optional).",
       "When to use: When the body of your video is fine but people scroll past the first frame, or when you want several hook options to A/B mentally before filming.",
       "What you get: Multiple opening lines, each annotated with all four legs. Incomplete lines are rejected. Never a full spoken Reel as the primary job.",
-      "Batch surface: use the Hook Studio tab in the top nav (`/studio`) for profile + modes + copyable cards. This chat page is for collect/confirm/refine.",
     ].join("\n\n"),
   },
   {

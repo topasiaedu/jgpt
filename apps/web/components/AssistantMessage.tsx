@@ -87,9 +87,10 @@ function renderParagraphLines(lines: string[]): ReactNode {
 
 /**
  * Splits raw assistant text into paragraph, list, heading, and rule blocks.
- * Blank lines become separate beats so \n\n spacing shows in the UI.
+ * Blank lines separate paragraph beats, but do not split an open list
+ * (so CSS counters stay 1. 2. 3. when the model blanks between items).
  */
-function parseBlocks(content: string): Block[] {
+export function parseBlocks(content: string): Block[] {
   const lines: string[] = content.replace(/\r\n/g, "\n").split("\n");
   const blocks: Block[] = [];
   let paragraphLines: string[] = [];
@@ -120,8 +121,9 @@ function parseBlocks(content: string): Block[] {
     const trimmed: string = line.trim();
 
     if (trimmed.length === 0) {
+      // Blank lines breathe between paragraphs, but must not flush a list:
+      // each flush would start a new <ol> and CSS counters restart at 1.
       flushParagraph();
-      flushList();
       continue;
     }
 

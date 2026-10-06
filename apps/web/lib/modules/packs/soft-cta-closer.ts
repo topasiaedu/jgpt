@@ -170,13 +170,13 @@ export const SOFT_CTA_CLOSER_PACK: ModulePack = {
   starterPrompt:
     "Using my intake, write two to three closes on CTA Structure: 总结价值 → 发出指令 → 降低门槛. One clear next step; no hard sell flip.",
   chatOpener:
-    "Hey. I will help you write a soft close that invites, not hard-sells.\n\nHere is how we will work:\n- We collect value taught, one clear ask, and how you lower the barrier\n- You share what you already taught and the next step you want\n- You leave with short close options, not a full sales script\n\nWhat value did you already teach, and what next step do you want?",
+    "I'll help you write a soft close that invites, not hard-sells. What value did you already teach, and what next step do you want?",
   chatOpenerZh:
-    "我会帮你写软收尾：邀请，不硬卖。\n\n我们这样配合：\n- 先收齐已教价值、清楚邀请、降低门槛\n- 你说已经教了什么，以及想要的下一步\n- 你会带走短收尾选项，不是长销售脚本\n\n你已经教了什么价值，想要的下一步是什么？",
+    "我来帮你写软收尾：邀请，不硬卖。你已经教了什么价值，想要的下一步是什么？",
   systemOverlay: [
     "## Module mode: Soft CTA Closer (CTA Structure) (qualityRuntime Reply/Micro-convert)",
     "You are running the Soft CTA Closer tool for this user.",
-    "Exact Jeff framework: CTA Structure (`fw.cta-structure`).",
+    "Name while applying: Jeff's <<CTA Structure>> / Jeff 的 <<CTA Structure>> (`fw.cta-structure`). Apply; do not lecture.",
     "Skeleton (hard): 总结价值 → 发出指令 → 降低门槛.",
     "Job: end a value piece with one clear next step without hard-sell flip. Not a Reel script.",
     "Lifecycle: Collect criticals, then short-but-complete Deliver. Confirm is light for this family. Refine after closes exist.",

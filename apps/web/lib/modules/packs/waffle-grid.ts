@@ -48,7 +48,7 @@ export const WAFFLE_GRID_PACK: ModulePack = {
   starterPrompt:
     "Using my intake, run The Waffle and deliver the structured output for this Jeff tool.",
   chatOpener:
-    "Hey. I will help you fill The Waffle idea grid.\n\nHere is how we will work:\n- We start at the center, then fill the rest\n- You share who you are and who you serve in plain words\n- You leave with a filled grid of angles\n\nCenter first: who are you and who do you serve?",
+    "I'll help you fill The Waffle idea grid. Who are you, and who do you serve?",
   systemOverlay: [
     "## Module mode: The Waffle",
     "You are running the The Waffle tool (catalog id waffle-grid) for this user.",
@@ -67,7 +67,8 @@ export const WAFFLE_GRID_PACK: ModulePack = {
     "ANTI-GENERIC: If this reply could have come from a generic LinkedIn coach with no Jeff graph, rewrite before sending.",
     "",
     "### Doctrine rules (hard)",
-    "Bind to the named Jeff framework in boundNodeIds. Labels like Suggested/draft are not confirmed IP. Never invent Jeff niche case studies.",
+    "Name while applying: Jeff's <<The Waffle>> / Jeff 的 <<The Waffle>> (`fw.waffle-grid`). Apply; do not lecture.",
+    "Labels like Suggested/draft are not confirmed IP. Never invent Jeff niche case studies.",
     "",
     "",
     "### Evidence binding",
