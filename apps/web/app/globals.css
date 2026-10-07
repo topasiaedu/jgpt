@@ -1855,6 +1855,10 @@ a.auth-text-link {
 }
 
 .send {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
   height: 2.75rem;
   padding: 0 1.1rem;
   border: none;
@@ -1863,6 +1867,8 @@ a.auth-text-link {
   color: #fff;
   font: inherit;
   font-weight: 600;
+  line-height: 1;
+  text-decoration: none;
   cursor: pointer;
 }
 
