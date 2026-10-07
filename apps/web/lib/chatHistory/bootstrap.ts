@@ -1,10 +1,11 @@
 /**
- * Loads or creates the tool conversation for a module + optional Brand profile.
+ * Loads tool chat history for a module + optional Brand profile.
+ * Resumes ?c= or the latest thread with a user message; otherwise stays ephemeral
+ * (pack opener in UI only, no DB row until the first successful user send).
  * Dedupes concurrent calls (React Strict Mode) per module/profile key.
  */
 
 import {
-  createChatConversation,
   fetchChatConversation,
   fetchChatConversations,
   fetchChatFolders,
@@ -20,12 +21,17 @@ export type ToolChatBootstrapInput = {
   moduleId: string;
   brandProfileId: string | null;
   preferredConversationId: string | undefined;
+  /** Pack opener shown when no persisted thread is resumed (not written to DB). */
   openerContent: string;
 };
 
 export type ToolChatBootstrapSuccess = {
   ok: true;
-  conversation: ChatConversationSummary;
+  /**
+   * Persisted thread when resumed; null when the UI should show an ephemeral opener
+   * with no chat_conversations row yet.
+   */
+  conversation: ChatConversationSummary | null;
   messages: ChatHistoryMessage[];
   conversations: ChatConversationSummary[];
   folders: ChatFolderDto[];
@@ -48,17 +54,22 @@ function bootstrapKey(moduleId: string, brandProfileId: string | null): string {
 }
 
 /**
- * True when the preferred id is in the filtered live list.
+ * True when the resumed conversation matches this tool + Brand profile key.
  */
-function listHasConversation(
-  conversations: ChatConversationSummary[],
-  conversationId: string,
+function conversationMatchesScope(
+  conversation: ChatConversationSummary,
+  moduleId: string,
+  brandProfileId: string | null,
 ): boolean {
-  return conversations.some((row) => row.id === conversationId);
+  if (conversation.moduleId !== moduleId) {
+    return false;
+  }
+  return conversation.brandProfileId === brandProfileId;
 }
 
 /**
- * List + folders, then ?c= if valid, else latest, else create with opener (ungrouped).
+ * List + folders, then ?c= if valid, else latest listed thread, else ephemeral opener.
+ * Never inserts a conversation on land.
  */
 async function runToolChatBootstrap(
   input: ToolChatBootstrapInput,
@@ -74,16 +85,20 @@ async function runToolChatBootstrap(
     return foldersResult;
   }
 
-  let conversations: ChatConversationSummary[] = listResult.conversations;
+  const conversations: ChatConversationSummary[] = listResult.conversations;
   const folders: ChatFolderDto[] = foldersResult.folders;
 
   const preferredId: string | undefined = input.preferredConversationId;
-  if (
-    preferredId !== undefined &&
-    listHasConversation(conversations, preferredId)
-  ) {
+  if (preferredId !== undefined) {
     const preferred = await fetchChatConversation(preferredId);
-    if (preferred.ok) {
+    if (
+      preferred.ok &&
+      conversationMatchesScope(
+        preferred.conversation,
+        input.moduleId,
+        input.brandProfileId,
+      )
+    ) {
       return {
         ok: true,
         conversation: preferred.conversation,
@@ -97,7 +112,14 @@ async function runToolChatBootstrap(
   const latest: ChatConversationSummary | undefined = conversations[0];
   if (latest !== undefined) {
     const resumed = await fetchChatConversation(latest.id);
-    if (resumed.ok) {
+    if (
+      resumed.ok &&
+      conversationMatchesScope(
+        resumed.conversation,
+        input.moduleId,
+        input.brandProfileId,
+      )
+    ) {
       return {
         ok: true,
         conversation: resumed.conversation,
@@ -108,44 +130,18 @@ async function runToolChatBootstrap(
     }
   }
 
-  const created = await createChatConversation({
-    moduleId: input.moduleId,
-    openerContent: input.openerContent,
-    brandProfileId: input.brandProfileId,
-  });
-  if (!created.ok) {
-    return created;
-  }
-
-  conversations = [
-    created.conversation,
-    ...conversations.filter((row) => row.id !== created.conversation.id),
-  ];
-
-  // Brand-profile auto-filing may create a folder; refresh so the sidebar sees it.
-  let nextFolders: ChatFolderDto[] = folders;
-  const assignedFolderId: string | null = created.conversation.folderId;
-  if (
-    assignedFolderId !== null &&
-    !folders.some((folder) => folder.id === assignedFolderId)
-  ) {
-    const refreshed = await fetchChatFolders();
-    if (refreshed.ok) {
-      nextFolders = refreshed.folders;
-    }
-  }
-
   return {
     ok: true,
-    conversation: created.conversation,
-    messages: created.messages,
+    conversation: null,
+    messages: [],
     conversations,
-    folders: nextFolders,
+    folders,
   };
 }
 
 /**
- * Auto-resumes or creates the landing thread. Shares in-flight work per module/profile.
+ * Auto-resumes a persisted thread, or leaves the tool on an ephemeral opener.
+ * Shares in-flight work per module/profile.
  */
 export function bootstrapToolChatHistory(
   input: ToolChatBootstrapInput,

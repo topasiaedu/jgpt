@@ -28,7 +28,7 @@ type AppNavProps = {
   placement?: AppNavPlacement;
   /**
    * Optional control rendered as the first row inside the signed-in rail nav
-   * (e.g. New chat) before All Tools / Brand profile / Account / Sign out.
+   * (e.g. New chat → home) before All Tools / Brand profile / Account / Sign out.
    */
   railInsertAfterBrand?: ReactNode;
 };

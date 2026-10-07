@@ -13,7 +13,7 @@ import type {
   ChatFolderDto,
 } from "@/lib/chatHistory/types";
 
-const STORAGE_KEY = "influence-engine.chat-history-shell-v1";
+const STORAGE_KEY = "influence-engine.chat-history-shell-v2";
 
 /** Fresh enough to paint immediately; still revalidated in the background. */
 export const SHELL_LIST_CACHE_TTL_MS = 60_000;

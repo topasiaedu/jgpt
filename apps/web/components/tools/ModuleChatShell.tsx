@@ -4,7 +4,11 @@ import { useEffect, useRef, useState } from "react";
 import type { FormEvent, KeyboardEvent } from "react";
 
 import AssistantMessage from "@/components/AssistantMessage";
-import { appendChatHistoryTurn } from "@/lib/chatHistory/clientApi";
+import {
+  appendChatHistoryTurn,
+  createChatConversation,
+  patchChatConversation,
+} from "@/lib/chatHistory/clientApi";
 import type { ChatConversationSummary } from "@/lib/chatHistory/types";
 import { postChat } from "@/lib/chatClient";
 import { chatErrorMessageKey } from "@/lib/chatErrors";
@@ -22,8 +26,13 @@ const MESSAGE_LIST_SMOOTH_MAX_DELTA_PX = 720;
 type ModuleChatShellProps = {
   moduleId: string;
   moduleTitle: string;
-  /** Persisted conversation this shell is bound to. */
-  conversationId: string;
+  /**
+   * Persisted conversation id, or null when the opener is ephemeral
+   * (lazy-create on the first successful user send).
+   */
+  conversationId: string | null;
+  /** Pack opener stored with the conversation on first persist. */
+  openerContent: string;
   /** Full UI transcript from history (opener plus turns). */
   initialMessages: ChatMessage[];
   /** Optional home → tool intent (silent API hint on later turns). */
@@ -34,19 +43,20 @@ type ModuleChatShellProps = {
   brandProfileId?: string;
   /** Called after a successful history append so the sidebar title can refresh. */
   onTurnPersisted?: (conversation: ChatConversationSummary) => void;
-  /** Lets the sidebar disable New chat / switch while a reply is in flight. */
+  /** Lets the parent disable conversation switch while a reply is in flight. */
   onSendingChange?: (isSending: boolean) => void;
 };
 
 /**
  * Module chat UI: brand bubbles. Posts moduleId every turn.
- * Parent remounts via conversationId when the student picks another thread.
+ * Parent remounts via conversationId (or ephemeral key) when the student picks another thread.
  * Graph and brand sources stay on the API payload; they are not shown on bubbles.
  */
 export default function ModuleChatShell({
   moduleId,
   moduleTitle,
   conversationId,
+  openerContent,
   initialMessages,
   homeIntent,
   brandProfileId,
@@ -61,7 +71,8 @@ export default function ModuleChatShell({
   const [persistError, setPersistError] = useState<string | null>(null);
 
   const messagesRef = useRef<ChatMessage[]>(messages);
-  const conversationIdRef = useRef<string>(conversationId);
+  const conversationIdRef = useRef<string | null>(conversationId);
+  const openerContentRef = useRef<string>(openerContent);
   const isSendingRef = useRef(false);
   const wasSendingRef = useRef(false);
   const messageListRef = useRef<HTMLUListElement | null>(null);
@@ -91,6 +102,10 @@ export default function ModuleChatShell({
   useEffect(() => {
     conversationIdRef.current = conversationId;
   }, [conversationId]);
+
+  useEffect(() => {
+    openerContentRef.current = openerContent;
+  }, [openerContent]);
 
   /**
    * Places the caret in the composer on first paint of this thread.
@@ -339,7 +354,30 @@ export default function ModuleChatShell({
       onSendingChange(false);
     }
 
-    const historyId: string = conversationIdRef.current;
+    /**
+     * Persist only after a successful reply. Lazy-create the conversation
+     * (opener row) on the first user send when none exists yet.
+     */
+    let historyId: string | null = conversationIdRef.current;
+    let createdThisSend: string | null = null;
+    if (historyId === null) {
+      const created = await createChatConversation({
+        moduleId,
+        openerContent: openerContentRef.current,
+        brandProfileId:
+          typeof brandProfileId === "string" && brandProfileId.length > 0
+            ? brandProfileId
+            : null,
+      });
+      if (!created.ok) {
+        setPersistError(t("histSaveFailed"));
+        return;
+      }
+      historyId = created.conversation.id;
+      createdThisSend = historyId;
+      conversationIdRef.current = historyId;
+    }
+
     const appendResult = await appendChatHistoryTurn(historyId, {
       userContent: trimmed,
       assistantContent: result.reply,
@@ -347,6 +385,11 @@ export default function ModuleChatShell({
       brandSources: result.brandSources,
     });
     if (!appendResult.ok) {
+      if (createdThisSend !== null) {
+        // Avoid leaving opener-only junk in the DB after a failed first append.
+        await patchChatConversation(createdThisSend, { deleted: true });
+        conversationIdRef.current = null;
+      }
       setPersistError(t("histSaveFailed"));
       return;
     }

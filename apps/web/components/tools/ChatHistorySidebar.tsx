@@ -51,8 +51,8 @@ type ChatHistorySidebarProps = {
 
 /**
  * Global history list: Chats section (ChatGPT "Projects" slot), folders first, then
- * no-folder chats, and row actions via ⋯ menus. New chat lives in the rail nav above
- * All Tools (quiet icon+label row). Rows show tool title so cross-tool lists stay clear.
+ * no-folder chats, and row actions via ⋯ menus. Rail New chat (home launcher) lives
+ * in AppNav above All Tools. Rows show tool title so cross-tool lists stay clear.
  */
 export default function ChatHistorySidebar({
   conversations,

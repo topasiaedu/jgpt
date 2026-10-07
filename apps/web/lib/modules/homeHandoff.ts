@@ -180,6 +180,23 @@ export function replaceToolConversationQuery(conversationId: string): void {
 }
 
 /**
+ * Removes `?c=` with replaceState when the tool is on an ephemeral (unpersisted) opener.
+ */
+export function clearToolConversationQuery(): void {
+  const url: URL = new URL(window.location.href);
+  if (!url.searchParams.has(TOOL_CONVERSATION_QUERY_KEY)) {
+    return;
+  }
+  url.searchParams.delete(TOOL_CONVERSATION_QUERY_KEY);
+  const query: string = url.searchParams.toString();
+  const nextPath: string =
+    query.length === 0
+      ? `${url.pathname}${url.hash}`
+      : `${url.pathname}?${query}${url.hash}`;
+  window.history.replaceState(window.history.state, "", nextPath);
+}
+
+/**
  * True when `profile` is present in searchParams but is not a usable UUID.
  * Distinguishes a bad explicit id from a missing id (which may fall back to last-active).
  */

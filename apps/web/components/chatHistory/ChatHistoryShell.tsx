@@ -19,7 +19,6 @@ import AppNav, {
   appNavActiveFromPath,
 } from "@/components/AppNav";
 import {
-  createChatConversation,
   createChatFolder,
   deleteChatFolder,
   fetchAllChatConversations,
@@ -45,14 +44,11 @@ import type {
   ChatFolderPatchInput,
 } from "@/lib/chatHistory/types";
 import { useI18n } from "@/lib/i18n/LocaleProvider";
-import { getModuleById } from "@/lib/modules/catalog";
 import {
   buildToolConversationHref,
   parseConversationSearchParam,
-  parseProfileSearchParam,
   parseToolModuleIdFromPath,
 } from "@/lib/modules/homeHandoff";
-import { resolveModuleChatOpener } from "@/lib/modules/resolveChatOpener";
 import { useAuthSession } from "@/lib/supabase/useAuthSession";
 
 /**
@@ -112,31 +108,6 @@ function ActiveConversationQuerySync({
 }
 
 /**
- * Reads `c` / `profile` from the current URL without useSearchParams.
- * Keeps ChatHistoryShell out of a Suspense CSR bailout that would SSR bare
- * children while the client wraps them in app-with-history.
- */
-function readToolSearchFields(): {
-  conversationId: string | null;
-  brandProfileId: string | null;
-} {
-  if (typeof window === "undefined") {
-    return { conversationId: null, brandProfileId: null };
-  }
-  const params = new URLSearchParams(window.location.search);
-  const conversationId = parseConversationSearchParam({
-    c: params.get("c") ?? undefined,
-  });
-  const brandProfileId = parseProfileSearchParam({
-    profile: params.get("profile") ?? undefined,
-  });
-  return {
-    conversationId: conversationId === undefined ? null : conversationId,
-    brandProfileId: brandProfileId === undefined ? null : brandProfileId,
-  };
-}
-
-/**
  * Global signed-in chat history chrome: sidebar on desktop, drawer on mobile.
  * Mounts once under Providers so list state survives home ↔ tools ↔ profile routes.
  *
@@ -145,7 +116,7 @@ function readToolSearchFields(): {
  * client-only and must not fork the wrapper className during hydration.
  */
 export default function ChatHistoryShell({ children }: ChatHistoryShellProps) {
-  const { t, locale } = useI18n();
+  const { t } = useI18n();
   const auth = useAuthSession();
   const pathname = usePathname();
   const router = useRouter();
@@ -201,7 +172,7 @@ export default function ChatHistoryShell({ children }: ChatHistoryShellProps) {
   /**
    * Loads the cross-tool conversation list and folders when signed in.
    * Uses a short client cache so reloads paint the list immediately, then revalidate.
-   * New chat stays clickable during this fetch (disabled only while creating).
+   * Rail New chat stays available during this fetch (it only navigates home).
    */
   useEffect(() => {
     if (!hydrated || !showHistory) {
@@ -212,7 +183,7 @@ export default function ChatHistoryShell({ children }: ChatHistoryShellProps) {
       setLoading(true);
       /**
        * If getSession stalls, clear the spinner so the rail does not look broken forever.
-       * New chat is already clickable (busy-only disable).
+       * Rail New chat stays available (home navigation, not create).
        */
       const authWaitTimer: number = window.setTimeout(() => {
         setLoading(false);
@@ -437,78 +408,21 @@ export default function ChatHistoryShell({ children }: ChatHistoryShellProps) {
   }
 
   /**
-   * Starts a new chat on the current tool, or the last-used tool, else All Tools.
+   * Global rail New chat: always go to home create launcher.
+   * Clears tool conversation context (`?c=`) by navigating to `/`.
+   * Does not create a tool thread; tool-local new-thread (if any) stays separate.
    */
-  async function handleNewChat(): Promise<void> {
-    if (busy) {
-      return;
-    }
-
-    const pathModuleId: string | null = parseToolModuleIdFromPath(pathname);
-    let moduleId: string | null = pathModuleId;
-    let brandProfileId: string | null = null;
-
-    if (moduleId !== null) {
-      brandProfileId = readToolSearchFields().brandProfileId;
-    } else {
-      const latest: ChatConversationSummary | undefined = conversations[0];
-      if (latest === undefined) {
-        closeSidebarIfMobile();
-        router.push("/tools");
-        return;
-      }
-      moduleId = latest.moduleId;
-      brandProfileId = latest.brandProfileId;
-    }
-
-    if (moduleId === null || getModuleById(moduleId) === undefined) {
-      closeSidebarIfMobile();
-      router.push("/tools");
-      return;
-    }
-
-    setBusy(true);
+  function handleNewChat(): void {
+    setActiveConversationId(null);
     setError(null);
-    const openerContent: string = await resolveModuleChatOpener(moduleId, locale);
-    const created = await createChatConversation({
-      moduleId,
-      openerContent,
-      brandProfileId,
-    });
-    if (!created.ok) {
-      setBusy(false);
-      setError(created.error);
+    closeSidebarIfMobile();
+    const alreadyHomeClean: boolean =
+      pathname === "/" &&
+      (typeof window === "undefined" || window.location.search === "");
+    if (alreadyHomeClean) {
       return;
     }
-    const nextConversations = upsertConversationSummary(
-      conversations,
-      created.conversation,
-    );
-    setConversations(nextConversations);
-
-    let nextFolders: ChatFolderDto[] = folders;
-    const assignedFolderId: string | null = created.conversation.folderId;
-    if (
-      assignedFolderId !== null &&
-      !folders.some((folder) => folder.id === assignedFolderId)
-    ) {
-      const refreshed = await fetchChatFolders();
-      if (refreshed.ok) {
-        nextFolders = refreshed.folders;
-        setFolders(nextFolders);
-      }
-    }
-    persistShellList(nextConversations, nextFolders);
-
-    setBusy(false);
-    closeSidebarIfMobile();
-    router.push(
-      buildToolConversationHref(
-        created.conversation.moduleId,
-        created.conversation.id,
-        created.conversation.brandProfileId,
-      ),
-    );
+    router.push("/");
   }
 
   /**
@@ -718,9 +632,8 @@ export default function ChatHistoryShell({ children }: ChatHistoryShellProps) {
                 <button
                   type="button"
                   className="chat-history-new chat-history-new-rail"
-                  disabled={busy}
                   onClick={() => {
-                    void handleNewChat();
+                    handleNewChat();
                   }}
                 >
                   <svg

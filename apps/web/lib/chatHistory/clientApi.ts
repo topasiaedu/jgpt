@@ -184,7 +184,8 @@ export type CreateChatConversationInput = {
 };
 
 /**
- * POST /api/chat-history: new ungrouped thread with opener.
+ * POST /api/chat-history: create a thread with opener.
+ * Call only on first successful user send (lazy-create), never on tool land / New chat.
  */
 export async function createChatConversation(
   input: CreateChatConversationInput,

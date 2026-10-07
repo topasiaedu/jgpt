@@ -63,8 +63,53 @@ export function requireCatalogModuleId(
 }
 
 /**
+ * Keeps only conversations that have at least one user message.
+ * Opener-only threads stay out of sidebar lists (legacy junk + failed lazy-create).
+ */
+async function filterConversationsWithUserMessages(
+  supabase: SupabaseClient,
+  conversations: ChatConversationSummary[],
+): Promise<
+  { ok: true; conversations: ChatConversationSummary[] } | ChatHistoryDbError
+> {
+  if (conversations.length === 0) {
+    return { ok: true, conversations };
+  }
+
+  const conversationIds: string[] = conversations.map((row) => row.id);
+  const { data, error } = await supabase
+    .from("chat_messages")
+    .select("conversation_id")
+    .in("conversation_id", conversationIds)
+    .eq("role", "user");
+
+  if (error !== null) {
+    return { ok: false, status: 500, error: error.message };
+  }
+
+  const withUserMessage: Set<string> = new Set();
+  if (Array.isArray(data)) {
+    for (const item of data) {
+      if (
+        isPlainObject(item) &&
+        typeof item.conversation_id === "string" &&
+        item.conversation_id.trim().length > 0
+      ) {
+        withUserMessage.add(item.conversation_id);
+      }
+    }
+  }
+
+  return {
+    ok: true,
+    conversations: conversations.filter((row) => withUserMessage.has(row.id)),
+  };
+}
+
+/**
  * Lists non-deleted conversations for this user, module, and profile key.
  * brandProfileId null means continue-without (IS NULL).
+ * Opener-only threads (zero user messages) are omitted.
  */
 export async function listOwnedConversations(
   supabase: SupabaseClient,
@@ -122,12 +167,13 @@ export async function listOwnedConversations(
       }
     }
   }
-  return { ok: true, conversations };
+  return filterConversationsWithUserMessages(supabase, conversations);
 }
 
 /**
  * Lists all non-deleted conversations for this user across tools and profiles.
  * Newest updated_at first. Used by the global history sidebar.
+ * Opener-only threads (zero user messages) are omitted.
  */
 export async function listAllOwnedConversations(
   supabase: SupabaseClient,
@@ -155,7 +201,7 @@ export async function listAllOwnedConversations(
       }
     }
   }
-  return { ok: true, conversations };
+  return filterConversationsWithUserMessages(supabase, conversations);
 }
 
 export type CreateConversationInput = {

@@ -92,6 +92,7 @@ export async function GET(
 /**
  * POST /api/chat-history: create a conversation with opener (ordinal 0).
  * Body: { moduleId, openerContent, brandProfileId?, title? }
+ * Intended for lazy-create on first user send (not on tool land / New chat).
  * With brandProfileId: auto-files into that profile's folder (create or reuse).
  * Continue-without (null): stays Ungrouped.
  */

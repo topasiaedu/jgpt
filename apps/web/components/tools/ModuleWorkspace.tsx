@@ -19,6 +19,7 @@ import { useI18n } from "@/lib/i18n/LocaleProvider";
 import { getModuleStatus } from "@/lib/modules/catalog";
 import {
   buildToolChatOpener,
+  clearToolConversationQuery,
   parseConversationSearchParam,
   parseHomeHandoffSearchParams,
   replaceToolConversationQuery,
@@ -42,7 +43,8 @@ type ModuleWorkspaceProps = {
 };
 
 /**
- * Module route body: resume the last thread for this tool + profile, or start one.
+ * Module route body: resume ?c= / latest user-thread, or show an ephemeral opener.
+ * No DB conversation until the first successful user send (lazy-create in ModuleChatShell).
  * Global chat history chrome lives in ChatHistoryShell (not here).
  * Intro modal is on demand only (never auto-shown on land).
  */
@@ -77,6 +79,8 @@ export default function ModuleWorkspace({
   const [activeConversation, setActiveConversation] =
     useState<ChatConversationSummary | null>(null);
   const [activeMessages, setActiveMessages] = useState<ChatMessage[]>([]);
+  /** True while the UI shows a pack opener with no persisted conversation yet. */
+  const [ephemeralOpen, setEphemeralOpen] = useState(false);
 
   const openerRef = useRef<string>("");
   const preferredConversationId: string | undefined = parseConversationSearchParam(
@@ -130,14 +134,19 @@ export default function ModuleWorkspace({
   }, [brandProfileId]);
 
   /**
-   * Applies a loaded or created conversation to local state, the URL, and global history.
+   * Applies a persisted conversation to local state and the URL.
+   * Sidebar upsert only when the thread already has a user message (never opener-only).
    */
-  const applyActiveThread = useCallback(
+  const applyPersistedThread = useCallback(
     (conversation: ChatConversationSummary, messages: ChatMessage[]): void => {
+      setEphemeralOpen(false);
       setActiveConversation(conversation);
       setActiveMessages(messages);
       replaceToolConversationQuery(conversation.id);
-      if (historyShell !== null) {
+      const hasUserMessage: boolean = messages.some(
+        (message) => message.role === "user",
+      );
+      if (historyShell !== null && hasUserMessage) {
         historyShell.notifyConversationUpsert(conversation);
       }
     },
@@ -145,7 +154,17 @@ export default function ModuleWorkspace({
   );
 
   /**
-   * Auto-resumes ?c= or the latest thread, otherwise creates an ungrouped opener chat.
+   * Shows the pack opener in the UI without a DB row or sidebar entry.
+   */
+  const applyEphemeralThread = useCallback((openerContent: string): void => {
+    setEphemeralOpen(true);
+    setActiveConversation(null);
+    setActiveMessages([{ role: "assistant", content: openerContent }]);
+    clearToolConversationQuery();
+  }, []);
+
+  /**
+   * Auto-resumes ?c= or the latest user-message thread; otherwise stays ephemeral.
    */
   useEffect(() => {
     if (!hydrated || !isReady || !hasPack) {
@@ -158,7 +177,7 @@ export default function ModuleWorkspace({
     preferredConversationRef.current = preferredConversationId;
 
     /**
-     * Runs list/resume/create for this module + profile key.
+     * Runs list/resume (never create) for this module + profile key.
      */
     async function loadHistory(): Promise<void> {
       const result = await bootstrapToolChatHistory({
@@ -175,10 +194,14 @@ export default function ModuleWorkspace({
         setHistoryReady(true);
         return;
       }
-      applyActiveThread(
-        result.conversation,
-        historyMessagesToChat(result.messages),
-      );
+      if (result.conversation !== null) {
+        applyPersistedThread(
+          result.conversation,
+          historyMessagesToChat(result.messages),
+        );
+      } else {
+        applyEphemeralThread(openerRef.current);
+      }
       if (historyShell !== null) {
         historyShell.notifyFoldersReplace(result.folders);
       }
@@ -196,7 +219,8 @@ export default function ModuleWorkspace({
     module.id,
     profileKey,
     preferredConversationId,
-    applyActiveThread,
+    applyPersistedThread,
+    applyEphemeralThread,
     historyShell,
   ]);
 
@@ -233,10 +257,14 @@ export default function ModuleWorkspace({
         setHistoryReady(true);
         return;
       }
-      applyActiveThread(
-        result.conversation,
-        historyMessagesToChat(result.messages),
-      );
+      if (result.conversation !== null) {
+        applyPersistedThread(
+          result.conversation,
+          historyMessagesToChat(result.messages),
+        );
+      } else {
+        applyEphemeralThread(openerRef.current);
+      }
       if (historyShell !== null) {
         historyShell.notifyFoldersReplace(result.folders);
       }
@@ -245,16 +273,24 @@ export default function ModuleWorkspace({
   }
 
   /**
-   * Refreshes global sidebar metadata after a persisted user+assistant turn.
+   * After lazy-create + first turn persist: bind URL, local state, and sidebar.
    */
   function handleTurnPersisted(conversation: ChatConversationSummary): void {
+    setEphemeralOpen(false);
     setActiveConversation(conversation);
+    replaceToolConversationQuery(conversation.id);
     if (historyShell !== null) {
       historyShell.notifyConversationUpsert(conversation);
     }
   }
 
   const showChat: boolean = hydrated && isReady && pack !== undefined;
+  const chatReady: boolean =
+    historyReady && (activeConversation !== null || ephemeralOpen);
+  const shellKey: string =
+    activeConversation !== null
+      ? activeConversation.id
+      : `ephemeral:${module.id}:${profileKey ?? "none"}`;
 
   return (
     <div className="shell shell-studio shell-studio-chat">
@@ -282,7 +318,7 @@ export default function ModuleWorkspace({
           <div className="module-workspace-chat-col">
             {!historyReady ? (
               <p className="tools-loading">{t("histLoading")}</p>
-            ) : historyError !== null && activeConversation === null ? (
+            ) : historyError !== null && !chatReady ? (
               <div className="module-history-fallback">
                 <p className="error" role="alert">
                   {historyError}
@@ -295,7 +331,7 @@ export default function ModuleWorkspace({
                   {t("histRetry")}
                 </button>
               </div>
-            ) : activeConversation !== null ? (
+            ) : chatReady ? (
               <>
                 {historyError !== null ? (
                   <p className="error" role="alert">
@@ -303,10 +339,13 @@ export default function ModuleWorkspace({
                   </p>
                 ) : null}
                 <ModuleChatShell
-                  key={activeConversation.id}
+                  key={shellKey}
                   moduleId={module.id}
                   moduleTitle={display.title}
-                  conversationId={activeConversation.id}
+                  conversationId={
+                    activeConversation !== null ? activeConversation.id : null
+                  }
+                  openerContent={chatOpener}
                   initialMessages={activeMessages}
                   homeIntent={homeIntent}
                   brandProfileId={brandProfileId}
