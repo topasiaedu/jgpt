@@ -9,7 +9,10 @@ import {
   createChatConversation,
   patchChatConversation,
 } from "@/lib/chatHistory/clientApi";
-import type { ChatConversationSummary } from "@/lib/chatHistory/types";
+import type {
+  ChatConversationSummary,
+  ChatFolderDto,
+} from "@/lib/chatHistory/types";
 import { postChat } from "@/lib/chatClient";
 import { chatErrorMessageKey } from "@/lib/chatErrors";
 import type { ChatMessage } from "@/lib/chatTypes";
@@ -38,9 +41,14 @@ type ModuleChatShellProps = {
   /** Optional home → tool intent (silent API hint on later turns). */
   homeIntent?: string;
   /**
-   * Optional owned Brand profile id. Sent on /api/chat only when the student chose one.
+   * Optional owned Brand profile id. Sent on /api/chat and lazy-create when set.
    */
   brandProfileId?: string;
+  /**
+   * Called after lazy-create when the server auto-filed into a profile folder
+   * so the sidebar can upsert that folder before the conversation row.
+   */
+  onAutoFolderReady?: (folder: ChatFolderDto) => void;
   /** Called after a successful history append so the sidebar title can refresh. */
   onTurnPersisted?: (conversation: ChatConversationSummary) => void;
   /** Lets the parent disable conversation switch while a reply is in flight. */
@@ -60,6 +68,7 @@ export default function ModuleChatShell({
   initialMessages,
   homeIntent,
   brandProfileId,
+  onAutoFolderReady,
   onTurnPersisted,
   onSendingChange,
 }: ModuleChatShellProps) {
@@ -73,6 +82,7 @@ export default function ModuleChatShell({
   const messagesRef = useRef<ChatMessage[]>(messages);
   const conversationIdRef = useRef<string | null>(conversationId);
   const openerContentRef = useRef<string>(openerContent);
+  const brandProfileIdRef = useRef<string | undefined>(brandProfileId);
   const isSendingRef = useRef(false);
   const wasSendingRef = useRef(false);
   const messageListRef = useRef<HTMLUListElement | null>(null);
@@ -106,6 +116,10 @@ export default function ModuleChatShell({
   useEffect(() => {
     openerContentRef.current = openerContent;
   }, [openerContent]);
+
+  useEffect(() => {
+    brandProfileIdRef.current = brandProfileId;
+  }, [brandProfileId]);
 
   /**
    * Places the caret in the composer on first paint of this thread.
@@ -171,8 +185,13 @@ export default function ModuleChatShell({
 
   /**
    * Pins to true bottom when following the thread. First long jump is instant.
+   * Kept in a ref so the message-list effect can call the latest logic without
+   * re-subscribing ResizeObserver on every render.
    */
-  function pinMessageListIfNeeded(allowSmooth: boolean): void {
+  const pinMessageListIfNeededRef = useRef<(allowSmooth: boolean) => void>(
+    () => undefined,
+  );
+  pinMessageListIfNeededRef.current = (allowSmooth: boolean): void => {
     if (!shouldPinMessageList()) {
       return;
     }
@@ -194,7 +213,7 @@ export default function ModuleChatShell({
       delta < MESSAGE_LIST_SMOOTH_MAX_DELTA_PX;
     scrollMessageListToTrueBottom(useSmooth ? "smooth" : "auto");
     hasCompletedInitialPinRef.current = true;
-  }
+  };
 
   /**
    * Tracks whether the student is still at the bottom of the transcript.
@@ -234,14 +253,14 @@ export default function ModuleChatShell({
     const outerFrame: number = window.requestAnimationFrame(() => {
       innerFrame = window.requestAnimationFrame(() => {
         if (!cancelled) {
-          pinMessageListIfNeeded(true);
+          pinMessageListIfNeededRef.current(true);
         }
       });
     });
 
     const resizeObserver = new ResizeObserver(() => {
       if (!cancelled) {
-        pinMessageListIfNeeded(false);
+        pinMessageListIfNeededRef.current(false);
       }
     });
     resizeObserver.observe(listEl);
@@ -317,12 +336,14 @@ export default function ModuleChatShell({
       restoreComposerFocus();
     });
 
+    const sessionBrandProfileId: string | undefined = brandProfileIdRef.current;
     const result = await postChat({
       messages: toDialogueOnly(nextMessages),
       locale,
       moduleId,
-      ...(typeof brandProfileId === "string" && brandProfileId.length > 0
-        ? { brandProfileId }
+      ...(typeof sessionBrandProfileId === "string" &&
+      sessionBrandProfileId.length > 0
+        ? { brandProfileId: sessionBrandProfileId }
         : {}),
       ...(typeof homeIntent === "string" && homeIntent.length > 0
         ? { homeIntent }
@@ -365,8 +386,9 @@ export default function ModuleChatShell({
         moduleId,
         openerContent: openerContentRef.current,
         brandProfileId:
-          typeof brandProfileId === "string" && brandProfileId.length > 0
-            ? brandProfileId
+          typeof sessionBrandProfileId === "string" &&
+          sessionBrandProfileId.length > 0
+            ? sessionBrandProfileId
             : null,
       });
       if (!created.ok) {
@@ -376,6 +398,9 @@ export default function ModuleChatShell({
       historyId = created.conversation.id;
       createdThisSend = historyId;
       conversationIdRef.current = historyId;
+      if (created.folder !== null && onAutoFolderReady !== undefined) {
+        onAutoFolderReady(created.folder);
+      }
     }
 
     const appendResult = await appendChatHistoryTurn(historyId, {
@@ -440,7 +465,9 @@ export default function ModuleChatShell({
                     </>
                   ) : (
                     <>
-                      <span className="message-role">{t("roleYou")}</span>
+                      <div className="message-header">
+                        <span className="message-role">{t("roleYou")}</span>
+                      </div>
                       <p className="message-body">{message.content}</p>
                     </>
                   )}

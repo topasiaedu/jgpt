@@ -25,6 +25,11 @@ type OrderedItem = {
   text: string;
 };
 
+/** CSS custom property used by `.assistant-ol` counter reset. */
+type AssistantOlStyle = CSSProperties & {
+  "--assistant-ol-start": number;
+};
+
 /** True when a trimmed line is a Markdown horizontal rule. */
 function isHorizontalRule(trimmed: string): boolean {
   return /^(-{3,}|\*{3,}|_{3,})$/.test(trimmed);
@@ -366,7 +371,7 @@ export default function AssistantMessage({ content }: AssistantMessageProps) {
             </ul>
           );
         }
-        const olStyle: CSSProperties = {
+        const olStyle: AssistantOlStyle = {
           "--assistant-ol-start": block.start - 1,
         };
         return (

@@ -29,6 +29,7 @@ import {
 import {
   collectFolderAndDescendantIds,
   upsertConversationSummary,
+  upsertFolderDto,
 } from "@/lib/chatHistory/group";
 import {
   clearShellListCache,
@@ -68,6 +69,8 @@ const ChatHistorySidebar = dynamic(
 type ChatHistoryShellApi = {
   /** Upserts a conversation row after bootstrap, create, or a persisted turn. */
   notifyConversationUpsert: (conversation: ChatConversationSummary) => void;
+  /** Inserts or replaces one folder (e.g. brand-profile auto-folder from lazy-create). */
+  notifyFolderUpsert: (folder: ChatFolderDto) => void;
   /** Replaces the folder list (e.g. after brand-profile auto-folder create). */
   notifyFoldersReplace: (folders: ChatFolderDto[]) => void;
 };
@@ -192,15 +195,18 @@ export default function ChatHistoryShell({ children }: ChatHistoryShellProps) {
         window.clearTimeout(authWaitTimer);
       };
     }
-    if (auth.user === null) {
+
+    // Depend on user id only (see deps below) so token refreshes do not refetch.
+    const signedInUserId: string | undefined = auth.user?.id;
+    if (signedInUserId === undefined) {
       clearShellListCache();
       setLoading(false);
       setConversations([]);
       setFolders([]);
       return;
     }
+    const userId: string = signedInUserId;
 
-    const userId: string = auth.user.id;
     const cached =
       readShellListMemory(userId) ?? readShellListSession(userId);
     if (cached !== null) {
@@ -275,7 +281,7 @@ export default function ChatHistoryShell({ children }: ChatHistoryShellProps) {
       cancelled = true;
     };
     // Use user id (not the User object) so token refreshes do not refetch the list.
-  }, [hydrated, showHistory, auth.ready, auth.user?.id]);
+  }, [hydrated, showHistory, auth.ready, auth.user?.id, t]);
 
   /**
    * Keeps the client cache aligned after local list mutations.
@@ -296,25 +302,6 @@ export default function ChatHistoryShell({ children }: ChatHistoryShellProps) {
     });
   }
 
-  const notifyConversationUpsert = useCallback(
-    (conversation: ChatConversationSummary): void => {
-      setConversations((current) => {
-        const next = upsertConversationSummary(current, conversation);
-        const userId: string | undefined = auth.user?.id;
-        if (userId !== undefined) {
-          writeShellListSnapshot({
-            userId,
-            conversations: next,
-            folders: foldersRef.current,
-            fetchedAt: Date.now(),
-          });
-        }
-        return next;
-      });
-    },
-    [auth.user?.id],
-  );
-
   const notifyFoldersReplace = useCallback(
     (next: ChatFolderDto[]): void => {
       setFolders(next);
@@ -331,9 +318,74 @@ export default function ChatHistoryShell({ children }: ChatHistoryShellProps) {
     [auth.user?.id],
   );
 
+  const notifyFolderUpsert = useCallback(
+    (folder: ChatFolderDto): void => {
+      setFolders((current) => {
+        const next = upsertFolderDto(current, folder);
+        // Eager ref so a follow-up conversation upsert in the same turn
+        // already sees the auto-folder (avoids a one-frame Ungrouped flash).
+        foldersRef.current = next;
+        const userId: string | undefined = auth.user?.id;
+        if (userId !== undefined) {
+          writeShellListSnapshot({
+            userId,
+            conversations: conversationsRef.current,
+            folders: next,
+            fetchedAt: Date.now(),
+          });
+        }
+        return next;
+      });
+    },
+    [auth.user?.id],
+  );
+
+  const notifyConversationUpsert = useCallback(
+    (conversation: ChatConversationSummary): void => {
+      const folderId: string | null = conversation.folderId;
+      const folderKnown: boolean =
+        folderId === null ||
+        foldersRef.current.some((folder) => folder.id === folderId);
+
+      /**
+       * Self-heal: conversation.folderId points at a brand auto-folder the
+       * sidebar has not loaded yet (common on first profile send). Refetch
+       * folders so the row groups under the profile folder instead of Ungrouped.
+       */
+      if (!folderKnown && folderId !== null) {
+        void (async () => {
+          const result = await fetchChatFolders();
+          if (!result.ok) {
+            return;
+          }
+          notifyFoldersReplace(result.folders);
+        })();
+      }
+
+      setConversations((current) => {
+        const next = upsertConversationSummary(current, conversation);
+        const userId: string | undefined = auth.user?.id;
+        if (userId !== undefined) {
+          writeShellListSnapshot({
+            userId,
+            conversations: next,
+            folders: foldersRef.current,
+            fetchedAt: Date.now(),
+          });
+        }
+        return next;
+      });
+    },
+    [auth.user?.id, notifyFoldersReplace],
+  );
+
   const shellApi = useMemo<ChatHistoryShellApi>(
-    () => ({ notifyConversationUpsert, notifyFoldersReplace }),
-    [notifyConversationUpsert, notifyFoldersReplace],
+    () => ({
+      notifyConversationUpsert,
+      notifyFolderUpsert,
+      notifyFoldersReplace,
+    }),
+    [notifyConversationUpsert, notifyFolderUpsert, notifyFoldersReplace],
   );
 
   /**

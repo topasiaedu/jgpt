@@ -9,6 +9,7 @@ import {
   listChatHistorySidebarSections,
   listFoldersForMove,
   listValidParentsForFolder,
+  upsertFolderDto,
 } from "../lib/chatHistory/group";
 import type {
   ChatConversationSummary,
@@ -130,5 +131,20 @@ assert(
 );
 const parentsForRoot = listValidParentsForFolder([root, child], "root");
 assert(parentsForRoot.length === 0, "folder with children cannot nest");
+
+const withNewFolder = upsertFolderDto([root], orphan);
+assert(withNewFolder.length === 2, "upsertFolderDto appends unknown folders");
+assert(withNewFolder[1]?.id === "orphan", "new folder is appended");
+const renamedRoot = { ...root, name: "Renamed" };
+const withReplace = upsertFolderDto([root, orphan], renamedRoot);
+assert(withReplace[0]?.name === "Renamed", "upsertFolderDto replaces by id");
+assert(withReplace[1]?.id === "orphan", "other folders keep order");
+
+const unknownFolderChat = sampleConversation("ghost", "missing-folder");
+const ghostGrouped = groupConversationsByFolder([unknownFolderChat], [root]);
+assert(
+  ghostGrouped.ungrouped.some((row) => row.id === "ghost"),
+  "folderId not in known folders stays Ungrouped",
+);
 
 console.log("test-chat-history-group: ok");

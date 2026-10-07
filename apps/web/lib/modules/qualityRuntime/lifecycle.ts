@@ -447,7 +447,7 @@ export function buildLifecycleModeRules(options: {
           `Heuristic missing critical ids: ${missing}`,
           "Ask at most 1 to 2 clarifying questions for critical gaps. Bullets if two.",
           "Do NOT produce the dense family deliverable yet.",
-          "If they say I don't know / blank, use the I-don't-know option engine (choices, not invented niche facts).",
+          "If they say I don't know / blank: normalize + belief, then use the I-don't-know option engine (2 easy forks as help, warm invite to pick; ban 别躲 / don't hide).",
         ];
       case "confirm":
         return [

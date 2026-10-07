@@ -13,7 +13,10 @@ import ModuleIntroModal, {
 import { fetchBrandProfile } from "@/lib/brandProfile/clientApi";
 import { bootstrapToolChatHistory } from "@/lib/chatHistory/bootstrap";
 import { historyMessagesToChat } from "@/lib/chatHistory/toChatMessages";
-import type { ChatConversationSummary } from "@/lib/chatHistory/types";
+import type {
+  ChatConversationSummary,
+  ChatFolderDto,
+} from "@/lib/chatHistory/types";
 import type { ChatMessage } from "@/lib/chatTypes";
 import { useI18n } from "@/lib/i18n/LocaleProvider";
 import { getModuleStatus } from "@/lib/modules/catalog";
@@ -273,6 +276,16 @@ export default function ModuleWorkspace({
   }
 
   /**
+   * After lazy-create auto-folder: ensure the profile folder is in the sidebar
+   * before the conversation row upserts (so it groups under the folder, not Ungrouped).
+   */
+  function handleAutoFolderReady(folder: ChatFolderDto): void {
+    if (historyShell !== null) {
+      historyShell.notifyFolderUpsert(folder);
+    }
+  }
+
+  /**
    * After lazy-create + first turn persist: bind URL, local state, and sidebar.
    */
   function handleTurnPersisted(conversation: ChatConversationSummary): void {
@@ -349,6 +362,7 @@ export default function ModuleWorkspace({
                   initialMessages={activeMessages}
                   homeIntent={homeIntent}
                   brandProfileId={brandProfileId}
+                  onAutoFolderReady={handleAutoFolderReady}
                   onTurnPersisted={handleTurnPersisted}
                 />
               </>

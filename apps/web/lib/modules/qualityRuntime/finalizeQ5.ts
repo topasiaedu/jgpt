@@ -141,6 +141,7 @@ export function injectLifecycleIntoOverlay(
     "",
     "### Hard bans (qualityRuntime)",
     "No overnight-fame. No virality guarantee.",
+    "On I don't know / blank: normalize + belief + 2 forks + warm invite. Ban 别躲 / don't hide shame closers.",
   ].join("\n");
 
   // Remove soft collect / soft output gates that fight the hard lifecycle.

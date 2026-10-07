@@ -243,3 +243,19 @@ export function upsertConversationSummary(
   });
   return [next, ...without];
 }
+
+/**
+ * Inserts or replaces a folder by id (keeps relative order; new folders append).
+ */
+export function upsertFolderDto(
+  folders: ChatFolderDto[],
+  next: ChatFolderDto,
+): ChatFolderDto[] {
+  const index: number = folders.findIndex((folder) => folder.id === next.id);
+  if (index < 0) {
+    return [...folders, next];
+  }
+  return folders.map((folder, folderIndex) => {
+    return folderIndex === index ? next : folder;
+  });
+}

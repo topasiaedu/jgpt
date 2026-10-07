@@ -24,7 +24,6 @@ import {
 import {
   CHAT_HISTORY_MAX_FOLDERS_PER_USER,
   CHAT_HISTORY_MAX_MESSAGES_PER_CONVERSATION,
-  DEFAULT_CONVERSATION_TITLE,
   type ChatConversationSummary,
   type ChatFolderDto,
   type ChatHistoryMessage,
@@ -213,15 +212,23 @@ export type CreateConversationInput = {
 
 /**
  * Creates a conversation with ordinal 0 assistant opener.
- * With a Brand profile, auto-files into that profile's folder (create or reuse).
+ * With a Brand profile, auto-files into that profile's folder (reuse by
+ * brand_profile_id or name match, else create). See resolveOrCreateBrandProfileFolder.
  * Continue-without stays Ungrouped (folder_id null).
+ * When auto-filed, `folder` is returned so the client can upsert sidebar folders
+ * before the conversation row (avoids a brief Ungrouped flash).
  */
 export async function createOwnedConversation(
   supabase: SupabaseClient,
   userId: string,
   input: CreateConversationInput,
 ): Promise<
-  | { ok: true; conversation: ChatConversationSummary; messages: ChatHistoryMessage[] }
+  | {
+      ok: true;
+      conversation: ChatConversationSummary;
+      messages: ChatHistoryMessage[];
+      folder: ChatFolderDto | null;
+    }
   | ChatHistoryDbError
 > {
   const catalog = requireCatalogModuleId(input.moduleId);
@@ -229,7 +236,7 @@ export async function createOwnedConversation(
     return catalog;
   }
 
-  let folderId: string | null = null;
+  let folder: ChatFolderDto | null = null;
 
   if (input.brandProfileId !== null) {
     const owned = await userOwnsBrandProfile(
@@ -252,7 +259,7 @@ export async function createOwnedConversation(
     if (!profileFolder.ok) {
       return profileFolder;
     }
-    folderId = profileFolder.folderId;
+    folder = profileFolder.folder;
   }
 
   const { data, error } = await supabase
@@ -261,7 +268,7 @@ export async function createOwnedConversation(
       owner_user_id: userId,
       module_id: catalog.moduleId,
       brand_profile_id: input.brandProfileId,
-      folder_id: folderId,
+      folder_id: folder !== null ? folder.id : null,
       title: input.title,
     })
     .select(CONVERSATION_SELECT)
@@ -303,7 +310,7 @@ export async function createOwnedConversation(
     return { ok: false, status: 500, error: "Could not store opener message." };
   }
 
-  return { ok: true, conversation, messages: [opener] };
+  return { ok: true, conversation, messages: [opener], folder };
 }
 
 /**
@@ -805,12 +812,26 @@ export async function renameOwnedFolder(
 
 /**
  * Finds or creates the root folder linked to a Brand profile for auto-filing.
+ *
+ * Resolution order:
+ * 1. Folder already linked via brand_profile_id.
+ * 2. Unlinked root folder whose name matches the profile name (trim, case-insensitive).
+ *    On match, set brand_profile_id (if null) and reuse; do not create a duplicate.
+ * 3. Soft alias (conservative): only when the user has exactly one root folder, that
+ *    folder is unlinked, and the profile name contains the folder name or vice versa
+ *    (e.g. profile "Demo Coffee Co" vs folder "Coffee"). Skipped when multiple roots
+ *    exist to avoid wrong merges.
+ * 4. Otherwise create a new root folder named after the profile.
+ *
+ * Note: users who already have both an orphan auto-file folder and a manual alias
+ * (e.g. "Demo Coffee Co" + "Coffee") keep both until they merge; new creates prefer
+ * exact name link when possible.
  */
 export async function resolveOrCreateBrandProfileFolder(
   supabase: SupabaseClient,
   userId: string,
   brandProfileId: string,
-): Promise<{ ok: true; folderId: string } | ChatHistoryDbError> {
+): Promise<{ ok: true; folder: ChatFolderDto } | ChatHistoryDbError> {
   const existing = await findBrandProfileFolder(
     supabase,
     userId,
@@ -819,8 +840,8 @@ export async function resolveOrCreateBrandProfileFolder(
   if (!existing.ok) {
     return existing;
   }
-  if (existing.folderId !== null) {
-    return { ok: true, folderId: existing.folderId };
+  if (existing.folder !== null) {
+    return { ok: true, folder: existing.folder };
   }
 
   const { data: profileRow, error: profileError } = await supabase
@@ -850,6 +871,20 @@ export async function resolveOrCreateBrandProfileFolder(
 
   const folderName: string =
     normalizeChatHistoryName(profileRow.name) ?? "Brand profile";
+
+  const nameLinked = await tryLinkRootFolderByProfileName(
+    supabase,
+    userId,
+    brandProfileId,
+    folderName,
+  );
+  if (!nameLinked.ok) {
+    return nameLinked;
+  }
+  if (nameLinked.folder !== null) {
+    return { ok: true, folder: nameLinked.folder };
+  }
+
   const color: ChatFolderColor = pickFolderColorForProfileId(brandProfileId);
 
   const created = await createOwnedFolder(supabase, userId, {
@@ -860,7 +895,7 @@ export async function resolveOrCreateBrandProfileFolder(
   });
 
   if (created.ok) {
-    return { ok: true, folderId: created.folder.id };
+    return { ok: true, folder: created.folder };
   }
 
   // Concurrent create: unique (owner, brand_profile_id) race → re-read.
@@ -877,8 +912,8 @@ export async function resolveOrCreateBrandProfileFolder(
     if (!again.ok) {
       return again;
     }
-    if (again.folderId !== null) {
-      return { ok: true, folderId: again.folderId };
+    if (again.folder !== null) {
+      return { ok: true, folder: again.folder };
     }
   }
 
@@ -886,16 +921,16 @@ export async function resolveOrCreateBrandProfileFolder(
 }
 
 /**
- * Loads the folder id linked to a Brand profile, if any.
+ * Loads the folder linked to a Brand profile, if any.
  */
 async function findBrandProfileFolder(
   supabase: SupabaseClient,
   userId: string,
   brandProfileId: string,
-): Promise<{ ok: true; folderId: string | null } | ChatHistoryDbError> {
+): Promise<{ ok: true; folder: ChatFolderDto | null } | ChatHistoryDbError> {
   const { data, error } = await supabase
     .from("chat_folders")
-    .select("id")
+    .select(FOLDER_SELECT)
     .eq("owner_user_id", userId)
     .eq("brand_profile_id", brandProfileId)
     .maybeSingle();
@@ -903,14 +938,232 @@ async function findBrandProfileFolder(
   if (error !== null) {
     return { ok: false, status: 500, error: error.message };
   }
-  if (data === null || !isPlainObject(data) || typeof data.id !== "string") {
-    return { ok: true, folderId: null };
+  if (data === null) {
+    return { ok: true, folder: null };
   }
-  const folderId: string = data.id.trim();
-  if (folderId.length === 0) {
-    return { ok: true, folderId: null };
+  const folder = parseChatFolderDto(data);
+  if (folder === null) {
+    return { ok: true, folder: null };
   }
-  return { ok: true, folderId };
+  return { ok: true, folder };
+}
+
+/**
+ * Lowercases and collapses whitespace for folder/profile name comparison.
+ */
+function folderNameMatchKey(name: string): string {
+  return name.trim().replace(/\s+/g, " ").toLowerCase();
+}
+
+/**
+ * True when names match after trim and case-insensitive compare.
+ */
+function folderNamesMatchExactly(a: string, b: string): boolean {
+  return folderNameMatchKey(a) === folderNameMatchKey(b);
+}
+
+/**
+ * Soft alias: one name contains the other (case-insensitive). Used only under
+ * the single-root-folder guard in pickRootFolderForProfileName.
+ */
+function folderNamesSoftAlias(profileName: string, folderName: string): boolean {
+  const profileKey: string = folderNameMatchKey(profileName);
+  const folderKey: string = folderNameMatchKey(folderName);
+  if (profileKey.length === 0 || folderKey.length === 0) {
+    return false;
+  }
+  if (profileKey === folderKey) {
+    return true;
+  }
+  return profileKey.includes(folderKey) || folderKey.includes(profileKey);
+}
+
+/**
+ * Picks an unlinked root folder to attach to a Brand profile.
+ * Exact name match first; soft containment only when there is exactly one root.
+ */
+function pickRootFolderForProfileName(
+  roots: ChatFolderDto[],
+  profileName: string,
+): ChatFolderDto | null {
+  const exactUnlinked: ChatFolderDto[] = roots.filter(
+    (folder) =>
+      folder.brandProfileId === null &&
+      folderNamesMatchExactly(folder.name, profileName),
+  );
+
+  if (exactUnlinked.length === 1) {
+    const onlyExact: ChatFolderDto | undefined = exactUnlinked[0];
+    return onlyExact !== undefined ? onlyExact : null;
+  }
+
+  if (exactUnlinked.length > 1) {
+    const sorted: ChatFolderDto[] = [...exactUnlinked].sort((left, right) =>
+      left.createdAt.localeCompare(right.createdAt),
+    );
+    const oldest: ChatFolderDto | undefined = sorted[0];
+    return oldest !== undefined ? oldest : null;
+  }
+
+  if (roots.length === 1) {
+    const onlyRoot: ChatFolderDto | undefined = roots[0];
+    if (
+      onlyRoot !== undefined &&
+      onlyRoot.brandProfileId === null &&
+      folderNamesSoftAlias(profileName, onlyRoot.name)
+    ) {
+      return onlyRoot;
+    }
+  }
+
+  return null;
+}
+
+/**
+ * Lists owned root folders (parent_folder_id null) for name-based brand linking.
+ */
+async function listOwnedRootFolders(
+  supabase: SupabaseClient,
+  userId: string,
+): Promise<{ ok: true; folders: ChatFolderDto[] } | ChatHistoryDbError> {
+  const { data, error } = await supabase
+    .from("chat_folders")
+    .select(FOLDER_SELECT)
+    .eq("owner_user_id", userId)
+    .is("parent_folder_id", null)
+    .order("created_at", { ascending: true });
+
+  if (error !== null) {
+    return { ok: false, status: 500, error: error.message };
+  }
+
+  const folders: ChatFolderDto[] = [];
+  if (Array.isArray(data)) {
+    for (const row of data) {
+      const folder = parseChatFolderDto(row);
+      if (folder !== null) {
+        folders.push(folder);
+      }
+    }
+  }
+  return { ok: true, folders };
+}
+
+/**
+ * Sets brand_profile_id on an unlinked folder and returns the updated DTO.
+ * If another writer linked first, re-reads the brand-linked folder instead.
+ */
+async function linkUnlinkedFolderToBrandProfile(
+  supabase: SupabaseClient,
+  userId: string,
+  folderId: string,
+  brandProfileId: string,
+): Promise<{ ok: true; folder: ChatFolderDto } | ChatHistoryDbError> {
+  const nowIso: string = new Date().toISOString();
+  const { data, error } = await supabase
+    .from("chat_folders")
+    .update({
+      brand_profile_id: brandProfileId,
+      updated_at: nowIso,
+    })
+    .eq("id", folderId)
+    .eq("owner_user_id", userId)
+    .is("brand_profile_id", null)
+    .select(FOLDER_SELECT)
+    .maybeSingle();
+
+  if (error !== null) {
+    if (
+      error.message.toLowerCase().includes("duplicate") ||
+      error.message.toLowerCase().includes("unique") ||
+      error.message.toLowerCase().includes("chat_folders_owner_brand_profile")
+    ) {
+      const again = await findBrandProfileFolder(
+        supabase,
+        userId,
+        brandProfileId,
+      );
+      if (!again.ok) {
+        return again;
+      }
+      if (again.folder !== null) {
+        return { ok: true, folder: again.folder };
+      }
+    }
+    return {
+      ok: false,
+      status: mapFolderWriteErrorStatus(error.message),
+      error: mapFolderWriteErrorMessage(error.message),
+    };
+  }
+
+  const linked = parseChatFolderDto(data);
+  if (linked !== null) {
+    return { ok: true, folder: linked };
+  }
+
+  // Race: row no longer null-branded; prefer the folder now linked to this profile.
+  const again = await findBrandProfileFolder(supabase, userId, brandProfileId);
+  if (!again.ok) {
+    return again;
+  }
+  if (again.folder !== null) {
+    return { ok: true, folder: again.folder };
+  }
+
+  return {
+    ok: false,
+    status: 409,
+    error: "Could not link folder to Brand profile.",
+  };
+}
+
+/**
+ * Tries exact (then soft) name match against root folders; links when found.
+ * Returns folder null when no match (caller should create).
+ */
+async function tryLinkRootFolderByProfileName(
+  supabase: SupabaseClient,
+  userId: string,
+  brandProfileId: string,
+  profileName: string,
+): Promise<{ ok: true; folder: ChatFolderDto | null } | ChatHistoryDbError> {
+  const roots = await listOwnedRootFolders(supabase, userId);
+  if (!roots.ok) {
+    return roots;
+  }
+
+  const candidate = pickRootFolderForProfileName(roots.folders, profileName);
+  if (candidate === null) {
+    return { ok: true, folder: null };
+  }
+
+  const linked = await linkUnlinkedFolderToBrandProfile(
+    supabase,
+    userId,
+    candidate.id,
+    brandProfileId,
+  );
+  if (!linked.ok) {
+    // Unique race: another folder took this brand; use that folder if present.
+    if (linked.status === 409) {
+      const again = await findBrandProfileFolder(
+        supabase,
+        userId,
+        brandProfileId,
+      );
+      if (!again.ok) {
+        return again;
+      }
+      if (again.folder !== null) {
+        return { ok: true, folder: again.folder };
+      }
+      return { ok: true, folder: null };
+    }
+    return linked;
+  }
+
+  return { ok: true, folder: linked.folder };
 }
 
 /**

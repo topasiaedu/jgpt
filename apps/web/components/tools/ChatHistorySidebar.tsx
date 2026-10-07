@@ -1034,9 +1034,9 @@ function formatRelativeUpdatedAt(iso: string, locale: Locale): string {
  * Locale tool title for a conversation row, or empty when the module id is unknown.
  */
 function resolveToolLabel(moduleId: string, locale: Locale): string {
-  const module = getModuleById(moduleId);
-  if (module === undefined) {
+  const catalogModule = getModuleById(moduleId);
+  if (catalogModule === undefined) {
     return "";
   }
-  return getModuleDisplay(module, locale).title;
+  return getModuleDisplay(catalogModule, locale).title;
 }

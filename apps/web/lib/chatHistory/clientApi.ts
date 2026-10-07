@@ -186,11 +186,17 @@ export type CreateChatConversationInput = {
 /**
  * POST /api/chat-history: create a thread with opener.
  * Call only on first successful user send (lazy-create), never on tool land / New chat.
+ * With brandProfileId, the server auto-files into the profile folder and may return it.
  */
 export async function createChatConversation(
   input: CreateChatConversationInput,
 ): Promise<
-  | { ok: true; conversation: ChatConversationSummary; messages: ChatHistoryMessage[] }
+  | {
+      ok: true;
+      conversation: ChatConversationSummary;
+      messages: ChatHistoryMessage[];
+      folder: ChatFolderDto | null;
+    }
   | ChatHistoryClientError
 > {
   const payload: {
@@ -222,7 +228,7 @@ export async function createChatConversation(
         error: await readApiError(response, "Could not start a new chat."),
       };
     }
-    return parseConversationWithMessages(
+    return parseCreateConversationResponse(
       await response.json(),
       "Unexpected create chat response.",
     );
@@ -537,6 +543,43 @@ function parseConversationWithMessages(
     return { ok: false, status: 500, error: fallback };
   }
   return { ok: true, conversation, messages };
+}
+
+/**
+ * Parser for POST create: { conversation, messages, folder? }.
+ * Missing or null folder means continue-without (Ungrouped).
+ */
+function parseCreateConversationResponse(
+  body: unknown,
+  fallback: string,
+):
+  | {
+      ok: true;
+      conversation: ChatConversationSummary;
+      messages: ChatHistoryMessage[];
+      folder: ChatFolderDto | null;
+    }
+  | ChatHistoryClientError {
+  const base = parseConversationWithMessages(body, fallback);
+  if (!base.ok) {
+    return base;
+  }
+  if (typeof body !== "object" || body === null) {
+    return { ok: false, status: 500, error: fallback };
+  }
+  if (!("folder" in body) || body.folder === null || body.folder === undefined) {
+    return { ok: true, conversation: base.conversation, messages: base.messages, folder: null };
+  }
+  const folder = parseChatFolderDto(body.folder);
+  if (folder === null) {
+    return { ok: false, status: 500, error: fallback };
+  }
+  return {
+    ok: true,
+    conversation: base.conversation,
+    messages: base.messages,
+    folder,
+  };
 }
 
 /**

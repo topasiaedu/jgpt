@@ -6,11 +6,13 @@
 
 import type { QualitySlot } from "@/lib/modules/qualityRuntime/types";
 
-/** Shared student-facing phrasing (no dash punctuation). */
+/** Shared coach phrasing for IDK turns (no dash punctuation; warm + firm). */
 const IDK_SHARED_STUB_EN: string = [
   "They said they do not know or left a critical answer blank.",
+  "情绪价值 first: normalize (stuck is common; not broken), then belief (I got you / 我来帮你), then help.",
   "Do not invent their niche facts (medical details, client names, private proof).",
-  "Offer 2 to 4 concrete choices or micro-examples shaped as scaffolding, then ask them to pick or correct.",
+  "Offer 2 easy forks (concrete choices or micro-examples as scaffolding). Options feel like help, not an order.",
+  "Warm invite to pick one. Hype the pick. Ban shame closers: 别躲 / 别装 / 别逃避 / don't hide / stop dodging / quit stalling.",
   "Label examples as practice structure for THEIR work, not Jeff workshop cases.",
   "Still ask at most 1 to 2 clarifying questions this turn (bullets if two).",
 ].join(" ");

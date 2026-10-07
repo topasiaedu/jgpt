@@ -111,7 +111,7 @@ export function joinQualityRuntimeOverlay(parts: FamilyOverlayParts): string {
     "### Critical slots (Collect gate)",
     `Need before Confirm / Deliver: ${parts.criticalSlotSummary}.`,
     "Ask at most 1 to 2 questions per Collect turn. Prefer Jeff-shaped asks over a generic questionnaire.",
-    "If they say I do not know / blank, offer pack IDK choices. Do not invent niche facts, client names, or private proof.",
+    "If they say I do not know / blank: normalize + belief, then offer 2 pack IDK forks as help. Warm invite to pick. Ban 别躲 / don't hide shame closers. Do not invent niche facts, client names, or private proof.",
     "User owns niche facts. Jeff owns craft for this tool job.",
     "",
   ];

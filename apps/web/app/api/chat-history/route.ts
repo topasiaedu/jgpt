@@ -17,6 +17,7 @@ import {
 import {
   DEFAULT_CONVERSATION_TITLE,
   type ChatConversationSummary,
+  type ChatFolderDto,
   type ChatHistoryMessage,
 } from "@/lib/chatHistory/types";
 
@@ -30,6 +31,8 @@ export type ChatHistoryListResponse = {
 export type ChatHistoryCreateResponse = {
   conversation: ChatConversationSummary;
   messages: ChatHistoryMessage[];
+  /** Present when brandProfileId auto-filed into a profile folder. */
+  folder: ChatFolderDto | null;
 };
 
 /**
@@ -160,7 +163,11 @@ export async function POST(
   }
 
   return NextResponse.json(
-    { conversation: result.conversation, messages: result.messages },
+    {
+      conversation: result.conversation,
+      messages: result.messages,
+      folder: result.folder,
+    },
     { status: 201 },
   );
 }

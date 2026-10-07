@@ -376,6 +376,28 @@ a.example-chip-link {
   margin-bottom: 0.6rem;
 }
 
+/* User bubbles: right rail like iMessage / WeChat; Jeff stays full left. */
+.module-chat .message-user {
+  align-self: flex-end;
+  width: fit-content;
+  max-width: 82%;
+  margin-left: auto;
+}
+
+.module-chat .message-user .message-header {
+  justify-content: flex-end;
+}
+
+.module-chat .message-user .message-role {
+  text-align: right;
+}
+
+.module-chat .message-assistant,
+.module-chat .message-loading {
+  align-self: flex-start;
+  max-width: 100%;
+}
+
 /* Mount-only enter: CSS animation does not restart on parent re-render. */
 .module-chat .message-enter {
   animation: message-enter 0.82s ease-out backwards;
