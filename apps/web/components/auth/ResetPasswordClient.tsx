@@ -1,10 +1,11 @@
 "use client";
 
+import Image from "next/image";
 import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useState, type FormEvent } from "react";
 
-import AppNav from "@/components/AppNav";
+import { AppNavLocaleToggle } from "@/components/AppNav";
 import { useI18n } from "@/lib/i18n/LocaleProvider";
 import { createBrowserSupabaseClient } from "@/lib/supabase/browser";
 import { readSupabasePublicEnv } from "@/lib/supabase/env";
@@ -109,12 +110,20 @@ export default function ResetPasswordClient() {
 
   return (
     <div className="shell shell-studio shell-auth">
-      <header className="header header-create">
-        <AppNav active="auth" />
-      </header>
-
       <main className="studio-main">
         <div className="auth-surface empty-state-enter">
+          <div className="auth-brand">
+            <Image
+              src="/brand/influence-engine-mark.png"
+              alt=""
+              width={36}
+              height={42}
+              className="auth-brand-mark"
+              priority
+            />
+            <span className="auth-brand-name">{t("productName")}</span>
+          </div>
+
           <h1 className="create-ask">{t("authResetTitle")}</h1>
           <p className="create-tip">{t("authResetSubtitle")}</p>
 
@@ -198,6 +207,10 @@ export default function ResetPasswordClient() {
           {!auth.envMissing && !auth.ready ? (
             <p className="account-muted">{t("authWorking")}</p>
           ) : null}
+
+          <div className="auth-locale">
+            <AppNavLocaleToggle />
+          </div>
         </div>
       </main>
     </div>

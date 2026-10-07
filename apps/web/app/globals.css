@@ -1376,7 +1376,8 @@ body:has(.shell-studio) {
 .shell-studio.shell-auth .studio-main {
   justify-content: center;
   align-items: center;
-  min-height: min(68vh, 560px);
+  min-height: min(88vh, 720px);
+  padding-block: 1.5rem;
 }
 
 .auth-surface {
@@ -1389,6 +1390,35 @@ body:has(.shell-studio) {
   gap: 0;
   text-align: center;
   padding: 0.35rem 0 1.25rem;
+}
+
+.auth-brand {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.45rem;
+  margin: 0 0 1.15rem;
+}
+
+.auth-brand-mark {
+  display: block;
+  width: 2.25rem;
+  height: auto;
+}
+
+.auth-brand-name {
+  font-family: var(--font-create-ask);
+  font-size: 0.92rem;
+  font-weight: 500;
+  letter-spacing: -0.01em;
+  line-height: 1.25;
+  color: #fff8f2;
+}
+
+.auth-locale {
+  display: flex;
+  justify-content: center;
+  margin: 1.35rem 0 0;
 }
 
 .auth-surface .create-ask {

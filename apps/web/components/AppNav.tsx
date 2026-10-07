@@ -199,7 +199,9 @@ function RailIconSignOut() {
 
 /**
  * Product nav: brand mark (home), tools, Brand profile, Account, sign out, locale.
- * Signed-in routes render this in the history rail; signed-out and auth keep the top bar.
+ * Signed-in routes render this in the history rail. Signed-out non-auth pages keep
+ * the top bar. Auth pages (`/auth`, `/auth/*`) never mount top AppNav; they host
+ * a form-local locale toggle instead.
  */
 export default function AppNav({
   active,
@@ -227,10 +229,10 @@ export default function AppNav({
   const isRail: boolean = placement === "rail";
 
   /**
-   * Signed-in product pages hide the top bar; ChatHistoryShell owns brand and actions.
-   * Auth surfaces keep top chrome even when a session exists.
+   * Auth is a focused form: never render top AppNav there (locale lives on the form).
+   * Signed-in product pages also hide the top bar; ChatHistoryShell owns brand/actions.
    */
-  if (placement === "top" && signedIn && !onAuthSurface) {
+  if (placement === "top" && (onAuthSurface || signedIn)) {
     return null;
   }
 

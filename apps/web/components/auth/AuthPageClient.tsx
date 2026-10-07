@@ -1,9 +1,10 @@
 "use client";
 
+import Image from "next/image";
 import { useSearchParams } from "next/navigation";
 import { useEffect, useState, type FormEvent } from "react";
 
-import AppNav from "@/components/AppNav";
+import { AppNavLocaleToggle } from "@/components/AppNav";
 import {
   persistLocaleChoice,
   readPersistedLocale,
@@ -185,12 +186,20 @@ export default function AuthPageClient() {
 
   return (
     <div className="shell shell-studio shell-auth">
-      <header className="header header-create">
-        <AppNav active="auth" />
-      </header>
-
       <main className="studio-main">
         <div className="auth-surface empty-state-enter">
+          <div className="auth-brand">
+            <Image
+              src="/brand/influence-engine-mark.png"
+              alt=""
+              width={36}
+              height={42}
+              className="auth-brand-mark"
+              priority
+            />
+            <span className="auth-brand-name">{t("productName")}</span>
+          </div>
+
           <h1 className="create-ask">{title}</h1>
           <p className="create-tip">{subtitle}</p>
 
@@ -370,6 +379,10 @@ export default function AuthPageClient() {
               </div>
             </section>
           ) : null}
+
+          <div className="auth-locale">
+            <AppNavLocaleToggle />
+          </div>
         </div>
       </main>
     </div>
