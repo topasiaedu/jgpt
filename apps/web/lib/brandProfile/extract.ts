@@ -6,6 +6,7 @@
 import JSZip from "jszip";
 import { extractText } from "unpdf";
 
+import { ocrPdfBrandAsset } from "@/lib/brandProfile/ocrPdf";
 import type { BrandAssetKind } from "@/lib/brandProfile/types";
 
 /** One labeled unit of extracted text (page, slide, or whole paste). */
@@ -52,8 +53,13 @@ function stripXmlToText(xml: string): string {
  * Extracts text from a PDF buffer, one unit per page.
  */
 async function extractPdfUnits(bytes: Uint8Array): Promise<ExtractUnit[]> {
-  const result = await extractText(bytes, { mergePages: false });
-  const pages: string[] = Array.isArray(result.text) ? result.text : [result.text];
+  // unpdf/pdfjs detaches the ArrayBuffer it is given. Copy so the caller can
+  // still run OCR on the original bytes when native text is empty.
+  const forNative: Uint8Array = bytes.slice();
+  const result = await extractText(forNative, { mergePages: false });
+  const pages: string[] = Array.isArray(result.text)
+    ? result.text
+    : [result.text];
   const units: ExtractUnit[] = [];
   for (let index = 0; index < pages.length; index += 1) {
     const pageText: string = pages[index]?.trim() ?? "";
@@ -102,6 +108,14 @@ async function extractPptxUnits(bytes: Uint8Array): Promise<ExtractUnit[]> {
 }
 
 /**
+ * True when UTF-8 decodes to nothing but whitespace (empty companion .txt files).
+ */
+export function plainTextBytesAreEmpty(bytes: Uint8Array): boolean {
+  const text: string = new TextDecoder("utf-8").decode(bytes).trim();
+  return text.length === 0;
+}
+
+/**
  * Treats UTF-8 bytes as a single plain-text / markdown / paste unit.
  */
 function extractPlainUnits(bytes: Uint8Array, label: string): ExtractUnit[] {
@@ -114,6 +128,7 @@ function extractPlainUnits(bytes: Uint8Array, label: string): ExtractUnit[] {
 
 /**
  * Runs the extractor for a Brand asset kind.
+ * For PDFs with no native text layer, falls back to OpenAI PDF OCR (page-capped).
  */
 export async function extractBrandAssetText(
   kind: BrandAssetKind,
@@ -142,10 +157,26 @@ export async function extractBrandAssetText(
     }
   }
 
-  const totalChars: number = units.reduce(
+  let totalChars: number = units.reduce(
     (sum, unit) => sum + unit.text.length,
     0,
   );
+
+  // Image-heavy slide PDFs often have zero native text (e.g. AUG workshop decks).
+  if (kind === "pdf" && (units.length === 0 || totalChars === 0)) {
+    try {
+      const ocr = await ocrPdfBrandAsset(bytes);
+      units = ocr.units;
+      totalChars = ocr.totalChars;
+    } catch (error) {
+      const message: string =
+        error instanceof Error
+          ? error.message
+          : "Could not OCR this PDF.";
+      throw new Error(message);
+    }
+  }
+
   return { units, totalChars };
 }
 

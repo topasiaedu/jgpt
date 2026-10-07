@@ -10,7 +10,8 @@ import { createServiceRoleSupabaseClient } from "@/lib/supabase/serviceRole";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
-export const maxDuration = 60;
+/** OCR fallback for scanned PDFs can exceed 60s on multi-page decks. */
+export const maxDuration = 120;
 
 type RouteParams = {
   params: Promise<{ id: string; assetId: string }>;

@@ -15,15 +15,26 @@ import {
   embedBrandChunkTexts,
   formatEmbeddingForPg,
 } from "@/lib/brandProfile/embed";
-import { extractBrandAssetText } from "@/lib/brandProfile/extract";
+import {
+  extractBrandAssetText,
+  inferBrandAssetKind,
+  plainTextBytesAreEmpty,
+} from "@/lib/brandProfile/extract";
 import {
   assertAssetExtractWithinQuota,
   assertProfileExtractWithinQuota,
 } from "@/lib/brandProfile/quotas";
+import {
+  alignFileNameWithKind,
+  resolveBrandAssetKind,
+} from "@/lib/brandProfile/sniffKind";
 import { summarizeBrandProfile } from "@/lib/brandProfile/summarize";
 import {
+  BRAND_ASSET_EMPTY_PLAIN_TEXT_ERROR,
+  BRAND_ASSET_NO_TEXT_ERROR,
   BRAND_ASSETS_BUCKET,
   normalizeBrandProfileStructured,
+  type BrandAssetKind,
   type BrandProfileStructured,
 } from "@/lib/brandProfile/types";
 
@@ -144,6 +155,22 @@ async function loadSampleChunkTexts(
 }
 
 /**
+ * User-facing message when extract (+ PDF OCR) produced no usable text.
+ */
+function noExtractTextMessage(
+  kind: BrandAssetKind,
+  bytes: Uint8Array,
+): string {
+  if (
+    (kind === "text" || kind === "md" || kind === "paste") &&
+    plainTextBytesAreEmpty(bytes)
+  ) {
+    return BRAND_ASSET_EMPTY_PLAIN_TEXT_ERROR;
+  }
+  return BRAND_ASSET_NO_TEXT_ERROR;
+}
+
+/**
  * Processes one pending/failed Brand asset through the full ingest pipeline.
  * Caller must already verify the signed-in user owns the profile.
  */
@@ -217,18 +244,48 @@ export async function processBrandAssetIngest(
   const arrayBuffer: ArrayBuffer = await download.data.arrayBuffer();
   const bytes = new Uint8Array(arrayBuffer);
 
+  // Correct kind when storage holds a PDF (or PPTX) mislabeled as text/.txt.
+  const nameMimeKind: BrandAssetKind | null =
+    assetRow.file_name !== null
+      ? inferBrandAssetKind(assetRow.file_name, "")
+      : assetRow.kind;
+  const resolvedKind: BrandAssetKind =
+    resolveBrandAssetKind(
+      assetRow.file_name ?? "",
+      "",
+      bytes,
+      nameMimeKind ?? assetRow.kind,
+    ) ?? assetRow.kind;
+  const resolvedFileName: string = alignFileNameWithKind(
+    assetRow.file_name ?? "upload",
+    resolvedKind,
+  );
+
+  if (
+    resolvedKind !== assetRow.kind ||
+    resolvedFileName !== (assetRow.file_name ?? "")
+  ) {
+    await admin
+      .from("brand_assets")
+      .update({
+        kind: resolvedKind,
+        file_name: resolvedFileName,
+      })
+      .eq("id", assetId);
+  }
+
   let extractResult;
   try {
-    extractResult = await extractBrandAssetText(assetRow.kind, bytes);
+    extractResult = await extractBrandAssetText(resolvedKind, bytes);
   } catch (error) {
     const message: string =
-      error instanceof Error ? error.message : "Text extraction failed.";
+      error instanceof Error ? error.message : BRAND_ASSET_NO_TEXT_ERROR;
     const failed = await markAssetFailed(admin, assetId, message);
     return { ok: false, error: message, asset: failed };
   }
 
   if (extractResult.units.length === 0 || extractResult.totalChars === 0) {
-    const message = "No text could be extracted from this document.";
+    const message = noExtractTextMessage(resolvedKind, bytes);
     const failed = await markAssetFailed(admin, assetId, message);
     return { ok: false, error: message, asset: failed };
   }
@@ -255,7 +312,7 @@ export async function processBrandAssetIngest(
 
   const chunks = chunkExtractUnits(extractResult.units);
   if (chunks.length === 0) {
-    const message = "Document produced no chunks after extraction.";
+    const message = noExtractTextMessage(resolvedKind, bytes);
     const failed = await markAssetFailed(admin, assetId, message);
     return { ok: false, error: message, asset: failed };
   }

@@ -17,7 +17,8 @@
     "test:assistant-lists": "npx --yes tsx scripts/test-assistant-message-lists.ts",
     "test:response-qa": "npx --yes tsx scripts/test-response-qa.ts",
     "test:long-chat": "npx --yes tsx scripts/test-long-chat.ts",
-    "test:brand-chat": "npx --yes tsx scripts/test-brand-chat.ts"
+    "test:brand-chat": "npx --yes tsx scripts/test-brand-chat.ts",
+    "test:brand-ocr-sniff": "npx --yes tsx scripts/test-brand-ocr-sniff.ts"
   },
   "dependencies": {
     "@supabase/ssr": "^0.12.7",
@@ -25,6 +26,7 @@
     "jszip": "^3.10.2",
     "next": "^15.5.2",
     "openai": "^4.104.0",
+    "pdf-lib": "^1.17.1",
     "react": "^19.1.1",
     "react-dom": "^19.1.1",
     "unpdf": "^1.7.0"

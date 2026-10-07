@@ -1,6 +1,12 @@
 import type { NextConfig } from "next";
 import path from "path";
 
+import { BRAND_ASSET_MAX_BYTES } from "./lib/brandProfile/types";
+
+/** File cap plus multipart boundary overhead for middleware body buffering. */
+const BRAND_UPLOAD_MIDDLEWARE_BODY_LIMIT_MB: number =
+  Math.ceil(BRAND_ASSET_MAX_BYTES / (1024 * 1024)) + 5;
+
 /**
  * Influence Engine Coach under apps/web. Teaching assets live in content/jeff
  * (synced at prebuild and committed for self-contained Vercel deploys).
@@ -43,6 +49,10 @@ const TRACING_EXCLUDES: string[] = [
 const TEACHING_INCLUDES: string[] = ["./content/jeff/**/*"];
 
 const nextConfig: NextConfig = {
+  experimental: {
+    // Supabase middleware runs on /api/*; default 10MB truncates brand PDF uploads.
+    middlewareClientMaxBodySize: `${String(BRAND_UPLOAD_MIDDLEWARE_BODY_LIMIT_MB)}mb`,
+  },
   distDir: DIST_DIR,
   // Pin tracing to this app so serverless paths stay under apps/web on Vercel.
   outputFileTracingRoot: path.join(__dirname),

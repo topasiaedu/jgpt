@@ -99,6 +99,31 @@ export const BRAND_PROBE_MAX_EXCERPTS = 4;
 export const MAX_BRAND_PROBE_TOOL_CALLS = 2;
 
 /**
+ * Max PDF pages sent to OpenAI OCR when native text extract is empty.
+ * Keeps serverless time and vision token cost bounded (large slide decks).
+ */
+export const BRAND_OCR_MAX_PAGES = 12;
+
+/**
+ * Stable EN error when no readable text remains after extract (+ OCR for PDF).
+ * UI maps this string to locale copy (EN + ZH).
+ */
+export const BRAND_ASSET_NO_TEXT_ERROR =
+  "Couldn't read text from this file. Try a text PDF or clearer scan.";
+
+/**
+ * Plain .txt / .md rejected at upload before an asset row is created.
+ */
+export const BRAND_ASSET_EMPTY_PLAIN_TEXT_UPLOAD_ERROR =
+  "This text file is empty. Choose the PDF or slide deck (.pdf or .pptx) instead.";
+
+/**
+ * Plain .txt / .md with only whitespace after ingest (failed asset row exists).
+ */
+export const BRAND_ASSET_EMPTY_PLAIN_TEXT_ERROR =
+  "This file has no text in it. Delete it and upload the PDF or slide deck instead.";
+
+/**
  * Type guard for asset kind strings from the DB / forms.
  */
 export function isBrandAssetKind(value: string): value is BrandAssetKind {

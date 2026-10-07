@@ -19,10 +19,42 @@ import {
 } from "@/lib/brandProfile/clientApi";
 import type { BrandProfileStructured } from "@/lib/brandProfile/types";
 import {
+  BRAND_ASSET_EMPTY_PLAIN_TEXT_ERROR,
+  BRAND_ASSET_EMPTY_PLAIN_TEXT_UPLOAD_ERROR,
   BRAND_ASSET_MAX_BYTES,
+  BRAND_ASSET_NO_TEXT_ERROR,
   BRAND_PROFILE_MAX_ASSETS,
 } from "@/lib/brandProfile/types";
 import { useI18n } from "@/lib/i18n/LocaleProvider";
+
+/**
+ * Maps known server ingest errors to locale copy. Falls back to the raw string.
+ */
+function localizeDocsError(
+  message: string,
+  translate: (
+    key:
+      | "bpDocsNoTextError"
+      | "bpDocsEmptyPlainTextError"
+      | "bpDocsEmptyPlainTextUploadError",
+  ) => string,
+): string {
+  const trimmed: string = message.trim();
+  if (trimmed === BRAND_ASSET_EMPTY_PLAIN_TEXT_UPLOAD_ERROR) {
+    return translate("bpDocsEmptyPlainTextUploadError");
+  }
+  if (trimmed === BRAND_ASSET_EMPTY_PLAIN_TEXT_ERROR) {
+    return translate("bpDocsEmptyPlainTextError");
+  }
+  if (
+    trimmed === BRAND_ASSET_NO_TEXT_ERROR ||
+    trimmed === "No text could be extracted from this document." ||
+    trimmed === "Document produced no chunks after extraction."
+  ) {
+    return translate("bpDocsNoTextError");
+  }
+  return message;
+}
 
 type BrandDocumentsPanelProps = {
   /** Null on create: queue files locally until the parent flushes after save. */
@@ -159,10 +191,11 @@ const BrandDocumentsPanel = forwardRef<
         }
 
         if (lastError !== null) {
-          setError(lastError);
+          const localized: string = localizeDocsError(lastError, t);
+          setError(localized);
           setNote(null);
           setBusy(false);
-          return { ok: false, error: lastError };
+          return { ok: false, error: localized };
         }
 
         setDraftFiles([]);
@@ -189,7 +222,7 @@ const BrandDocumentsPanel = forwardRef<
 
     const created = await create();
     if (!created.ok) {
-      setError(created.error);
+      setError(localizeDocsError(created.error, t));
       setBusy(false);
       return;
     }
@@ -199,7 +232,7 @@ const BrandDocumentsPanel = forwardRef<
 
     const processed = await processBrandAsset(targetId, created.asset.id);
     if (!processed.ok) {
-      setError(processed.error);
+      setError(localizeDocsError(processed.error, t));
       await reloadAssets(targetId);
       setBusy(false);
       return;
@@ -232,6 +265,7 @@ const BrandDocumentsPanel = forwardRef<
     if (file === undefined) {
       return;
     }
+    setError(null);
     if (file.size > BRAND_ASSET_MAX_BYTES) {
       setError(t("bpDocsFileTooLarge"));
       return;
@@ -297,7 +331,7 @@ const BrandDocumentsPanel = forwardRef<
     setNote(t("bpDocsProcessing"));
     const processed = await processBrandAsset(profileId, assetId);
     if (!processed.ok) {
-      setError(processed.error);
+      setError(localizeDocsError(processed.error, t));
       await reloadAssets(profileId);
       setBusy(false);
       return;
@@ -446,7 +480,9 @@ const BrandDocumentsPanel = forwardRef<
                   </span>
                 </p>
                 {asset.errorMessage !== null && asset.status === "failed" ? (
-                  <p className="bp-docs-item-error">{asset.errorMessage}</p>
+                  <p className="bp-docs-item-error">
+                    {localizeDocsError(asset.errorMessage, t)}
+                  </p>
                 ) : null}
               </div>
               <div className="bp-docs-item-actions">

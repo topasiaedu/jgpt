@@ -203,6 +203,9 @@ export type MessageKey =
   | "bpDocsResummarize"
   | "bpDocsResummarized"
   | "bpDocsBriefUpdated"
+  | "bpDocsNoTextError"
+  | "bpDocsEmptyPlainTextError"
+  | "bpDocsEmptyPlainTextUploadError"
   | "bpFieldBusinessName"
   | "bpFieldWhatTheySell"
   | "bpFieldWhoTheyServe"
@@ -474,6 +477,12 @@ const zh: MessageTable = {
   bpDocsResummarize: "按资料重写简介",
   bpDocsResummarized: "简介已按现有资料重写。",
   bpDocsBriefUpdated: "简介和品牌信息已根据资料更新。",
+  bpDocsNoTextError:
+    "读不到这份文件里的文字。请换可复制文字的 PDF，或更清晰的扫描件。",
+  bpDocsEmptyPlainTextError:
+    "这份文件里没有文字。请删掉它，改上传 PDF 或幻灯片。",
+  bpDocsEmptyPlainTextUploadError:
+    "这份文字文件是空的。请改选 PDF 或幻灯片（.pdf 或 .pptx）。",
   bpFieldBusinessName: "对外品牌名",
   bpFieldWhatTheySell: "卖什么",
   bpFieldWhoTheyServe: "谁买",
@@ -751,6 +760,12 @@ const en: MessageTable = {
   bpDocsResummarize: "Rewrite brief from materials",
   bpDocsResummarized: "Brief rewritten from your materials.",
   bpDocsBriefUpdated: "Brief and brand details updated from your materials.",
+  bpDocsNoTextError:
+    "Couldn't read text from this file. Try a text PDF or clearer scan.",
+  bpDocsEmptyPlainTextError:
+    "This file has no text in it. Delete it and upload the PDF or slide deck instead.",
+  bpDocsEmptyPlainTextUploadError:
+    "This text file is empty. Choose the PDF or slide deck (.pdf or .pptx) instead.",
   bpFieldBusinessName: "Public brand name",
   bpFieldWhatTheySell: "What they sell",
   bpFieldWhoTheyServe: "Who it's for",
