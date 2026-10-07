@@ -1,4 +1,8 @@
 import type { ModulePack } from "@/lib/modules/types";
+import {
+  buildLifecycleOpener,
+  buildLifecycleOpenerZh,
+} from "@/lib/modules/qualityRuntime/familyOverlay";
 
 /**
  * 评论回应三句法 (D1 p028). In-thread reply craft only.
@@ -141,10 +145,16 @@ export const COMMENT_REPLY_THREE_LINES_PACK: ModulePack = {
   ],
   starterPrompt:
     "Using my intake, draft 评论回应三句法 replies: 接住, 澄清, 拉回主轴 (plus stop-drain / keep-publishing notes when needed).",
-  chatOpener:
-    "I'll help you draft a three-line comment reply. Paste the comment you want to answer.",
-  chatOpenerZh:
-    "我来帮你按三句法起草评论回复。把要回的评论贴过来。",
+  chatOpener: buildLifecycleOpener({
+    jobLine: "I'll help you draft a three-line comment reply.",
+    firstAsk: "Paste the comment you want to answer.",
+    seed: "comment-reply-three-lines",
+  }),
+  chatOpenerZh: buildLifecycleOpenerZh({
+    jobLine: "我来帮你按三句法起草评论回复。",
+    firstAsk: "把要回的评论丢给我。",
+    seed: "comment-reply-three-lines",
+  }),
   systemOverlay: [
     "## Module mode: 评论回应三句法 (qualityRuntime Reply/Micro-convert)",
     "You are running the 评论回应三句法 tool for this user.",

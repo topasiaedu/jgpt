@@ -77,13 +77,13 @@ export type ModulePack = {
   starterPrompt: string;
   /**
    * Seeded as the first assistant message when the module chat opens.
-   * Artemo one-liner: short job sentence + one concrete first collect ask.
+   * Spoken beat + one job sentence + one concrete first collect ask.
    * No "Here is how we will work" process bullets.
    */
   chatOpener: string;
   /**
    * Optional Chinese opener (口语化). When set, preferred over packChatOpenersZh for zh locale.
-   * Same one-liner shape as chatOpener: job + ask, no "我们这样配合" block.
+   * Same shape as chatOpener: spoken beat + job + ask, no "我们这样配合" block.
    */
   chatOpenerZh?: string;
   /**

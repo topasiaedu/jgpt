@@ -1,4 +1,8 @@
 import type { ModulePack } from "@/lib/modules/types";
+import {
+  buildLifecycleOpener,
+  buildLifecycleOpenerZh,
+} from "@/lib/modules/qualityRuntime/familyOverlay";
 
 /**
  * GOAT Four Beats: stakeholder Framework Needed PDF tool.
@@ -149,10 +153,16 @@ export const GOAT_FOUR_BEATS_PACK: ModulePack = {
   ],
   starterPrompt:
     "Using my intake, run GOAT Four Beats and deliver a dense ~60s+ Grab / Open / Answer / Take away script for this Jeff tool.",
-  chatOpener:
-    "I'll help you structure one dense short video at about 60 seconds and above with GOAT beats: Grab, Open, Answer, Take away. What is the topic?",
-  chatOpenerZh:
-    "我来帮你用 GOAT 四拍搭一条密实短视频，大约 60 秒及以上：抓注意、打开、回答、带走。题目是什么？",
+  chatOpener: buildLifecycleOpener({
+    jobLine: "I'll help you structure one dense short video at about 60 seconds and above with GOAT beats: Grab, Open, Answer, Take away.",
+    firstAsk: "What is the topic?",
+    seed: "goat-four-beats",
+  }),
+  chatOpenerZh: buildLifecycleOpenerZh({
+    jobLine: "我来帮你用 GOAT 四拍搭一条密实短视频，大约 60 秒及以上：抓注意、打开、回答、带走。",
+    firstAsk: "题目是什么？",
+    seed: "goat-four-beats",
+  }),
   systemOverlay: [
     "## Module mode: GOAT Four Beats (qualityRuntime Script/Spoken)",
     "You are running the GOAT Four Beats tool (catalog id goat-four-beats) for this user.",

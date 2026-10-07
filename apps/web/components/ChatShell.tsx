@@ -2,16 +2,25 @@
 
 import { useEffect, useRef, useState } from "react";
 import type { FormEvent, KeyboardEvent, ReactNode } from "react";
-import Link from "next/link";
+import { useRouter } from "next/navigation";
 
 import AppNav from "@/components/AppNav";
+import BrandProfilePickModal from "@/components/brandProfiles/BrandProfilePickModal";
+import {
+  gateLastActiveProfileId,
+  gateProfileList,
+  useBrandProfileGate,
+} from "@/lib/brandProfile/useBrandProfileGate";
 import { postRecommend } from "@/lib/chatClient";
 import { handleComposerKeyDown } from "@/lib/composerKeyboard";
 import { categoryMessageKey } from "@/lib/i18n/messages";
 import type { Locale } from "@/lib/i18n/messages";
 import { useI18n } from "@/lib/i18n/LocaleProvider";
 import { getModuleById } from "@/lib/modules/catalog";
-import { buildToolHrefFromHome } from "@/lib/modules/homeHandoff";
+import {
+  buildAuthHref,
+  buildToolHrefFromHome,
+} from "@/lib/modules/homeHandoff";
 import { getModuleDisplay } from "@/lib/modules/moduleDisplay";
 import { RECOMMEND_DRAFT_MIN_CHARS } from "@/lib/modules/recommend";
 import type { ModuleDefinition } from "@/lib/modules/types";
@@ -59,36 +68,53 @@ function resolveRecommendedModules(moduleIds: string[] | undefined): ModuleDefin
 }
 
 /**
- * Paper-plane send icon for the create-surface composer (Artemo hero control).
+ * Decorative orange background blobs for the home create landing.
+ * Pulse and drift are CSS-only; this markup is inert to pointer events.
  */
-function SendPlaneIcon() {
+function HomeGlowBlobs(): ReactNode {
+  return (
+    <div className="home-glow" aria-hidden="true">
+      <span className="home-glow-blob home-glow-blob-pulse" />
+      <span className="home-glow-blob home-glow-blob-drift" />
+    </div>
+  );
+}
+
+/**
+ * Filled paper-plane send icon for the create-surface composer.
+ * Sized in CSS so Tailwind preflight cannot shrink it inside the orange button.
+ */
+function SendPlaneIcon(): ReactNode {
   return (
     <svg
       className="send-plane-icon"
-      width="18"
-      height="18"
+      width="20"
+      height="20"
       viewBox="0 0 24 24"
-      fill="none"
+      fill="currentColor"
       xmlns="http://www.w3.org/2000/svg"
       aria-hidden="true"
     >
-      <path
-        d="M4.5 12.5L20 4.5L14.5 20L12 13.5L4.5 12.5Z"
-        stroke="currentColor"
-        strokeWidth="1.75"
-        strokeLinejoin="round"
-      />
+      <path d="M2.01 21 23 12 2.01 3 2 10l15 2-15 2z" />
     </svg>
   );
 }
+
+type PendingToolOpen = {
+  moduleId: string;
+  intent: string | undefined;
+};
 
 /**
  * Home shell: Artemo create landing only.
  * Debounced /api/recommend cards sit under the input. Opening a tool card leaves create mode.
  * Typing, Enter, and Send must never start a Jeff coach chat transcript.
+ * Tool cards open a Brand profile picker. Profile is optional.
  */
 export default function ChatShell() {
   const { t, locale } = useI18n();
+  const router = useRouter();
+  const { state: brandGate, actionError, selectProfile } = useBrandProfileGate();
   const inputRef = useRef<HTMLTextAreaElement | null>(null);
   const recommendAbortRef = useRef<AbortController | null>(null);
   const recommendTimerRef = useRef<number | null>(null);
@@ -99,6 +125,16 @@ export default function ChatShell() {
   const [composerModuleIds, setComposerModuleIds] = useState<string[]>([]);
   const [composerIntent, setComposerIntent] = useState<string>("");
   const [recommendStatus, setRecommendStatus] = useState<RecommendUiStatus>("idle");
+  const [pendingTool, setPendingTool] = useState<PendingToolOpen | null>(null);
+
+  /**
+   * Unsigned users go straight to /auth instead of a home sign-in CTA panel.
+   */
+  useEffect(() => {
+    if (brandGate.kind === "signed_out") {
+      router.replace(buildAuthHref("/"));
+    }
+  }, [brandGate.kind, router]);
 
   const createPrefix: string = t("composerPrefix");
   const recommendDraft: string = composeCreateIntent(createPrefix, draft, locale);
@@ -248,7 +284,36 @@ export default function ChatShell() {
   const canConfirm: boolean = draft.trim().length > 0;
 
   /**
+   * Opens the Brand profile picker for a recommend card. Profile is optional.
+   */
+  function openToolPicker(moduleId: string, intent: string | undefined): void {
+    setPendingTool({ moduleId, intent });
+  }
+
+  /**
+   * Navigates to the pending tool with or without a Brand profile query.
+   */
+  function finishToolOpen(profileId: string | null): void {
+    const pending: PendingToolOpen | null = pendingTool;
+    setPendingTool(null);
+    if (pending === null) {
+      return;
+    }
+    if (profileId !== null) {
+      void selectProfile(profileId);
+    }
+    router.push(
+      buildToolHrefFromHome(
+        pending.moduleId,
+        pending.intent,
+        profileId === null ? undefined : profileId,
+      ),
+    );
+  }
+
+  /**
    * Recommend cards under the create composer (2 to 4 tools).
+   * Click opens the Brand profile picker instead of jumping straight in.
    */
   function renderRecommendBlock(): ReactNode {
     if (composerModules.length === 0) {
@@ -265,9 +330,12 @@ export default function ChatShell() {
               composerIntent.length > 0 ? composerIntent : undefined;
             return (
               <li key={entry.id}>
-                <Link
-                  href={buildToolHrefFromHome(entry.id, intentForLink)}
+                <button
+                  type="button"
                   className="recommend-card"
+                  onClick={() => {
+                    openToolPicker(entry.id, intentForLink);
+                  }}
                 >
                   <span className="recommend-card-text">
                     <span className="recommend-card-title">{display.title}</span>
@@ -276,7 +344,7 @@ export default function ChatShell() {
                     </span>
                   </span>
                   <span className="recommend-card-cta">{t("recommendOpen")}</span>
-                </Link>
+                </button>
               </li>
             );
           })}
@@ -332,6 +400,7 @@ export default function ChatShell() {
 
   return (
     <div className="shell shell-create">
+      <HomeGlowBlobs />
       <header className="header header-create">
         <AppNav active="home" />
       </header>
@@ -366,6 +435,17 @@ export default function ChatShell() {
           </div>
         </section>
       </div>
+      <BrandProfilePickModal
+        open={pendingTool !== null}
+        profiles={gateProfileList(brandGate)}
+        lastActiveProfileId={gateLastActiveProfileId(brandGate)}
+        loading={brandGate.kind === "loading"}
+        actionError={actionError}
+        onClose={() => {
+          setPendingTool(null);
+        }}
+        onChoose={finishToolOpen}
+      />
     </div>
   );
 }

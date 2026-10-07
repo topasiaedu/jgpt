@@ -3,11 +3,12 @@ import type { ModuleCategory, ModuleDefinition } from "@/lib/modules/types";
 /**
  * Full Jeff IP module menu (proposed set shipped for stakeholder cut).
  * Product UX copy only: not doctrine pages for jeff-wiki ingest.
+ * English card titles and descriptions live here. Chinese UI copy lives in catalogZh.ts.
  */
 export const MODULE_CATALOG: ModuleDefinition[] = [
   {
     id: "ip-stage-check",
-    title: "SELF DIAGNOSTIC / 自我诊断",
+    title: "SELF DIAGNOSTIC",
     category: "Ideation",
     status: "ready",
     description: [
@@ -67,7 +68,7 @@ export const MODULE_CATALOG: ModuleDefinition[] = [
   },
   {
     id: "ip-pillars",
-    title: "Brand Pillars / 品牌支柱",
+    title: "Brand Pillars",
     category: "IP Positioning",
     status: "ready",
     description: [
@@ -79,7 +80,7 @@ export const MODULE_CATALOG: ModuleDefinition[] = [
   },
   {
     id: "ig-reel-script",
-    title: "OPENS 60秒五幕剧",
+    title: "OPENS 60s Five Act",
     category: "Content",
     status: "ready",
     description: [
@@ -167,7 +168,7 @@ export const MODULE_CATALOG: ModuleDefinition[] = [
     category: "Trust",
     status: "ready",
     description: [
-      "What it does: Outlines a longer teach as a trust path (Trust Evidence / 信任复利公式 / Trust Engine), so viewers stay long enough to trust your judgment, not only your hook.",
+      "What it does: Outlines a longer teach as a trust path (Trust Evidence / Trust Engine), so viewers stay long enough to trust your judgment, not only your hook.",
       "What to input: The topic you can teach for 5 to 15 minutes, who it helps, one story or example from your practice, the trust outcome you want, and which Trust Evidence types you can show (结果 / 过程 / 角色 / 人品).",
       "When to use: When short clips get views but not belief, or when a topic needs depth the Reel format cannot hold.",
       "What you get: A trust-path outline with teaching sections that place Trust Evidence types, not stock YouTube boilerplate, plus a soft next step.",
@@ -275,7 +276,7 @@ export const MODULE_CATALOG: ModuleDefinition[] = [
     category: "Convert",
     status: "ready",
     description: [
-      "What it does: Names your 客户购买路径 (paths 1 to 7) and maps where people drop off, so convert content does not appear out of nowhere.",
+      "What it does: Names your Customer Purchase Path (paths 1 to 7) and maps where people drop off, so convert content does not appear out of nowhere.",
       "What to input: What you teach for free, what you sell, where people drop off, and optionally which path you think you are on.",
       "When to use: When trust content never turns into conversations, or when convert posts feel abrupt.",
       "What you get: A named path (路径1 内容→私讯→客户, 路径2 内容→信任→到店/询问, 路径3 内容→转介绍, or 路径4 to 7 长决策), drop-off map, and content moves. Not a generic rungs-only soft-sell.",
@@ -311,7 +312,7 @@ export const MODULE_CATALOG: ModuleDefinition[] = [
     category: "Ideation",
     status: "ready",
     description: [
-      "What it does: Helps you fill 九宫格 Topic Bingo: you in the center, eight cells for interest, expertise, views, stories, customers, industry, trends, and pains, then four cross lines that grow about 12 topic seeds you can film.",
+      "What it does: Helps you fill Topic Bingo: you in the center, eight cells for interest, expertise, views, stories, customers, industry, trends, and pains, then four cross lines that grow about 12 topic seeds you can film.",
       "What to input: Your 人设, plus keywords for the eight cells from real work (interest, expertise, views, stories, customers, industry, trends, pains).",
       "When to use: When the blank page wins, or when ideas feel random instead of on-brand for your personal IP.",
       "What you get: One filled 九宫格 with clear cell labels, four cross-line directions, and about 12 topic seeds. Use The Waffle when you want formats times themes toward about 100 videos.",
@@ -395,7 +396,7 @@ export const MODULE_CATALOG: ModuleDefinition[] = [
     category: "Convert",
     status: "ready",
     description: [
-      "What it does: Ends a value piece with CTA Structure: 总结价值 → 发出指令 → 降低门槛, without flipping the whole post into a hard sell. Collect criticals, then short-but-complete closes (not a Reel script).",
+      "What it does: Ends a value piece with CTA Structure: value taught, one clear ask, then lower the barrier, without flipping the whole post into a hard sell. Collect criticals, then short-but-complete closes (not a Reel script).",
       "What to input: The value you already taught, the one next step you want, how you lower the barrier, and how warm the audience is.",
       "When to use: When your teach is strong but the ending trails off, or when closes feel either missing or too pushy.",
       "What you get: Two to three soft close options, each showing all three CTA Structure beats, plus guidance to pick one.",
@@ -407,7 +408,7 @@ export const MODULE_CATALOG: ModuleDefinition[] = [
     category: "Convert",
     status: "ready",
     description: [
-      "What it does: Names the 客户购买路径 this invite serves, then writes messaging that bridges earned trust into the offer and next conversation.",
+      "What it does: Names the Customer Purchase Path this invite serves, then writes messaging that bridges earned trust into the offer and next conversation.",
       "What to input: What trust you have earned, what you offer in plain words, the honest next conversation, and optionally which purchase path (1 to 7) you are on.",
       "When to use: When people already trust you but you freeze when naming the offer, or when invite posts feel disconnected from prior teaching.",
       "What you get: A named path plus a short bridge script or caption matched to 私讯 / 到店询问 / 转介绍 / long-decision follow-up. No overnight-fame or ad-as-asset framing.",
@@ -647,7 +648,7 @@ export const MODULE_CATALOG: ModuleDefinition[] = [
     category: "Content",
     status: "ready",
     description: [
-      "What it does: Plans posts across Story, Case, POV, and News. Not the same as Four Content Assets (曝光/认知/信任/成交).",
+      "What it does: Plans posts across Story, Case, POV, and News. Not the same as Four Content Assets (exposure, awareness, trust, convert).",
       "What to input: Who you serve, proof you can show, and this week mix goal.",
       "When to use: When the calendar is all news or all opinion with no story or case.",
       "What you get: Ideas per layer plus Lead with Story / Prove with Case / Differentiate with POV / Borrow from News.",

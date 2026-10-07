@@ -4,7 +4,7 @@ import type {
   ChatCompletionTool,
 } from "openai/resources/chat/completions";
 
-import type { ChatMessage, ChatSource } from "@/lib/chatTypes";
+import type { BrandChatSource, ChatMessage, ChatSource } from "@/lib/chatTypes";
 import { mergeSourcesById } from "@/lib/mergeSources";
 import {
   RECOMMEND_MAX,
@@ -13,11 +13,16 @@ import {
   validateRecommendedModuleIds,
 } from "@/lib/modules/recommend";
 import type { ProbeResult } from "@/lib/probe";
+import type { BrandProbeResult } from "@/lib/brandProfile/probeBrand";
+import { MAX_BRAND_PROBE_TOOL_CALLS } from "@/lib/brandProfile/types";
 
 const DEFAULT_MODEL = "gpt-4.1-mini";
 
 /** Max refinement probes via tool calling after the automatic first probe. */
 export const MAX_PROBE_TOOL_CALLS = 2;
+
+/** Max probe_brand calls per turn (user Brand chunks only). */
+export const MAX_BRAND_PROBE_CALLS = MAX_BRAND_PROBE_TOOL_CALLS;
 
 /** Max recommend_modules calls per turn (home mode only). */
 export const MAX_RECOMMEND_TOOL_CALLS = 1;
@@ -38,6 +43,26 @@ const PROBE_JEFF_TOOL: ChatCompletionTool = {
         intent: {
           type: "string",
           description: "Optional short label for why you are re-probing (e.g. webinar_funnel, trust).",
+        },
+      },
+      required: ["query"],
+      additionalProperties: false,
+    },
+  },
+};
+
+const PROBE_BRAND_TOOL: ChatCompletionTool = {
+  type: "function",
+  function: {
+    name: "probe_brand",
+    description:
+      "Search THIS client's Brand profile chunks (uploads and pastes) for a detail missing from USER_BRAND_FACTS. Use for deck lines, product names, warranties, proof wording. Do not use for Jeff teaching IP (use probe_jeff). Results are user brand facts, not Jeff citations.",
+    parameters: {
+      type: "object",
+      properties: {
+        query: {
+          type: "string",
+          description: "Focused search string for this client's Brand documents only.",
         },
       },
       required: ["query"],
@@ -73,7 +98,9 @@ export type OpenAIChatResult = {
   reply: string;
   model: string;
   sources: ChatSource[];
+  brandSources: BrandChatSource[];
   probeToolCalls: number;
+  brandProbeToolCalls: number;
   /** Validated home recommend ids; empty when none or module mode. */
   recommendedModuleIds: string[];
 };
@@ -81,6 +108,10 @@ export type OpenAIChatResult = {
 export type ProbeJeffArgs = {
   query: string;
   intent?: string;
+};
+
+export type ProbeBrandArgs = {
+  query: string;
 };
 
 export type RecommendModulesArgs = {
@@ -101,9 +132,9 @@ export function getOpenAIConfig(): { apiKey: string | null; model: string } {
 }
 
 /**
- * Calls OpenAI Chat Completions with optional probe_jeff (and home recommend_modules).
+ * Calls OpenAI Chat Completions with optional probe_jeff, probe_brand, and home recommend_modules.
  * Initial evidence is already in the system prompt; tool calls re-probe and append packs.
- * Caps probe loops at MAX_PROBE_TOOL_CALLS, then forces a final text answer.
+ * Caps Jeff probes at MAX_PROBE_TOOL_CALLS and Brand probes at MAX_BRAND_PROBE_CALLS.
  */
 export async function generateJeffReply(options: {
   apiKey: string;
@@ -115,6 +146,11 @@ export async function generateJeffReply(options: {
   initialSources: ChatSource[];
   /** Runs a teaching probe for a tool refinement query. */
   runProbe: (query: string) => ProbeResult;
+  /**
+   * When set, expose probe_brand and run profile-scoped Brand retrieval.
+   * Omit on paths without an owned Brand profile.
+   */
+  runBrandProbe?: (query: string) => Promise<BrandProbeResult>;
   /**
    * When true (home free chat), expose recommend_modules so the model can
    * return structured catalog ids for UI deep links.
@@ -133,17 +169,25 @@ export async function generateJeffReply(options: {
   ];
 
   let probeToolCalls = 0;
+  let brandProbeToolCalls = 0;
   let recommendToolCalls = 0;
   let recommendedModuleIds: string[] = [];
   let turnSources: ChatSource[] = [...options.initialSources];
+  let turnBrandSources: BrandChatSource[] = [];
+  const brandProbeEnabled: boolean = options.runBrandProbe !== undefined;
 
   while (true) {
     const allowProbe: boolean = probeToolCalls < MAX_PROBE_TOOL_CALLS;
+    const allowBrandProbe: boolean =
+      brandProbeEnabled && brandProbeToolCalls < MAX_BRAND_PROBE_CALLS;
     const allowRecommend: boolean =
       recommendMode && recommendToolCalls < MAX_RECOMMEND_TOOL_CALLS;
     const tools: ChatCompletionTool[] = [];
     if (allowProbe) {
       tools.push(PROBE_JEFF_TOOL);
+    }
+    if (allowBrandProbe) {
+      tools.push(PROBE_BRAND_TOOL);
     }
     if (allowRecommend) {
       tools.push(RECOMMEND_MODULES_TOOL);
@@ -222,6 +266,45 @@ export async function generateJeffReply(options: {
           continue;
         }
 
+        if (toolName === "probe_brand") {
+          const runBrandProbe = options.runBrandProbe;
+          if (runBrandProbe === undefined || brandProbeToolCalls >= MAX_BRAND_PROBE_CALLS) {
+            openAiMessages.push({
+              role: "tool",
+              tool_call_id: toolCall.id,
+              content: JSON.stringify({
+                error:
+                  "probe_brand budget exhausted or unavailable this turn. Answer from USER_BRAND_FACTS already provided.",
+              }),
+            });
+            continue;
+          }
+
+          const brandArgs = parseProbeBrandArgs(toolCall.function.arguments);
+          if (brandArgs === null || brandArgs.query.trim().length === 0) {
+            openAiMessages.push({
+              role: "tool",
+              tool_call_id: toolCall.id,
+              content: JSON.stringify({
+                error: "probe_brand requires a non-empty query string.",
+              }),
+            });
+            brandProbeToolCalls += 1;
+            continue;
+          }
+
+          const brandProbe: BrandProbeResult = await runBrandProbe(brandArgs.query.trim());
+          brandProbeToolCalls += 1;
+          turnBrandSources = mergeBrandSourcesById(turnBrandSources, brandProbe.sources);
+
+          openAiMessages.push({
+            role: "tool",
+            tool_call_id: toolCall.id,
+            content: formatBrandProbeToolPayload(brandProbe),
+          });
+          continue;
+        }
+
         if (toolName === "recommend_modules") {
           if (!recommendMode || recommendToolCalls >= MAX_RECOMMEND_TOOL_CALLS) {
             openAiMessages.push({
@@ -270,7 +353,7 @@ export async function generateJeffReply(options: {
           role: "tool",
           tool_call_id: toolCall.id,
           content: JSON.stringify({
-            error: "Unknown tool. Use probe_jeff or recommend_modules only.",
+            error: "Unknown tool. Use probe_jeff, probe_brand, or recommend_modules only.",
           }),
         });
       }
@@ -286,8 +369,12 @@ export async function generateJeffReply(options: {
     return {
       reply: reply.trim(),
       model: options.model,
-      sources: turnSources,
+      sources: turnSources.filter((source) => !source.id.startsWith("brand:")),
+      brandSources: turnBrandSources.filter(
+        (source) => source.kind === "brand" && source.id.startsWith("brand:"),
+      ),
       probeToolCalls,
+      brandProbeToolCalls,
       recommendedModuleIds,
     };
   }
@@ -391,6 +478,58 @@ function parseRecommendModulesArgs(raw: string): RecommendModulesArgs | null {
   } catch {
     return null;
   }
+}
+
+/**
+ * Parses probe_brand tool arguments from the model.
+ */
+function parseProbeBrandArgs(raw: string): ProbeBrandArgs | null {
+  try {
+    const parsed: unknown = JSON.parse(raw);
+    if (typeof parsed !== "object" || parsed === null) {
+      return null;
+    }
+    if (!("query" in parsed) || typeof (parsed as { query: unknown }).query !== "string") {
+      return null;
+    }
+    return { query: (parsed as { query: string }).query };
+  } catch {
+    return null;
+  }
+}
+
+/**
+ * Compact Brand tool payload: user excerpts only, never Jeff graph ids.
+ */
+function formatBrandProbeToolPayload(probe: BrandProbeResult): string {
+  return JSON.stringify({
+    query: probe.query,
+    kind: "user_brand_excerpts",
+    not_jeff_doctrine: true,
+    sources: probe.sources,
+    excerpts: probe.evidencePackText,
+  });
+}
+
+/**
+ * Unions Brand chips by id, preserving first-seen order.
+ */
+function mergeBrandSourcesById(
+  current: BrandChatSource[],
+  incoming: BrandChatSource[],
+): BrandChatSource[] {
+  const byId: Map<string, BrandChatSource> = new Map();
+  for (const source of current) {
+    if (!byId.has(source.id)) {
+      byId.set(source.id, source);
+    }
+  }
+  for (const source of incoming) {
+    if (!byId.has(source.id)) {
+      byId.set(source.id, source);
+    }
+  }
+  return [...byId.values()];
 }
 
 /**

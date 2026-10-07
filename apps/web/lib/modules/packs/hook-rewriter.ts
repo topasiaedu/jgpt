@@ -1,4 +1,8 @@
 import type { ModulePack } from "@/lib/modules/types";
+import {
+  buildLifecycleOpener,
+  buildLifecycleOpenerZh,
+} from "@/lib/modules/qualityRuntime/familyOverlay";
 
 /**
  * Hook Rewriter: same script, stronger open.
@@ -149,10 +153,16 @@ export const HOOK_REWRITER_PACK: ModulePack = {
   ],
   starterPrompt:
     "Using my intake, rewrite only the open: multiple stronger hooks for the same piece, no trust-breaking clickbait.",
-  chatOpener:
-    "I'll help you rewrite only the opening into stronger hooks. Paste the current hook or the body topic.",
-  chatOpenerZh:
-    "我来帮你只改开场，写成更强钩子。把现有钩子或正文主题贴过来。",
+  chatOpener: buildLifecycleOpener({
+    jobLine: "I'll help you rewrite only the opening into stronger hooks.",
+    firstAsk: "Paste the current hook or the body topic.",
+    seed: "hook-rewriter",
+  }),
+  chatOpenerZh: buildLifecycleOpenerZh({
+    jobLine: "我来帮你只改开场，写成更强钩子。",
+    firstAsk: "把现有钩子或正文主题丢给我。",
+    seed: "hook-rewriter",
+  }),
   systemOverlay: [
     "## Module mode: Hook Rewriter (qualityRuntime Hook/Line)",
     "You are running the Hook Rewriter tool for this user.",
@@ -171,10 +181,9 @@ export const HOOK_REWRITER_PACK: ModulePack = {
     "Do not write the full rewritten open batch in Confirm.",
     "",
     "### Deliverable shape (opens only)",
-    "1. 5 to 8 rewritten hooks.",
-    "2. Brief why each open earns the first seconds (Jeff reason, not viral guarantee).",
-    "3. Note which to film first.",
-    "4. End with named refine levers.",
+    "5 to 8 rewritten hooks. Each open: ## heading, spoken line, then a short why bullet. Do not prefix every open with \"1.\".",
+    "Note which to film first.",
+    "End with named refine levers.",
     "Keep the body topic intact. Rewrite opens only. Prefer a short rewrite note on what changed vs the pasted open.",
     "No overnight-fame / viral-guarantee hooks. No clickbait that breaks trust. Ban Maria principle labels.",
     "Ground every open in their paste and audience. Different inputs must produce different opens.",

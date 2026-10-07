@@ -12,6 +12,7 @@ import {
 } from "@/lib/modules/qualityRuntime/lifecycle";
 import { criticalQualitySlots, resolveQualitySlots } from "@/lib/modules/qualityRuntime/slots";
 import type { LifecycleDetection, QualitySlot } from "@/lib/modules/qualityRuntime/types";
+import type { BrandProfileStructured } from "@/lib/brandProfile/types";
 
 export type QualityRuntimeInjection = {
   detection: LifecycleDetection;
@@ -26,11 +27,13 @@ export function buildQualityRuntimeInjection(options: {
   pack: ModulePack;
   messages: ChatMessage[];
   intake?: Record<string, string>;
+  brandStructured?: BrandProfileStructured;
 }): QualityRuntimeInjection {
   const detection: LifecycleDetection = detectLifecycleMode({
     pack: options.pack,
     messages: options.messages,
     intake: options.intake,
+    brandStructured: options.brandStructured,
   });
 
   const allSlots: QualitySlot[] = resolveQualitySlots(options.pack);

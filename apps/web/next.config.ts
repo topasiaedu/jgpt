@@ -46,6 +46,8 @@ const nextConfig: NextConfig = {
   distDir: DIST_DIR,
   // Pin tracing to this app so serverless paths stay under apps/web on Vercel.
   outputFileTracingRoot: path.join(__dirname),
+  // Brand PDF extract (unpdf / pdfjs) prefers Node resolution on serverless.
+  serverExternalPackages: ["unpdf"],
   outputFileTracingIncludes: {
     "/api/chat": TEACHING_INCLUDES,
   },

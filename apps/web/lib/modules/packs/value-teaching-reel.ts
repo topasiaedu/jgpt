@@ -1,4 +1,8 @@
 import type { ModulePack } from "@/lib/modules/types";
+import {
+  buildLifecycleOpener,
+  buildLifecycleOpenerZh,
+} from "@/lib/modules/qualityRuntime/familyOverlay";
 
 /**
  * Value Teaching Reel: teach one tip openly; light next step.
@@ -151,10 +155,16 @@ export const VALUE_TEACHING_REEL_PACK: ModulePack = {
   ],
   starterPrompt:
     "Using my intake, script a dense value-led Reel at about 60 seconds and above that teaches one tip openly, then adds a light next step. Keep convert soft.",
-  chatOpener:
-    "I'll help you script a value-led Reel at about 60 seconds and above: teach one tip openly, then a light next step. What is the one tip you can teach at about 60 seconds and above?",
-  chatOpenerZh:
-    "我来帮你写一条价值向 Reel，大约 60 秒及以上：先公开教一招，再给一个轻下一步。你能用大约 60 秒及以上教完的那一招是什么？",
+  chatOpener: buildLifecycleOpener({
+    jobLine: "I'll help you script a value-led Reel at about 60 seconds and above: teach one tip openly, then a light next step.",
+    firstAsk: "What is the one tip you can teach at about 60 seconds and above?",
+    seed: "value-teaching-reel",
+  }),
+  chatOpenerZh: buildLifecycleOpenerZh({
+    jobLine: "我来帮你写一条价值向 Reel，大约 60 秒及以上：先公开教一招，再给一个轻下一步。",
+    firstAsk: "你能用大约 60 秒及以上教完的那一招是什么？",
+    seed: "value-teaching-reel",
+  }),
   systemOverlay: [
     "## Module mode: Value Teaching Reel (qualityRuntime Script/Spoken)",
     "You are running the Value Teaching Reel tool for this user.",

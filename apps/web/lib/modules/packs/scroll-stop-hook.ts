@@ -1,4 +1,8 @@
 import type { ModulePack } from "@/lib/modules/types";
+import {
+  buildLifecycleOpener,
+  buildLifecycleOpenerZh,
+} from "@/lib/modules/qualityRuntime/familyOverlay";
 
 /**
  * Hook Formula (AUG-D2): opening lines for the first second of attention.
@@ -183,16 +187,22 @@ export const SCROLL_STOP_HOOK_PACK: ModulePack = {
   ],
   starterPrompt:
     "Using my intake, apply Hook Formula (对象＋痛点＋反差/结果＋好奇): several opening lines for the first 1 to 3 seconds, each annotated with all four legs.",
-  chatOpener:
-    "I'll help you write scroll-stop opens for the first 1 to 3 seconds. Who is this video for, and what problem should hit them first?",
-  chatOpenerZh:
-    "我来帮你写前 1 到 3 秒能停住滑动的开场。这条视频是讲给谁听的？先打哪个痛点？",
+  chatOpener: buildLifecycleOpener({
+    jobLine: "I'll help you write scroll-stop opens for the first 1 to 3 seconds.",
+    firstAsk: "Who is this video for, and what problem should hit them first?",
+    seed: "scroll-stop-hook",
+  }),
+  chatOpenerZh: buildLifecycleOpenerZh({
+    jobLine: "我来帮你写前 1 到 3 秒能停住滑动的开场。",
+    firstAsk: "这条视频是讲给谁听的，先打哪个痛点？",
+    seed: "scroll-stop-hook",
+  }),
   systemOverlay: [
     "## Module mode: Hook Formula (qualityRuntime Hook/Line)",
     "You are running the Hook Formula tool (catalog id scroll-stop-hook) for this user.",
     "Job: opening lines only for the first 1 to 3 seconds of attention. Not the full Reel body unless asked.",
     "Lifecycle is hard: Collect → Confirm → Deliver → Refine. Do not dense-dump in Collect. Confirm before the first annotated batch unless they explicitly say just write it after criticals are filled.",
-    "Reply in chat prose with numbered opens and four-leg annotations. Do not invent a second JSON card product UI.",
+    "Reply in markdown: each open is a ## heading (short label), then the spoken line, then bullets for 对象 / 痛点 / 反差或结果 / 好奇. Do not emit three separate \"1.\" items. Do not invent a second JSON card product UI.",
     "",
     "### Named doctrine (AUG-D2, must teach)",
     "Hook Formula: 对象 ＋ 痛点 ＋ 反差/结果 ＋ 好奇.",
@@ -212,11 +222,17 @@ export const SCROLL_STOP_HOOK_PACK: ModulePack = {
     "Do not write the full annotated open batch in Confirm.",
     "",
     "### Deliverable shape (opens only; not a full script)",
-    "1. 5 to 8 numbered opening lines.",
-    "2. Under each line: annotate 对象 / 痛点 / 反差或结果 / 好奇 (all four required).",
-    "3. Drop any candidate that cannot fill all four; say why it was rejected.",
-    "4. Optional avoid example (viral-bait or ad-like).",
-    "5. End with named refine levers (sharper 对象, stronger 痛点, clearer 反差/结果, tighter 好奇, film-first pick).",
+    "5 to 8 opens. For EACH open use this markdown shape:",
+    "## Short label (who or angle)",
+    "Spoken opening line.",
+    "- 对象: ...",
+    "- 痛点: ...",
+    "- 反差/结果: ...",
+    "- 好奇: ...",
+    "Hash headings are required per open. Do not prefix every open with \"1.\". If you use a numbered list at all, it must be 1. 2. 3. contiguous in one list.",
+    "Drop any candidate that cannot fill all four; say why it was rejected.",
+    "Optional avoid example (viral-bait or ad-like).",
+    "End with named refine levers (sharper 对象, stronger 痛点, clearer 反差/结果, tighter 好奇, film-first pick).",
     "Mark which line to film first when you deliver a batch.",
     "Ground every line in their concrete answers. Different inputs must produce different opens.",
     "",

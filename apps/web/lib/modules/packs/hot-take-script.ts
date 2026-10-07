@@ -1,4 +1,8 @@
 import type { ModulePack } from "@/lib/modules/types";
+import {
+  buildLifecycleOpener,
+  buildLifecycleOpenerZh,
+} from "@/lib/modules/qualityRuntime/familyOverlay";
 
 /**
  * Hot Take Script: sharp standpoint on camera as advice, not ego.
@@ -153,10 +157,16 @@ export const HOT_TAKE_SCRIPT_PACK: ModulePack = {
   ],
   starterPrompt:
     "Using my intake, write a dense ~60s+ hot-take script with stance, reason, and a landing that protects relationship with the viewer. Keep it advice, not ego.",
-  chatOpener:
-    "I'll help you turn a sharp claim into a dense hot-take script at about 60 seconds and above that lands as advice, not a flex. What claim are you willing to own in one sentence?",
-  chatOpenerZh:
-    "我来帮你把锋利主张写成密实热观点脚本，大约 60 秒及以上，落点是建议，不是炫耀。你愿意用一句话认领的主张是什么？",
+  chatOpener: buildLifecycleOpener({
+    jobLine: "I'll help you turn a sharp claim into a dense hot-take script at about 60 seconds and above that lands as advice, not a flex.",
+    firstAsk: "What claim are you willing to own in one sentence?",
+    seed: "hot-take-script",
+  }),
+  chatOpenerZh: buildLifecycleOpenerZh({
+    jobLine: "我来帮你把锋利主张写成密实热观点脚本，大约 60 秒及以上，落点是建议，不是炫耀。",
+    firstAsk: "你愿意用一句话认领的主张是什么？",
+    seed: "hot-take-script",
+  }),
   systemOverlay: [
     "## Module mode: Hot Take Script (qualityRuntime Script/Spoken)",
     "You are running the Hot Take Script tool for this user.",

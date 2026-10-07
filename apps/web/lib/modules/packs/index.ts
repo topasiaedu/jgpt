@@ -53,20 +53,40 @@ import { THREE_C_METHOD_PACK } from "@/lib/modules/packs/three-c-method";
 import { THREE_R_METHOD_PACK } from "@/lib/modules/packs/three-r-method";
 import { TWO_KINDS_STUDENT_TWO_METHODS_PACK } from "@/lib/modules/packs/two-kinds-student-two-methods";
 import { WAFFLE_GRID_PACK } from "@/lib/modules/packs/waffle-grid";
+import {
+  prefixJeffSpokenBeatEn,
+  prefixJeffSpokenBeatZh,
+} from "@/lib/modules/qualityRuntime/familyOverlay";
 import { finalizeQ5Pack } from "@/lib/modules/qualityRuntime/finalizeQ5";
 import { Q5_MIGRATIONS } from "@/lib/modules/qualityRuntime/q5Migrations";
 import type { ModulePack } from "@/lib/modules/types";
 
 /**
+ * Ensures registered packs carry a Jeff spoken beat on EN/ZH openers.
+ */
+function withJeffSpokenOpeners(pack: ModulePack): ModulePack {
+  const zh: string | undefined = pack.chatOpenerZh;
+  const chatOpenerZh: string | undefined =
+    typeof zh === "string" && zh.trim().length > 0
+      ? prefixJeffSpokenBeatZh(zh, pack.moduleId)
+      : zh;
+  return {
+    ...pack,
+    chatOpener: prefixJeffSpokenBeatEn(pack.chatOpener, pack.moduleId),
+    chatOpenerZh,
+  };
+}
+
+/**
  * Applies Q5 Quality Runtime migration when a registry entry exists.
- * Q0 to Q4 packs already set qualityRuntime on the pack file and are left unchanged.
+ * Q0 to Q4 packs already set qualityRuntime on the pack file; openers still get a spoken beat.
  */
 function registerPack(pack: ModulePack): ModulePack {
   const migration = Q5_MIGRATIONS[pack.moduleId];
   if (migration === undefined) {
-    return pack;
+    return withJeffSpokenOpeners(pack);
   }
-  return finalizeQ5Pack(pack, migration);
+  return withJeffSpokenOpeners(finalizeQ5Pack(pack, migration));
 }
 
 /**

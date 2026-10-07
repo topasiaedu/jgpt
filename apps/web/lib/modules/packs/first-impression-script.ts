@@ -1,4 +1,8 @@
 import type { ModulePack } from "@/lib/modules/types";
+import {
+  buildLifecycleOpener,
+  buildLifecycleOpenerZh,
+} from "@/lib/modules/qualityRuntime/familyOverlay";
 
 /**
  * First Impression Script: event + viewpoint → discussion → traffic.
@@ -177,10 +181,16 @@ export const FIRST_IMPRESSION_SCRIPT_PACK: ModulePack = {
   ],
   starterPrompt:
     "Using my intake, write a dense ~60s+ first-impression script: viewpoint, discussion beat, then light traffic invite. Asset tone, not overnight fame.",
-  chatOpener:
-    "I'll help you write a dense first-impression script at about 60 seconds and above that leads with your viewpoint. What event or moment are you reacting to?",
-  chatOpenerZh:
-    "我来帮你写一条密实第一印象脚本，大约 60 秒及以上，先讲观点。你在回应的是什么事件或瞬间？",
+  chatOpener: buildLifecycleOpener({
+    jobLine: "I'll help you write a dense first-impression script at about 60 seconds and above that leads with your viewpoint.",
+    firstAsk: "What event or moment are you reacting to?",
+    seed: "first-impression-script",
+  }),
+  chatOpenerZh: buildLifecycleOpenerZh({
+    jobLine: "我来帮你写一条密实第一印象脚本，大约 60 秒及以上，先讲观点。",
+    firstAsk: "你在回应的是什么事件或瞬间？",
+    seed: "first-impression-script",
+  }),
   systemOverlay: [
     "## Module mode: First Impression Script (qualityRuntime Script/Spoken)",
     "You are running the First Impression Script tool for this user.",

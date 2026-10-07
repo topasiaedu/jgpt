@@ -44,18 +44,15 @@ export function assertModuleZhCoverage(): void {
 }
 
 /**
- * Short card teaser from the first "what it does" paragraph.
+ * Card teaser from the first "what it does" paragraph.
  * Strips EN or ZH job labels used in catalog descriptions.
+ * Does not clip length: row height comes from CSS stretch, not equal text.
  */
 export function moduleCardBlurb(description: string): string {
   const first = description.split("\n\n")[0] ?? description;
-  const withoutLabel = first
+  return first
     .replace(/^What it does:\s*/i, "")
     .replace(/^做什么[：:]\s*/, "");
-  if (withoutLabel.length <= 140) {
-    return withoutLabel;
-  }
-  return `${withoutLabel.slice(0, 137).trimEnd()}…`;
 }
 
 /**

@@ -1,4 +1,8 @@
 import type { ModulePack } from "@/lib/modules/types";
+import {
+  buildLifecycleOpener,
+  buildLifecycleOpenerZh,
+} from "@/lib/modules/qualityRuntime/familyOverlay";
 
 /**
  * IP Stage Check: AUG-D3 SELF DIAGNOSTIC / 自我诊断 (内容还是系统 + six yes/no).
@@ -230,10 +234,16 @@ export const IP_STAGE_CHECK_PACK: ModulePack = {
   ],
   starterPrompt:
     "Using my intake, run SELF DIAGNOSTIC / 自我诊断: 内容还是系统, six yes/no checks, then name the unanswered checks as the next stage to fix.",
-  chatOpener:
-    "I'll help you check what stage your personal IP is in right now. Do you already know which three content types fit you best?",
-  chatOpenerZh:
-    "我来帮你看清现在个人 IP 卡在哪个阶段。你已经知道哪三种内容最适合自己吗？",
+  chatOpener: buildLifecycleOpener({
+    jobLine: "I'll help you check what stage your personal IP is in right now.",
+    firstAsk: "Do you already know which three content types fit you best?",
+    seed: "ip-stage-check",
+  }),
+  chatOpenerZh: buildLifecycleOpenerZh({
+    jobLine: "我来帮你看清现在个人 IP 卡在哪个阶段。",
+    firstAsk: "你已经知道哪三种内容最适合自己吗？",
+    seed: "ip-stage-check",
+  }),
   systemOverlay: [
     "## Module mode: SELF DIAGNOSTIC / 自我诊断 (qualityRuntime Diagnosis)",
     "You are running the IP Stage Check tool (catalog id ip-stage-check) as AUG-D3 SELF DIAGNOSTIC for this user.",

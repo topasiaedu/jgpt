@@ -2,6 +2,7 @@
  * Post-processes assistant reply prose so dash punctuation never reaches the client.
  * Replaces em dash, en dash, and spaced hyphen-as-dash with ". ".
  * Leaves in-word hyphens alone (e.g. jeff-wiki, well-known, --flag).
+ * Leaves markdown list markers at line start ("- item") unchanged.
  */
 
 /**

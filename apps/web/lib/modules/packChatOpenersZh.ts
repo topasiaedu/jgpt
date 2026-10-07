@@ -1,12 +1,14 @@
 /**
  * Chinese chat openers keyed by module id.
  * Kept beside packs so EN openers stay in pack files; locale helper picks ZH here.
- * Shape: one short job sentence + one concrete question (口语化).
+ * Shape: spoken beat + one short job sentence + one concrete question (口语化).
  */
 
-export const PACK_CHAT_OPENERS_ZH: Record<string, string> = {
+import { prefixJeffSpokenBeatZh } from "@/lib/modules/qualityRuntime/familyOverlay";
+
+const PACK_CHAT_OPENERS_ZH_JOBS: Record<string, string> = {
   "ad-vs-asset-checker":
-    "我来帮你看看这段草稿像硬广，还是像有用的内容资产。把要检查的草稿贴过来。",
+    "我来帮你看看这段草稿像硬广，还是像有用的内容资产。把要检查的草稿丢给我。",
   "advice-vs-ego-coach":
     "我来帮你在开拍前检查：这话是给观众的建议，还是给自己炫耀。你打算在镜头前说什么？",
   "authority-relatable-mixer":
@@ -20,9 +22,9 @@ export const PACK_CHAT_OPENERS_ZH: Record<string, string> = {
   "bullet-caption-pack":
     "我来帮你写配套文案：短要点加软收尾，服务 Reel 不抢戏。这条 Reel 讲什么？",
   "comment-reply-three-lines":
-    "我来帮你按三句法起草评论回复。把要回的评论贴过来。",
+    "我来帮你按三句法起草评论回复。把要回的评论丢给我。",
   "comment-to-content":
-    "我来帮你把评论转成下一支脚本的角度。把评论或推回贴过来。",
+    "我来帮你把评论转成下一支脚本的角度。把评论或推回丢给我。",
   "content-asset-planner":
     "我来帮你用四种内容资产做规划：曝光、认知、信任、成交。你现在主要是没被看见、在建信任，还是在成交？",
   "content-asset-stack":
@@ -38,9 +40,9 @@ export const PACK_CHAT_OPENERS_ZH: Record<string, string> = {
   "direction-fixer":
     "我来帮你做一次清楚的方向判断：留什么、砍什么、为什么。你最近在发什么内容？",
   "dm-comment-closer":
-    "我来帮你把评论或私信里的兴趣，推进到清楚的下一步。把评论或私信贴过来。",
+    "我来帮你把评论或私信里的兴趣，推进到清楚的下一步。把评论或私信丢给我。",
   "dont-outsource-judgment":
-    "我来帮你在改 AI 草稿时，把判断权留在自己手里。把要审的 AI 草稿贴过来。",
+    "我来帮你在改 AI 草稿时，把判断权留在自己手里。把要审的 AI 草稿丢给我。",
   "eight-ways-to-open":
     "我来帮你试几种开场方式，打磨视频前三秒。从哪个题目或现有开场开始？",
   "faq-content-bank":
@@ -56,7 +58,7 @@ export const PACK_CHAT_OPENERS_ZH: Record<string, string> = {
   "hit-100x-followers":
     "我来帮你按账号体量定义什么叫爆。你现在大约有多少粉丝？",
   "hook-rewriter":
-    "我来帮你只改开场，写成更强钩子。把现有钩子或正文主题贴过来。",
+    "我来帮你只改开场，写成更强钩子。把现有钩子或正文主题丢给我。",
   "hot-take-script":
     "我来帮你把锋利主张写成密实热观点脚本，大约 60 秒及以上，落点是建议，不是炫耀。你愿意用一句话认领的主张是什么？",
   "ig-reel-script":
@@ -74,17 +76,17 @@ export const PACK_CHAT_OPENERS_ZH: Record<string, string> = {
   "offer-explanation-simple":
     "我来帮你用白话说明 offer，让陌生人也能听懂。你卖什么，用白话说？",
   "platform-adapter":
-    "我来帮你把同一条内容适配到不同格式，立场不丢。把要改写的原文贴过来。",
+    "我来帮你把同一条内容适配到不同格式，立场不丢。把要改写的原文丢给我。",
   "positioning-four-questions":
     "我来帮你答完定位四问，让陌生人更快听懂你为谁工作。你卖的是什么，用一句话说？",
   "process-proof-reel":
     "我来帮你写一条密实过程证明 Reel，大约 60 秒及以上，让人看见你怎么做事，好建立信任。你能诚实上镜展示的一个流程步骤是什么？",
   "revision-sharpen":
-    "我来帮你用一个诊断加一个动作磨利草稿。把水分多的草稿贴过来。",
+    "我来帮你用一个诊断加一个动作磨利草稿。把水分多的草稿丢给我。",
   "script-humanizer":
-    "我来帮你把生硬草稿改成一对一能说出口的句子。把听起来像手册的草稿贴过来。",
+    "我来帮你把生硬草稿改成一对一能说出口的句子。把听起来像手册的草稿丢给我。",
   "scroll-stop-hook":
-    "我来帮你写前 1 到 3 秒能停住滑动的开场。这条视频是讲给谁听的？先打哪个痛点？",
+    "我来帮你写前 1 到 3 秒能停住滑动的开场。这条视频是讲给谁听的，先打哪个痛点？",
   "short-vs-long-planner":
     "我来帮你规划哪些题目适合短、哪些适合长。你现在处在哪个阶段？",
   "six-caption-angles":
@@ -116,3 +118,13 @@ export const PACK_CHAT_OPENERS_ZH: Record<string, string> = {
   "who-i-serve":
     "我来帮你写满定位三行地图：我是谁、我帮谁、解决什么。用白话说，市场里你是谁？",
 };
+
+/**
+ * ZH openers with a rotating Jeff spoken beat already applied.
+ */
+export const PACK_CHAT_OPENERS_ZH: Record<string, string> = Object.fromEntries(
+  Object.entries(PACK_CHAT_OPENERS_ZH_JOBS).map(([id, text]) => [
+    id,
+    prefixJeffSpokenBeatZh(text, id),
+  ]),
+);

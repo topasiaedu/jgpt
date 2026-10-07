@@ -6,6 +6,11 @@ import type {
   ChatRequestBody,
   ChatResponseBody,
 } from "@/lib/chatTypes";
+import { requireAuthedApi } from "@/lib/brandProfile/apiAuth";
+import { isUuid } from "@/lib/brandProfile/db";
+import { loadOwnedBrandProfileForChat } from "@/lib/brandProfile/loadChatContext";
+import { probeBrandChunks } from "@/lib/brandProfile/probeBrand";
+import { buildUserBrandFactsBlock } from "@/lib/brandProfile/userBrandFacts";
 import { buildProbeQuery, toDialogueOnly } from "@/lib/dialogue";
 import {
   appendModuleSystemOverlay,
@@ -35,7 +40,9 @@ export const maxDuration = 60;
 export const dynamic = "force-dynamic";
 
 /**
- * POST /api/chat: fresh probe this turn + dialogue-only history + optional probe_jeff tools.
+ * POST /api/chat: fresh probe this turn + dialogue-only history + optional probe_jeff / probe_brand tools.
+ * Requires an authenticated user. Optional owned brandProfileId injects capped USER_BRAND_FACTS
+ * and enables probe_brand. Omitted profile skips brand facts and brand probe.
  * Optional moduleId enables named IP module packs (same closed-doctrine stack).
  * Module path runs a second ask-match QA call (+ at most one repair) after the primary reply.
  * Legacy intake map is optional; chat-first modules rely on conversation history.
@@ -70,10 +77,46 @@ async function handleChatPost(
     return NextResponse.json(
       {
         error:
-          "Body must include messages: { role, content }[]. Optional locale, moduleId, intake, and homeIntent must be well-typed.",
+          "Body must include messages: { role, content }[]. Optional locale, moduleId, intake, homeIntent, and brandProfileId must be well-typed.",
       },
       { status: 400 },
     );
+  }
+
+  const auth = await requireAuthedApi();
+  if (!auth.ok) {
+    return auth.response;
+  }
+
+  let ownedProfile: Awaited<ReturnType<typeof loadOwnedBrandProfileForChat>> = null;
+  let userBrandFacts: string | undefined = undefined;
+
+  const brandProfileIdRaw: string | undefined = body.brandProfileId;
+  if (typeof brandProfileIdRaw === "string" && brandProfileIdRaw.trim().length > 0) {
+    const brandProfileId: string = brandProfileIdRaw.trim();
+    if (!isUuid(brandProfileId)) {
+      return NextResponse.json(
+        { error: "brandProfileId must be a valid profile id." },
+        { status: 400 },
+      );
+    }
+
+    ownedProfile = await loadOwnedBrandProfileForChat(
+      auth.ctx.supabase,
+      brandProfileId,
+    );
+    if (ownedProfile === null) {
+      return NextResponse.json(
+        { error: "Brand profile not found or not owned by this account." },
+        { status: 403 },
+      );
+    }
+
+    userBrandFacts = buildUserBrandFactsBlock({
+      profileName: ownedProfile.name,
+      activeBrief: ownedProfile.activeBrief,
+      structured: ownedProfile.structured,
+    });
   }
 
   const { apiKey, model } = getOpenAIConfig();
@@ -135,10 +178,16 @@ async function handleChatPost(
     evidencePackText: probe.evidencePackText,
     coverage: probe.coverage,
     locale,
+    ...(userBrandFacts !== undefined ? { userBrandFacts } : {}),
     ...(pack !== undefined && isQualityRuntimeEnabled(pack)
       ? {
           formattingOverride: systemPromptFormattingOverride(
-            detectLifecycleMode({ pack, messages: dialogue, intake }).replyBudget,
+            detectLifecycleMode({
+              pack,
+              messages: dialogue,
+              intake,
+              brandStructured: ownedProfile === null ? undefined : ownedProfile.structured,
+            }).replyBudget,
           ),
         }
       : {}),
@@ -154,18 +203,29 @@ async function handleChatPost(
           homeIntent,
           locale,
           messages: dialogue,
+          brandStructured: ownedProfile === null ? undefined : ownedProfile.structured,
         })
       : appendHomeRecommendOverlay(baseSystemPrompt, locale);
   const systemPrompt: string = moduleSystemPrompt;
 
   try {
-    const { reply, sources, recommendedModuleIds } = await generateJeffReply({
+    const { reply, sources, brandSources, recommendedModuleIds } = await generateJeffReply({
       apiKey,
       model,
       systemPrompt,
       messages: dialogue,
       initialSources: probe.sources,
       runProbe: (toolQuery: string) => probeTeaching(toolQuery),
+      ...(ownedProfile === null
+        ? {}
+        : {
+            runBrandProbe: (toolQuery: string) =>
+              probeBrandChunks({
+                supabase: auth.ctx.supabase,
+                profileId: ownedProfile.id,
+                query: toolQuery,
+              }),
+          }),
       recommendMode,
     });
 
@@ -191,6 +251,7 @@ async function handleChatPost(
     const response: ChatResponseBody = {
       reply: sanitizeAssistantReply(finalReply, locale),
       sources,
+      ...(brandSources.length > 0 ? { brandSources } : {}),
       ...(recommendMode && recommendedModuleIds.length > 0
         ? { recommendedModuleIds }
         : {}),
@@ -241,6 +302,13 @@ function isChatRequestBody(value: unknown): value is ChatRequestBody {
   if ("homeIntent" in value) {
     const homeIntent = (value as { homeIntent: unknown }).homeIntent;
     if (homeIntent !== undefined && typeof homeIntent !== "string") {
+      return false;
+    }
+  }
+
+  if ("brandProfileId" in value) {
+    const brandProfileId = (value as { brandProfileId: unknown }).brandProfileId;
+    if (brandProfileId !== undefined && typeof brandProfileId !== "string") {
       return false;
     }
   }

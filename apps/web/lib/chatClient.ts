@@ -1,9 +1,15 @@
-import type { ChatMessage, ChatResponseBody, ChatSource } from "@/lib/chatTypes";
+import type {
+  BrandChatSource,
+  ChatMessage,
+  ChatResponseBody,
+  ChatSource,
+} from "@/lib/chatTypes";
 
 export type ChatApiSuccess = {
   ok: true;
   reply: string;
   sources: ChatSource[];
+  brandSources: BrandChatSource[];
   recommendedModuleIds: string[];
 };
 
@@ -22,12 +28,18 @@ export type PostChatOptions = {
   intake?: Record<string, string>;
   /** Optional home → tool intent handoff (length-capped client-side). */
   homeIntent?: string;
+  /**
+   * Optional owned Brand profile id. Sent only when the student chose one.
+   * /api/chat verifies ownership and injects USER_BRAND_FACTS when present.
+   */
+  brandProfileId?: string;
 };
 
 /**
  * POSTs dialogue to /api/chat. Optionally sends moduleId for module mode.
  * Legacy intake map remains supported but chat-first tools omit it.
  * homeIntent is a silent hint when the user arrived from home recommend cards.
+ * brandProfileId is optional. When sent, the server checks auth + ownership.
  * locale is the sole authority for reply language (not the user's message language).
  */
 export async function postChat(options: PostChatOptions): Promise<ChatApiResult> {
@@ -48,6 +60,10 @@ export async function postChat(options: PostChatOptions): Promise<ChatApiResult>
         ...(options.intake !== undefined ? { intake: options.intake } : {}),
         ...(typeof options.homeIntent === "string" && options.homeIntent.length > 0
           ? { homeIntent: options.homeIntent }
+          : {}),
+        ...(typeof options.brandProfileId === "string" &&
+        options.brandProfileId.length > 0
+          ? { brandProfileId: options.brandProfileId }
           : {}),
       }),
     });
@@ -81,6 +97,7 @@ export async function postChat(options: PostChatOptions): Promise<ChatApiResult>
       ok: true,
       reply: data.reply,
       sources: data.sources,
+      brandSources: data.brandSources ?? [],
       recommendedModuleIds: data.recommendedModuleIds ?? [],
     };
   } catch (error) {
@@ -295,5 +312,30 @@ export function isChatResponseBody(value: unknown): value is ChatResponseBody {
     }
   }
 
+  if ("brandSources" in value) {
+    const brandSources = (value as { brandSources: unknown }).brandSources;
+    if (brandSources !== undefined) {
+      if (!Array.isArray(brandSources) || !brandSources.every(isBrandChatSource)) {
+        return false;
+      }
+    }
+  }
+
   return true;
+}
+
+/**
+ * Narrows one brand source chip from the chat API.
+ */
+function isBrandChatSource(value: unknown): value is BrandChatSource {
+  if (typeof value !== "object" || value === null) {
+    return false;
+  }
+  const candidate = value as { id?: unknown; title?: unknown; kind?: unknown };
+  return (
+    typeof candidate.id === "string" &&
+    candidate.id.startsWith("brand:") &&
+    typeof candidate.title === "string" &&
+    candidate.kind === "brand"
+  );
 }

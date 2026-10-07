@@ -1,4 +1,8 @@
 import type { ModulePack } from "@/lib/modules/types";
+import {
+  buildLifecycleOpener,
+  buildLifecycleOpenerZh,
+} from "@/lib/modules/qualityRuntime/familyOverlay";
 
 /**
  * IG Reel Script pack: shootable ~60s+ Reel as a content asset, not a hard-sell ad.
@@ -232,10 +236,16 @@ export const IG_REEL_SCRIPT_PACK: ModulePack = {
   ],
   starterPrompt:
     "Using my intake, write a shootable Instagram Reel script about 60 seconds and above on OPENS (Opening / Problem / Evidence / New Way / Step). Keep it a content asset, not a hard-sell ad.",
-  chatOpener:
-    "I'll help you write a shootable Instagram Reel, about 60 seconds and above, as a teaching asset, not a hard-sell ad. What is the one lesson or story beat you want them to take away?",
-  chatOpenerZh:
-    "我来帮你写一条能直接拍的 Instagram Reel，大约 60 秒及以上，当教学资产，不当硬广。你希望观众带走的那个教训或故事节拍是什么？",
+  chatOpener: buildLifecycleOpener({
+    jobLine: "I'll help you write a shootable Instagram Reel, about 60 seconds and above, as a teaching asset, not a hard-sell ad.",
+    firstAsk: "What is the one lesson or story beat you want them to take away?",
+    seed: "ig-reel-script",
+  }),
+  chatOpenerZh: buildLifecycleOpenerZh({
+    jobLine: "我来帮你写一条能直接拍的 Instagram Reel，大约 60 秒及以上，当教学资产，不当硬广。",
+    firstAsk: "你希望观众带走的那个教训或故事节拍是什么？",
+    seed: "ig-reel-script",
+  }),
   systemOverlay: [
     "## Module mode: IG Reel Script (qualityRuntime Script/Spoken)",
     "You are running the IG Reel Script tool for this user.",

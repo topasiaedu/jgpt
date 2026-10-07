@@ -16,17 +16,23 @@
     "test:sanitize-reply": "npx --yes tsx scripts/test-sanitize-reply.ts",
     "test:assistant-lists": "npx --yes tsx scripts/test-assistant-message-lists.ts",
     "test:response-qa": "npx --yes tsx scripts/test-response-qa.ts",
-    "test:long-chat": "npx --yes tsx scripts/test-long-chat.ts"
+    "test:long-chat": "npx --yes tsx scripts/test-long-chat.ts",
+    "test:brand-chat": "npx --yes tsx scripts/test-brand-chat.ts"
   },
   "dependencies": {
+    "@supabase/ssr": "^0.12.7",
+    "@supabase/supabase-js": "^2.117.2",
+    "jszip": "^3.10.2",
     "next": "^15.5.2",
     "openai": "^4.104.0",
     "react": "^19.1.1",
-    "react-dom": "^19.1.1"
+    "react-dom": "^19.1.1",
+    "unpdf": "^1.7.0"
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3.3.1",
     "@tailwindcss/postcss": "^4.1.12",
+    "@types/jszip": "^3.4.0",
     "@types/node": "^22.17.2",
     "@types/react": "^19.1.12",
     "@types/react-dom": "^19.1.9",

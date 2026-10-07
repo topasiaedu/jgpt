@@ -1,4 +1,8 @@
 import type { ModulePack } from "@/lib/modules/types";
+import {
+  buildLifecycleOpener,
+  buildLifecycleOpenerZh,
+} from "@/lib/modules/qualityRuntime/familyOverlay";
 
 /**
  * 定位一句话：三行地图 (D1 p038).
@@ -137,10 +141,16 @@ export const WHO_I_SERVE_PACK: ModulePack = {
   ],
   starterPrompt:
     "Using my intake, write only the 定位一句话：三行地图 lines (我是谁 / 我帮谁 / 解决什么). Pass OCR acceptance: positioning helps the market understand who you help, not a long self-intro.",
-  chatOpener:
-    "I'll help you write your three-line positioning map: who you are, who you help, and what you solve. In plain words, who are you in this market?",
-  chatOpenerZh:
-    "我来帮你写满定位三行地图：我是谁、我帮谁、解决什么。用白话说，市场里你是谁？",
+  chatOpener: buildLifecycleOpener({
+    jobLine: "I'll help you write your three-line positioning map: who you are, who you help, and what you solve.",
+    firstAsk: "In plain words, who are you in this market?",
+    seed: "who-i-serve",
+  }),
+  chatOpenerZh: buildLifecycleOpenerZh({
+    jobLine: "我来帮你写满定位三行地图：我是谁、我帮谁、解决什么。",
+    firstAsk: "用白话说，市场里你是谁？",
+    seed: "who-i-serve",
+  }),
   systemOverlay: [
     "## Module mode: 定位一句话：三行地图 (qualityRuntime Positioning/Map)",
     "You are running the 定位一句话：三行地图 tool (catalog id who-i-serve) for this user.",

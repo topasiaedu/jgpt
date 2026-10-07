@@ -131,6 +131,7 @@ export function injectLifecycleIntoOverlay(
     ...spec.deliverableSectionOrder.map((section: string, index: number) => `${index + 1}. ${section}`),
     "Ground every line in their concrete answers. Different inputs must produce different outputs.",
     "Write the whole deliverable in the locked UI locale language.",
+    "Multiple options: ## heading per option, then bullets. Numbered lists must be 1. 2. 3. in one list. Hash headings are expected in Deliver.",
     "End with named refine levers.",
     "",
     ...(spec.qualityFamily === "script-spoken" ? [SCRIPT_SPOKEN_TIMING_CALIBRATION, ""] : []),
@@ -205,22 +206,26 @@ export function finalizeQ5Pack(base: ModulePack, spec: Q5MigrationSpec): ModuleP
 }
 
 /**
- * Helper to build EN/ZH one-line openers (job sentence + first ask).
+ * Helper to build EN/ZH one-line openers (spoken beat + job sentence + first ask).
  */
 export function q5Openers(opts: {
   jobEn: string;
   jobZh: string;
   askEn: string;
   askZh: string;
+  seed?: string;
 }): { chatOpener: string; chatOpenerZh: string } {
+  const seed: string = opts.seed ?? `${opts.jobEn}|${opts.jobZh}`;
   return {
     chatOpener: buildLifecycleOpener({
       jobLine: opts.jobEn,
       firstAsk: opts.askEn,
+      seed,
     }),
     chatOpenerZh: buildLifecycleOpenerZh({
       jobLine: opts.jobZh,
       firstAsk: opts.askZh,
+      seed,
     }),
   };
 }

@@ -1,4 +1,8 @@
 import type { ModulePack } from "@/lib/modules/types";
+import {
+  buildLifecycleOpener,
+  buildLifecycleOpenerZh,
+} from "@/lib/modules/qualityRuntime/familyOverlay";
 
 /**
  * DM / Comment Closer: reply that moves warm interest.
@@ -141,10 +145,16 @@ export const DM_COMMENT_CLOSER_PACK: ModulePack = {
   ],
   starterPrompt:
     "Using my intake, draft a reply that moves warm interest toward a clear next step. Include a softer and a firmer variant.",
-  chatOpener:
-    "I'll help you move warm interest in a comment or DM into a clear next step. Paste the comment or DM.",
-  chatOpenerZh:
-    "我来帮你把评论或私信里的兴趣，推进到清楚的下一步。把评论或私信贴过来。",
+  chatOpener: buildLifecycleOpener({
+    jobLine: "I'll help you move warm interest in a comment or DM into a clear next step.",
+    firstAsk: "Paste the comment or DM.",
+    seed: "dm-comment-closer",
+  }),
+  chatOpenerZh: buildLifecycleOpenerZh({
+    jobLine: "我来帮你把评论或私信里的兴趣，推进到清楚的下一步。",
+    firstAsk: "把评论或私信丢给我。",
+    seed: "dm-comment-closer",
+  }),
   systemOverlay: [
     "## Module mode: DM / Comment Closer (qualityRuntime Reply/Micro-convert)",
     "You are running the DM / Comment Closer tool for this user.",

@@ -1,4 +1,8 @@
 import type { ModulePack } from "@/lib/modules/types";
+import {
+  buildLifecycleOpener,
+  buildLifecycleOpenerZh,
+} from "@/lib/modules/qualityRuntime/familyOverlay";
 
 /**
  * Process Proof Reel: why customers choose us + how we work (advice vs ego).
@@ -177,10 +181,16 @@ export const PROCESS_PROOF_REEL_PACK: ModulePack = {
   ],
   starterPrompt:
     "Using my intake, write a dense ~60s+ process-proof Reel: hook, how-we-work beat, soft close. Keep it advice-led, not ego flex.",
-  chatOpener:
-    "I'll help you write a dense process-proof Reel at about 60 seconds and above that shows how you work so trust can build. What is one process step you can honestly show on camera?",
-  chatOpenerZh:
-    "我来帮你写一条密实过程证明 Reel，大约 60 秒及以上，让人看见你怎么做事，好建立信任。你能诚实上镜展示的一个流程步骤是什么？",
+  chatOpener: buildLifecycleOpener({
+    jobLine: "I'll help you write a dense process-proof Reel at about 60 seconds and above that shows how you work so trust can build.",
+    firstAsk: "What is one process step you can honestly show on camera?",
+    seed: "process-proof-reel",
+  }),
+  chatOpenerZh: buildLifecycleOpenerZh({
+    jobLine: "我来帮你写一条密实过程证明 Reel，大约 60 秒及以上，让人看见你怎么做事，好建立信任。",
+    firstAsk: "你能诚实上镜展示的一个流程步骤是什么？",
+    seed: "process-proof-reel",
+  }),
   systemOverlay: [
     "## Module mode: Process Proof Reel (qualityRuntime Script/Spoken)",
     "You are running the Process Proof Reel tool for this user.",

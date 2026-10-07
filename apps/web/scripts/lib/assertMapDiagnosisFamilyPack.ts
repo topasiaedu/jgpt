@@ -69,8 +69,8 @@ export function assertMapOrDiagnosisPackContract(
 
   const openerBlob: string = [pack.chatOpener, pack.chatOpenerZh ?? ""].join("\n");
   assert(
-    /confirm|确认/i.test(openerBlob),
-    `${pack.moduleId} openers should mention confirm before dense deliver`,
+    !/here is how we will work|我们这样配合/i.test(openerBlob),
+    `${pack.moduleId} openers must stay job + one ask, no process block`,
   );
   assert(
     !/OPENS|60\s*seconds|可拍的密实 OPENS/i.test(openerBlob),

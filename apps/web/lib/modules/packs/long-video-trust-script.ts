@@ -1,4 +1,8 @@
 import type { ModulePack } from "@/lib/modules/types";
+import {
+  buildLifecycleOpener,
+  buildLifecycleOpenerZh,
+} from "@/lib/modules/qualityRuntime/familyOverlay";
 
 /**
  * Long Video Trust Script: trust-path outline bound to Trust Evidence /
@@ -211,10 +215,16 @@ export const LONG_VIDEO_TRUST_SCRIPT_PACK: ModulePack = {
   ],
   starterPrompt:
     "Using my intake, outline a dense long trust-path video (5 to 15 minutes): place Trust Evidence types (结果/过程/角色/人品), frame as 看见你→理解你→相信你→问你→买你 where useful, and close with a soft next step. Structure for MY craft.",
-  chatOpener:
-    "I'll help you outline a longer teach (5 to 15 minutes) that builds trust, not filler. What topic can you teach for 5 to 15 minutes without fluff?",
-  chatOpenerZh:
-    "我来帮你搭长视频信任大纲（5 到 15 分钟），不堆注水。有哪个题目你能讲 5 到 15 分钟还不注水？",
+  chatOpener: buildLifecycleOpener({
+    jobLine: "I'll help you outline a longer teach (5 to 15 minutes) that builds trust, not filler.",
+    firstAsk: "What topic can you teach for 5 to 15 minutes without fluff?",
+    seed: "long-video-trust-script",
+  }),
+  chatOpenerZh: buildLifecycleOpenerZh({
+    jobLine: "我来帮你搭长视频信任大纲（5 到 15 分钟），不堆注水。",
+    firstAsk: "有哪个题目你能讲 5 到 15 分钟还不注水？",
+    seed: "long-video-trust-script",
+  }),
   systemOverlay: [
     "## Module mode: Long Video Trust Script (qualityRuntime Script/Spoken)",
     "You are running the Long Video Trust Script tool for this user.",

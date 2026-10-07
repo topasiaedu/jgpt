@@ -68,7 +68,7 @@ export const MODULE_ZH_COPY: Record<string, ModuleZhCopy> = {
     ].join("\n\n"),
   },
   "ig-reel-script": {
-    title: "OPENS 60秒五幕剧",
+    title: "60秒 OPENS 脚本",
     description: [
       "做什么：用 OPENS（Opening、Problem、Evidence、New Way、Step）写出能直接拍的约 60 秒及以上 Instagram Reel。当教学资产，不当硬广。",
       "需要准备：赛道或行业、受众、立场或产品角度、一个教训或故事节拍、语言偏好、收尾软硬偏好，以及可选一种「四种内容资产」类型。",

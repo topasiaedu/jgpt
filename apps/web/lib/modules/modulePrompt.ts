@@ -8,8 +8,11 @@ import {
   buildQualityRuntimeInjection,
   formatQualitySlotChecklist,
   isQualityRuntimeEnabled,
+  qualitySlotFromIntakeField,
   resolveQualitySlots,
 } from "@/lib/modules/qualityRuntime";
+import type { BrandProfileStructured } from "@/lib/brandProfile/types";
+import { formatKnownBrandSlotsBlock } from "@/lib/brandProfile/knownSlots";
 
 /** Cap bound-node briefs so module prompts stay denser than free chat without dumping the wiki. */
 const MAX_BOUND_NODE_BRIEFS: number = 6;
@@ -143,8 +146,14 @@ export function formatBoundNodeBriefs(boundNodeIds: string[] | undefined): strin
  * When qualityRuntime is on, soft "just write it when enough" is replaced by the
  * hard Collect → Confirm → Deliver → Refine block from qualityRuntime injection.
  */
-export function buildSharedModuleRules(pack: ModulePack): string {
+export function buildSharedModuleRules(
+  pack: ModulePack,
+  brandStructured?: BrandProfileStructured,
+): string {
   const qualityOn: boolean = isQualityRuntimeEnabled(pack);
+  const resolvedSlots = qualityOn
+    ? resolveQualitySlots(pack)
+    : pack.intakeFields.map(qualitySlotFromIntakeField);
   const slotBlock: string = qualityOn
     ? formatQualitySlotChecklist(resolveQualitySlots(pack))
     : formatSlotChecklist(pack.intakeFields);
@@ -191,8 +200,14 @@ export function buildSharedModuleRules(pack: ModulePack): string {
         "Do not wait for a form object. Conversation history (and optional home intent hint) is the source of answers.",
       ];
 
+  const knownBrandBlock: string =
+    brandStructured !== undefined
+      ? formatKnownBrandSlotsBlock(resolvedSlots, brandStructured)
+      : "";
+
   return [
     ...collectRules,
+    ...(knownBrandBlock.length > 0 ? ["", knownBrandBlock] : []),
     "",
     "## Stay on this tool's job (hard; anti-derail; module chat only)",
     `This chat is bound to tool ${toolLabel}. "Back" means this pack's overlay deliverable and the clarifying slots above, not a new topic.`,
@@ -202,8 +217,20 @@ export function buildSharedModuleRules(pack: ModulePack): string {
     "Light related asides that serve this job are OK (example: energy for filming). A new curriculum or deep dive on the aside is not.",
     "Firm and warm, spoken, not fierce. Never abandon this tool's job for a new topic.",
     "",
+    "## Tool chat markdown (hard; readability)",
+    "Use light markdown so the student can scan: ## or ### headings when you label options or sections, bullets or numbered lists for 2+ items, **bold** / *italic* sparingly.",
+    "When delivering multiple options, scripts, or opens: one ## (or ###) heading per option, then bullets. Do not emit three separate \"1.\" items with blank lines and unlabeled 对象/痛点 lines.",
+    "Numbered lists MUST be contiguous 1. 2. 3. in ONE list. Never restart at 1.",
+    "Hash headings are allowed and expected in Deliver. \"Stacked headers\" means **Step N** / **Key takeaways** bold labels, not ## headings.",
+    "Two clarifying questions in one turn MUST be a markdown list with markers, for example:",
+    "- Who is this video for?",
+    "- What pain makes them stop scrolling?",
+    "Do not write those as a prose row or as indented plain lines without \"- \" / \"1. \". The \"- \" marker is allowed (it is not dash punctuation).",
+    "Stay 1-on-1 coach. No essay dumps.",
+    "",
     "## Clarity ask (hard; every Collect / Confirm turn)",
-    "Every turn that still needs input must end with ONE concrete ask: paste X, or answer Y in one sentence.",
+    "Every turn that still needs input must end with ONE concrete ask: send/name X, or answer Y in one sentence.",
+    "Ban bare robotic closers: \"贴过来。\" / \"Paste it.\" / \"Paste them here.\" after you already asked. ZH: \"直接回我这两点。\" / \"先把这两点丢给我。\" For real paste, name the object: \"把草稿丢给我。\"",
     "Ban process dumps in normal replies: \"Here is how we will work\", \"我们这样配合\", lifecycle tours, or multi-step \"first we… then we…\" before the ask.",
     "The user must never finish a turn wondering what you want next.",
     "",
@@ -433,9 +460,11 @@ export function appendModuleSystemOverlay(options: {
    * Ignored when qualityRuntime is off (legacy path unchanged).
    */
   messages?: ChatMessage[];
+  /** Active Brand profile structured fields; Collect treats mapped slots as known. */
+  brandStructured?: BrandProfileStructured;
 }): string {
   const intakeBlock: string = formatIntakeForPrompt(options.intake, options.pack.intakeFields);
-  const shared: string = buildSharedModuleRules(options.pack);
+  const shared: string = buildSharedModuleRules(options.pack, options.brandStructured);
   const homeHint: string = formatHomeIntentHint(options.homeIntent);
   const localeLock: string = moduleLocaleLockReminder(options.locale);
 
@@ -448,6 +477,7 @@ export function appendModuleSystemOverlay(options: {
       pack: options.pack,
       messages,
       intake: options.intake,
+      brandStructured: options.brandStructured,
     });
     return injection.promptBlock;
   })();

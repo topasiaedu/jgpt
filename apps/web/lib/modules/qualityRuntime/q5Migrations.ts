@@ -15,24 +15,28 @@ function idkMap(entries: Array<{ id: string; label: string }>): Record<string, s
   return out;
 }
 
-function spec(opts: {
-  family: QualityFamilyId;
-  fields: Array<{ id: string; label: string; required: boolean }>;
-  forceCriticalIds?: string[];
-  jobEn: string;
-  jobZh: string;
-  askEn: string;
-  askZh: string;
-  sections: string[];
-  levers: string[];
-  confirmBlurb: string;
-  refuseScriptLine?: string;
-}): Q5MigrationSpec {
+function spec(
+  moduleId: string,
+  opts: {
+    family: QualityFamilyId;
+    fields: Array<{ id: string; label: string; required: boolean }>;
+    forceCriticalIds?: string[];
+    jobEn: string;
+    jobZh: string;
+    askEn: string;
+    askZh: string;
+    sections: string[];
+    levers: string[];
+    confirmBlurb: string;
+    refuseScriptLine?: string;
+  },
+): Q5MigrationSpec {
   const openers = q5Openers({
     jobEn: opts.jobEn,
     jobZh: opts.jobZh,
     askEn: opts.askEn,
     askZh: opts.askZh,
+    seed: moduleId,
   });
 
   /** Include every required field, then fill to at least 3 IDK keys. */
@@ -109,7 +113,7 @@ function spec(opts: {
 }
 
 export const Q5_MIGRATIONS: Record<string, Q5MigrationSpec> = {
-  "positioning-four-questions": spec({
+  "positioning-four-questions": spec("positioning-four-questions", {
     family: "positioning-map",
     fields: [{"id":"sellWhat","label":"What do you sell","required":true},{"id":"sellTo","label":"Who do you sell it to","required":true},{"id":"sellWhy","label":"Why do you sell it","required":true},{"id":"mostOf","label":"What are you the most of","required":true}],
     jobEn: "I'll help you answer four positioning questions so strangers know who you are for." ,
@@ -120,7 +124,7 @@ export const Q5_MIGRATIONS: Record<string, Q5MigrationSpec> = {
     levers: ["sharper who","narrower audience","clearer proof or crown","tighter market language"],
     confirmBlurb: "Mirror the plan in 2 to 4 bullets for four positioning answers plus crown category line. Name assumptions. Ask for go-ahead before the dense deliverable. Do not write a Reel script.",
   }),
-  "standpoint-builder": spec({
+  "standpoint-builder": spec("standpoint-builder", {
     family: "positioning-map",
     fields: [{"id":"insist","label":"坚持什么","required":true},{"id":"oppose","label":"反对什么","required":true},{"id":"realGap","label":"真实缺口 (FLAW)","required":true},{"id":"marketImpression","label":"One market-impression sentence","required":true},{"id":"language","label":"Language preference","required":false}],
     jobEn: "I'll help you lock a clear standpoint people can recognize." ,
@@ -131,7 +135,7 @@ export const Q5_MIGRATIONS: Record<string, Q5MigrationSpec> = {
     levers: ["sharper who","narrower audience","clearer proof or crown","tighter market language"],
     confirmBlurb: "Mirror the plan in 2 to 4 bullets for IP Influence Triangle standpoint map. Name assumptions. Ask for go-ahead before the dense deliverable. Do not write a Reel script.",
   }),
-  "brand-stance-model": spec({
+  "brand-stance-model": spec("brand-stance-model", {
     family: "positioning-map",
     fields: [{"id":"standFor","label":"What you stand for","required":true},{"id":"standAgainst","label":"What you stand against","required":true},{"id":"realGap","label":"真实缺口 / FLAW (optional)","required":false}],
     forceCriticalIds: ["standFor","standAgainst","realGap"],
@@ -143,7 +147,7 @@ export const Q5_MIGRATIONS: Record<string, Q5MigrationSpec> = {
     levers: ["sharper who","narrower audience","clearer proof or crown","tighter market language"],
     confirmBlurb: "Mirror the plan in 2 to 4 bullets for brand stance legs with a real gap. Name assumptions. Ask for go-ahead before the dense deliverable. Do not write a Reel script.",
   }),
-  "boss-brand-brief": spec({
+  "boss-brand-brief": spec("boss-brand-brief", {
     family: "positioning-map",
     fields: [{"id":"role","label":"Your role","required":true},{"id":"audience","label":"Audience","required":true},{"id":"proof","label":"One proof point you are willing to show","required":true},{"id":"topics","label":"Topics you can teach without a script team","required":true}],
     jobEn: "I'll help you write a short founder-face brand brief you can film from." ,
@@ -154,7 +158,7 @@ export const Q5_MIGRATIONS: Record<string, Q5MigrationSpec> = {
     levers: ["sharper who","narrower audience","clearer proof or crown","tighter market language"],
     confirmBlurb: "Mirror the plan in 2 to 4 bullets for founder-face brand brief for lean IP. Name assumptions. Ask for go-ahead before the dense deliverable. Do not write a Reel script.",
   }),
-  "ip-pillars": spec({
+  "ip-pillars": spec("ip-pillars", {
     family: "positioning-map",
     fields: [{"id":"whoAndPain","label":"WHO + 痛点","required":true},{"id":"marketQuestions","label":"10 market questions","required":true},{"id":"language","label":"Language preference","required":false}],
     forceCriticalIds: ["whoAndPain","marketQuestions","language"],
@@ -166,7 +170,7 @@ export const Q5_MIGRATIONS: Record<string, Q5MigrationSpec> = {
     levers: ["sharper who","narrower audience","clearer proof or crown","tighter market language"],
     confirmBlurb: "Mirror the plan in 2 to 4 bullets for 3 to 5 durable content pillars. Name assumptions. Ask for go-ahead before the dense deliverable. Do not write a Reel script.",
   }),
-  "offer-explanation-simple": spec({
+  "offer-explanation-simple": spec("offer-explanation-simple", {
     family: "positioning-map",
     fields: [{"id":"whatYouSell","label":"What you sell","required":true},{"id":"whoFor","label":"Who it is for","required":true},{"id":"outcome","label":"Outcome","required":true},{"id":"notThis","label":"What it is not","required":false}],
     jobEn: "I'll help you explain your offer in plain language a stranger can understand." ,
@@ -177,7 +181,7 @@ export const Q5_MIGRATIONS: Record<string, Q5MigrationSpec> = {
     levers: ["sharper who","narrower audience","clearer proof or crown","tighter market language"],
     confirmBlurb: "Mirror the plan in 2 to 4 bullets for plain-language offer explanation. Name assumptions. Ask for go-ahead before the dense deliverable. Do not write a Reel script.",
   }),
-  "authority-relatable-mixer": spec({
+  "authority-relatable-mixer": spec("authority-relatable-mixer", {
     family: "positioning-map",
     fields: [{"id":"role","label":"Primary role (艺人 / 直播主 / 老师 / 博主)","required":true},{"id":"usualShowUp","label":"How you usually show up","required":true},{"id":"stiffOrCasual","label":"Where you feel stiff or too casual","required":true},{"id":"audienceNeed","label":"What audience needs to trust you","required":true},{"id":"format","label":"Format","required":false}],
     jobEn: "I'll help you mix authority and relatability so you still sound like yourself on camera." ,
@@ -188,18 +192,18 @@ export const Q5_MIGRATIONS: Record<string, Q5MigrationSpec> = {
     levers: ["sharper who","narrower audience","clearer proof or crown","tighter market language"],
     confirmBlurb: "Mirror the plan in 2 to 4 bullets for authority and relatability mix for your role. Name assumptions. Ask for go-ahead before the dense deliverable. Do not write a Reel script.",
   }),
-  "ad-vs-asset-checker": spec({
+  "ad-vs-asset-checker": spec("ad-vs-asset-checker", {
     family: "diagnosis",
     fields: [{"id":"draft","label":"Paste your draft","required":true},{"id":"audience","label":"Audience","required":true},{"id":"goal","label":"Honest goal of the post","required":true},{"id":"mustKeep","label":"Must-keep facts or offers","required":false}],
     jobEn: "I'll help you check whether a draft sounds like a hard-sell ad, or like a useful content asset." ,
     jobZh: "我来帮你看看这段草稿像硬广，还是像有用的内容资产。" ,
     askEn: "Paste the draft that might be ad-shaped.",
-    askZh: "把要检查的草稿贴过来。",
+    askZh: "把要检查的草稿丢给我。",
     sections: ["Framing call","Evidence scorecard","Ranked next actions","Named refine levers"],
     levers: ["clearer framing call","stronger evidence cite","reordered next actions","tighter constraint"],
     confirmBlurb: "Mirror the plan in 2 to 4 bullets for ad vs content-asset verdict plus rewrite. Name assumptions. Ask for go-ahead before the dense deliverable. Do not write a Reel script.",
   }),
-  "content-not-working-checklists": spec({
+  "content-not-working-checklists": spec("content-not-working-checklists", {
     family: "diagnosis",
     fields: [{"id":"symptom","label":"Symptom","required":true},{"id":"whatSold","label":"The business: what is actually sold","required":true},{"id":"methodGuess","label":"The method: loud or quiet","required":true},{"id":"customerWords","label":"The words customers use","required":true},{"id":"positioningGuess","label":"Positioning guess","required":true}],
     jobEn: "I'll help you run the Content Not Working checklists." ,
@@ -210,7 +214,7 @@ export const Q5_MIGRATIONS: Record<string, Q5MigrationSpec> = {
     levers: ["clearer framing call","stronger evidence cite","reordered next actions","tighter constraint"],
     confirmBlurb: "Mirror the plan in 2 to 4 bullets for two coach checklists for content that is not working. Name assumptions. Ask for go-ahead before the dense deliverable. Do not write a Reel script.",
   }),
-  "hit-100x-followers": spec({
+  "hit-100x-followers": spec("hit-100x-followers", {
     family: "diagnosis",
     fields: [{"id":"followers","label":"Follower count","required":true},{"id":"recentViews","label":"Recent view numbers","required":true},{"id":"goal","label":"What you want next","required":true}],
     jobEn: "I'll help you define what counts as a hit for your account size." ,
@@ -221,7 +225,7 @@ export const Q5_MIGRATIONS: Record<string, Q5MigrationSpec> = {
     levers: ["clearer framing call","stronger evidence cite","reordered next actions","tighter constraint"],
     confirmBlurb: "Mirror the plan in 2 to 4 bullets for 100x hit diagnosis and series plan. Name assumptions. Ask for go-ahead before the dense deliverable. Do not write a Reel script.",
   }),
-  "direction-fixer": spec({
+  "direction-fixer": spec("direction-fixer", {
     family: "diagnosis",
     fields: [{"id":"posting","label":"What you have been posting","required":true},{"id":"worry","label":"What metrics or gut feel worry you","required":true},{"id":"outcomes","label":"Outcomes you actually want","required":true},{"id":"niche","label":"Niche or industry","required":false}],
     jobEn: "I'll help you make a clear direction call: keep, cut, and why." ,
@@ -232,7 +236,7 @@ export const Q5_MIGRATIONS: Record<string, Q5MigrationSpec> = {
     levers: ["clearer framing call","stronger evidence cite","reordered next actions","tighter constraint"],
     confirmBlurb: "Mirror the plan in 2 to 4 bullets for direction pick: double down vs pause. Name assumptions. Ask for go-ahead before the dense deliverable. Do not write a Reel script.",
   }),
-  "faq-content-bank": spec({
+  "faq-content-bank": spec("faq-content-bank", {
     family: "ideation-bank",
     fields: [{"id":"topicsOrQuestions","label":"题材 inputs (problems, views, myths, stories, or FAQ questions)","required":true},{"id":"niche","label":"Niche","required":true},{"id":"preferredForms","label":"Preferred 形式 (optional)","required":false},{"id":"statusDefault","label":"Default 状态 (optional)","required":false},{"id":"boundaries","label":"Answer boundaries","required":false}],
     forceCriticalIds: ["topicsOrQuestions","niche","preferredForms"],
@@ -244,7 +248,7 @@ export const Q5_MIGRATIONS: Record<string, Q5MigrationSpec> = {
     levers: ["tighter filters","more usable bank rows","better tags","which row to film first"],
     confirmBlurb: "Mirror the plan in 2 to 4 bullets for CONTENT BANK inventory rows. Name assumptions. Ask for go-ahead before the dense deliverable. Do not write a Reel script.",
   }),
-  "content-ideation-ip": spec({
+  "content-ideation-ip": spec("content-ideation-ip", {
     family: "ideation-bank",
     fields: [{"id":"renshe","label":"人设 (center)","required":true},{"id":"interestPro","label":"兴趣 / 专业","required":true},{"id":"viewStory","label":"观点 / 故事","required":true},{"id":"customerIndustry","label":"客户 / 行业","required":true},{"id":"trendPain","label":"趋势 / 痛点","required":true}],
     jobEn: "I'll help you fill Topic Bingo and grow about 12 filmable topic seeds." ,
@@ -255,7 +259,7 @@ export const Q5_MIGRATIONS: Record<string, Q5MigrationSpec> = {
     levers: ["tighter filters","more usable bank rows","better tags","which row to film first"],
     confirmBlurb: "Mirror the plan in 2 to 4 bullets for Topic Bingo seeds with 穿心线. Name assumptions. Ask for go-ahead before the dense deliverable. Do not write a Reel script.",
   }),
-  "waffle-grid": spec({
+  "waffle-grid": spec("waffle-grid", {
     family: "ideation-bank",
     fields: [{"id":"whoYouAre","label":"Who you are and who you serve","required":true},{"id":"themes","label":"Themes you already own","required":true},{"id":"formats","label":"Formats you will use","required":false}],
     forceCriticalIds: ["whoYouAre","themes","formats"],
@@ -267,7 +271,7 @@ export const Q5_MIGRATIONS: Record<string, Q5MigrationSpec> = {
     levers: ["tighter filters","more usable bank rows","better tags","which row to film first"],
     confirmBlurb: "Mirror the plan in 2 to 4 bullets for waffle grid themes times formats. Name assumptions. Ask for go-ahead before the dense deliverable. Do not write a Reel script.",
   }),
-  "bullet-caption-pack": spec({
+  "bullet-caption-pack": spec("bullet-caption-pack", {
     family: "ideation-bank",
     fields: [{"id":"topic","label":"Reel topic or script summary","required":true},{"id":"bullets","label":"Key bullets to include","required":true},{"id":"ctaSoftness","label":"CTA softness","required":true},{"id":"language","label":"Language preference","required":false}],
     jobEn: "I'll help you write a caption that supports the Reel with short bullets and a soft close." ,
@@ -278,7 +282,7 @@ export const Q5_MIGRATIONS: Record<string, Q5MigrationSpec> = {
     levers: ["tighter filters","more usable bank rows","better tags","which row to film first"],
     confirmBlurb: "Mirror the plan in 2 to 4 bullets for supporting bullet caption under a Reel. Name assumptions. Ask for go-ahead before the dense deliverable. Do not write a Reel script.",
   }),
-  "six-caption-angles": spec({
+  "six-caption-angles": spec("six-caption-angles", {
     family: "ideation-bank",
     fields: [{"id":"videoPoint","label":"What the video already does","required":true},{"id":"audienceFeeling","label":"Unspoken audience feeling","required":true}],
     forceCriticalIds: ["videoPoint","audienceFeeling"],
@@ -290,7 +294,7 @@ export const Q5_MIGRATIONS: Record<string, Q5MigrationSpec> = {
     levers: ["tighter filters","more usable bank rows","better tags","which row to film first"],
     confirmBlurb: "Mirror the plan in 2 to 4 bullets for six one-line caption angles. Name assumptions. Ask for go-ahead before the dense deliverable. Do not write a Reel script.",
   }),
-  "four-content-layers": spec({
+  "four-content-layers": spec("four-content-layers", {
     family: "ideation-bank",
     fields: [{"id":"whoYouServe","label":"Who you serve","required":true},{"id":"proofAvailable","label":"Proof you can show","required":true},{"id":"weekGoal","label":"This week goal","required":false}],
     forceCriticalIds: ["whoYouServe","proofAvailable","weekGoal"],
@@ -302,7 +306,7 @@ export const Q5_MIGRATIONS: Record<string, Q5MigrationSpec> = {
     levers: ["tighter filters","more usable bank rows","better tags","which row to film first"],
     confirmBlurb: "Mirror the plan in 2 to 4 bullets for Story Case POV News layer plan. Name assumptions. Ask for go-ahead before the dense deliverable. Do not write a Reel script.",
   }),
-  "learning-journey-series": spec({
+  "learning-journey-series": spec("learning-journey-series", {
     family: "ideation-bank",
     fields: [{"id":"started","label":"Where you started","required":true},{"id":"turningPoint","label":"Turning point","required":true},{"id":"howWeWork","label":"How you work now","required":true},{"id":"viewerLearn","label":"What the viewer should learn","required":true},{"id":"episodeCount","label":"Preferred episode count","required":false}],
     jobEn: "I'll help you map a short learning-journey series with soft continuity." ,
@@ -313,18 +317,18 @@ export const Q5_MIGRATIONS: Record<string, Q5MigrationSpec> = {
     levers: ["tighter filters","more usable bank rows","better tags","which row to film first"],
     confirmBlurb: "Mirror the plan in 2 to 4 bullets for multi-part learning journey arc. Name assumptions. Ask for go-ahead before the dense deliverable. Do not write a Reel script.",
   }),
-  "comment-to-content": spec({
+  "comment-to-content": spec("comment-to-content", {
     family: "ideation-bank",
     fields: [{"id":"comment","label":"Comment or pushback","required":true},{"id":"instinct","label":"Your honest reply instinct","required":true},{"id":"format","label":"Desired format","required":true},{"id":"tone","label":"Tone guardrail","required":false}],
     jobEn: "I'll help you turn a comment into angles for your next script." ,
     jobZh: "我来帮你把评论转成下一支脚本的角度。" ,
     askEn: "Paste the comment or pushback.",
-    askZh: "把评论或推回贴过来。",
+    askZh: "把评论或推回丢给我。",
     sections: ["Filters used","Numbered bank","Tags / reuse notes","Named refine levers"],
     levers: ["tighter filters","more usable bank rows","better tags","which row to film first"],
     confirmBlurb: "Mirror the plan in 2 to 4 bullets for comment-to-teaching asset angles. Name assumptions. Ask for go-ahead before the dense deliverable. Do not write a Reel script.",
   }),
-  "three-c-method": spec({
+  "three-c-method": spec("three-c-method", {
     family: "ideation-bank",
     fields: [{"id":"audience","label":"Who watches","required":true},{"id":"controversial","label":"Controversial view","required":true},{"id":"commonInterest","label":"Common interest","required":true},{"id":"conflict","label":"Conflict worth having","required":true}],
     jobEn: "I'll help you run the Three C method for an outgoing owner: Controversial, Common interest, Conflict." ,
@@ -335,7 +339,7 @@ export const Q5_MIGRATIONS: Record<string, Q5MigrationSpec> = {
     levers: ["tighter filters","more usable bank rows","better tags","which row to film first"],
     confirmBlurb: "Mirror the plan in 2 to 4 bullets for Three C reactive content set. Name assumptions. Ask for go-ahead before the dense deliverable. Do not write a Reel script.",
   }),
-  "three-r-method": spec({
+  "three-r-method": spec("three-r-method", {
     family: "ideation-bank",
     fields: [{"id":"industry","label":"Industry or craft","required":true},{"id":"readSource","label":"What you can read this week","required":true},{"id":"livedView","label":"Your lived view","required":true}],
     jobEn: "I'll help you run the Three R routine for a reserved owner: read, respond, then add your view." ,
@@ -346,7 +350,7 @@ export const Q5_MIGRATIONS: Record<string, Q5MigrationSpec> = {
     levers: ["tighter filters","more usable bank rows","better tags","which row to film first"],
     confirmBlurb: "Mirror the plan in 2 to 4 bullets for Three R read-then-respond routine. Name assumptions. Ask for go-ahead before the dense deliverable. Do not write a Reel script.",
   }),
-  "content-asset-planner": spec({
+  "content-asset-planner": spec("content-asset-planner", {
     family: "planner-ladder",
     fields: [{"id":"stage","label":"Your stage","required":true},{"id":"slots","label":"Available filming slots this week","required":true},{"id":"themes","label":"Themes you can cover without research theater","required":true},{"id":"platform","label":"Primary platform this week","required":false}],
     jobEn: "I'll help you plan with four content assets: exposure, recognition, trust, and conversion." ,
@@ -357,7 +361,7 @@ export const Q5_MIGRATIONS: Record<string, Q5MigrationSpec> = {
     levers: ["clearer horizon","rebalanced steps","stronger checkpoints","which step this week"],
     confirmBlurb: "Mirror the plan in 2 to 4 bullets for 四种内容资产 week plan. Name assumptions. Ask for go-ahead before the dense deliverable. Do not write a Reel script.",
   }),
-  "content-asset-stack": spec({
+  "content-asset-stack": spec("content-asset-stack", {
     family: "planner-ladder",
     fields: [{"id":"piece","label":"Content piece or idea","required":true},{"id":"audience","label":"Who this is for","required":true},{"id":"currentStep","label":"Where they are now on the stack","required":true},{"id":"desiredStep","label":"Where you want them next","required":true}],
     jobEn: "I'll help you place one piece on the Content Asset Stack: see, remember, believe, ask, then buy." ,
@@ -368,7 +372,7 @@ export const Q5_MIGRATIONS: Record<string, Q5MigrationSpec> = {
     levers: ["clearer horizon","rebalanced steps","stronger checkpoints","which step this week"],
     confirmBlurb: "Mirror the plan in 2 to 4 bullets for 看见到成交 stack map. Name assumptions. Ask for go-ahead before the dense deliverable. Do not write a Reel script.",
   }),
-  "content-authority-ladder": spec({
+  "content-authority-ladder": spec("content-authority-ladder", {
     family: "planner-ladder",
     fields: [{"id":"recentPosts","label":"Recent posts","required":true},{"id":"ownedProof","label":"Owned proof or stories","required":true}],
     forceCriticalIds: ["recentPosts","ownedProof"],
@@ -380,7 +384,7 @@ export const Q5_MIGRATIONS: Record<string, Q5MigrationSpec> = {
     levers: ["clearer horizon","rebalanced steps","stronger checkpoints","which step this week"],
     confirmBlurb: "Mirror the plan in 2 to 4 bullets for News to Story authority ladder climb. Name assumptions. Ask for go-ahead before the dense deliverable. Do not write a Reel script.",
   }),
-  "short-vs-long-planner": spec({
+  "short-vs-long-planner": spec("short-vs-long-planner", {
     family: "planner-ladder",
     fields: [{"id":"stage","label":"Current stage","required":true},{"id":"topics","label":"Topics you can cover","required":true},{"id":"capacity","label":"Capacity","required":true},{"id":"platforms","label":"Platforms","required":false}],
     jobEn: "I'll help you plan which topics go short versus long." ,
@@ -391,7 +395,7 @@ export const Q5_MIGRATIONS: Record<string, Q5MigrationSpec> = {
     levers: ["clearer horizon","rebalanced steps","stronger checkpoints","which step this week"],
     confirmBlurb: "Mirror the plan in 2 to 4 bullets for short vs long format plan. Name assumptions. Ask for go-ahead before the dense deliverable. Do not write a Reel script.",
   }),
-  "value-convert-ladder": spec({
+  "value-convert-ladder": spec("value-convert-ladder", {
     family: "planner-ladder",
     fields: [{"id":"freeTeach","label":"What you teach for free","required":true},{"id":"sell","label":"What you sell","required":true},{"id":"dropOff","label":"Where people drop off","required":true},{"id":"pathGuess","label":"Likely purchase path (1 to 7)","required":false},{"id":"audience","label":"Audience","required":false}],
     jobEn: "I'll help you map where people drop on the path to buy." ,
@@ -402,7 +406,7 @@ export const Q5_MIGRATIONS: Record<string, Q5MigrationSpec> = {
     levers: ["clearer horizon","rebalanced steps","stronger checkpoints","which step this week"],
     confirmBlurb: "Mirror the plan in 2 to 4 bullets for value to convert path plan. Name assumptions. Ask for go-ahead before the dense deliverable. Do not write a Reel script.",
   }),
-  "lean-ip-setup": spec({
+  "lean-ip-setup": spec("lean-ip-setup", {
     family: "planner-ladder",
     fields: [{"id":"hours","label":"Hours you can honestly give per week","required":true},{"id":"platforms","label":"Platforms you already use","required":true},{"id":"comfort","label":"Comfort mode","required":true},{"id":"blocker","label":"What blocks you from shipping now","required":false}],
     jobEn: "I'll help you set a lean weekly IP rhythm you can actually keep." ,
@@ -413,7 +417,7 @@ export const Q5_MIGRATIONS: Record<string, Q5MigrationSpec> = {
     levers: ["clearer horizon","rebalanced steps","stronger checkpoints","which step this week"],
     confirmBlurb: "Mirror the plan in 2 to 4 bullets for lean personal IP operating rhythm. Name assumptions. Ask for go-ahead before the dense deliverable. Do not write a Reel script.",
   }),
-  "trust-offer-bridge": spec({
+  "trust-offer-bridge": spec("trust-offer-bridge", {
     family: "planner-ladder",
     fields: [{"id":"trustEarned","label":"Trust you have earned","required":true},{"id":"offerPlain","label":"What you offer in plain words","required":true},{"id":"nextConversation","label":"Honest next conversation","required":true},{"id":"pathGuess","label":"Purchase path this bridge serves (1 to 7)","required":false},{"id":"format","label":"Format","required":false}],
     jobEn: "I'll help you bridge from earned trust into a clear offer." ,
@@ -424,7 +428,7 @@ export const Q5_MIGRATIONS: Record<string, Q5MigrationSpec> = {
     levers: ["clearer horizon","rebalanced steps","stronger checkpoints","which step this week"],
     confirmBlurb: "Mirror the plan in 2 to 4 bullets for trust to offer bridge on a named path. Name assumptions. Ask for go-ahead before the dense deliverable. Do not write a Reel script.",
   }),
-  "advice-vs-ego-coach": spec({
+  "advice-vs-ego-coach": spec("advice-vs-ego-coach", {
     family: "mindset-guardrail",
     fields: [{"id":"plan","label":"What you plan to say","required":true},{"id":"viewerWhy","label":"Why it matters to them","required":true},{"id":"flexLines","label":"Flex lines you are tempted to keep","required":false},{"id":"format","label":"Format","required":false}],
     forceCriticalIds: ["plan","viewerWhy","flexLines"],
@@ -436,7 +440,7 @@ export const Q5_MIGRATIONS: Record<string, Q5MigrationSpec> = {
     levers: ["sharper reframe","clearer do/don't","smaller practice","which line to keep"],
     confirmBlurb: "If needed, mirror in one short beat what guardrail plan you will deliver for advice vs ego pre-shoot checklist.",
   }),
-  "criticism-armor": spec({
+  "criticism-armor": spec("criticism-armor", {
     family: "mindset-guardrail",
     fields: [{"id":"criticism","label":"Criticism you fear or already got","required":true},{"id":"baseline","label":"Your baseline (Baselines)","required":true},{"id":"consistent","label":"Keep Going this month","required":true},{"id":"shame","label":"变好羞耻症 / growth shame notes (optional)","required":false}],
     jobEn: "I'll help you turn criticism into a clear judgment call, not an emotional loop." ,
@@ -447,7 +451,7 @@ export const Q5_MIGRATIONS: Record<string, Q5MigrationSpec> = {
     levers: ["sharper reframe","clearer do/don't","smaller practice","which line to keep"],
     confirmBlurb: "If needed, mirror in one short beat what guardrail plan you will deliver for B.R.E.A.K shield judgment plan.",
   }),
-  "bianhao-coach": spec({
+  "bianhao-coach": spec("bianhao-coach", {
     family: "mindset-guardrail",
     fields: [{"id":"whoPressure","label":"Who is pressuring you","required":true},{"id":"whatTheySay","label":"What they say","required":true},{"id":"building","label":"What you are trying to build","required":true},{"id":"consistency","label":"Consistency this month","required":true}],
     jobEn: "I'll help you face the pressure to make content \"better\" without forcing a stiff performance." ,
@@ -458,7 +462,7 @@ export const Q5_MIGRATIONS: Record<string, Q5MigrationSpec> = {
     levers: ["sharper reframe","clearer do/don't","smaller practice","which line to keep"],
     confirmBlurb: "If needed, mirror in one short beat what guardrail plan you will deliver for growth-shame coaching plan.",
   }),
-  "high-ticket-caution": spec({
+  "high-ticket-caution": spec("high-ticket-caution", {
     family: "mindset-guardrail",
     fields: [{"id":"offer","label":"What you sell","required":true},{"id":"aboutToFilm","label":"What you were about to film","required":true},{"id":"risk","label":"Risk that worries you","required":true},{"id":"audienceWarmth","label":"Audience warmth","required":false}],
     jobEn: "I'll help you decide film, don't film, or film differently when the offer is high ticket." ,
@@ -469,18 +473,18 @@ export const Q5_MIGRATIONS: Record<string, Q5MigrationSpec> = {
     levers: ["sharper reframe","clearer do/don't","smaller practice","which line to keep"],
     confirmBlurb: "If needed, mirror in one short beat what guardrail plan you will deliver for when not to film weakness call.",
   }),
-  "dont-outsource-judgment": spec({
+  "dont-outsource-judgment": spec("dont-outsource-judgment", {
     family: "mindset-guardrail",
     fields: [{"id":"draft","label":"AI draft","required":true},{"id":"agree","label":"What you agree with","required":true},{"id":"off","label":"What feels off","required":true},{"id":"yourCall","label":"Decision only you can make","required":true}],
     jobEn: "I'll help you keep ownership while you edit an AI draft." ,
     jobZh: "我来帮你在改 AI 草稿时，把判断权留在自己手里。" ,
     askEn: "Paste the AI draft you want to review.",
-    askZh: "把要审的 AI 草稿贴过来。",
+    askZh: "把要审的 AI 草稿丢给我。",
     sections: ["Reframe","Do / don't","One practice","Named refine levers"],
     levers: ["sharper reframe","clearer do/don't","smaller practice","which line to keep"],
     confirmBlurb: "If needed, mirror in one short beat what guardrail plan you will deliver for AI draft pass with human judgment kept.",
   }),
-  "two-kinds-student-two-methods": spec({
+  "two-kinds-student-two-methods": spec("two-kinds-student-two-methods", {
     family: "mindset-guardrail",
     fields: [{"id":"temperament","label":"Loud or quiet","required":true},{"id":"niche","label":"What they do","required":true},{"id":"stuck","label":"Where filming stuck","required":true}],
     jobEn: "I'll help you sort loud versus quiet energy and pick the matching method." ,
@@ -491,43 +495,43 @@ export const Q5_MIGRATIONS: Record<string, Q5MigrationSpec> = {
     levers: ["sharper reframe","clearer do/don't","smaller practice","which line to keep"],
     confirmBlurb: "If needed, mirror in one short beat what guardrail plan you will deliver for loud vs quiet method assignment.",
   }),
-  "script-humanizer": spec({
+  "script-humanizer": spec("script-humanizer", {
     family: "rewrite-adapter",
     fields: [{"id":"draft","label":"Paste the stiff draft","required":true},{"id":"speakingLanguage","label":"Natural speaking language","required":true},{"id":"jargon","label":"Jargon you must keep","required":false},{"id":"length","label":"Target length","required":false}],
     forceCriticalIds: ["draft","speakingLanguage","jargon"],
     jobEn: "I'll help you turn a stiff draft into lines you can say one-on-one out loud." ,
     jobZh: "我来帮你把生硬草稿改成一对一能说出口的句子。" ,
     askEn: "Paste the draft that sounds like a brochure.",
-    askZh: "把听起来像手册的草稿贴过来。",
+    askZh: "把听起来像手册的草稿丢给我。",
     sections: ["Humanized speakable script","Keep list","Cut list","Named refine levers"],
     levers: ["more speakable","tighter cut","preserve intent better","which paragraph to read aloud"],
     confirmBlurb: "Mirror the plan in 2 to 4 bullets for humanized speakable rewrite of your draft. Name assumptions. Ask for go-ahead before the dense deliverable. Do not write a Reel script.",
   }),
-  "platform-adapter": spec({
+  "platform-adapter": spec("platform-adapter", {
     family: "rewrite-adapter",
     fields: [{"id":"source","label":"Source script or caption","required":true},{"id":"formats","label":"Formats you need","required":true},{"id":"limits","label":"Length limits","required":false},{"id":"standpoint","label":"Standpoint to keep","required":false}],
     forceCriticalIds: ["source","formats","limits"],
     jobEn: "I'll help you adapt one piece across formats without losing your standpoint." ,
     jobZh: "我来帮你把同一条内容适配到不同格式，立场不丢。" ,
     askEn: "Paste the source piece to adapt.",
-    askZh: "把要改写的原文贴过来。",
+    askZh: "把要改写的原文丢给我。",
     sections: ["Before → after or adapted cut","Craft notes","What was preserved","Named refine levers"],
     levers: ["more speakable","tighter cut","preserve intent better","which paragraph to read aloud"],
     confirmBlurb: "Mirror the plan in 2 to 4 bullets for cross-format adaptation keeping standpoint. Name assumptions. Ask for go-ahead before the dense deliverable. Do not write a Reel script.",
   }),
-  "revision-sharpen": spec({
+  "revision-sharpen": spec("revision-sharpen", {
     family: "rewrite-adapter",
     fields: [{"id":"draft","label":"Draft","required":true},{"id":"mustSurvive","label":"One point that must survive","required":true},{"id":"padded","label":"What feels padded","required":false},{"id":"language","label":"Language preference","required":false}],
     forceCriticalIds: ["draft","mustSurvive","padded"],
     jobEn: "I'll help you sharpen a draft with one diagnosis and one move." ,
     jobZh: "我来帮你用一个诊断加一个动作磨利草稿。" ,
     askEn: "Paste the draft that feels padded.",
-    askZh: "把水分多的草稿贴过来。",
+    askZh: "把水分多的草稿丢给我。",
     sections: ["Before → after or adapted cut","Craft notes","What was preserved","Named refine levers"],
     levers: ["more speakable","tighter cut","preserve intent better","which paragraph to read aloud"],
     confirmBlurb: "Mirror the plan in 2 to 4 bullets for sharpened cut with one diagnosis one move. Name assumptions. Ask for go-ahead before the dense deliverable. Do not write a Reel script.",
   }),
-  "soundbite-one-liner": spec({
+  "soundbite-one-liner": spec("soundbite-one-liner", {
     family: "hook-line",
     fields: [{"id":"niche","label":"Niche","required":true},{"id":"belief","label":"Belief to remember","required":true},{"id":"wordsYouSay","label":"Words you actually say","required":true},{"id":"wordsFake","label":"Words that feel fake","required":false}],
     jobEn: "I'll help you craft a Memory Hook: one line people can retell." ,

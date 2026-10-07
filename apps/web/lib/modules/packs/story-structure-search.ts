@@ -1,4 +1,8 @@
 import type { ModulePack } from "@/lib/modules/types";
+import {
+  buildLifecycleOpener,
+  buildLifecycleOpenerZh,
+} from "@/lib/modules/qualityRuntime/familyOverlay";
 
 /**
  * Story Structure (Problem to Search): stakeholder Framework Needed PDF tool.
@@ -178,10 +182,16 @@ export const STORY_STRUCTURE_SEARCH_PACK: ModulePack = {
   ],
   starterPrompt:
     "Using my intake, run Story Structure (Problem to Search) and deliver a dense five-beat spoken outline for this Jeff tool.",
-  chatOpener:
-    "I'll help you build a dense longer story structure: Problem, Search, Story, Solution, What next. What problem opens the story?",
-  chatOpenerZh:
-    "我来帮你搭密实更长的故事结构：问题、寻找、故事、解法、下一步。打开故事的问题是什么？",
+  chatOpener: buildLifecycleOpener({
+    jobLine: "I'll help you build a dense longer story structure: Problem, Search, Story, Solution, What next.",
+    firstAsk: "What problem opens the story?",
+    seed: "story-structure-search",
+  }),
+  chatOpenerZh: buildLifecycleOpenerZh({
+    jobLine: "我来帮你搭密实更长的故事结构：问题、寻找、故事、解法、下一步。",
+    firstAsk: "打开故事的问题是什么？",
+    seed: "story-structure-search",
+  }),
   systemOverlay: [
     "## Module mode: Story Structure (Problem to Search) (qualityRuntime Script/Spoken)",
     "You are running the Story Structure (Problem to Search) tool (catalog id story-structure-search) for this user.",

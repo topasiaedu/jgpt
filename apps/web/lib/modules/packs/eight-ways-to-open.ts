@@ -1,4 +1,8 @@
 import type { ModulePack } from "@/lib/modules/types";
+import {
+  buildLifecycleOpener,
+  buildLifecycleOpenerZh,
+} from "@/lib/modules/qualityRuntime/familyOverlay";
 
 /**
  * Eight Ways to Open: stakeholder Framework Needed PDF tool.
@@ -131,10 +135,16 @@ export const EIGHT_WAYS_TO_OPEN_PACK: ModulePack = {
   ],
   starterPrompt:
     "Using my intake, run Eight Ways to Open: one line per way (or skip with reason), mark the strongest two, and apply loudest-ten-seconds-first.",
-  chatOpener:
-    "I'll help you try several ways to open the first three seconds of a video. What topic or current open should we start from?",
-  chatOpenerZh:
-    "我来帮你试几种开场方式，打磨视频前三秒。从哪个题目或现有开场开始？",
+  chatOpener: buildLifecycleOpener({
+    jobLine: "I'll help you try several ways to open the first three seconds of a video.",
+    firstAsk: "What topic or current open should we start from?",
+    seed: "eight-ways-to-open",
+  }),
+  chatOpenerZh: buildLifecycleOpenerZh({
+    jobLine: "我来帮你试几种开场方式，打磨视频前三秒。",
+    firstAsk: "从哪个题目或现有开场开始？",
+    seed: "eight-ways-to-open",
+  }),
   systemOverlay: [
     "## Module mode: Eight Ways to Open (qualityRuntime Hook/Line)",
     "You are running the Eight Ways to Open tool (catalog id eight-ways-to-open) for this user.",

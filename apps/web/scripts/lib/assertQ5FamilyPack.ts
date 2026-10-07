@@ -85,15 +85,15 @@ export function assertQ5FamilyPackContract(
     !/\bOPENS\b/.test(openerBlob) && !/可拍的密实 OPENS/.test(openerBlob),
     `${pack.moduleId} openers must not advertise OPENS Reel writing`,
   );
+  assert(
+    !/here is how we will work|我们这样配合/i.test(openerBlob),
+    `${pack.moduleId} openers must stay job + one ask, no process block`,
+  );
 
   const contractNeedsConfirm: boolean =
     expectedFamily !== "mindset-guardrail" && expectedFamily !== "reply-micro-convert";
   if (contractNeedsConfirm) {
     assert(overlay.includes("Confirm"), `${pack.moduleId} overlay must name Confirm`);
-    assert(
-      /confirm|确认/i.test(openerBlob),
-      `${pack.moduleId} openers should mention confirm before dense deliver`,
-    );
   }
 
   return criticalIds;

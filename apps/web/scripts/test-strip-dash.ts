@@ -38,6 +38,11 @@ const cases: Array<{ input: string; expected: string; label: string }> = [
     expected: "See jeff-wiki and well-known terms.",
   },
   {
+    label: "preserves markdown unordered list markers",
+    input: "- Who is this for?\n- What is the pain?",
+    expected: "- Who is this for?\n- What is the pain?",
+  },
+  {
     label: "no-op when clean",
     input: "Careful with that one. What matters is ownership.",
     expected: "Careful with that one. What matters is ownership.",

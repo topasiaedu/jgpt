@@ -137,6 +137,7 @@ export function joinQualityRuntimeOverlay(parts: FamilyOverlayParts): string {
     ...parts.deliverableLines,
     "Ground every line in their concrete answers. Different inputs must produce different outputs.",
     "Write the whole deliverable in the locked UI locale language.",
+    "Multiple options: ## heading per option, then bullets. Numbered lists must be 1. 2. 3. in one list. Hash headings are expected in Deliver.",
     "End with named refine levers.",
     "",
   );
@@ -166,6 +167,76 @@ export function joinQualityRuntimeOverlay(parts: FamilyOverlayParts): string {
 }
 
 /**
+ * Spoken beats for EN tool openers. Rotated so every tool does not start the same way.
+ */
+export const JEFF_OPENER_BEATS_EN: readonly string[] = [
+  "Hey.",
+  "Yo.",
+  "Alright.",
+  "OK.",
+  "Right.",
+];
+
+/**
+ * Spoken beats for ZH tool openers (口语, 1-on-1). Rotated across tools.
+ */
+export const JEFF_OPENER_BEATS_ZH: readonly string[] = [
+  "Yo!",
+  "哟！",
+  "来了！",
+  "嘿。",
+  "来。",
+];
+
+/**
+ * Stable FNV-1a hash so the same seed always picks the same beat.
+ */
+function hashSeed(seed: string): number {
+  let hash: number = 2166136261;
+  for (let i = 0; i < seed.length; i += 1) {
+    hash ^= seed.charCodeAt(i);
+    hash = Math.imul(hash, 16777619);
+  }
+  return hash >>> 0;
+}
+
+/**
+ * Picks one beat from a small rotating set using seed.
+ */
+function pickRotatedBeat(seed: string, beats: readonly string[]): string {
+  if (beats.length === 0) {
+    return "";
+  }
+  const idx: number = hashSeed(seed) % beats.length;
+  const picked: string | undefined = beats[idx];
+  if (picked !== undefined) {
+    return picked;
+  }
+  const fallback: string | undefined = beats[0];
+  return fallback === undefined ? "" : fallback;
+}
+
+/**
+ * True when the opener already starts with a known spoken beat.
+ */
+function openerHasSpokenBeat(text: string, beats: readonly string[]): boolean {
+  const trimmed: string = text.trimStart();
+  for (const beat of beats) {
+    if (!trimmed.startsWith(beat)) {
+      continue;
+    }
+    if (trimmed.length === beat.length) {
+      return true;
+    }
+    const next: string = trimmed.charAt(beat.length);
+    if (next === " " || next === "\n") {
+      return true;
+    }
+  }
+  return false;
+}
+
+/**
  * Joins a job sentence and first ask into one opener line.
  * Skips the separator after CJK sentence punctuation so ZH stays natural.
  */
@@ -183,23 +254,65 @@ function joinJobAndAsk(jobLine: string, firstAsk: string): string {
 }
 
 /**
- * Builds a chat-first opener: one job sentence + one concrete question.
+ * Prefixes an already-joined EN opener with a Jeff spoken beat when missing.
+ */
+export function prefixJeffSpokenBeatEn(opener: string, seed: string): string {
+  const trimmed: string = opener.trim();
+  if (trimmed.length === 0) {
+    return trimmed;
+  }
+  if (openerHasSpokenBeat(trimmed, JEFF_OPENER_BEATS_EN)) {
+    return trimmed;
+  }
+  const beat: string = pickRotatedBeat(seed, JEFF_OPENER_BEATS_EN);
+  if (beat.length === 0) {
+    return trimmed;
+  }
+  return `${beat} ${trimmed}`;
+}
+
+/**
+ * Prefixes an already-joined ZH opener with a Jeff spoken beat when missing.
+ */
+export function prefixJeffSpokenBeatZh(opener: string, seed: string): string {
+  const trimmed: string = opener.trim();
+  if (trimmed.length === 0) {
+    return trimmed;
+  }
+  if (openerHasSpokenBeat(trimmed, JEFF_OPENER_BEATS_ZH)) {
+    return trimmed;
+  }
+  const beat: string = pickRotatedBeat(seed, JEFF_OPENER_BEATS_ZH);
+  if (beat.length === 0) {
+    return trimmed;
+  }
+  return `${beat} ${trimmed}`;
+}
+
+/**
+ * Builds a chat-first EN opener: spoken beat + one job sentence + one concrete question.
  * No "Here is how we will work" process bullets (Artemo one-liner shape).
  */
 export function buildLifecycleOpener(opts: {
   jobLine: string;
   firstAsk: string;
+  seed?: string;
 }): string {
-  return joinJobAndAsk(opts.jobLine, opts.firstAsk);
+  const joined: string = joinJobAndAsk(opts.jobLine, opts.firstAsk);
+  const seed: string = opts.seed ?? `${opts.jobLine}\n${opts.firstAsk}`;
+  return prefixJeffSpokenBeatEn(joined, seed);
 }
 
 /**
- * Builds a ZH chat-first opener: one job sentence + one concrete question.
+ * Builds a ZH chat-first opener: spoken beat + one job sentence + one concrete question.
  * No "我们这样配合" process bullets. Callers supply 口语化 job/ask strings.
  */
 export function buildLifecycleOpenerZh(opts: {
   jobLine: string;
   firstAsk: string;
+  seed?: string;
 }): string {
-  return joinJobAndAsk(opts.jobLine, opts.firstAsk);
+  const joined: string = joinJobAndAsk(opts.jobLine, opts.firstAsk);
+  const seed: string = opts.seed ?? `${opts.jobLine}\n${opts.firstAsk}`;
+  return prefixJeffSpokenBeatZh(joined, seed);
 }

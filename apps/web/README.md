@@ -68,8 +68,50 @@ npm run test:probe
 | `OPENAI_MODEL` | No | `gpt-4.1-mini` (default if unset) |
 | `OPENAI_QA_ENABLED` | No | unset = on for module chat; `0` / `false` / `off` disables |
 | `OPENAI_QA_MODEL` | No | `gpt-4.1-nano` (judge only; repair uses `OPENAI_MODEL`) |
+| `NEXT_PUBLIC_SUPABASE_URL` | Yes for Brand profiles | `https://lizrtckbhfswyrokiawd.supabase.co` |
+| `NEXT_PUBLIC_SUPABASE_ANON_KEY` | Yes for Brand profiles | anon or publishable key from Project Settings → API |
+| `SUPABASE_SERVICE_ROLE_KEY` | Yes for Brand document ingest | server-only `service_role` key; never `NEXT_PUBLIC_` |
 
-Set these under Project → Settings → Environment Variables for **Production** (and Preview if you use preview URLs), then **Redeploy**. Never expose `OPENAI_API_KEY` to the browser.
+Set these under Project → Settings → Environment Variables for **Production** (and Preview if you use preview URLs), then **Redeploy**. Never expose `OPENAI_API_KEY` or `SUPABASE_SERVICE_ROLE_KEY` to the browser.
+
+### Brand documents smoke (manual)
+
+After Auth + a Brand profile exist, with `OPENAI_API_KEY` and `SUPABASE_SERVICE_ROLE_KEY` set in `apps/web/.env.local`:
+
+1. Open `/brand-profiles/[id]` while signed in.
+2. **Paste:** paste a short proof line → Save paste and process → status becomes **Ready**; Active brief updates; you can still edit the brief and Save.
+3. **PDF:** upload a short text PDF → wait for Ready → confirm brief/structured filled gaps (non-empty user fields stay).
+4. **PPTX:** upload a short deck → Ready → same.
+5. Optional SQL check on project Jeff GPT: `select status, kind from brand_assets;` and `select count(*), count(embedding) from brand_chunks;` for that profile.
+6. Over-quota: try a file over ~40MB or a 21st document → API returns a clear error; no orphan ready state.
+7. **Re-summarize brief** rebuilds `active_brief` from ready chunks + current structured fields.
+
+### Brand chat grounding smoke (Agent E)
+
+With a signed-in user, an owned Brand profile, `OPENAI_API_KEY`, and (for deck details) at least one **Ready** document:
+
+1. Home: pick Client A → open a tool. URL has `profile=<uuid>`. First turn should stay on Client A niche without dumping a full PDF into the model.
+2. Ask for a line that exists only in the uploaded deck (warranty, SKU, exact proof sentence). The assistant should retrieve Brand excerpts (`probe_brand`); Jeff Sources chips stay graph-only; Brand chips use `brand:<chunkUuid>`.
+3. Home: switch to Client B → open the same tool. Niche follows Client B.
+4. Collect: if audience / offer / niche / proof / stance / founder face are already filled on the profile, the tool should not re-ask those slots; it asks remaining gaps only.
+5. Offline: `npm run test:brand-chat` (facts budget, Collect skip, excerpt cap, `brand:` ids).
+
+`POST /api/chat` requires a session cookie plus owned `brandProfileId`. Jeff path is unchanged (`probeTeaching` + `probe_jeff`). Brand retrieval is `match_brand_chunks` plus keyword fallback on `brand_chunks` for that profile only.
+
+Routes: `GET/POST /api/brand-profiles/[id]/assets`, `POST .../assets/paste`, `POST .../assets/[assetId]/process`, `DELETE .../assets/[assetId]`, `POST .../resummarize`.
+
+### Supabase Auth (email / password)
+
+Brand profiles use Supabase Auth **email + password** (not magic-link-only).
+
+Human dashboard steps on project **Jeff GPT** (`lizrtckbhfswyrokiawd`):
+
+1. Open [Authentication → Providers → Email](https://supabase.com/dashboard/project/lizrtckbhfswyrokiawd/auth/providers).
+2. Ensure **Email** provider is **Enabled**.
+3. Keep **Confirm email** on or off for your staging preference (off is easier for early internal testing; on for production).
+4. Under [Authentication → URL Configuration](https://supabase.com/dashboard/project/lizrtckbhfswyrokiawd/auth/url-configuration), set **Site URL** to your app origin (local: `http://localhost:3000`) and add the same origin under **Redirect URLs**.
+
+Schema, RLS, and private Storage bucket `brand-assets` are already applied on this project via Agent A. App clients live under `apps/web/lib/supabase/`; middleware refreshes the session cookie without blocking existing routes. Agent D fixed Storage path RLS (`storage.foldername(name)` for `{userId}/{profileId}/…`) so uploads match the object path.
 
 `POST /api/chat` runs on the Node.js runtime with `maxDuration = 60` so probe + OpenAI tool loops are less likely to hit the platform timeout (which returns a non-JSON error page to the client).
 

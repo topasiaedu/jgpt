@@ -23,6 +23,8 @@ import type {
   LifecycleMode,
   QualitySlot,
 } from "@/lib/modules/qualityRuntime/types";
+import type { BrandProfileStructured } from "@/lib/brandProfile/types";
+import { slotFilledByBrandProfile } from "@/lib/brandProfile/knownSlots";
 
 /** Rough length that suggests a prior dense Script/Spoken deliverable already landed. */
 const DENSE_ASSISTANT_CHAR_THRESHOLD: number = 900;
@@ -116,12 +118,20 @@ function slotLooksFilled(
   slot: QualitySlot,
   messages: ChatMessage[],
   intake: Record<string, string> | undefined,
+  brandStructured: BrandProfileStructured | undefined,
 ): boolean {
   if (intake !== undefined) {
     const raw: string | undefined = intake[slot.id];
     if (typeof raw === "string" && raw.trim().length > 0) {
       return true;
     }
+  }
+
+  if (
+    brandStructured !== undefined &&
+    slotFilledByBrandProfile(slot.id, brandStructured)
+  ) {
+    return true;
   }
 
   const labelToken: string = slot.label.trim().toLowerCase();
@@ -314,13 +324,22 @@ export function detectLifecycleMode(options: {
   pack: ModulePack;
   messages: ChatMessage[];
   intake?: Record<string, string>;
+  brandStructured?: BrandProfileStructured;
 }): LifecycleDetection {
   const criticalSlots: QualitySlot[] = criticalQualitySlots(options.pack);
   const latestUser: string = latestUserContent(options.messages);
   const latestUserLooksLikeIdk: boolean = looksLikeIdkOrBlank(latestUser);
 
   const missingCriticalSlotIds: string[] = criticalSlots
-    .filter((slot) => !slotLooksFilled(slot, options.messages, options.intake))
+    .filter(
+      (slot) =>
+        !slotLooksFilled(
+          slot,
+          options.messages,
+          options.intake,
+          options.brandStructured,
+        ),
+    )
     .map((slot) => slot.id);
 
   const denseAlready: boolean = priorDenseDeliverable(
@@ -445,6 +464,7 @@ export function buildLifecycleModeRules(options: {
           "Produce the full job-shaped dense deliverable now.",
           `Follow section order: ${sectionOrder.join(" → ")}`,
           "Ground every beat in their concrete answers. Name assumptions where gaps remain.",
+          "Markdown structure (hard): each option or script beat gets a ## (or ###) heading, then bullets. Do not emit three separate \"1.\" items. Numbered lists must be 1. 2. 3. in one list. Hash headings are expected, not banned.",
           ...(options.pack.qualityFamily === "script-spoken"
             ? [
                 "Spoken timing: claimed minutes/seconds must match spoken volume (EN ~130 to 160 WPM; ZH ~220 to 280 CPM).",

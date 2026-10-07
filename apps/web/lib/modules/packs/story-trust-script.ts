@@ -1,4 +1,8 @@
 import type { ModulePack } from "@/lib/modules/types";
+import {
+  buildLifecycleOpener,
+  buildLifecycleOpenerZh,
+} from "@/lib/modules/qualityRuntime/familyOverlay";
 
 /**
  * Story Trust Script: S.T.O.R.Y Founder Story (fw.story-founder-story).
@@ -229,10 +233,16 @@ export const STORY_TRUST_SCRIPT_PACK: ModulePack = {
   ],
   starterPrompt:
     "Using my intake, write a dense S.T.O.R.Y trust script (Situation, Turning Point, Obstacle, Reason, Yield) using only MY story facts. Illustrative for MY practice; do not invent Jeff case studies.",
-  chatOpener:
-    "I'll help you shape a dense story that builds trust, using your facts only. What was the starting situation?",
-  chatOpenerZh:
-    "我来帮你把故事写成密实、能建立信任的脚本，只用你的事实。起点处境是什么？",
+  chatOpener: buildLifecycleOpener({
+    jobLine: "I'll help you shape a dense story that builds trust, using your facts only.",
+    firstAsk: "What was the starting situation?",
+    seed: "story-trust-script",
+  }),
+  chatOpenerZh: buildLifecycleOpenerZh({
+    jobLine: "我来帮你把故事写成密实、能建立信任的脚本，只用你的事实。",
+    firstAsk: "起点处境是什么？",
+    seed: "story-trust-script",
+  }),
   systemOverlay: [
     "## Module mode: Story Trust Script (S.T.O.R.Y) (qualityRuntime Script/Spoken)",
     "You are running the Story Trust Script tool for this user.",

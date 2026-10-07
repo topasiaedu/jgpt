@@ -58,6 +58,10 @@ export {
   buildLifecycleOpenerZh,
   buildQualitySlotsFromIntake,
   joinQualityRuntimeOverlay,
+  prefixJeffSpokenBeatEn,
+  prefixJeffSpokenBeatZh,
+  JEFF_OPENER_BEATS_EN,
+  JEFF_OPENER_BEATS_ZH,
 } from "@/lib/modules/qualityRuntime/familyOverlay";
 export type { FamilyOverlayParts } from "@/lib/modules/qualityRuntime/familyOverlay";
 

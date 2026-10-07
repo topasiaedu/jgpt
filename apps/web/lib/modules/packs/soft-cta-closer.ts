@@ -1,4 +1,8 @@
 import type { ModulePack } from "@/lib/modules/types";
+import {
+  buildLifecycleOpener,
+  buildLifecycleOpenerZh,
+} from "@/lib/modules/qualityRuntime/familyOverlay";
 
 /**
  * Soft CTA Closer: CTA Structure skeleton
@@ -169,10 +173,16 @@ export const SOFT_CTA_CLOSER_PACK: ModulePack = {
   ],
   starterPrompt:
     "Using my intake, write two to three closes on CTA Structure: 总结价值 → 发出指令 → 降低门槛. One clear next step; no hard sell flip.",
-  chatOpener:
-    "I'll help you write a soft close that invites, not hard-sells. What value did you already teach, and what next step do you want?",
-  chatOpenerZh:
-    "我来帮你写软收尾：邀请，不硬卖。你已经教了什么价值，想要的下一步是什么？",
+  chatOpener: buildLifecycleOpener({
+    jobLine: "I'll help you write a soft close that invites, not hard-sells.",
+    firstAsk: "What value did you already teach, and what next step do you want?",
+    seed: "soft-cta-closer",
+  }),
+  chatOpenerZh: buildLifecycleOpenerZh({
+    jobLine: "我来帮你写软收尾：邀请，不硬卖。",
+    firstAsk: "你已经教了什么价值，想要的下一步是什么？",
+    seed: "soft-cta-closer",
+  }),
   systemOverlay: [
     "## Module mode: Soft CTA Closer (CTA Structure) (qualityRuntime Reply/Micro-convert)",
     "You are running the Soft CTA Closer tool for this user.",
