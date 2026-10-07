@@ -4,7 +4,8 @@ import { updateSession } from "@/lib/supabase/middleware";
 
 /**
  * Next.js middleware: refresh Supabase Auth cookies and send unsigned
- * visitors on / and /tools to /auth?next=...
+ * visitors on / and /tools to /auth?next=... (gate only; form sign-in
+ * still lands on home `/` and ignores that next).
  */
 export async function middleware(request: NextRequest) {
   return updateSession(request);

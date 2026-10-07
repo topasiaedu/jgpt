@@ -8,7 +8,7 @@ import { useState, type ReactNode } from "react";
 import { useI18n } from "@/lib/i18n/LocaleProvider";
 import type { Locale } from "@/lib/i18n/messages";
 import { buildAuthHref } from "@/lib/modules/homeHandoff";
-import { signOutBrowser, useAuthSession } from "@/lib/supabase/useAuthSession";
+import { signOutBrowser } from "@/lib/supabase/useAuthSession";
 
 export type AppNavActive =
   | "home"
@@ -22,7 +22,7 @@ export type AppNavPlacement = "top" | "rail";
 type AppNavProps = {
   active: AppNavActive;
   /**
-   * `top`: page header chrome (hidden when signed-in history rail owns nav).
+   * `top`: retired; always renders nothing (call sites may still pass it).
    * `rail`: brand + account controls inside ChatHistoryShell.
    */
   placement?: AppNavPlacement;
@@ -57,7 +57,7 @@ export function appNavActiveFromPath(pathname: string): AppNavActive {
 }
 
 /**
- * 中文 | EN control shared by top nav and the signed-in rail footer.
+ * 中文 | EN control for the signed-in rail footer and auth form locale row.
  */
 export function AppNavLocaleToggle() {
   const { locale, setLocale, t } = useI18n();
@@ -198,10 +198,9 @@ function RailIconSignOut() {
 }
 
 /**
- * Product nav: brand mark (home), tools, Brand profile, Account, sign out, locale.
- * Signed-in routes render this in the history rail. Signed-out non-auth pages keep
- * the top bar. Auth pages (`/auth`, `/auth/*`) never mount top AppNav; they host
- * a form-local locale toggle instead.
+ * Product nav for the signed-in history rail only.
+ * Top placement is retired: product chrome lives in ChatHistoryShell, and auth
+ * pages host a form-local locale toggle instead of this bar.
  */
 export default function AppNav({
   active,
@@ -209,30 +208,16 @@ export default function AppNav({
   railInsertAfterBrand = null,
 }: AppNavProps) {
   const { t } = useI18n();
-  const auth = useAuthSession();
   const pathname = usePathname();
   const router = useRouter();
   const [signOutError, setSignOutError] = useState<string | null>(null);
   const [signingOut, setSigningOut] = useState(false);
 
-  const signedIn: boolean =
-    auth.user !== null || (!auth.ready && auth.chromeHint === "signed_in");
-  const signedOut: boolean =
-    (auth.ready && auth.user === null && !auth.envMissing) ||
-    (!auth.ready && auth.chromeHint === "signed_out");
-  const authPending: boolean =
-    !auth.ready && auth.chromeHint === "unknown" && !auth.envMissing;
-  const onAuthSurface: boolean =
-    active === "auth" ||
-    pathname === "/auth" ||
-    pathname.startsWith("/auth/");
-  const isRail: boolean = placement === "rail";
-
   /**
-   * Auth is a focused form: never render top AppNav there (locale lives on the form).
-   * Signed-in product pages also hide the top bar; ChatHistoryShell owns brand/actions.
+   * Legacy top bar must never paint. ChatHistoryShell shows a chrome loader until
+   * the rail is ready, so a transitional top nav never flashes after login.
    */
-  if (placement === "top" && (onAuthSurface || signedIn)) {
+  if (placement === "top") {
     return null;
   }
 
@@ -251,12 +236,8 @@ export default function AppNav({
     router.replace(signInHref(pathname));
   }
 
-  const barClassName: string =
-    isRail ? "app-nav-bar app-nav-bar-rail" : "app-nav-bar";
-  const showSignedInChrome: boolean = signedIn || isRail;
-
   return (
-    <div className={barClassName}>
+    <div className="app-nav-bar app-nav-bar-rail">
       <Link href="/" className="app-nav-brand" aria-label={t("productName")}>
         <Image
           src="/brand/influence-engine-mark.png"
@@ -268,14 +249,11 @@ export default function AppNav({
         />
         <span className="app-nav-wordmark">
           <span className="app-nav-product">{t("productName")}</span>
-          {isRail ? null : (
-            <span className="app-nav-tagline">{t("productTagline")}</span>
-          )}
         </span>
       </Link>
       <div className="app-nav-actions">
         <nav className="app-nav" aria-label={t("navPrimaryLabel")}>
-          {isRail && railInsertAfterBrand !== null ? railInsertAfterBrand : null}
+          {railInsertAfterBrand !== null ? railInsertAfterBrand : null}
           <Link
             href="/tools"
             className={
@@ -283,80 +261,45 @@ export default function AppNav({
             }
             aria-current={active === "tools" ? "page" : undefined}
           >
-            {isRail ? <RailIconTools /> : null}
+            <RailIconTools />
             <span>{t("navTools")}</span>
           </Link>
-          {showSignedInChrome ? (
-            <Link
-              href="/brand-profiles"
-              className={
-                active === "brandProfiles"
-                  ? "app-nav-link app-nav-link-active"
-                  : "app-nav-link"
-              }
-              aria-current={active === "brandProfiles" ? "page" : undefined}
-            >
-              {isRail ? <RailIconBrandProfile /> : null}
-              <span>{t("navBrandProfiles")}</span>
-            </Link>
-          ) : authPending ? (
-            <span className="app-nav-auth-slot" aria-hidden="true" />
-          ) : null}
-          {isRail && showSignedInChrome ? (
-            <Link
-              href="/account"
-              className={
-                active === "account"
-                  ? "app-nav-link app-nav-link-quiet app-nav-link-active"
-                  : "app-nav-link app-nav-link-quiet"
-              }
-              aria-current={active === "account" ? "page" : undefined}
-            >
-              <RailIconAccount />
-              <span>{t("navAccount")}</span>
-            </Link>
-          ) : null}
-          {isRail && showSignedInChrome ? (
-            <button
-              type="button"
-              className="app-nav-signout app-nav-signout-quiet"
-              disabled={signingOut}
-              onClick={() => {
-                void handleSignOut();
-              }}
-            >
-              <RailIconSignOut />
-              <span>{signingOut ? t("authWorking") : t("navSignOut")}</span>
-            </button>
-          ) : null}
+          <Link
+            href="/brand-profiles"
+            className={
+              active === "brandProfiles"
+                ? "app-nav-link app-nav-link-active"
+                : "app-nav-link"
+            }
+            aria-current={active === "brandProfiles" ? "page" : undefined}
+          >
+            <RailIconBrandProfile />
+            <span>{t("navBrandProfiles")}</span>
+          </Link>
+          <Link
+            href="/account"
+            className={
+              active === "account"
+                ? "app-nav-link app-nav-link-quiet app-nav-link-active"
+                : "app-nav-link app-nav-link-quiet"
+            }
+            aria-current={active === "account" ? "page" : undefined}
+          >
+            <RailIconAccount />
+            <span>{t("navAccount")}</span>
+          </Link>
+          <button
+            type="button"
+            className="app-nav-signout app-nav-signout-quiet"
+            disabled={signingOut}
+            onClick={() => {
+              void handleSignOut();
+            }}
+          >
+            <RailIconSignOut />
+            <span>{signingOut ? t("authWorking") : t("navSignOut")}</span>
+          </button>
         </nav>
-        {!isRail ? (
-          <div className="app-nav-cluster">
-            {signedOut && active !== "auth" && placement === "top" ? (
-              <Link href={signInHref(pathname)} className="app-nav-cta">
-                {t("navSignIn")}
-              </Link>
-            ) : null}
-            {showSignedInChrome ? (
-              <div className="app-nav-account" aria-label={t("navAccountLabel")}>
-                <button
-                  type="button"
-                  className="app-nav-signout"
-                  disabled={signingOut}
-                  onClick={() => {
-                    void handleSignOut();
-                  }}
-                >
-                  {signingOut ? t("authWorking") : t("navSignOut")}
-                </button>
-              </div>
-            ) : authPending ? (
-              <span className="app-nav-auth-slot" aria-hidden="true" />
-            ) : null}
-            <span className="app-nav-rule" aria-hidden="true" />
-            <AppNavLocaleToggle />
-          </div>
-        ) : null}
       </div>
       {signOutError !== null ? (
         <p className="error app-nav-error" role="alert">

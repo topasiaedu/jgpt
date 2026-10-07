@@ -56,6 +56,7 @@ export async function updateSession(request: NextRequest): Promise<NextResponse>
   const signedIn: boolean = isSignedInFromClaims(claimsData, claimsError);
 
   const pathname: string = request.nextUrl.pathname;
+  // Gate only: AuthPageClient ignores `next` and always leaves to `/`.
   if (!signedIn && isUnsignedAuthRedirectPath(pathname)) {
     const redirectUrl = request.nextUrl.clone();
     redirectUrl.pathname = "/auth";

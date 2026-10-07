@@ -234,15 +234,19 @@ export function buildHomeGateHref(reason: HomeGateBannerReason): string {
 }
 
 /**
- * Auth page URL that returns to `nextPath` after sign-in.
- * `nextPath` must be a same-origin relative path (see AuthPageClient).
+ * Auth page URL with a `next` hint for gates / analytics.
+ * Email/password sign-in always leaves to `/` and ignores `next`
+ * (see AuthPageClient). Email link routes may still use `next` for
+ * `/auth/*` continuations via `postAuthSuccessPath`.
+ * `nextPath` must be a same-origin relative path.
  */
 export function buildAuthHref(nextPath: string): string {
   return `/auth?next=${encodeURIComponent(nextPath)}`;
 }
 
 /**
- * Reconstructs a tool path (plus useful query) so /auth can send the user back.
+ * Reconstructs a tool path (plus useful query) for auth gate URLs.
+ * Post-login success no longer returns here; users land on home `/`.
  */
 export function buildToolReturnPath(
   moduleId: string,

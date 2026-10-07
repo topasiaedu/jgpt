@@ -12,13 +12,16 @@ import {
 import { useI18n } from "@/lib/i18n/LocaleProvider";
 import { createBrowserSupabaseClient } from "@/lib/supabase/browser";
 import { readSupabasePublicEnv } from "@/lib/supabase/env";
-import { safeNextPath, withLocaleQuery } from "@/lib/supabase/safeNextPath";
+import { withLocaleQuery } from "@/lib/supabase/safeNextPath";
 import { persistChromeHint, useAuthSession } from "@/lib/supabase/useAuthSession";
 
 type AuthMode = "signIn" | "signUp" | "forgot";
 
 const REFERRAL_CODE_MAX_LENGTH = 64;
 const REFERRAL_CODE_PATTERN = /^[A-Za-z0-9_-]+$/;
+
+/** Successful email/password sign-in (and already-signed-in leave) always go home. */
+const POST_SIGN_IN_PATH = "/";
 
 type ReferralParseResult =
   | { ok: true; value: string | null }
@@ -31,6 +34,13 @@ type SignUpUserMetadata = {
 /**
  * Sign-in-first email/password auth with forgot-password request.
  * Sign up sits as a bottom link (no top mode toggle).
+ *
+ * Product rule: after successful sign-in (or signup that already has a session),
+ * always leave to `/`. The `?next=` query may still be set by middleware or tool
+ * gates for URL continuity, but the form ignores it so users do not land back
+ * in a tool chat. Email confirm / magic / recovery links use `/auth/callback`
+ * and `/auth/confirm`, which still honor `next` only for `/auth/*` continuations
+ * (see `postAuthSuccessPath`).
  */
 export default function AuthPageClient() {
   const { t } = useI18n();
@@ -50,13 +60,11 @@ export default function AuthPageClient() {
   );
   const [info, setInfo] = useState<string | null>(null);
 
-  const nextPath: string = safeNextPath(searchParams.get("next"));
-
   useEffect(() => {
     if (auth.ready && auth.user !== null && mode !== "forgot") {
-      leaveAuthPage(nextPath);
+      leaveAuthPage();
     }
-  }, [auth.ready, auth.user, mode, nextPath]);
+  }, [auth.ready, auth.user, mode]);
 
   /**
    * Switches mode and clears transient form feedback.
@@ -135,7 +143,7 @@ export default function AuthPageClient() {
           setError(mapAuthError(signInError.message, t("authSignInFailed")));
           return;
         }
-        leaveAuthPage(nextPath);
+        leaveAuthPage();
         return;
       }
 
@@ -155,7 +163,7 @@ export default function AuthPageClient() {
       }
 
       if (data.session !== null) {
-        leaveAuthPage(nextPath);
+        leaveAuthPage();
         return;
       }
 
@@ -184,10 +192,22 @@ export default function AuthPageClient() {
         ? t("authSignUpSubtitle")
         : t("authSubtitle");
 
+  /** Session already present: leave the form and show a focused redirect loader. */
+  const isRedirecting: boolean =
+    !auth.envMissing && auth.ready && auth.user !== null && mode !== "forgot";
+
   return (
     <div className="shell shell-studio shell-auth">
       <main className="studio-main">
-        <div className="auth-surface empty-state-enter">
+        <div
+          className={[
+            "auth-surface",
+            "empty-state-enter",
+            isRedirecting ? "auth-surface-redirecting" : "",
+          ]
+            .filter((part) => part.length > 0)
+            .join(" ")}
+        >
           <div className="auth-brand">
             <Image
               src="/brand/influence-engine-mark.png"
@@ -200,185 +220,209 @@ export default function AuthPageClient() {
             <span className="auth-brand-name">{t("productName")}</span>
           </div>
 
-          <h1 className="create-ask">{title}</h1>
-          <p className="create-tip">{subtitle}</p>
+          {isRedirecting ? (
+            <div
+              className="auth-redirect"
+              role="status"
+              aria-live="polite"
+              aria-busy="true"
+            >
+              <span className="auth-redirect-spinner" aria-hidden="true" />
+              <p className="auth-redirect-message">{t("authAlreadySignedIn")}</p>
+            </div>
+          ) : (
+            <>
+              <h1 className="create-ask">{title}</h1>
+              <p className="create-tip">{subtitle}</p>
 
-          {auth.envMissing ? <p className="error">{t("authEnvMissing")}</p> : null}
+              {auth.envMissing ? <p className="error">{t("authEnvMissing")}</p> : null}
 
-          {!auth.envMissing && auth.ready && auth.user !== null && mode !== "forgot" ? (
-            <p className="account-muted">{t("authAlreadySignedIn")}</p>
-          ) : null}
+              {!auth.envMissing ? (
+                <section className="auth-panel" aria-labelledby="auth-form-title">
+                  <h2 id="auth-form-title" className="sr-only">
+                    {title}
+                  </h2>
 
-          {!auth.envMissing && (auth.user === null || !auth.ready || mode === "forgot") ? (
-            <section className="auth-panel" aria-labelledby="auth-form-title">
-              <h2 id="auth-form-title" className="sr-only">
-                {title}
-              </h2>
-
-              <form
-                className="account-form auth-form"
-                onSubmit={(event) => void handleSubmit(event)}
-              >
-                <div className="auth-field">
-                  <label className="account-label" htmlFor="auth-email">
-                    {t("authEmail")}
-                  </label>
-                  <input
-                    id="auth-email"
-                    className="input account-input"
-                    type="email"
-                    autoComplete="email"
-                    value={email}
-                    onChange={(event) => {
-                      setEmail(event.target.value);
-                    }}
-                    disabled={busy}
-                    required
-                  />
-                </div>
-
-                {mode !== "forgot" ? (
-                  <div className="auth-field">
-                    <label className="account-label" htmlFor="auth-password">
-                      {t("authPassword")}
-                    </label>
-                    <input
-                      id="auth-password"
-                      className="input account-input"
-                      type="password"
-                      autoComplete={
-                        mode === "signIn" ? "current-password" : "new-password"
-                      }
-                      value={password}
-                      onChange={(event) => {
-                        setPassword(event.target.value);
-                      }}
-                      disabled={busy}
-                      required
-                      minLength={6}
-                    />
-                  </div>
-                ) : null}
-
-                {mode === "signUp" ? (
-                  <div className="auth-field">
-                    <label className="account-label" htmlFor="auth-confirm-password">
-                      {t("authConfirmPassword")}
-                    </label>
-                    <input
-                      id="auth-confirm-password"
-                      className="input account-input"
-                      type="password"
-                      autoComplete="new-password"
-                      value={confirmPassword}
-                      onChange={(event) => {
-                        setConfirmPassword(event.target.value);
-                      }}
-                      disabled={busy}
-                      required
-                      minLength={6}
-                    />
-                  </div>
-                ) : null}
-
-                {mode === "signUp" ? (
-                  <div className="auth-field auth-field-optional">
-                    <label className="account-label" htmlFor="auth-referral-code">
-                      {t("authReferralCode")}
-                    </label>
-                    <input
-                      id="auth-referral-code"
-                      className="input account-input"
-                      type="text"
-                      autoComplete="off"
-                      spellCheck={false}
-                      value={referralCode}
-                      onChange={(event) => {
-                        setReferralCode(event.target.value);
-                      }}
-                      disabled={busy}
-                      maxLength={REFERRAL_CODE_MAX_LENGTH}
-                    />
-                  </div>
-                ) : null}
-
-                {mode === "signIn" ? (
-                  <button
-                    type="button"
-                    className="auth-text-link auth-forgot-link"
-                    onClick={() => {
-                      switchMode("forgot");
-                    }}
-                    disabled={busy}
+                  <form
+                    className="account-form auth-form"
+                    onSubmit={(event) => void handleSubmit(event)}
                   >
-                    {t("authForgotLink")}
-                  </button>
-                ) : null}
+                    <div className="auth-field">
+                      <label className="account-label" htmlFor="auth-email">
+                        {t("authEmail")}
+                      </label>
+                      <input
+                        id="auth-email"
+                        className="input account-input"
+                        type="email"
+                        autoComplete="email"
+                        value={email}
+                        onChange={(event) => {
+                          setEmail(event.target.value);
+                        }}
+                        disabled={busy}
+                        required
+                      />
+                    </div>
 
-                {error !== null ? <p className="error">{error}</p> : null}
-                {info !== null ? <p className="account-info">{info}</p> : null}
+                    {mode !== "forgot" ? (
+                      <div className="auth-field">
+                        <label className="account-label" htmlFor="auth-password">
+                          {t("authPassword")}
+                        </label>
+                        <input
+                          id="auth-password"
+                          className="input account-input"
+                          type="password"
+                          autoComplete={
+                            mode === "signIn" ? "current-password" : "new-password"
+                          }
+                          value={password}
+                          onChange={(event) => {
+                            setPassword(event.target.value);
+                          }}
+                          disabled={busy}
+                          required
+                          minLength={6}
+                        />
+                      </div>
+                    ) : null}
 
-                <button type="submit" className="send account-submit" disabled={busy}>
-                  {busy
-                    ? t("authWorking")
-                    : mode === "forgot"
-                      ? t("authForgotSubmit")
-                      : mode === "signIn"
-                        ? t("authSignIn")
-                        : t("authSignUp")}
-                </button>
-              </form>
+                    {mode === "signUp" ? (
+                      <div className="auth-field">
+                        <label
+                          className="account-label"
+                          htmlFor="auth-confirm-password"
+                        >
+                          {t("authConfirmPassword")}
+                        </label>
+                        <input
+                          id="auth-confirm-password"
+                          className="input account-input"
+                          type="password"
+                          autoComplete="new-password"
+                          value={confirmPassword}
+                          onChange={(event) => {
+                            setConfirmPassword(event.target.value);
+                          }}
+                          disabled={busy}
+                          required
+                          minLength={6}
+                        />
+                      </div>
+                    ) : null}
 
-              <div className="auth-switch">
-                {mode === "signIn" ? (
-                  <p className="auth-switch-row">
-                    <span className="account-muted">{t("authSwitchToSignUpBefore")}</span>{" "}
+                    {mode === "signUp" ? (
+                      <div className="auth-field auth-field-optional">
+                        <label
+                          className="account-label"
+                          htmlFor="auth-referral-code"
+                        >
+                          {t("authReferralCode")}
+                        </label>
+                        <input
+                          id="auth-referral-code"
+                          className="input account-input"
+                          type="text"
+                          autoComplete="off"
+                          spellCheck={false}
+                          value={referralCode}
+                          onChange={(event) => {
+                            setReferralCode(event.target.value);
+                          }}
+                          disabled={busy}
+                          maxLength={REFERRAL_CODE_MAX_LENGTH}
+                        />
+                      </div>
+                    ) : null}
+
+                    {mode === "signIn" ? (
+                      <button
+                        type="button"
+                        className="auth-text-link auth-forgot-link"
+                        onClick={() => {
+                          switchMode("forgot");
+                        }}
+                        disabled={busy}
+                      >
+                        {t("authForgotLink")}
+                      </button>
+                    ) : null}
+
+                    {error !== null ? <p className="error">{error}</p> : null}
+                    {info !== null ? <p className="account-info">{info}</p> : null}
+
                     <button
-                      type="button"
-                      className="auth-text-link"
-                      onClick={() => {
-                        switchMode("signUp");
-                      }}
+                      type="submit"
+                      className="send account-submit"
                       disabled={busy}
                     >
-                      {t("authSwitchToSignUpAction")}
+                      {busy
+                        ? t("authWorking")
+                        : mode === "forgot"
+                          ? t("authForgotSubmit")
+                          : mode === "signIn"
+                            ? t("authSignIn")
+                            : t("authSignUp")}
                     </button>
-                  </p>
-                ) : null}
+                  </form>
 
-                {mode === "signUp" ? (
-                  <p className="auth-switch-row">
-                    <span className="account-muted">{t("authSwitchToSignInBefore")}</span>{" "}
-                    <button
-                      type="button"
-                      className="auth-text-link"
-                      onClick={() => {
-                        switchMode("signIn");
-                      }}
-                      disabled={busy}
-                    >
-                      {t("authSwitchToSignInAction")}
-                    </button>
-                  </p>
-                ) : null}
+                  <div className="auth-switch">
+                    {mode === "signIn" ? (
+                      <p className="auth-switch-row">
+                        <span className="account-muted">
+                          {t("authSwitchToSignUpBefore")}
+                        </span>{" "}
+                        <button
+                          type="button"
+                          className="auth-text-link"
+                          onClick={() => {
+                            switchMode("signUp");
+                          }}
+                          disabled={busy}
+                        >
+                          {t("authSwitchToSignUpAction")}
+                        </button>
+                      </p>
+                    ) : null}
 
-                {mode === "forgot" ? (
-                  <p className="auth-switch-row">
-                    <button
-                      type="button"
-                      className="auth-text-link"
-                      onClick={() => {
-                        switchMode("signIn");
-                      }}
-                      disabled={busy}
-                    >
-                      {t("authBackToSignIn")}
-                    </button>
-                  </p>
-                ) : null}
-              </div>
-            </section>
-          ) : null}
+                    {mode === "signUp" ? (
+                      <p className="auth-switch-row">
+                        <span className="account-muted">
+                          {t("authSwitchToSignInBefore")}
+                        </span>{" "}
+                        <button
+                          type="button"
+                          className="auth-text-link"
+                          onClick={() => {
+                            switchMode("signIn");
+                          }}
+                          disabled={busy}
+                        >
+                          {t("authSwitchToSignInAction")}
+                        </button>
+                      </p>
+                    ) : null}
+
+                    {mode === "forgot" ? (
+                      <p className="auth-switch-row">
+                        <button
+                          type="button"
+                          className="auth-text-link"
+                          onClick={() => {
+                            switchMode("signIn");
+                          }}
+                          disabled={busy}
+                        >
+                          {t("authBackToSignIn")}
+                        </button>
+                      </p>
+                    ) : null}
+                  </div>
+                </section>
+              ) : null}
+            </>
+          )}
 
           <div className="auth-locale">
             <AppNavLocaleToggle />
@@ -390,21 +434,20 @@ export default function AuthPageClient() {
 }
 
 /**
- * Leaves /auth with a document navigation so App Router cannot no-op
- * `router.replace` when `next` is already this page.
- * Re-writes the locale cookie from storage (not React state) so a signed-in
- * effect cannot replace home before LocaleProvider hydrates, flashing zh.
+ * Leaves /auth for home with a document navigation so App Router cannot no-op
+ * a soft replace. Re-writes the locale cookie from storage (not React state)
+ * so a signed-in effect cannot replace home before LocaleProvider hydrates,
+ * flashing zh. Ignores `?next=` (including tool deep links).
  */
-function leaveAuthPage(nextPath: string): void {
+function leaveAuthPage(): void {
   persistChromeHint("signed_in");
   const storedLocale = readPersistedLocale();
-  const safePath: string = safeNextPath(nextPath);
   if (storedLocale !== null) {
     persistLocaleChoice(storedLocale);
-    window.location.replace(withLocaleQuery(safePath, storedLocale));
+    window.location.replace(withLocaleQuery(POST_SIGN_IN_PATH, storedLocale));
     return;
   }
-  window.location.replace(safePath);
+  window.location.replace(POST_SIGN_IN_PATH);
 }
 
 /**

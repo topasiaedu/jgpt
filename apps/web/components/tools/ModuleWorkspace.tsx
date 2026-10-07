@@ -3,7 +3,6 @@
 import Link from "next/link";
 import { useCallback, useEffect, useRef, useState } from "react";
 
-import AppNav from "@/components/AppNav";
 import { useChatHistoryShell } from "@/components/chatHistory/ChatHistoryShell";
 import ModuleChatShell from "@/components/tools/ModuleChatShell";
 import ModuleIntroModal, {
@@ -308,7 +307,6 @@ export default function ModuleWorkspace({
   return (
     <div className="shell shell-studio shell-studio-chat">
       <header className="header header-create">
-        <AppNav active="home" />
         <div className="module-workspace-heading">
           <h1 className="studio-title">{display.title}</h1>
           {typeof brandProfileId === "string" &&

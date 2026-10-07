@@ -4,7 +4,6 @@ import { useEffect, useRef, useState } from "react";
 import type { FormEvent, KeyboardEvent, ReactNode } from "react";
 import { useRouter } from "next/navigation";
 
-import AppNav from "@/components/AppNav";
 import BrandProfilePickModal from "@/components/brandProfiles/BrandProfilePickModal";
 import {
   gateLastActiveProfileId,
@@ -401,9 +400,6 @@ export default function ChatShell() {
   return (
     <div className="shell shell-create">
       <HomeGlowBlobs />
-      <header className="header header-create">
-        <AppNav active="home" />
-      </header>
 
       <div className="main">
         <section className="chat chat-create" aria-label={t("homeAsk")}>

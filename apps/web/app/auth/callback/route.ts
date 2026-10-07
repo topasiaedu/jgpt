@@ -1,17 +1,21 @@
 import { NextResponse, type NextRequest } from "next/server";
 
 import { createServerSupabaseClient } from "@/lib/supabase/server";
-import { safeNextPath } from "@/lib/supabase/safeNextPath";
+import { postAuthSuccessPath } from "@/lib/supabase/safeNextPath";
 import { readSupabasePublicEnv } from "@/lib/supabase/env";
 
 /**
  * PKCE code exchange for Supabase email links (recovery, confirm, magic link).
  * redirectTo should point here, e.g. /auth/callback?next=/auth/reset
+ *
+ * After a successful exchange, `next` is honored only for `/auth/*` continuations
+ * (password reset). Signup confirm and magic links otherwise land on home `/`,
+ * matching email/password form sign-in (tool deep links are not preferred).
  */
 export async function GET(request: NextRequest): Promise<NextResponse> {
   const url: URL = new URL(request.url);
   const code: string | null = url.searchParams.get("code");
-  const nextPath: string = safeNextPath(url.searchParams.get("next"));
+  const nextPath: string = postAuthSuccessPath(url.searchParams.get("next"));
   const origin: string = resolveRequestOrigin(request);
 
   if (readSupabasePublicEnv() === null) {

@@ -1,11 +1,18 @@
 "use client";
 
-import dynamic from "next/dynamic";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { useEffect, useState, type FormEvent } from "react";
+import {
+  useEffect,
+  useRef,
+  useState,
+  type FormEvent,
+  type TextareaHTMLAttributes,
+} from "react";
 
-import AppNav from "@/components/AppNav";
+import BrandDocumentsPanel, {
+  type BrandDocumentsPanelHandle,
+} from "@/components/brandProfiles/BrandDocumentsPanel";
 import {
   createBrandProfile,
   deleteBrandProfile,
@@ -17,7 +24,6 @@ import {
   updateBrandProfile,
 } from "@/lib/brandProfile/clientApi";
 import {
-  ACTIVE_BRIEF_MAX_CHARS,
   EMPTY_BRAND_PROFILE_STRUCTURED,
   type BrandProfileStructured,
 } from "@/lib/brandProfile/types";
@@ -25,50 +31,97 @@ import { useI18n } from "@/lib/i18n/LocaleProvider";
 import type { MessageKey } from "@/lib/i18n/messages";
 import { useAuthSession } from "@/lib/supabase/useAuthSession";
 
-/** Docs panel (upload/paste) loads only on edit routes after the form shell paints. */
-const BrandDocumentsPanel = dynamic(
-  () => import("@/components/brandProfiles/BrandDocumentsPanel"),
-  {
-    ssr: false,
-    loading: () => (
-      <div className="bp-docs-panel bp-docs-panel-loading" aria-busy="true" />
-    ),
-  },
-);
-
 export type BrandProfileFormProps =
   | { mode: "create" }
   | { mode: "edit"; profileId: string };
 
-type StructuredFieldKey = keyof BrandProfileStructured;
+type FormFieldKey = Exclude<
+  keyof BrandProfileStructured,
+  "offerCta" | "founderRoleFace"
+>;
 
-const STRUCTURED_FIELDS: Array<{
-  key: StructuredFieldKey;
+const FORM_FIELDS: Array<{
+  key: FormFieldKey;
   labelKey: MessageKey;
   hintKey: MessageKey;
+  /** Short one-line style field (public brand name). */
+  short?: boolean;
 }> = [
-  { key: "businessName", labelKey: "bpFieldBusinessName", hintKey: "bpHintBusinessName" },
-  { key: "whatTheySell", labelKey: "bpFieldWhatTheySell", hintKey: "bpHintWhatTheySell" },
-  { key: "whoTheyServe", labelKey: "bpFieldWhoTheyServe", hintKey: "bpHintWhoTheyServe" },
   {
-    key: "founderRoleFace",
-    labelKey: "bpFieldFounderRoleFace",
-    hintKey: "bpHintFounderRoleFace",
+    key: "businessName",
+    labelKey: "bpFieldBusinessName",
+    hintKey: "bpHintBusinessName",
+    short: true,
   },
+  { key: "whoTheyServe", labelKey: "bpFieldWhoTheyServe", hintKey: "bpHintWhoTheyServe" },
+  { key: "whatTheySell", labelKey: "bpFieldWhatTheySell", hintKey: "bpHintWhatTheySell" },
   { key: "stance", labelKey: "bpFieldStance", hintKey: "bpHintStance" },
   {
     key: "proofCredentials",
     labelKey: "bpFieldProofCredentials",
     hintKey: "bpHintProofCredentials",
   },
-  { key: "offerCta", labelKey: "bpFieldOfferCta", hintKey: "bpHintOfferCta" },
   { key: "toneNotes", labelKey: "bpFieldToneNotes", hintKey: "bpHintToneNotes" },
   { key: "doNotSay", labelKey: "bpFieldDoNotSay", hintKey: "bpHintDoNotSay" },
 ];
 
+type AutoGrowTextareaProps = Omit<
+  TextareaHTMLAttributes<HTMLTextAreaElement>,
+  "rows"
+> & {
+  /** Extra class for short vs long field sizing. */
+  sizingClassName: string;
+};
+
 /**
- * Create or edit one Brand profile: name, structured fields, active brief.
- * Documents stay on edit only, because upload needs a saved id.
+ * Textarea that grows with its content so filled copy is never clipped mid-line.
+ */
+function AutoGrowTextarea({
+  sizingClassName,
+  value,
+  className,
+  onChange,
+  ...rest
+}: AutoGrowTextareaProps) {
+  const ref = useRef<HTMLTextAreaElement | null>(null);
+
+  /**
+   * Sets height from scrollHeight after resetting to auto so shrink also works.
+   */
+  function syncHeight(): void {
+    const el: HTMLTextAreaElement | null = ref.current;
+    if (el === null) {
+      return;
+    }
+    el.style.height = "auto";
+    el.style.height = `${String(el.scrollHeight)}px`;
+  }
+
+  useEffect(() => {
+    syncHeight();
+  }, [value]);
+
+  return (
+    <textarea
+      {...rest}
+      ref={ref}
+      value={value}
+      rows={1}
+      className={`${className ?? ""} ${sizingClassName}`.trim()}
+      onChange={(event) => {
+        onChange?.(event);
+        requestAnimationFrame(() => {
+          syncHeight();
+        });
+      }}
+    />
+  );
+}
+
+/**
+ * Create or edit one Brand profile: name, brand facts, and documents on the
+ * same page. Create queues files until save, then uploads in place.
+ * Chat brief (active_brief) is filled by upload summarize, not a form field.
  */
 export default function BrandProfileEditClient(props: BrandProfileFormProps) {
   const isCreate: boolean = props.mode === "create";
@@ -81,12 +134,12 @@ export default function BrandProfileEditClient(props: BrandProfileFormProps) {
   const { t } = useI18n();
   const router = useRouter();
   const auth = useAuthSession();
+  const docsRef = useRef<BrandDocumentsPanelHandle | null>(null);
 
   const [name, setName] = useState("");
   const [structured, setStructured] = useState<BrandProfileStructured>({
     ...EMPTY_BRAND_PROFILE_STRUCTURED,
   });
-  const [activeBrief, setActiveBrief] = useState("");
   const [loading, setLoading] = useState(!isCreate);
   const [saving, setSaving] = useState(false);
   const [deleting, setDeleting] = useState(false);
@@ -134,7 +187,6 @@ export default function BrandProfileEditClient(props: BrandProfileFormProps) {
       }
       setName(result.profile.name);
       setStructured(result.profile.structured);
-      setActiveBrief(result.profile.activeBrief);
       setLoading(false);
     }
 
@@ -145,8 +197,8 @@ export default function BrandProfileEditClient(props: BrandProfileFormProps) {
   }, [auth.ready, auth.envMissing, auth.user, authNextPath, isCreate, profileId, router, t]);
 
   /**
-   * Create: POST name + structured + brief, then open the saved profile.
-   * Edit: PATCH the same fields.
+   * Create: POST profile, flush queued docs on this page, then open edit URL.
+   * Edit: PATCH name + facts only (active_brief stays server-side from summarize).
    */
   async function handleSubmit(event: FormEvent<HTMLFormElement>): Promise<void> {
     event.preventDefault();
@@ -158,20 +210,15 @@ export default function BrandProfileEditClient(props: BrandProfileFormProps) {
       setError(t("bpNameRequired"));
       return;
     }
-    if (activeBrief.trim().length > ACTIVE_BRIEF_MAX_CHARS) {
-      setError(t("bpBriefTooLong"));
-      return;
-    }
 
     setSaving(true);
 
     if (isCreate || profileId === null) {
       const created = await createBrandProfile(trimmedName, {
         structured,
-        activeBrief: activeBrief.trim(),
       });
-      setSaving(false);
       if (!created.ok) {
+        setSaving(false);
         if (created.status === 401) {
           router.replace(`/auth?next=${encodeURIComponent(authNextPath)}`);
           return;
@@ -179,15 +226,30 @@ export default function BrandProfileEditClient(props: BrandProfileFormProps) {
         setError(created.error);
         return;
       }
+
       await saveLastActiveProfileId(created.profile.id);
-      router.push(`/brand-profiles/${created.profile.id}`);
+
+      const docsHandle: BrandDocumentsPanelHandle | null = docsRef.current;
+      if (docsHandle !== null && docsHandle.hasDrafts()) {
+        setSavedNote(t("bpDocsUploadingDrafts"));
+        const flushed = await docsHandle.flushDrafts(created.profile.id);
+        if (!flushed.ok) {
+          setSaving(false);
+          setError(flushed.error);
+          setSavedNote(null);
+          router.replace(`/brand-profiles/${created.profile.id}`);
+          return;
+        }
+      }
+
+      setSaving(false);
+      router.replace(`/brand-profiles/${created.profile.id}`);
       return;
     }
 
     const result = await updateBrandProfile(profileId, {
       name: trimmedName,
       structured,
-      activeBrief: activeBrief.trim(),
     });
     setSaving(false);
 
@@ -198,7 +260,6 @@ export default function BrandProfileEditClient(props: BrandProfileFormProps) {
 
     setName(result.profile.name);
     setStructured(result.profile.structured);
-    setActiveBrief(result.profile.activeBrief);
     setSavedNote(t("bpSaved"));
   }
 
@@ -247,25 +308,23 @@ export default function BrandProfileEditClient(props: BrandProfileFormProps) {
   }
 
   /**
-   * Updates one structured field in local form state.
+   * Updates one editable fact field in local form state.
    */
-  function updateStructuredField(
-    key: StructuredFieldKey,
-    value: string,
-  ): void {
+  function updateFormField(key: FormFieldKey, value: string): void {
     setStructured((prev) => ({ ...prev, [key]: value }));
   }
 
   const nameFieldId: string = isCreate ? "bp-create-name" : "bp-edit-name";
-  const briefFieldId: string = isCreate ? "bp-create-brief" : "bp-active-brief";
 
   return (
     <div className="shell shell-studio shell-studio-bp">
       <header className="header header-create">
-        <AppNav active="brandProfiles" />
         <p className="tools-back bp-form-back">
-          <Link href="/brand-profiles" className="tools-back-link">
-            {t("bpBackToList")}
+          <Link href="/brand-profiles" className="tools-back-link bp-form-back-link">
+            <span className="bp-form-back-arrow" aria-hidden="true">
+              ←
+            </span>
+            <span>{t("bpBackToList")}</span>
           </Link>
         </p>
         <h1 className="studio-title">
@@ -286,13 +345,13 @@ export default function BrandProfileEditClient(props: BrandProfileFormProps) {
             className="account-form bp-edit-form"
             onSubmit={(event) => void handleSubmit(event)}
           >
-            <section className="account-panel">
+            <section className="bp-edit-identity">
               <label className="account-label" htmlFor={nameFieldId}>
                 {t("bpNameLabel")}
               </label>
               <input
                 id={nameFieldId}
-                className="input account-input"
+                className="input account-input bp-edit-name-input"
                 type="text"
                 value={name}
                 onChange={(event) => {
@@ -318,25 +377,41 @@ export default function BrandProfileEditClient(props: BrandProfileFormProps) {
               ) : null}
             </section>
 
-            <section className="account-panel" aria-labelledby="bp-structured-title">
-              <h2 id="bp-structured-title" className="account-panel-title">
-                {t("bpStructuredTitle")}
-              </h2>
-              <p className="account-muted">{t("bpStructuredHint")}</p>
-              <div className="bp-field-grid">
-                {STRUCTURED_FIELDS.map((field) => (
-                  <div key={field.key} className="bp-field">
-                    <label className="account-label" htmlFor={`bp-field-${field.key}`}>
+            <section className="bp-facts-section" aria-labelledby="bp-facts-title">
+              <header className="bp-section-head">
+                <h2 id="bp-facts-title" className="account-panel-title">
+                  {t("bpStructuredTitle")}
+                </h2>
+                <p className="account-muted bp-section-lede">
+                  {t("bpStructuredHint")}
+                </p>
+              </header>
+              <div className="bp-field-stack">
+                {FORM_FIELDS.map((field) => (
+                  <div
+                    key={field.key}
+                    className={
+                      field.short === true ? "bp-field bp-field-short" : "bp-field"
+                    }
+                  >
+                    <label
+                      className="account-label bp-field-label"
+                      htmlFor={`bp-field-${field.key}`}
+                    >
                       {t(field.labelKey)}
                     </label>
                     <p className="bp-field-hint">{t(field.hintKey)}</p>
-                    <textarea
+                    <AutoGrowTextarea
                       id={`bp-field-${field.key}`}
-                      className="input account-textarea"
-                      rows={field.key === "doNotSay" || field.key === "toneNotes" ? 3 : 2}
+                      className="input account-textarea bp-field-textarea"
+                      sizingClassName={
+                        field.short === true
+                          ? "bp-field-textarea-short"
+                          : "bp-field-textarea-long"
+                      }
                       value={structured[field.key]}
                       onChange={(event) => {
-                        updateStructuredField(field.key, event.target.value);
+                        updateFormField(field.key, event.target.value);
                       }}
                     />
                   </div>
@@ -344,40 +419,17 @@ export default function BrandProfileEditClient(props: BrandProfileFormProps) {
               </div>
             </section>
 
-            <section className="account-panel" aria-labelledby="bp-brief-title">
-              <h2 id="bp-brief-title" className="account-panel-title">
-                {t("bpBriefTitle")}
-              </h2>
-              <p className="account-muted">{t("bpBriefHint")}</p>
-              <textarea
-                id={briefFieldId}
-                className="input account-textarea"
-                rows={8}
-                value={activeBrief}
-                maxLength={ACTIVE_BRIEF_MAX_CHARS}
-                onChange={(event) => {
-                  setActiveBrief(event.target.value);
-                }}
-              />
-              <p className="account-muted">
-                {t("bpBriefCount", { n: activeBrief.trim().length })}
-              </p>
-            </section>
-
-            {!isCreate && profileId !== null ? (
+            <div className="bp-materials-block">
               <BrandDocumentsPanel
+                ref={docsRef}
                 profileId={profileId}
+                disabled={saving || deleting}
                 onProfileUpdated={(update) => {
                   setStructured(update.structured);
-                  setActiveBrief(update.activeBrief);
                   setSavedNote(t("bpDocsBriefUpdated"));
                 }}
               />
-            ) : null}
-
-            {isCreate ? (
-              <p className="account-muted">{t("bpCreateDocsLater")}</p>
-            ) : null}
+            </div>
 
             <button type="submit" className="send account-submit" disabled={saving}>
               {isCreate

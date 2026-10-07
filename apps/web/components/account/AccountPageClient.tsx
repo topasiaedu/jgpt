@@ -3,7 +3,6 @@
 import { useRouter } from "next/navigation";
 import { useEffect, useId, useState, type FormEvent } from "react";
 
-import AppNav from "@/components/AppNav";
 import { useI18n } from "@/lib/i18n/LocaleProvider";
 import { createBrowserSupabaseClient } from "@/lib/supabase/browser";
 import { readSupabasePublicEnv } from "@/lib/supabase/env";
@@ -131,7 +130,6 @@ export default function AccountPageClient() {
   return (
     <div className="shell shell-studio shell-account">
       <header className="header header-create">
-        <AppNav active="account" />
         <h1 className="studio-title">{t("accountTitle")}</h1>
         <p className="studio-subtitle">{t("accountSubtitle")}</p>
       </header>

@@ -4,7 +4,6 @@ import dynamic from "next/dynamic";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 
-import AppNav from "@/components/AppNav";
 import {
   gateLastActiveProfileId,
   gateProfileList,
@@ -26,8 +25,9 @@ const BrandProfilePickModal = dynamic(
 );
 
 /**
- * All Tools page: nav chrome, then page title, then the stage card wall.
- * Module entry opens a Brand profile picker. Profile is optional.
+ * All Tools page: page title, then the stage card wall.
+ * Signed-in nav chrome lives in ChatHistoryShell. Module entry opens a Brand
+ * profile picker. Profile is optional.
  */
 export default function ToolsPageClient() {
   const { t } = useI18n();
@@ -67,9 +67,6 @@ export default function ToolsPageClient() {
 
   return (
     <div className="shell shell-studio shell-tools">
-      <header className="header header-create tools-chrome-header">
-        <AppNav active="tools" />
-      </header>
       <div className="tools-page-head">
         <h1 className="studio-title">{t("toolsTitle")}</h1>
         <p className="studio-subtitle">{t("toolsSubtitle")}</p>

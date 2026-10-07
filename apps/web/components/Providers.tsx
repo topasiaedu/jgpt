@@ -15,7 +15,8 @@ type ProvidersProps = {
 /**
  * Client providers for the Influence Engine Coach shell.
  * Chat history chrome mounts once under auth so signed-in routes share one sidebar.
- * ChatHistoryShell must not suspend here: a Suspense fallback of bare children
+ * ChatHistoryShell owns the chrome loader until auth is ready, then mounts the
+ * sidebar shell. It must not suspend here: a Suspense fallback of bare children
  * hydrates against app-with-history and throws a recoverable mismatch.
  */
 export default function Providers({ children, initialLocale }: ProvidersProps) {

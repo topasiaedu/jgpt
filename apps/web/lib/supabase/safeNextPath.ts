@@ -2,11 +2,15 @@ import type { Locale } from "@/lib/i18n/messages";
 
 /**
  * Same-origin relative path guard for auth redirects (`next` query param).
- * Empty or unsafe values go to Brand profiles. `/auth` itself is a dead-end
- * (would loop the sign-in page), so that case goes home.
+ * Empty or unsafe values go home. `/auth` itself is a dead-end
+ * (would loop the sign-in page), so that case goes home too.
+ *
+ * Auth form sign-in always navigates to `/` and ignores `next` (see AuthPageClient).
+ * Email link routes use `postAuthSuccessPath` so tool deep links do not win over home,
+ * while password-reset continuations under `/auth/*` still honor `next`.
  */
 export function safeNextPath(raw: string | null | undefined): string {
-  const fallback: string = "/brand-profiles";
+  const fallback: string = "/";
   if (raw === null || raw === undefined || raw.length === 0) {
     return fallback;
   }
@@ -31,6 +35,26 @@ export function safeNextPath(raw: string | null | undefined): string {
   }
 
   return `${parsed.pathname}${parsed.search}${parsed.hash}`;
+}
+
+/**
+ * Destination after PKCE / OTP email links (`/auth/callback`, `/auth/confirm`).
+ * Keeps `next` only for auth continuations such as `/auth/reset`.
+ * Tool chats and other app paths resolve to home so login success matches the form.
+ */
+export function postAuthSuccessPath(raw: string | null | undefined): string {
+  const safe: string = safeNextPath(raw);
+  let parsed: URL;
+  try {
+    parsed = new URL(safe, "http://localhost");
+  } catch {
+    return "/";
+  }
+  const pathname: string = stripTrailingSlash(parsed.pathname);
+  if (pathname.startsWith("/auth/")) {
+    return safe;
+  }
+  return "/";
 }
 
 /**

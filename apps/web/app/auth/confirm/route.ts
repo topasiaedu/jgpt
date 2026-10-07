@@ -3,17 +3,20 @@ import { NextResponse, type NextRequest } from "next/server";
 import { parseEmailOtpType } from "@/lib/supabase/emailOtpType";
 import { readSupabasePublicEnv } from "@/lib/supabase/env";
 import { createServerSupabaseClient } from "@/lib/supabase/server";
-import { safeNextPath } from "@/lib/supabase/safeNextPath";
+import { postAuthSuccessPath } from "@/lib/supabase/safeNextPath";
 
 /**
  * Token-hash exchange for custom Supabase email templates
  * (e.g. {{ .SiteURL }}/auth/confirm?token_hash=...&type=recovery&next=/auth/reset).
+ *
+ * Same post-success rule as `/auth/callback`: keep `next` for `/auth/*`
+ * continuations only; otherwise home `/` (signup confirm does not reopen tools).
  */
 export async function GET(request: NextRequest): Promise<NextResponse> {
   const url: URL = new URL(request.url);
   const tokenHash: string | null = url.searchParams.get("token_hash");
   const otpType = parseEmailOtpType(url.searchParams.get("type"));
-  const nextPath: string = safeNextPath(url.searchParams.get("next"));
+  const nextPath: string = postAuthSuccessPath(url.searchParams.get("next"));
   const origin: string = resolveRequestOrigin(request);
 
   if (readSupabasePublicEnv() === null) {

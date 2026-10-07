@@ -180,6 +180,8 @@ export async function summarizeBrandProfile(
     "Return JSON only with keys: structured (object) and activeBrief (string).",
     "structured keys: businessName, whatTheySell, whoTheyServe, founderRoleFace, stance, proofCredentials, offerCta, toneNotes, doNotSay.",
     "All structured values must be strings. Use empty string when unknown.",
+    "founderRoleFace and offerCta are optional. Leave them empty unless materials clearly state them. Never invent a CTA or on-camera person.",
+    "activeBrief must work from the other fields alone when founderRoleFace or offerCta are empty.",
     `activeBrief must be at most ${ACTIVE_BRIEF_MAX_CHARS} characters.`,
     "Do not invent facts not supported by materials or existing fields.",
     "Do not use em dash or en dash punctuation in any string.",

@@ -4,7 +4,6 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 
-import AppNav from "@/components/AppNav";
 import {
   deleteBrandProfile,
   fetchBrandProfiles,
@@ -22,7 +21,7 @@ const CARD_PREVIEW_MAX_CHARS = 88;
 type CardPreviewField = {
   key: keyof Pick<
     BrandProfileStructured,
-    "whoTheyServe" | "whatTheySell" | "offerCta"
+    "whoTheyServe" | "whatTheySell" | "businessName"
   >;
   labelKey: MessageKey;
 };
@@ -30,7 +29,7 @@ type CardPreviewField = {
 const CARD_PREVIEW_FIELDS: CardPreviewField[] = [
   { key: "whoTheyServe", labelKey: "bpFieldWhoTheyServe" },
   { key: "whatTheySell", labelKey: "bpFieldWhatTheySell" },
-  { key: "offerCta", labelKey: "bpFieldOfferCta" },
+  { key: "businessName", labelKey: "bpFieldBusinessName" },
 ];
 
 /**
@@ -210,7 +209,6 @@ export default function BrandProfilesListClient() {
   return (
     <div className="shell shell-studio shell-studio-bp shell-studio-bp-list">
       <header className="header header-create">
-        <AppNav active="brandProfiles" />
         <div className="bp-page-head">
           <div className="bp-page-head-copy">
             <h1 className="studio-title">{t("bpListTitle")}</h1>

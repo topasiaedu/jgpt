@@ -1,6 +1,7 @@
 "use client";
 
 import dynamic from "next/dynamic";
+import Image from "next/image";
 import {
   createContext,
   Suspense,
@@ -93,6 +94,43 @@ function isAuthPath(pathname: string): boolean {
 }
 
 /**
+ * Focused full-page loader while product chrome (auth + history rail) resolves.
+ * Matches auth redirect styling so login → home never paints the legacy top bar.
+ */
+function ProductChromeLoader() {
+  const { t } = useI18n();
+
+  return (
+    <div className="shell shell-studio shell-auth chrome-loading-shell" aria-busy="true">
+      <main className="studio-main">
+        <div className="auth-surface auth-surface-redirecting empty-state-enter">
+          <div className="auth-brand">
+            <Image
+              src="/brand/influence-engine-mark.png"
+              alt=""
+              width={36}
+              height={42}
+              className="auth-brand-mark"
+              priority
+            />
+            <span className="auth-brand-name">{t("productName")}</span>
+          </div>
+          <div
+            className="auth-redirect"
+            role="status"
+            aria-live="polite"
+            aria-busy="true"
+          >
+            <span className="auth-redirect-spinner" aria-hidden="true" />
+            <p className="auth-redirect-message">{t("appChromeLoading")}</p>
+          </div>
+        </div>
+      </main>
+    </div>
+  );
+}
+
+/**
  * Suspends in its own boundary so ?c= tracking never forks the outer shell SSR tree.
  */
 function ActiveConversationQuerySync({
@@ -114,9 +152,9 @@ function ActiveConversationQuerySync({
  * Global signed-in chat history chrome: sidebar on desktop, drawer on mobile.
  * Mounts once under Providers so list state survives home ↔ tools ↔ profile routes.
  *
- * History chrome is deferred until after mount so SSR and the first client paint
- * share the same tree (page children only). Auth chromeHint / sessionStorage are
- * client-only and must not fork the wrapper className during hydration.
+ * Until `hydrated && auth.ready`, product routes render a chrome loader on both
+ * SSR and the first client paint (same tree). After auth resolves as signed-in,
+ * `app-with-history` mounts in one paint. Auth paths keep their own surface.
  */
 export default function ChatHistoryShell({ children }: ChatHistoryShellProps) {
   const { t } = useI18n();
@@ -124,8 +162,7 @@ export default function ChatHistoryShell({ children }: ChatHistoryShellProps) {
   const pathname = usePathname();
   const router = useRouter();
 
-  const signedIn: boolean =
-    auth.user !== null || (!auth.ready && auth.chromeHint === "signed_in");
+  const onAuthSurface: boolean = isAuthPath(pathname);
 
   const railNavActive = useMemo(
     () => appNavActiveFromPath(pathname),
@@ -150,11 +187,21 @@ export default function ChatHistoryShell({ children }: ChatHistoryShellProps) {
   foldersRef.current = folders;
 
   /**
-   * Same on server and first client paint (false). Only then may the history
-   * wrapper mount, so brand-profile shell classNames stay on the page root div.
+   * Same on server and first client paint: loader until mount + session settle.
+   * Avoids painting page chrome without the rail, then snapping to sidebar.
+   */
+  const showChromeLoader: boolean =
+    !onAuthSurface && (!hydrated || !auth.ready);
+
+  /**
+   * History rail only after hydrate + confirmed session. No chromeHint optimism:
+   * loader covers the wait so layout does not fork mid-flight.
    */
   const showHistory: boolean =
-    hydrated && signedIn && !isAuthPath(pathname);
+    hydrated &&
+    auth.ready &&
+    auth.user !== null &&
+    !onAuthSurface;
 
   useEffect(() => {
     setHydrated(true);
@@ -640,6 +687,14 @@ export default function ChatHistoryShell({ children }: ChatHistoryShellProps) {
       return;
     }
     router.push("/tools");
+  }
+
+  if (showChromeLoader) {
+    return (
+      <ChatHistoryShellContext.Provider value={shellApi}>
+        <ProductChromeLoader />
+      </ChatHistoryShellContext.Provider>
+    );
   }
 
   if (!showHistory) {
